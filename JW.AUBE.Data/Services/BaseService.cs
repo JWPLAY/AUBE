@@ -182,5 +182,20 @@ namespace JW.AUBE.Data.Services
 				return req;
 			}
 		}
+
+		public static WasRequest ProcedureCall(WasRequest req)
+		{
+			try
+			{
+				DaoFactory.Instance.QueryForObject<int>(req.SqlId, req.Parameter);
+				return req;
+			}
+			catch (Exception ex)
+			{
+				req.ErrorNumber = ex.HResult;
+				req.ErrorMessage = ex.Message;
+				return req;
+			}
+		}
 	}
 }

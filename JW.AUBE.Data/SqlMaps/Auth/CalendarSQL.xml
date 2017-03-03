@@ -8,15 +8,7 @@
 		<select id="SelectCalendar" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
 				SELECT	AA.CAL_DATE  
-					,	CASE AA.DAY_OF_WEEK
-							WHEN 1 THEN '일요일'
-							WHEN 2 THEN '월요일'
-							WHEN 3 THEN '화요일'
-							WHEN 4 THEN '수요일'
-							WHEN 5 THEN '목요일'
-							WHEN 6 THEN '금요일'
-							WHEN 7 THEN '토요일' 
-						END						AS WEEK_NAME
+					,	AA.WEEK_NAME
 					,	AA.CAL_YEAR
 					,	AA.CAL_MONTH
 					,	AA.CAL_DAY
@@ -26,7 +18,8 @@
 					,	AA.WEEK_OF_MONTH
 					,	AA.WEEK_OF_YEAR
 					,	AA.HOLIDAY_YN
-					,	AA.DESCRIPTION
+					,	AA.HOLIDAY_NAME
+					,	AA.REMARKS
 					,	AA.INS_TIME
 					,	AA.INS_USER
 					,	U1.NAME			AS INS_USER_NAME
@@ -43,7 +36,7 @@
 			<isNotEmpty property="FIND_TEXT">
 				<![CDATA[
 					AND	(
-							AA.DESCRIPTION	LINE '%' + #FIND_TEXT# + '%'	OR
+							AA.REMARKS		LINE '%' + #FIND_TEXT# + '%'	OR
 							AA.CAL_DATE		LIKE #FIND_TEXT# + '%'
 						)
 				]]>
@@ -62,51 +55,25 @@
 				ORDER BY AA.CAL_DATE ASC
 			]]>
 		</select>
-		<insert id="InsertCalendar" parameterClass="DataMap" >
-			<![CDATA[
-				INSERT INTOCalendar
-				( 
-					CalDate, CalYear, CalMonth, CalDay, Quarter, DayOfWeek, DayOfYear, WeekOfMonth, WeekOfYear, HolidayYn, Description, InsertDtime, INS_USER
-				)
-				SELECT	#CalDate#
-					,	datepart(year	, convert(date, #CalDate#, 112))
-					,	datepart(month	, convert(date, #CalDate#, 112))
-					,	datepart(day	, convert(date, #CalDate#, 112))
-					,	datepart(qq		, convert(date, #CalDate#, 112))
-					,	datepart(dw		, convert(date, #CalDate#, 112))
-					,	datepart(dy		, convert(date, #CalDate#, 112))
-					,	dbo.FnWeekOfMonth(#CalDate#)
-					,	datepart(wk		, convert(date, #CalDate#, 112))
-					,	case when datepart(dw, convert(date, #CalDate#, 112)) in (1, 7) or exists (select 1 fromHoliday where HolidayDate = #CalDate#) then 'Y' else 'N' end
-					,	case when datepart(dw, convert(date, #CalDate#, 112)) = 1 then '일요일'
-							 when datepart(dw, convert(date, #CalDate#, 112)) = 7 then '토요일'
-							 else isnull((select HolidayName fromHoliday where HolidayDate = #CalDate#), null) end					
-					,	getdate()
-					,	#INS_USER#
-			]]>
-		</insert>
 		<update id="UpdateCalendar" parameterClass="DataMap">
 			<![CDATA[
-				Update Calendar
-				Set     HolidayYn		= #HolidayYn#
-					,	Description		= #Description#
-					,	UpdateDtime		= getdate()
+				UPDATE	jwa.Calendar
+				SET     HOLIDAY_YN	= #HOLIDAY_YN#
+					,	HOLIDAY_NAME= #HOLIDAY_NAME#
+					,	REMARKS		= #REMARKS#
+					,	UPD_TIME	= GETDATE()
 					,	UPD_USER	= #INS_USER#
-				Where	CalDate			= #CalDate#
+				WHERE	CAL_DATE	= #CAL_DATE#
 			]]>
 		</update>
-		<delete id="DeleteCalendar" parameterClass="DataMap">
-			<![CDATA[
-				Delete FromCalendar Where CalDate = #CalDate#
-			]]>
-		</delete>
-		<procedure id="ProcedureCreateCalendar" parameterMap="createCalendarParams" resultClass="Int">
-			SpCalendarCreate
+		<procedure id="CreateCalendar" parameterMap="paramCreateCalendar" resultClass="Int">
+			spCreateCalendar
 		</procedure>		
 	</statements>
 	<parameterMaps>
-		<parameterMap id="createCalendarParams" class="DataMap">
-			<parameter property="CalYear" column="CalYear" />
+		<parameterMap id="paramCreateCalendar" class="DataMap">
+			<parameter property="CAL_YEAR" column="CAL_YEAR" />
+			<parameter property="INS_USER" column="INS_USER" />
 		</parameterMap>
 	</parameterMaps>
 </sqlMap>

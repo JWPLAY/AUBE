@@ -95,7 +95,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SqlMaps\Auth\HolidaySQL.xml" />
     <EmbeddedResource Include="SqlMaps\Auth\MessagesSQL.xml" />
     <EmbeddedResource Include="SqlMaps\Common\CodeHelpSQL.xml" />
     <EmbeddedResource Include="SqlMaps\Code\BusinessSQL.xml" />

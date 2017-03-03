@@ -20,12 +20,12 @@ namespace JW.AUBE.Base.Utils
 			return str == "Y" ? true : false;
 		}
 
-		public static string ToDateTime(this string str, string format = "yyyyMMdd")
+		public static string ToDateTime(this string str, string format = "yyyy-MM-dd")
 		{
 			return str.Length == 8 ? DateTime.ParseExact(str, "yyyyMMdd", null).ToString(format) : DateTime.Parse(str).ToString(format);
 		}
 
-		public static string ToDateTime(this object obj, string format = "yyyyMMdd")
+		public static string ToDateTime(this object obj, string format = "yyyy-MM-dd")
 		{
 			if (obj == null || !(obj is string))
 			{

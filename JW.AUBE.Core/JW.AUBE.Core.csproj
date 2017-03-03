@@ -139,6 +139,12 @@
     <Compile Include="Forms\Auth\CodesForm.Designer.cs">
       <DependentUpon>CodesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Auth\CalendarForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Auth\CalendarForm.Designer.cs">
+      <DependentUpon>CalendarForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Auth\DictionariesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -156,12 +162,6 @@
     </Compile>
     <Compile Include="Forms\Auth\UserMenusForm.Designer.cs">
       <DependentUpon>UserMenusForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Auth\HolidayForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Auth\HolidayForm.Designer.cs">
-      <DependentUpon>HolidayForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Auth\UsersForm.cs">
       <SubType>Form</SubType>
@@ -303,6 +303,9 @@
     <EmbeddedResource Include="Forms\Auth\CodesForm.resx">
       <DependentUpon>CodesForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Auth\CalendarForm.resx">
+      <DependentUpon>CalendarForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Auth\DictionariesForm.resx">
       <DependentUpon>DictionariesForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -311,9 +314,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Auth\UserMenusForm.resx">
       <DependentUpon>UserMenusForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Auth\HolidayForm.resx">
-      <DependentUpon>HolidayForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Auth\UsersForm.resx">
       <DependentUpon>UsersForm.cs</DependentUpon>

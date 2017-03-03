@@ -128,5 +128,30 @@ namespace JW.AUBE.Core.Utils
 					}
 			});
 		}
+
+		public static WasRequest ProcedureCall(string sqlId, DataMap parameter)
+		{
+			try
+			{
+				if (parameter == null)
+					parameter = new DataMap();
+
+				if (parameter.ContainsKey("INS_USER") == false)
+					parameter.SetValue("INS_USER", GlobalVar.Settings.GetValue("USER_ID"));
+
+				return (new WasRequest()
+							{
+								ServiceId = "Base",
+								ProcessId = "ProcedureCall",
+								SqlId = sqlId,
+								Parameter = parameter,
+								IsTransaction = true
+							}).Request();
+			}
+			catch
+			{
+				throw;
+			}
+		}
 	}
 }

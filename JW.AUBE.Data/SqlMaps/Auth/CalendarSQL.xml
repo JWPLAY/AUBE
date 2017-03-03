@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+	namespace="JW.AUBE.Data.SqlMaps"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<statements>
+		<select id="SelectCalendar" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT	AA.CAL_DATE  
+					,	CASE AA.DAY_OF_WEEK
+							WHEN 1 THEN '일요일'
+							WHEN 2 THEN '월요일'
+							WHEN 3 THEN '화요일'
+							WHEN 4 THEN '수요일'
+							WHEN 5 THEN '목요일'
+							WHEN 6 THEN '금요일'
+							WHEN 7 THEN '토요일' 
+						END						AS WEEK_NAME
+					,	AA.CAL_YEAR
+					,	AA.CAL_MONTH
+					,	AA.CAL_DAY
+					,	AA.QUARTER
+					,	AA.DAY_OF_WEEK
+					,	AA.DAY_OF_YEAR
+					,	AA.WEEK_OF_MONTH
+					,	AA.WEEK_OF_YEAR
+					,	AA.HOLIDAY_YN
+					,	AA.DESCRIPTION
+					,	AA.INS_TIME
+					,	AA.INS_USER
+					,	U1.NAME			AS INS_USER_NAME
+					,	AA.UPD_TIME
+					,	AA.UPD_USER
+					,	U2.NAME			AS UPD_USER_NAME
+				FROM	jwa.Calendar AA WITH (NOLOCK)
+						LEFT JOIN 
+							jwa.Users U1 WITH (NOLOCK) ON AA.INS_USER = U1.ID
+						LEFT JOIN 
+							jwa.Users U2 WITH (NOLOCK) ON AA.UPD_USER = U2.ID
+				WHERE	1=1
+			]]>
+			<isNotEmpty property="FIND_TEXT">
+				<![CDATA[
+					AND	(
+							AA.DESCRIPTION	LINE '%' + #FIND_TEXT# + '%'	OR
+							AA.CAL_DATE		LIKE #FIND_TEXT# + '%'
+						)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty property="CAL_YEAR">
+				<![CDATA[
+					AND	AA.CAL_YEAR = #CAL_YEAR#
+				]]>
+			</isNotEmpty>
+			<isNotEmpty property="CAL_DATE">
+				<![CDATA[
+					AND	AA.CAL_DATE	= #CAL_DATE#
+				]]>
+			</isNotEmpty>
+			<![CDATA[
+				ORDER BY AA.CAL_DATE ASC
+			]]>
+		</select>
+		<insert id="InsertCalendar" parameterClass="DataMap" >
+			<![CDATA[
+				INSERT INTOCalendar
+				( 
+					CalDate, CalYear, CalMonth, CalDay, Quarter, DayOfWeek, DayOfYear, WeekOfMonth, WeekOfYear, HolidayYn, Description, InsertDtime, INS_USER
+				)
+				SELECT	#CalDate#
+					,	datepart(year	, convert(date, #CalDate#, 112))
+					,	datepart(month	, convert(date, #CalDate#, 112))
+					,	datepart(day	, convert(date, #CalDate#, 112))
+					,	datepart(qq		, convert(date, #CalDate#, 112))
+					,	datepart(dw		, convert(date, #CalDate#, 112))
+					,	datepart(dy		, convert(date, #CalDate#, 112))
+					,	dbo.FnWeekOfMonth(#CalDate#)
+					,	datepart(wk		, convert(date, #CalDate#, 112))
+					,	case when datepart(dw, convert(date, #CalDate#, 112)) in (1, 7) or exists (select 1 fromHoliday where HolidayDate = #CalDate#) then 'Y' else 'N' end
+					,	case when datepart(dw, convert(date, #CalDate#, 112)) = 1 then '일요일'
+							 when datepart(dw, convert(date, #CalDate#, 112)) = 7 then '토요일'
+							 else isnull((select HolidayName fromHoliday where HolidayDate = #CalDate#), null) end					
+					,	getdate()
+					,	#INS_USER#
+			]]>
+		</insert>
+		<update id="UpdateCalendar" parameterClass="DataMap">
+			<![CDATA[
+				Update Calendar
+				Set     HolidayYn		= #HolidayYn#
+					,	Description		= #Description#
+					,	UpdateDtime		= getdate()
+					,	UPD_USER	= #INS_USER#
+				Where	CalDate			= #CalDate#
+			]]>
+		</update>
+		<delete id="DeleteCalendar" parameterClass="DataMap">
+			<![CDATA[
+				Delete FromCalendar Where CalDate = #CalDate#
+			]]>
+		</delete>
+		<procedure id="ProcedureCreateCalendar" parameterMap="createCalendarParams" resultClass="Int">
+			SpCalendarCreate
+		</procedure>		
+	</statements>
+	<parameterMaps>
+		<parameterMap id="createCalendarParams" class="DataMap">
+			<parameter property="CalYear" column="CalYear" />
+		</parameterMap>
+	</parameterMaps>
+</sqlMap>

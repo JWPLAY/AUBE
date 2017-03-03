@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+  namespace="JW.AUBE.Data.SqlMaps"
+  xmlns="http://ibatis.apache.org/mapping"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<statements>
+		<select id="GetLoginUser" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT	ID
+					,	NAME
+					,	LOGIN_ID
+					,	LOGIN_PW
+					,	USE_YN
+				FROM	jwa.Users
+				WHERE	LOGIN_ID = #LOGIN_ID#
+			]]>			
+		</select>
+		<insert id="InsertLoginLog" parameterClass="DataMap" >
+			<![CDATA[
+				INSERT INTO jwa.LoginLog
+				( 
+					USER_ID, LOGIN_ID, LOGIN_TIME
+				)
+				VALUES
+				( 
+					#USER_ID#, #LOGIN_ID#, GETDATE()
+				)
+			]]>
+		</insert>
+		<update id="UpdateLogout" parameterClass="DataMap">
+			<![CDATA[
+				UPDATE	jwa.LoginLog
+				SET		LOGOUT_TIME	= GETDATE()
+				WHERE	USER_ID		= #USER_ID#
+				AND		MAC_ADDR	= #MAC_ADDR#
+				AND		LOGOUT_TIME IS NULL
+			]]>			
+		</update>
+		<select id="GetMainMenus" parameterClass="DataMap" resultClass="DataMap">
+			<![CDATA[
+				WITH MENULIST (MENU_ID, MENU_LEVEL, HIER_ID)
+				AS 
+				(
+					SELECT	AA.ID		AS MENU_ID
+						,	1			AS MENU_LEVEL
+						,	CAST(CONVERT(VARCHAR, ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ, AA.ID)) AS VARCHAR(MAX))	AS HIER_ID
+					FROM	jwa.Menus AA WITH (NOLOCK)
+					WHERE	AA.USE_YN	 = 'Y'
+			]]>
+			<isNotEmpty property="MENU_GROUP">
+				<![CDATA[
+					AND		AA.PARENT_ID	= (	SELECT	CONVERT(INT, VALUE) 
+												FROM	jwa.Codes WITH (NOLOCK)
+												WHERE	CODE = #MENU_GROUP#
+												AND		PARENT_CODE = 'MENU_GROUP')
+				]]>
+			</isNotEmpty>
+			<![CDATA[
+					UNION ALL
+					SELECT	AA.ID				AS MENU_ID
+						,	BB.MENU_LEVEL + 1	AS MENU_LEVEL
+						,	CAST(BB.HIER_ID+ '-' + 
+								 CONVERT(VARCHAR, ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ, AA.ID)) AS VARCHAR(MAX))	AS HIER_ID
+					FROM	jwa.Menus AA WITH (NOLOCK)
+							INNER JOIN 
+								MENULIST BB ON AA.PARENT_ID = BB.MENU_ID
+					WHERE	AA.USE_YN = 'Y'
+				)
+				SELECT	AA.ID
+					,	AA.PARENT_ID
+					,	AA.NAME
+					,	BB.MENU_LEVEL
+					,	BB.HIER_ID
+					,	AA.ASSEMBLY
+					,	AA.NAMESPACE
+					,	AA.INSTANCE
+					,	AA.FORM_TYPE
+					,	'N'		AS BOOKMARK_YN
+					,	ISNULL((	SELECT	COUNT(*)
+									FROM	jwa.Menus BB
+									WHERE	BB.PARENT_ID = AA.ID), 0)	AS CHILD_COUNT
+					,	ISNULL(UM.VIEW_YN,'N')	AS VIEW_YN
+					,	ISNULL(UM.EDIT_YN,'N')	AS EDIT_YN
+				FROM	jwa.Menus AA WITH (NOLOCK)
+						INNER JOIN 
+							MENULIST BB ON AA.ID = BB.MENU_ID
+						LEFT JOIN
+							jwa.UserMenus UM ON AA.ID = UM.MENU_ID AND UM.USER_ID = #USER_ID#
+				WHERE	1=1
+				ORDER BY BB.HIER_ID
+			]]>
+		</select>
+		<select id="GetSettings" parameterClass="DataMap" resultClass="DataMap">
+			<![CDATA[
+				SELECT	AA.CODE			AS CODE
+					,	AA.VALUE		AS VALUE
+				FROM	jwa.Codes AA WITH (NOLOCK)
+				WHERE	AA.PARENT_CODE	= 'SYSTEM'
+				AND		AA.USE_YN = 'Y'
+				ORDER BY AA.CODE
+			]]>
+		</select>
+		<select id="GetDictionaries" parameterClass="DataMap" resultClass="DataMap">
+			<![CDATA[
+				SELECT	AA.VALUE	AS NAME
+					,	AA.NAME		AS VALUE
+				FROM	jwa.Dictionaries AA WITH (NOLOCK)
+				WHERE	AA.VALUE IS NOT NULL
+				ORDER BY AA.VALUE
+			]]>
+		</select>
+		<select id="GetMessages" parameterClass="DataMap" resultClass="DataMap">
+			<![CDATA[
+				SELECT	AA.DEFINITION	AS NAME
+					,	AA.NAME			AS VALUE
+				FROM	jwa.Messages AA WITH (NOLOCK)
+				WHERE	AA.DEFINITION IS NOT NULL
+				ORDER BY AA.DEFINITION
+			]]>
+		</select>
+	</statements>
+</sqlMap>

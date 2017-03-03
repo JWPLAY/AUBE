@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+	namespace="JW.AUBE.Data.SqlMaps"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<statements>
+		<select id="SelectCustomerAddress" parameterClass="DataMap">
+			<![CDATA[
+				SELECT  AA.ID
+					,	AA.CUSTOMER_ID
+					,	AA.ADDRESS_TYPE
+					,	AA.REMARKS
+					,	AA.ADDRESS_ID
+					,	AD.POST_NO
+					,	AD.ZONE_NO
+					,	AD.ADDRESS1
+					,	AD.ADDRESS2
+					
+					,	AA.INS_TIME
+					,	AA.INS_USER
+					,	U1.NAME			AS INS_USER_NAME
+					,	AA.UPD_TIME
+					,	AA.UPD_USER
+					,	U2.NAME			AS UPD_USER_NAME
+					
+				FROM	jwm.CustomerAddress AA WITH (NOLOCK)
+						LEFT JOIN
+							jwm.Address AD
+								ON AA.ADDRESS_ID = AD.ID
+						LEFT JOIN 
+							jwa.Users U1 WITH (NOLOCK)
+								ON AA.INS_USER = U1.ID
+						LEFT JOIN
+							jwa.Users U2 WITH (NOLOCK)
+								ON AA.UPD_USER = U2.ID
+				WHERE	1=1
+			]]>
+			<isNotEmpty property="CUSTOMER_ID">
+			<![CDATA[
+				AND		AA.CUSTOMER_ID = #CUSTOMER_ID#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty property="ID">
+				<![CDATA[
+				AND		AA.ID = #ID#
+			]]>
+			</isNotEmpty>
+			<![CDATA[
+				ORDER BY AA.ID DESC
+			]]>
+		</select>
+		<insert id="InsertCustomerAddress" parameterClass="DataMap" >
+			<![CDATA[
+				INSERT INTO jwm.CustomerAddress
+				( 
+					CUSTOMER_ID, ADDRESS_ID, ADDRESS_TYPE, REMARKS, INS_TIME, INS_USER 
+				)
+				VALUES
+				( 
+					#CUSTOMER_ID#, #ADDRESS_ID#, #ADDRESS_TYPE#, #REMARKS#, GETDATE(), #INS_USER# 
+				)
+			]]>
+			<selectKey type="post" property="ID" resultClass="Int">
+				<![CDATA[
+					SELECT @@IDENTITY AS ID
+				]]>
+			</selectKey>
+		</insert>
+		<update id="UpdateCustomerAddress" parameterClass="DataMap">
+			<![CDATA[
+				UPDATE  jwm.CustomerAddress
+				SET     ADDRESS_ID	= #ADDRESS_ID#
+					,	ADDRESS_TYPE= #ADDRESS_TYPE#
+					,	REMARKS		= #REMARKS#
+					,	UPD_TIME	= GETDATE()
+					,	UPD_USER	= #INS_USER#
+				WHERE	ID			= #ID#
+			]]>
+		</update>
+		<delete id="DeleteCustomerAddress" parameterClass="DataMap">
+			<![CDATA[
+				DELETE
+				FROM	jwm.CustomerAddress
+				WHERE	ID = #ID#
+			]]>
+		</delete>
+	</statements>
+</sqlMap>

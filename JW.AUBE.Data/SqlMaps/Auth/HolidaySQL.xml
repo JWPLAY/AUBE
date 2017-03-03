@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+	namespace="JW.AUBE.Data.SqlMaps"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<statements>
+		<select id="SelectHoliday" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT	AA.HOLIDAY_DATE
+					,	AA.HOLIDAY_NAME
+					,	AA.DESCRIPTION
+					,	AA.INS_TIME
+					,	AA.INS_USER
+					,	U1.NAME			AS INS_USER_NAME
+					,	AA.UPD_TIME
+					,	AA.UPD_USER
+					,	U2.NAME			AS UPD_USER_NAME
+				FROM	jwa.Holiday AA WITH (NOLOCK)
+						LEFT JOIN
+							jwa.Users U1 WITH (NOLOCK) 
+								ON AA.INS_USER = U1.ID
+						LEFT JOIN
+							jwa.Users U2 WITH (NOLOCK) 
+								ON AA.UPD_USER = U2.ID
+				WHERE	1=1
+			]]>
+			<isNotEmpty property="FIND_TEXT">
+				<![CDATA[
+					AND	(
+							AA.DESCRIPTION	LIKE '%' + #FIND_TEXT# + '%'	OR
+							AA.HOLIDAY_NAME	LIKE '%' + #FIND_TEXT# + '%'
+						)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty property="HOLIDAY_DATE">
+				<![CDATA[
+					AND	AA.HOLIDAY_DATE = #HOLIDAY_DATE#
+				]]>
+			</isNotEmpty>
+			<![CDATA[
+				ORDER BY AA.HOLIDAY_DATE ASC
+			]]>
+		</select>
+		<insert id="InsertHoliday" parameterClass="DataMap" >
+			<![CDATA[
+				INSERT INTO jwa.Holiday
+				( 
+					HOLIDAY_DATE, HOLIDAY_NAME, DESCRIPTION, INS_TIME, INS_USER
+				)
+				VALUES
+				(
+					#HOLIDAY_DATE#
+				,	#HOLIDAY_NAME#
+				,	#DESCRIPTION#
+				,	GETDATE()
+				,	#INS_USER#
+				)
+			]]>
+		</insert>
+		<update id="UpdateHoliday" parameterClass="DataMap">
+			<![CDATA[
+				UPDATE	jwa.HOLIDAY
+				SET		HOLIDAY_NAME	= #HOLIDAY_NAME#
+					,	DESCRIPTION		= #DESCRIPTION#
+					,	UPD_TIME		= GETDATE()
+					,	UPD_USER		= #INS_USER#
+				WHERE	HOLIDAY_DATE	= #HOLIDAY_DATE#;
+				
+				UPDATE	jwa.Calendar
+				SET		DESCRIPTION		= #HOLIDAY_NAME#
+					,	UPD_TIME		= GETDATE()
+					,	UPD_USER		= #INS_USER#
+				WHERE	CAL_DATE		= #HOLIDAY_DATE#;
+			]]>
+		</update>
+		<delete id="DeleteHoliday" parameterClass="DataMap">
+			<![CDATA[
+				DELETE
+				FROM	jwa.Holiday
+				WHERE	HOLIDAY_DATE = #HOLIDAY_DATE#;
+				
+				UPDATE	jwa.Calendar
+				SET		HOLIDAY_YN	= 'N'
+					,	DESCRIPTION	= NULL
+					,	UPD_TIME	= GETDATE()
+					,	UPD_USER	= #INS_USER#
+				WHERE	CAL_DATE	= #HOLIDAY_DATE#;
+			]]>
+		</delete>
+	</statements>
+</sqlMap>

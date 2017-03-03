@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+	namespace="JW.AUBE.Data.SqlMaps"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<statements>
+		<select id="SelectMenus" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				WITH MENULIST (MENU_ID, HIER_ID, MENU_LEVEL, SEQ_NO)
+				AS
+				(
+					SELECT	AA.ID
+						,	CAST(RIGHT('0000' + CONVERT(VARCHAR, ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ)), 4) AS VARCHAR(MAX))	AS HIER_ID
+						,	1											AS MENU_LEVEL
+						,	CAST(ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ) AS VARCHAR(MAX))	AS SEQ_NO
+					FROM	jwa.Menus AA WITH (NOLOCK)
+					WHERE	1=1
+			]]>
+			<isNotEmpty property="PARENT_ID">
+				<![CDATA[
+					And	AA.PARENT_ID = #PARENT_ID#
+				]]>
+			</isNotEmpty>
+			<isNotEmpty property="ID">
+				<![CDATA[
+					And	AA.ID = #ID#
+				]]>
+			</isNotEmpty>
+			<isEmpty property="ID">
+				<isEmpty property="PARENT_ID">
+					<![CDATA[
+						And	AA.PARENT_ID IS NULL
+					]]>
+				</isEmpty>
+			</isEmpty>
+			<![CDATA[
+					UNION ALL
+					SELECT	AA.ID
+						,	CAST(BB.HIER_ID + 
+								 RIGHT('0000' + CONVERT(VARCHAR, ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ)), 4) AS VARCHAR(MAX))	AS HIER_ID
+						,	BB.MENU_LEVEL + 1							AS MENU_LEVEL
+						,	CAST(BB.SEQ_NO + '.' + 
+								 CONVERT(VARCHAR, ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ)) AS VARCHAR(MAX))	AS SEQ_NO
+					FROM	jwa.Menus AA WITH (NOLOCK)
+							INNER JOIN 
+								MENULIST BB ON AA.PARENT_ID = BB.MENU_ID
+				)
+				SELECT  ROW_NUMBER() OVER (ORDER BY BB.HIER_ID)	AS ROW_NO
+					,	BB.HIER_ID
+					,	REPLICATE(' ', (BB.MENU_LEVEL -1) * 5) + BB.SEQ_NO + '. ' + AA.NAME	AS HIER_NAME
+					,	AA.ID
+					,	AA.NAME
+					,	AA.PARENT_ID
+					,	CC.NAME			AS PARENT_NAME
+					,	AA.SORT_SEQ
+					,	AA.ASSEMBLY
+					,	AA.NAMESPACE
+					,	AA.INSTANCE
+					,	AA.FORM_TYPE
+					,	AA.USE_YN
+					,	AA.REMARKS
+					,	AA.INS_TIME
+					,	AA.INS_USER
+					,	U1.NAME			AS INS_USER_NAME
+					,	AA.UPD_TIME
+					,	AA.UPD_USER
+					,	U2.NAME			AS UPD_USER_NAME
+				FROM	jwa.Menus AA WITH (NOLOCK)
+						INNER JOIN 
+							MENULIST BB ON AA.ID = BB.MENU_ID
+						LEFT JOIN
+							jwa.Menus CC ON AA.PARENT_ID = CC.ID
+						LEFT JOIN 
+							jwa.Users U1 WITH (NOLOCK) 
+								ON AA.INS_USER = U1.ID
+						LEFT JOIN 
+							jwa.Users U2 WITH (NOLOCK) 
+								ON AA.UPD_USER = U2.ID
+				Where	1=1				
+			]]>
+			<isNotEmpty property="FIND_TEXT">
+				<![CDATA[
+					And	AA.NAME LIKE '%' + #FIND_TEXT# + '%'
+				]]>
+			</isNotEmpty>
+			<isNotEmpty property="ID">
+				<![CDATA[
+					And	AA.ID = #ID#
+				]]>
+			</isNotEmpty>
+			<![CDATA[
+				ORDER BY BB.HIER_ID
+			]]>
+		</select>
+		<insert id="InsertMenus" parameterClass="DataMap" >
+			<![CDATA[
+				INSERT INTO jwa.Menus
+				( 
+					NAME, PARENT_ID, SORT_SEQ, ASSEMBLY, NAMESPACE, INSTANCE, FORM_TYPE, REMARKS, USE_YN, INS_TIME, INS_USER
+				)
+				VALUES
+				(
+					#NAME#, #PARENT_ID#, #SORT_SEQ#, #ASSEMBLY#, #NAMESPACE#, #INSTANCE#, #FORM_TYPE#, #REMARKS#, #USE_YN#, GETDATE(), #INS_USER#
+				)
+			]]>
+			<selectKey type="post" property="ID" resultClass="Int">
+				<![CDATA[
+					Select @@IDENTITY AS ID
+				]]>
+			</selectKey>
+		</insert>
+		<update id="UpdateMenus" parameterClass="DataMap">
+			<![CDATA[
+				UPDATE  jwa.Menus
+				SET     NAME		= #NAME#
+					,	PARENT_ID	= #PARENT_ID#
+					,	SORT_SEQ	= #SORT_SEQ#
+					,	ASSEMBLY	= #ASSEMBLY#
+					,	NAMESPACE	= #NAMESPACE#
+					,	INSTANCE	= #INSTANCE#
+					,	FORM_TYPE	= #FORM_TYPE#
+					,	REMARKS		= #REMARKS#
+					,	USE_YN		= #USE_YN#
+					,	UPD_TIME	= GETDATE()
+					,	UPD_USER	= #INS_USER#
+				WHERE	ID			= #ID#
+			]]>
+		</update>
+		<delete id="DeleteMenus" parameterClass="DataMap">
+			<![CDATA[
+				DELETE 
+				FROM	jwa.Menus 
+				WHERE	ID = #ID#
+			]]>
+		</delete>
+	</statements>
+</sqlMap>

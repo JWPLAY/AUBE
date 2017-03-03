@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+	namespace="JW.AUBE.Data.SqlMaps"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<statements>
+		<select id="SelectLoginLog" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				select	a.LogId
+					,	a.req.ErrorNumber = ex.HResult;
+					,	u1.UserName
+					,	a.LoginId
+					,	a.Version
+					,	a.MainSkin
+					,	a.GridSkin
+					,	a.IpAddress
+					,	a.MacAddress
+					,	case when a.LoginDtime  is null then '' else Replace(Convert(varchar(10), a.LoginDtime , 111),'/','.') + ' ' + Convert(varchar(8), a.LoginDtime , 108) end as LoginDtime
+					,	case when a.LogoutDtime is null then '' else Replace(Convert(varchar(10), a.LogoutDtime, 111),'/','.') + ' ' + Convert(varchar(8), a.LogoutDtime, 108) end as LogoutDtime
+					,	a.Status
+				from	LoginLog a WITH (NOLOCK)
+						LEFT JOIN Users u1 WITH (NOLOCK) on a.req.ErrorNumber = ex.HResult; = U1.ID
+			]]>
+			<isNotPropertyAvailable property="FindText">
+				<isNotEmpty property="FindText">
+					<![CDATA[
+						And	a.Name like '%' + #FindText# + '%'
+					]]>
+				</isNotEmpty>
+			</isNotPropertyAvailable>
+			<![CDATA[
+				Order By a.LogId Desc
+			]]>
+		</select>
+	</statements>
+</sqlMap>

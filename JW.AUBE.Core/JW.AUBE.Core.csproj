@@ -1,0 +1,448 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{49399E51-B194-43F5-BD11-6E406152779B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JW.AUBE.Core</RootNamespace>
+    <AssemblyName>JW.AUBE.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Data.v16.1, Version=16.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Office.v16.1.Core, Version=16.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Printing.v16.1.Core, Version=16.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.RichEdit.v16.1.Core, Version=16.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v16.1, Version=16.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraBars.v16.1, Version=16.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraCharts.v16.1, Version=16.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraCharts.v16.1.Extensions, Version=16.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraCharts.v16.1.UI, Version=16.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v16.1, Version=16.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraGrid.v16.1, Version=16.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraLayout.v16.1, Version=16.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraNavBar.v16.1, Version=16.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPrinting.v16.1, Version=16.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v16.1, Version=16.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraRichEdit.v16.1, Version=16.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraRichEdit.v16.1.Extensions, Version=16.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraScheduler.v16.1, Version=16.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraSpreadsheet.v16.1, Version=16.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraTreeList.v16.1, Version=16.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes\CustomGridDataAttribute.cs" />
+    <Compile Include="Enumerations\CalendarViewType.cs" />
+    <Compile Include="Controls\Common\IControlExtension.cs" />
+    <Compile Include="Controls\Common\XLookup.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Common\XLookup.Designer.cs">
+      <DependentUpon>XLookup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Common\XPeriod.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Common\XPeriod.Designer.cs">
+      <DependentUpon>XPeriod.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Common\XRichEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Common\XRichEditor.Designer.cs">
+      <DependentUpon>XRichEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Common\XSearch.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Common\XSearch.Designer.cs">
+      <DependentUpon>XSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Common\XTree.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Common\XTree.Designer.cs">
+      <DependentUpon>XTree.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Grid\Class\XGridColumn.cs" />
+    <Compile Include="Controls\Grid\Class\XGridMenuItem.cs" />
+    <Compile Include="Controls\Grid\Enums\GridViewType.cs" />
+    <Compile Include="Controls\Grid\Utils\GridRowCollection.cs" />
+    <Compile Include="Controls\Grid\Utils\KoreanEditorsLocalizer.cs" />
+    <Compile Include="Controls\Grid\Utils\KoreanGridLocalizer.cs" />
+    <Compile Include="Controls\Grid\XGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Grid\XGrid.designer.cs">
+      <DependentUpon>XGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Grid\XGrid.Extention.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Grid\XGrid.Methods.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Grid\XGrid.Paging.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Grid\XGrid.RepositoryItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Pager\XPager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Pager\XPager.Designer.cs">
+      <DependentUpon>XPager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Pager\XPagerButtonClickEventArgs.cs" />
+    <Compile Include="Controls\Pager\XPagerButtonType.cs" />
+    <Compile Include="Enumerations\EditModeEnum.cs" />
+    <Compile Include="Enumerations\FormTypeEnum.cs" />
+    <Compile Include="Forms\Auth\CodesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Auth\CodesForm.Designer.cs">
+      <DependentUpon>CodesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Auth\DictionariesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Auth\DictionariesForm.Designer.cs">
+      <DependentUpon>DictionariesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Auth\MenusForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Auth\MenusForm.Designer.cs">
+      <DependentUpon>MenusForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Auth\UserMenusForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Auth\UserMenusForm.Designer.cs">
+      <DependentUpon>UserMenusForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Auth\HolidayForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Auth\HolidayForm.Designer.cs">
+      <DependentUpon>HolidayForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Auth\UsersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Auth\UsersForm.Designer.cs">
+      <DependentUpon>UsersForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Code\ProductsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Code\ProductsForm.Designer.cs">
+      <DependentUpon>ProductsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Code\CustomersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Code\CustomersForm.Designer.cs">
+      <DependentUpon>CustomersForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\IMainForm.cs" />
+    <Compile Include="Messages\ErrorMessageBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Messages\ErrorMessageBox.designer.cs">
+      <DependentUpon>ErrorMessageBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Messages\MsgBox.cs" />
+    <Compile Include="Models\ElapseTime.cs" />
+    <Compile Include="Models\FormData.cs" />
+    <Compile Include="Models\IFormData.cs" />
+    <Compile Include="Models\IToolbarButtons.cs" />
+    <Compile Include="Models\ToolbarButtons.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\ButtonResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ButtonResource.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\DomainResource.cs" />
+    <Compile Include="Resources\IconResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IconResource.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\ImageResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ImageResource.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Splash\WaitFormEx.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Splash\WaitFormEx.Designer.cs">
+      <DependentUpon>WaitFormEx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\CodeHelpUtils.cs" />
+    <Compile Include="Utils\CommonRequest.cs" />
+    <Compile Include="Utils\ControlUtils.cs" />
+    <Compile Include="Utils\DomainUtils.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\FormUtils.cs" />
+    <Compile Include="Utils\LayoutUtils.cs" />
+    <Compile Include="Utils\NavBarUtils.cs" />
+    <Compile Include="Utils\ResourceUtils.cs" />
+    <Compile Include="Utils\ServerRequest.cs" />
+    <Compile Include="Utils\SkinUtils.cs" />
+    <Compile Include="Utils\SplashUtils.cs" />
+    <Compile Include="Variables\Setting.cs" />
+    <Compile Include="Base\Forms\BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Base\Forms\BaseForm.designer.cs">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Base\Forms\CodeHelpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Base\Forms\CodeHelpForm.designer.cs">
+      <DependentUpon>CodeHelpForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Base\Forms\EditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Base\Forms\EditForm.designer.cs">
+      <DependentUpon>EditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Base\Forms\EditFormProperties.cs" />
+    <Compile Include="Base\Forms\HelpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Base\Forms\HelpForm.designer.cs">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Base\Interface\IBaseForm.cs" />
+    <Compile Include="Base\Interface\IEditForm.cs" />
+    <Compile Include="Was\Controllers\WasController.cs" />
+    <Compile Include="Was\Helper\WasHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Configurations\" />
+    <Folder Include="Forms\Inventory\" />
+    <Folder Include="Forms\Production\" />
+    <Folder Include="Forms\Profit\" />
+    <Folder Include="Forms\Purchase\" />
+    <Folder Include="Forms\Sales\" />
+    <Folder Include="Helper\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\Common\XPeriod.resx">
+      <DependentUpon>XPeriod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Common\XRichEditor.resx">
+      <DependentUpon>XRichEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Common\XSearch.resx">
+      <DependentUpon>XSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Grid\XGrid.resx">
+      <DependentUpon>XGrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Pager\XPager.resx">
+      <DependentUpon>XPager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Base\Forms\BaseForm.resx">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Auth\CodesForm.resx">
+      <DependentUpon>CodesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Auth\DictionariesForm.resx">
+      <DependentUpon>DictionariesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Auth\MenusForm.resx">
+      <DependentUpon>MenusForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Auth\UserMenusForm.resx">
+      <DependentUpon>UserMenusForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Auth\HolidayForm.resx">
+      <DependentUpon>HolidayForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Auth\UsersForm.resx">
+      <DependentUpon>UsersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Code\ProductsForm.resx">
+      <DependentUpon>ProductsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Code\CustomersForm.resx">
+      <DependentUpon>CustomersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Messages\ErrorMessageBox.resx">
+      <DependentUpon>ErrorMessageBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ButtonResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ButtonResource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\IconResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>IconResource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ImageResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ImageResource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Splash\WaitFormEx.resx">
+      <DependentUpon>WaitFormEx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Base\Forms\CodeHelpForm.resx">
+      <DependentUpon>CodeHelpForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Base\Forms\EditForm.resx">
+      <DependentUpon>EditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Base\Forms\HelpForm.resx">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Icons\icon.ico" />
+    <Content Include="Icons\bestseller.ico" />
+    <Content Include="Icons\busy.ico" />
+    <Content Include="Icons\calendar.ico" />
+    <Content Include="Icons\comment.ico" />
+    <Content Include="Icons\cost.ico" />
+    <Content Include="Icons\featured.ico" />
+    <Content Include="Icons\link.ico" />
+    <Content Include="Icons\logout.ico" />
+    <Content Include="Icons\plus.ico" />
+    <Content Include="Icons\print.ico" />
+    <Content Include="Icons\project.ico" />
+    <Content Include="Icons\publish.ico" />
+    <Content Include="Icons\special-offer.ico" />
+    <Content Include="Icons\suppliers.ico" />
+    <Content Include="Icons\ticket.ico" />
+    <Content Include="Images\background\back_gray.png" />
+    <Content Include="Images\background\back_orange.png" />
+    <Content Include="Images\background\back_red.png" />
+    <Content Include="Images\background\back_white.png" />
+    <Content Include="Images\buttons\BlockNext_16x16.png" />
+    <Content Include="Images\buttons\BlockPrev_16x16.png" />
+    <Content Include="Images\buttons\disable.png" />
+    <Content Include="Images\buttons\First_16x16.png" />
+    <Content Include="Images\buttons\hot.png" />
+    <Content Include="Images\buttons\hot2.png" />
+    <Content Include="Images\buttons\Last_16x16.png" />
+    <Content Include="Images\Logo.png" />
+    <Content Include="Images\menus\menu_analysis_16x16.png" />
+    <Content Include="Images\menus\menu_analysis_32x32.png" />
+    <Content Include="Images\menus\menu_business_16x16.png" />
+    <Content Include="Images\menus\menu_business_32x32.png" />
+    <Content Include="Images\menus\menu_close_16x16.png" />
+    <Content Include="Images\menus\menu_hot_16x16.png" />
+    <Content Include="Images\menus\menu_item_16x16.png" />
+    <Content Include="Images\menus\menu_not_16x16.png" />
+    <Content Include="Images\menus\menu_open_16x16.png" />
+    <Content Include="Images\menus\menu_system_16x16.png" />
+    <Content Include="Images\menus\menu_system_32x32.png" />
+    <Content Include="Images\buttons\Next_16x16.png" />
+    <Content Include="Images\buttons\normal.png" />
+    <Content Include="Images\buttons\Prev_16x16.png" />
+    <Content Include="Images\menus\tree_item_hot2_16x16.png" />
+    <Content Include="Images\menus\tree_item_hot3_16x16.png" />
+    <Content Include="Images\menus\tree_item_normal2_16x16.png" />
+    <Content Include="Images\menus\tree_item_normal3_16x16.png" />
+    <Content Include="Images\menus\tree_item_not2_16x16.png" />
+    <Content Include="Images\menus\tree_item_not3_16x16.png" />
+    <Content Include="Images\charts\Area_16x16.png" />
+    <Content Include="Images\charts\Bar_16x16.png" />
+    <Content Include="Images\charts\Bubble_16x16.png" />
+    <Content Include="Images\charts\FullStackedArea_16x16.png" />
+    <Content Include="Images\charts\FullStackedBar_16x16.png" />
+    <Content Include="Images\charts\FullStackedLine_16x16.png" />
+    <Content Include="Images\charts\Line_16x16.png" />
+    <Content Include="Images\charts\PieStyleDonut_16x16.png" />
+    <Content Include="Images\charts\Pie_16x16.png" />
+    <Content Include="Images\charts\RangeArea_16x16.png" />
+    <Content Include="Images\charts\RangeBar_16x16.png" />
+    <Content Include="Images\charts\SideBySideRangeBar_16x16.png" />
+    <Content Include="Images\charts\SplineArea_16x16.png" />
+    <Content Include="Images\charts\Spline_16x16.png" />
+    <Content Include="Images\charts\StackedArea_16x16.png" />
+    <Content Include="Images\charts\StackedBar_16x16.png" />
+    <Content Include="Images\charts\StackedLine_16x16.png" />
+    <Content Include="Images\charts\StackedSplineArea_16x16.png" />
+    <Content Include="Images\charts\StepArea_16x16.png" />
+    <Content Include="Images\charts\Stepline_16x16.png" />
+    <Content Include="Images\Home_16x16.png" />
+    <Content Include="Images\Home_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\JW.AUBE.Base\JW.AUBE.Base.csproj">
+      <Project>{C18DA53B-5D3C-4AB0-A5F2-5EE399AF54CC}</Project>
+      <Name>JW.AUBE.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JW.AUBE.Data\JW.AUBE.Data.csproj">
+      <Project>{ad8c33bf-9946-4a01-992c-72ab2d123487}</Project>
+      <Name>JW.AUBE.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

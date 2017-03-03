@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap 
+	namespace="JW.AUBE.Data.SqlMaps" 
+	xmlns="http://ibatis.apache.org/mapping" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<statements>
+		<select id="SelectCodes" parameterClass="DataMap" resultClass="DataMap">
+			<![CDATA[
+				WITH CODELIST AS
+				(
+					SELECT	AA.ID
+						,	AA.CODE
+						,	CAST(RIGHT('0000' + CONVERT(VARCHAR, ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ, AA.CODE)), 4) AS VARCHAR(MAX))	AS HIER_ID
+						,	1	AS LEVEL
+					FROM	jwa.Codes AA
+					WHERE	AA.PARENT_CODE IS NULL
+			]]>
+			<isNotEmpty property="FIND_TEXT">
+			<![CDATA[
+					AND	(	
+							AA.CODE	LIKE '%'+#FIND_TEXT#+'%'	OR
+							AA.NAME	LIKE '%'+#FIND_TEXT#+'%'	OR
+							AA.PARENT_CODE LIKE '%'+#FIND_TEXT#+'%'
+						)
+			]]>
+			</isNotEmpty>
+			<![CDATA[
+					UNION ALL
+					SELECT	AA.ID
+						,	AA.CODE
+						,	CAST(BB.HIER_ID + 
+								 RIGHT('0000' + CONVERT(VARCHAR, ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ, AA.CODE)), 4) AS VARCHAR(MAX))	AS HIER_ID
+						,	BB.LEVEL + 1	AS LEVEL
+					FROM	jwa.Codes AA
+							INNER JOIN
+								CODELIST BB ON  AA.PARENT_CODE = BB.CODE
+					WHERE	AA.PARENT_CODE IS NOT NULL
+			]]>
+			<isNotEmpty property="FIND_TEXT">
+			<![CDATA[
+					AND	(	
+							AA.CODE	LIKE '%'+#FIND_TEXT#+'%'	OR
+							AA.NAME	LIKE '%'+#FIND_TEXT#+'%'
+						)
+			]]>
+			</isNotEmpty>
+			<![CDATA[
+				)
+				SELECT	ROW_NUMBER() OVER (ORDER BY BB.HIER_ID)	AS ROW_NO
+					,	BB.HIER_ID											AS HIER_ID
+					,	REPLICATE(' ', (BB.LEVEL -1) * 5) + '▶' + AA.NAME	AS HIER_NAME
+					,	AA.ID
+					,	AA.CODE
+					,	AA.NAME
+					,	AA.VALUE
+					,	AA.PARENT_CODE
+					,	AA.SORT_SEQ
+					,	AA.DESCRIPTION
+					,	AA.USE_YN
+					,	AA.OPTION_VALUE1
+					,	AA.OPTION_VALUE2
+					,	AA.OPTION_VALUE3
+					,	AA.OPTION_VALUE4
+					,	AA.OPTION_VALUE5
+					,	AA.INS_TIME
+					,	AA.INS_USER
+					,	U1.NAME		AS INS_USER_NAME
+					,	AA.UPD_TIME
+					,	AA.UPD_USER
+					,	U2.NAME		AS UPD_USER_NAME
+				FROM	jwa.Codes AA WITH (NOLOCK)
+						INNER JOIN
+							CODELIST BB
+								ON AA.ID = BB.ID
+						LEFT JOIN 
+							jwa.Users U1 WITH (NOLOCK) 
+								ON AA.INS_USER = U1.ID
+						LEFT JOIN 
+							jwa.Users U2 WITH (NOLOCK) 
+								ON AA.UPD_USER = U2.ID
+				ORDER BY ROW_NO
+			]]>
+		</select>
+		<select id="SelectCode" parameterClass="DataMap" resultClass="DataMap">
+			<![CDATA[
+				SELECT	AA.ID
+					,	AA.CODE
+					,	AA.NAME
+					,	AA.VALUE
+					,	AA.PARENT_CODE
+					,	AA.SORT_SEQ
+					,	AA.DESCRIPTION
+					,	AA.USE_YN
+					,	AA.OPTION_VALUE1
+					,	AA.OPTION_VALUE2
+					,	AA.OPTION_VALUE3
+					,	AA.OPTION_VALUE4
+					,	AA.OPTION_VALUE5
+					,	AA.INS_TIME
+					,	AA.INS_USER
+					,	U1.NAME		AS INS_USER_NAME
+					,	AA.UPD_TIME
+					,	AA.UPD_USER
+					,	U2.NAME		AS UPD_USER_NAME
+				FROM	jwa.Codes AA WITH (NOLOCK)
+						LEFT JOIN 
+							jwa.Users U1 WITH (NOLOCK) 
+								ON AA.INS_USER = U1.ID
+						LEFT JOIN 
+							jwa.Users U2 WITH (NOLOCK) 
+								ON AA.UPD_USER = U2.ID
+				WHERE	AA.ID = #ID#
+			]]>
+		</select>
+		<insert id="InsertCodes" parameterClass="DataMap" resultClass="Int">
+			<![CDATA[
+				INSERT INTO jwa.Codes
+				(
+					CODE, NAME, VALUE, PARENT_CODE, SORT_SEQ, DESCRIPTION, USE_YN, 
+					OPTION_VALUE1, OPTION_VALUE2, OPTION_VALUE3, OPTION_VALUE4, OPTION_VALUE5, 
+					INS_TIME, INS_USER
+				)
+				VALUES
+				(
+					#CODE#, #NAME#, #VALUE#, #PARENT_CODE#, #SORT_SEQ#, #DESCRIPTION#, #USE_YN#, 
+					#OPTION_VALUE1#, #OPTION_VALUE2#, #OPTION_VALUE3#, #OPTION_VALUE4#, #OPTION_VALUE5#, 
+					GETDATE(), #INS_USER#
+				)
+			]]>
+			<selectKey property="ID" type="post" resultClass="Int">
+				<![CDATA[
+					SELECT @@IDENTITY AS ID
+				]]>
+			</selectKey>
+		</insert>
+		<update id="UpdateCodes" parameterClass="DataMap">
+			<![CDATA[
+				UPDATE	jwa.Codes
+				SET		CODE			= #CODE#
+					,	NAME			= #NAME#
+					,	VALUE			= #VALUE#
+					,	PARENT_CODE		= #PARENT_CODE#
+					,	SORT_SEQ		= #SORT_SEQ#
+					,	DESCRIPTION		= #DESCRIPTION#
+					,	USE_YN			= #USE_YN#
+					,	OPTION_VALUE1	= #OPTION_VALUE1#
+					,	OPTION_VALUE2	= #OPTION_VALUE2#
+					,	OPTION_VALUE3	= #OPTION_VALUE3#
+					,	OPTION_VALUE4	= #OPTION_VALUE4#
+					,	OPTION_VALUE5	= #OPTION_VALUE5#
+					,	UPD_TIME		= GETDATE()
+					,	UPD_USER		= #INS_USER#
+				WHERE	ID				= #ID#
+			]]>
+		</update>
+		<delete id="DeleteCodes" parameterClass="DataMap">
+			<![CDATA[
+				DELETE
+				FROM	jwa.Codes
+				WHERE	ID = #ID#
+			]]>
+		</delete>
+	</statements>
+</sqlMap>

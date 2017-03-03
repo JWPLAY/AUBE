@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+	namespace="JW.AUBE.Data.SqlMaps"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<statements>
+		<select id="SelectAddress" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT  AA.ID
+					,	AA.POST_NO
+					,	AA.ZONE_NO
+					,	AA.ADDRESS1
+					,	AA.ADDRESS2
+					,	AA.INS_TIME
+					,	AA.INS_USER
+					,	U1.NAME			AS INS_USER_NAME
+					,	AA.UPD_TIME
+					,	AA.UPD_USER
+					,	U2.NAME			AS UPD_USER_NAME					
+				FROM	jwm.Address AA WITH (NOLOCK)
+						LEFT JOIN
+							jwa.Users U1 
+								ON AA.INS_USER = U1.ID
+						LEFT JOIN
+							jwa.Users U2
+								ON AA.UPD_USER = U2.ID
+				WHERE	1=1				
+			]]>
+			<isNotEmpty property="FIND_TEXT">
+				<![CDATA[
+					AND	(	
+							AA.POST_NO	LIKE #FIND_TEXT# + '%'	OR
+							AA.ZONE_NO	LIKE #FIND_TEXT# + '%'	OR
+							AA.ADDRESS1	LIKE '%' + #FIND_TEXT# + '%'	OR
+							AA.ADDRESS2	LIKE '%' + #FIND_TEXT# + '%'
+						)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty property="ID">
+				<![CDATA[
+					AND	AA.ID = #ID#
+				]]>
+			</isNotEmpty>
+			<![CDATA[
+				ORDER BY AA.ID
+			]]>
+		</select>
+		<insert id="InsertAddress" parameterClass="DataMap" >
+			<![CDATA[
+				INSERT INTO jwm.Address
+				( 
+					POST_NO, ZONE_NO, ADDRESS1, ADDRESS2, INS_TIME, INS_USER
+				)
+				VALUES
+				( 
+					#POST_NO#, #ZONE_NO#, #ADDRESS1#, #ADDRESS2#, GETDATE(), #INS_USER#
+				)
+			]]>
+			<selectKey type="post" property="ID" resultClass="Int">
+				<![CDATA[
+					SELECT @@IDENTITY AS ID
+				]]>
+			</selectKey>
+		</insert>
+		<update id="UpdateAddress" parameterClass="DataMap">
+			<![CDATA[
+				UPDATE	jwm.Address
+				SET     POST_NO		= #POST_NO#
+					,	ZONE_NO		= #ZONE_NO#
+					,	ADDRESS1	= #ADDRESS1#
+					,	ADDRESS2	= #ADDRESS2#
+					,	UPD_TIME	= GETDATE()
+					,	UPD_USER	= #INS_USER#
+				WHERE	ID			= #ID#
+			]]>
+		</update>
+		<delete id="DeleteAddress" parameterClass="DataMap">
+			<![CDATA[
+				DELETE
+				FROM	jwm.Address
+				WHERE	ID = #ID#
+			]]>
+		</delete>
+	</statements>
+</sqlMap>

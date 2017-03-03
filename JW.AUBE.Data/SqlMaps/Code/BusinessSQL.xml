@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+	namespace="JW.AUBE.Data.SqlMaps"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<statements>
+		<select id="SelectBusiness" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT  AA.ID
+					,	AA.REG_NO
+					,	AA.CORP_NO
+					,	AA.NAME
+					,	AA.REP_NAME
+					,	AA.BIZ_TYPE
+					,	AA.BIZ_ITEM
+					,	AA.REMARKS
+					,	AA.USE_YN
+					,	AA.INS_TIME
+					,	AA.INS_USER
+					,	U1.NAME			AS INS_USER_NAME
+					,	AA.UPD_TIME
+					,	AA.UPD_USER
+					,	U2.NAME			AS UPD_USER_NAME
+					
+					,	AA.ADDRESS_ID
+					,	AD.POST_NO
+					,	AD.ZONE_NO
+					,	AD.ADDRESS1
+					,	AD.ADDRESS2
+					
+				FROM	jwm.Business AA WITH (NOLOCK)
+						LEFT JOIN
+							jwm.Address AD WITH (NOLOCK)
+								ON AA.ADDRESS_ID = AD.ID
+						LEFT JOIN
+							jwa.Users U1 
+								ON AA.INS_USER = U1.ID
+						LEFT JOIN
+							jwa.Users U2
+								ON AA.UPD_USER = U2.ID
+				WHERE	1=1				
+			]]>
+			<isNotEmpty property="FIND_TEXT">
+				<![CDATA[
+					AND	AA.REG_NO LIKE '%' + #FIND_TEXT# + '%'
+				]]>
+			</isNotEmpty>
+			<isNotEmpty property="ID">
+				<![CDATA[
+					AND	AA.ID = #ID#
+				]]>
+			</isNotEmpty>
+			<![CDATA[
+				ORDER BY AA.NAME
+			]]>
+		</select>
+		<select id="SelectBusinessByRegNo" parameterClass="DataMap" resultClass="Int">
+			<![CDATA[
+				SELECT	ID
+				FROM	jwm.Business WITH (NOLOCK)
+				WHERE	REG_NO	= #REG_NO#
+			]]>
+		</select>
+		<insert id="InsertBusiness" parameterClass="DataMap" >
+			<![CDATA[
+				INSERT INTO jwm.Business
+				( 
+					REG_NO, CORP_NO, NAME, REP_NAME, BIZ_TYPE, BIZ_ITEM, REMARKS, USE_YN, INS_TIME, INS_USER
+				)
+				VALUES
+				( 
+					#REG_NO#, #CORP_NO#, #NAME#, #REP_NAME#, #BIZ_TYPE#, #BIZ_ITEM#, #REMARKS#, #USE_YN#, GETDATE(), #INS_USER#
+				)
+			]]>
+			<selectKey type="post" property="ID" resultClass="Int">
+				<![CDATA[
+					SELECT @@IDENTITY AS ID
+				]]>
+			</selectKey>
+		</insert>
+		<update id="UpdateBusiness" parameterClass="DataMap">
+			<![CDATA[
+				UPDATE	jwm.Business
+				SET     NAME		= #NAME#
+					,	REG_NO		= #REG_NO#
+					,	CORP_NO		= #CORP_NO#
+					,	REP_NAME	= #REP_NAME#
+					,	BIZ_TYPE	= #BIZ_TYPE#
+					,	BIZ_ITEM	= #BIZ_ITEM#
+					,	REMARKS		= #REMARKS#
+					,	USE_YN		= #USE_YN#
+					,	ADDRESS_ID	= #ADDRESS_ID#
+					,	UPD_TIME	= GETDATE()
+					,	UPD_USER	= #INS_USER#
+				WHERE	ID			= #ID#
+			]]>
+		</update>
+		<delete id="DeleteBusiness" parameterClass="DataMap">
+			<![CDATA[
+				DELETE
+				FROM	jwm.Business
+				WHERE	ID = #ID#
+			]]>
+		</delete>
+	</statements>
+</sqlMap>

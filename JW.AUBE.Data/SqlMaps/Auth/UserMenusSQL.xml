@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+	namespace="JW.AUBE.Data.SqlMaps"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<statements>
+		<select id="SelectUserMenus" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				WITH MENULIST (MENU_ID, HIER_ID, MENU_LEVEL, SEQ_NO)
+				AS
+				(
+					SELECT	AA.ID
+						,	CAST(RIGHT('0000' + 
+								 CONVERT(VARCHAR, ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ)), 4) AS VARCHAR(MAX))	AS HIER_ID
+						,	1																						AS MENU_LEVEL
+						,	CAST(ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ) AS VARCHAR(MAX))							AS SEQ_NO
+					FROM	jwa.Menus AA WITH (NOLOCK)
+					WHERE	AA.PARENT_ID IS NULL
+					AND		(
+								CONVERT(VARCHAR, #USER_ID#) = ISNULL((	SELECT	VALUE
+																		FROM	jwa.Codes
+																		WHERE	PARENT_CODE = 'SYSTEM'
+																		AND		CODE		= 'ADMIN'),'')
+								OR
+								AA.ID IN (	SELECT	MENU_ID
+											FROM	jwa.UserMenus
+											WHERE	USER_ID = #USER_ID# )
+							)
+					UNION ALL
+					SELECT	AA.ID
+						,	CAST(BB.HIER_ID + 
+								 RIGHT('0000' + 
+										CONVERT(VARCHAR, ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ)), 4) AS VARCHAR(MAX))	AS HIER_ID
+						,	BB.MENU_LEVEL + 1																			AS MENU_LEVEL
+						,	CAST(BB.SEQ_NO + '.' + 
+								 CONVERT(VARCHAR, ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ)) AS VARCHAR(MAX))			AS SEQ_NO
+					FROM	jwa.Menus AA WITH (NOLOCK)
+							INNER JOIN 
+								MENULIST BB ON AA.PARENT_ID = BB.MENU_ID
+					WHERE	(
+								CONVERT(VARCHAR, #USER_ID#) = ISNULL((	SELECT	VALUE
+																		FROM	jwa.Codes
+																		WHERE	PARENT_CODE = 'SYSTEM'
+																		AND		CODE		= 'ADMIN'),'')
+								OR
+								AA.ID IN (	SELECT	MENU_ID
+											FROM	jwa.UserMenus
+											WHERE	USER_ID = #USER_ID# )
+							)
+				)
+				SELECT  ROW_NUMBER() OVER (ORDER BY BB.HIER_ID)	AS ROW_NO
+					,	BB.HIER_ID
+					,	REPLICATE(' ', (BB.MENU_LEVEL -1) * 5) + BB.SEQ_NO + '. ' + AA.NAME	AS HIER_NAME
+					,	AA.ID
+					,	ISNULL(UM.VIEW_YN,'N')	AS VIEW_YN
+					,	ISNULL(UM.EDIT_YN,'N')	AS EDIT_YN
+					,	UM.INS_TIME
+					,	UM.INS_USER
+					,	U1.NAME			AS INS_USER_NAME
+					,	UM.UPD_TIME
+					,	UM.UPD_USER
+					,	U2.NAME			AS UPD_USER_NAME
+				FROM	jwa.Menus AA WITH (NOLOCK)
+						INNER JOIN 
+							MENULIST BB ON AA.ID = BB.MENU_ID
+						LEFT JOIN
+							jwa.Menus CC ON AA.PARENT_ID = CC.ID
+						LEFT JOIN
+							jwa.UserMenus UM 
+								ON AA.ID = UM.MENU_ID
+									AND UM.USER_ID = #USER_ID#
+						LEFT JOIN 
+							jwa.Users U1 WITH (NOLOCK) 
+								ON UM.INS_USER = U1.ID
+						LEFT JOIN 
+							jwa.Users U2 WITH (NOLOCK) 
+								ON UM.UPD_USER = U2.ID
+				ORDER BY BB.HIER_ID
+			]]>
+		</select>
+		<insert id="UpsertUserMenus" parameterClass="DataMap" >
+			<![CDATA[
+				IF EXISTS (	SELECT	1
+							FROM	jwa.UserMenus
+							WHERE	USER_ID	= #USER_ID#
+							AND		MENU_ID = #MENU_ID# )
+				BEGIN
+					UPDATE  jwa.UserMenus
+					SET     VIEW_YN		= #VIEW_YN#
+						,	EDIT_YN		= #EDIT_YN#
+						,	UPD_TIME	= GETDATE()
+						,	UPD_USER	= #INS_USER#
+					WHERE	USER_ID		= #USER_ID#
+					AND		MENU_ID		= #MENU_ID#
+				END
+				ELSE
+				BEGIN
+					INSERT INTO jwa.UserMenus
+					( 
+						USER_ID, MENU_ID, VIEW_YN, EDIT_YN, INS_TIME, INS_USER
+					)
+					VALUES
+					(
+						#USER_ID#, #MENU_ID#, #VIEW_YN#, #EDIT_YN#, GETDATE(), #INS_USER#
+					)
+				END
+			]]>
+		</insert>
+	</statements>
+</sqlMap>

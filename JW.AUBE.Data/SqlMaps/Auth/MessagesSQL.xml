@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+	namespace="JW.AUBE.Data.SqlMaps"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<statements>
+		<select id="SelectMessages" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT  AA.ID
+					,	AA.NAME
+					,	AA.SYNONYM
+					,	AA.FULL_NAME
+					,	AA.ABBR_NAME
+					,	AA.UPPR_NAME
+					,	AA.DESCRIPTION
+					,	AA.INS_TIME
+					,	AA.INS_USER
+					,	U1.NAME		AS INS_USER_NAME
+					,	AA.UPD_TIME
+					,	AA.UPD_USER
+					,	U2.NAME		AS UPD_USER_NAME
+				FROM	jwa.Messages AA WITH (NOLOCK)
+						LEFT JOIN 
+							jwa.Users U1 WITH (NOLOCK) ON AA.INS_USER = U1.ID
+						LEFT JOIN 
+							jwa.Users U2 WITH (NOLOCK) ON AA.UPD_USER = U2.ID
+				WHERE	1=1				
+			]]>
+			<isNotEmpty property="FIND_TEXT">
+				<![CDATA[
+					AND	AA.NAME like '%' + #FindText# + '%'
+				]]>
+			</isNotEmpty>
+			<isNotEmpty property="ID">
+				<![CDATA[
+					AND	AA.ID = #ID#
+				]]>
+			</isNotEmpty>
+			<![CDATA[
+				ORDER BY AA.NAME ASC
+			]]>
+		</select>
+		<insert id="InsertMessages" parameterClass="DataMap" >
+			<![CDATA[
+				INSERT INTO jwa.Messages
+				( 
+					NAME, SYNONYM, FULL_NAME, ABBR_NAME, UPPR_NAME, DESCRIPTION, INS_TIME, INS_USER
+				)
+				VALUES
+				( 
+					#NAME#, #SYNONYM#, #FULL_NAME#, #ABBR_NAME#, #UPPR_NAME#, #DESCRIPTION#, GETDATE(), #INS_USER#
+				)
+			]]>							
+			<selectKey type="post" property="ID" resultClass="Int">
+				<![CDATA[
+					SELECT @@IDENTITY AS ID
+				]]>
+			</selectKey>
+		</insert>
+		<update id="UpdateMessages" parameterClass="DataMap">
+			<![CDATA[
+				UPDATE	jwa.Messages
+				SET     NAME		= #NAME#
+					,	SYNONYM		= #SYNONYM#
+					,	FULL_NAME	= #FULL_NAME#
+					,	ABBR_NAME	= #ABBR_NAME#
+					,	UPPR_NAME	= #UPPR_NAME#
+					,	DESCRIPTION	= #DESCRIPTION#
+					,	UPD_TIME	= GETDATE()
+					,	UPD_USER	= #INS_USER#
+				WHERE	ID			= #ID#
+			]]>
+		</update>
+		<delete id="DeleteMessages" parameterClass="DataMap">
+			<![CDATA[
+				DELETE 
+				FROM	jwa.Messages 
+				WHERE	ID = #ID#
+			]]>
+		</delete>
+	</statements>
+</sqlMap>

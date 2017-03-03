@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+	namespace="JW.AUBE.Data.SqlMaps"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<statements>
+		<select id="GetCodeHelpLookup" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT	AA.CODE
+					,	AA.NAME
+					,	AA.NAME		AS LIST_NAME
+				FROM	jwa.Codes AA WITH (NOLOCK)
+				WHERE	AA.USE_YN	= 'Y'
+				AND		AA.PARENT_CODE	= #PARENT_CODE#
+				ORDER BY AA.SORT_SEQ, AA.NAME ASC
+			]]>
+		</select>
+
+		<select id="GetCodeHelpLookupByCodeGroup" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT	AA.CODE
+					,	AA.NAME
+					,	AA.NAME		AS LIST_NAME
+				FROM	jwa.Codes AA WITH (NOLOCK)
+				WHERE	AA.USE_YN	= 'Y'
+				AND		AA.PARENT_CODE IS NULL
+				ORDER BY AA.SORT_SEQ, AA.NAME ASC
+			]]>
+		</select>
+		
+		<select id="GetCodeHelpLookupBySysMenu" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				WITH MenusCTE (id, name, path, pid, hier_id, level)
+				AS
+				(
+					SELECT	AA.MenuId								as id
+						,	AA.MenuName								as name
+						,	convert(varchar(1000), AA.MenuName)		as path
+						,	AA.ParentMenuId							as pid
+						,	convert(varchar(1000), right('000000' + convert(varchar, AA.SortSeq), 6))		as hier_Id
+						,	1										as level
+					FROM	Menus aa
+					WHERE	AA.ParentMenuId IS NULL
+					AND		AA.UseYn = 'Y'
+					UNION ALL
+					SELECT	AA.MenuId																	as id
+						,	AA.MenuName																	as name
+						,	convert(varchar(1000), bb.name + ' ▶ ' + AA.MenuName)						as path
+						,	AA.ParentMenuId																as pid
+						,	convert(varchar(1000), bb.hier_id + '-' + right('000000'+convert(varchar, AA.SortSeq), 6))	as hier_id
+						,	bb.level + 1																as level
+					FROM	Menus aa
+							INNER JOIN MenusCTE bb on AA.ParentMenuId = bb.id
+					WHERE	AA.UseYn = 'Y'
+				)
+				SELECT	AA.id												as CODE
+					,	AA.path												as NAME
+					,	replicate(' ', (AA.level -1) * 5) + '▶' + AA.name	as LIST_NAME
+				FROM	MenusCTE aa
+				ORDER BY AA.hier_id ASC
+			]]>
+		</select>
+		
+		<select id="GetCodeHelpLookupBySysCode" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT	AA.CODE			AS CODE
+					,	AA.NAME			AS NAME
+					,	AA.NAME			AS LIST_NAME
+				FROM	jwa.Code AA WITH (NOLOCK)
+				WHERE	AA.PARENT_CODE IS NULL
+				ORDER BY AA.SORT_SEQ, AA.NAME ASC
+			]]>
+		</select>
+		
+		<select id="GetCodeHelpLookupByCustomer" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT	CONVERT(VARCHAR, AA.ID)	AS CODE
+					,	AA.NAME					AS NAME
+					,	AA.NAME					AS LIST_NAME
+				FROM	jwm.Customers AA WITH (NOLOCK)
+				WHERE	1=1
+			]]>
+			<isNotEmpty property="USE_YN">
+				<isEqual compareProperty="USE_YN" compareValue="Y">
+					<![CDATA[
+						AND	AA.USE_YN = 'Y'
+					]]>
+				</isEqual>
+			</isNotEmpty>
+			<![CDATA[
+				ORDER BY AA.NAME ASC
+			]]>
+		</select>
+	</statements>
+</sqlMap>

@@ -22,15 +22,15 @@
 					,	AA.REMARKS
 					,	AA.INS_TIME
 					,	AA.INS_USER
-					,	U1.NAME			AS INS_USER_NAME
+					,	U1.USER_NAME			AS INS_USER_NAME
 					,	AA.UPD_TIME
 					,	AA.UPD_USER
-					,	U2.NAME			AS UPD_USER_NAME
-				FROM	jwa.Calendar AA WITH (NOLOCK)
+					,	U2.USER_NAME			AS UPD_USER_NAME
+				FROM	UAA.CALENDAR AA WITH (NOLOCK)
 						LEFT JOIN 
-							jwa.Users U1 WITH (NOLOCK) ON AA.INS_USER = U1.ID
+							UAA.USERS U1 WITH (NOLOCK) ON AA.INS_USER = U1.USER_ID
 						LEFT JOIN 
-							jwa.Users U2 WITH (NOLOCK) ON AA.UPD_USER = U2.ID
+							UAA.USERS U2 WITH (NOLOCK) ON AA.UPD_USER = U2.USER_ID
 				WHERE	1=1
 			]]>
 			<isNotEmpty property="FIND_TEXT">
@@ -57,7 +57,7 @@
 		</select>
 		<update id="UpdateCalendar" parameterClass="DataMap">
 			<![CDATA[
-				UPDATE	jwa.Calendar
+				UPDATE	UAA.CALENDAR
 				SET     HOLIDAY_YN	= #HOLIDAY_YN#
 					,	HOLIDAY_NAME= #HOLIDAY_NAME#
 					,	REMARKS		= #REMARKS#

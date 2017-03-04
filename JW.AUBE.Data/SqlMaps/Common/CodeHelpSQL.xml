@@ -10,7 +10,7 @@
 				SELECT	AA.CODE
 					,	AA.NAME
 					,	AA.NAME		AS LIST_NAME
-				FROM	jwa.Codes AA WITH (NOLOCK)
+				FROM	UAA.CODES AA WITH (NOLOCK)
 				WHERE	AA.USE_YN	= 'Y'
 				AND		AA.PARENT_CODE	= #PARENT_CODE#
 				ORDER BY AA.SORT_SEQ, AA.NAME ASC
@@ -22,7 +22,7 @@
 				SELECT	AA.CODE
 					,	AA.NAME
 					,	AA.NAME		AS LIST_NAME
-				FROM	jwa.Codes AA WITH (NOLOCK)
+				FROM	UAA.CODES AA WITH (NOLOCK)
 				WHERE	AA.USE_YN	= 'Y'
 				AND		AA.PARENT_CODE IS NULL
 				ORDER BY AA.SORT_SEQ, AA.NAME ASC
@@ -67,7 +67,7 @@
 				SELECT	AA.CODE			AS CODE
 					,	AA.NAME			AS NAME
 					,	AA.NAME			AS LIST_NAME
-				FROM	jwa.Code AA WITH (NOLOCK)
+				FROM	UAA.CODES AA WITH (NOLOCK)
 				WHERE	AA.PARENT_CODE IS NULL
 				ORDER BY AA.SORT_SEQ, AA.NAME ASC
 			]]>
@@ -76,9 +76,9 @@
 		<select id="GetCodeHelpLookupByCustomer" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
 				SELECT	CONVERT(VARCHAR, AA.ID)	AS CODE
-					,	AA.NAME					AS NAME
-					,	AA.NAME					AS LIST_NAME
-				FROM	jwm.Customers AA WITH (NOLOCK)
+					,	AA.CUSTOMER_NAME		AS NAME
+					,	AA.CUSTOMER_NAME		AS LIST_NAME
+				FROM	UCD.CUSTOMERS AA WITH (NOLOCK)
 				WHERE	1=1
 			]]>
 			<isNotEmpty property="USE_YN">
@@ -89,7 +89,7 @@
 				</isEqual>
 			</isNotEmpty>
 			<![CDATA[
-				ORDER BY AA.NAME ASC
+				ORDER BY AA.CUSTOMER_NAME ASC
 			]]>
 		</select>
 	</statements>

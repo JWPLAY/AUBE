@@ -7,24 +7,24 @@
 	<statements>
 		<select id="SelectAddress" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
-				SELECT  AA.ID
+				SELECT  AA.ADDRESS_ID
 					,	AA.POST_NO
 					,	AA.ZONE_NO
 					,	AA.ADDRESS1
 					,	AA.ADDRESS2
 					,	AA.INS_TIME
 					,	AA.INS_USER
-					,	U1.NAME			AS INS_USER_NAME
+					,	U1.USER_NAME			AS INS_USER_NAME
 					,	AA.UPD_TIME
 					,	AA.UPD_USER
-					,	U2.NAME			AS UPD_USER_NAME					
-				FROM	jwm.Address AA WITH (NOLOCK)
+					,	U2.USER_NAME			AS UPD_USER_NAME					
+				FROM	UCD.ADDRESS AA WITH (NOLOCK)
 						LEFT JOIN
-							jwa.Users U1 
-								ON AA.INS_USER = U1.ID
+							UAA.USERS U1 
+								ON AA.INS_USER = U1.USER_ID
 						LEFT JOIN
-							jwa.Users U2
-								ON AA.UPD_USER = U2.ID
+							UAA.USERS U2
+								ON AA.UPD_USER = U2.USER_ID
 				WHERE	1=1				
 			]]>
 			<isNotEmpty property="FIND_TEXT">
@@ -37,18 +37,18 @@
 						)
 				]]>
 			</isNotEmpty>
-			<isNotEmpty property="ID">
+			<isNotEmpty property="ADDRESS_ID">
 				<![CDATA[
-					AND	AA.ID = #ID#
+					AND	AA.ADDRESS_ID = #ADDRESS_ID#
 				]]>
 			</isNotEmpty>
 			<![CDATA[
-				ORDER BY AA.ID
+				ORDER BY AA.ADDRESS_ID
 			]]>
 		</select>
 		<insert id="InsertAddress" parameterClass="DataMap" >
 			<![CDATA[
-				INSERT INTO jwm.Address
+				INSERT INTO UCD.ADDRESS
 				( 
 					POST_NO, ZONE_NO, ADDRESS1, ADDRESS2, INS_TIME, INS_USER
 				)
@@ -57,29 +57,29 @@
 					#POST_NO#, #ZONE_NO#, #ADDRESS1#, #ADDRESS2#, GETDATE(), #INS_USER#
 				)
 			]]>
-			<selectKey type="post" property="ID" resultClass="Int">
+			<selectKey type="post" property="ADDRESS_ID" resultClass="Int">
 				<![CDATA[
-					SELECT @@IDENTITY AS ID
+					SELECT @@IDENTITY AS ADDRESS_ID
 				]]>
 			</selectKey>
 		</insert>
 		<update id="UpdateAddress" parameterClass="DataMap">
 			<![CDATA[
-				UPDATE	jwm.Address
+				UPDATE	UCD.ADDRESS
 				SET     POST_NO		= #POST_NO#
 					,	ZONE_NO		= #ZONE_NO#
 					,	ADDRESS1	= #ADDRESS1#
 					,	ADDRESS2	= #ADDRESS2#
 					,	UPD_TIME	= GETDATE()
 					,	UPD_USER	= #INS_USER#
-				WHERE	ID			= #ID#
+				WHERE	ADDRESS_ID	= #ADDRESS_ID#
 			]]>
 		</update>
 		<delete id="DeleteAddress" parameterClass="DataMap">
 			<![CDATA[
 				DELETE
-				FROM	jwm.Address
-				WHERE	ID = #ID#
+				FROM	UCD.ADDRESS
+				WHERE	ADDRESS_ID = #ADDRESS_ID#
 			]]>
 		</delete>
 	</statements>

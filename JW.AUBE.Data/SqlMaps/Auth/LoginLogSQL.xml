@@ -20,7 +20,7 @@
 					,	case when a.LogoutDtime is null then '' else Replace(Convert(varchar(10), a.LogoutDtime, 111),'/','.') + ' ' + Convert(varchar(8), a.LogoutDtime, 108) end as LogoutDtime
 					,	a.Status
 				from	LoginLog a WITH (NOLOCK)
-						LEFT JOIN Users u1 WITH (NOLOCK) on a.req.ErrorNumber = ex.HResult; = U1.ID
+						LEFT JOIN Users u1 WITH (NOLOCK) on a.req.ErrorNumber = ex.HResult; = U1.USER_ID
 			]]>
 			<isNotPropertyAvailable property="FindText">
 				<isNotEmpty property="FindText">

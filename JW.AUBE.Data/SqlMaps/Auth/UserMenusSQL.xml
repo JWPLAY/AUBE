@@ -10,83 +10,86 @@
 				WITH MENULIST (MENU_ID, HIER_ID, MENU_LEVEL, SEQ_NO)
 				AS
 				(
-					SELECT	AA.ID
+					SELECT	AA.MENU_ID
 						,	CAST(RIGHT('0000' + 
 								 CONVERT(VARCHAR, ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ)), 4) AS VARCHAR(MAX))	AS HIER_ID
 						,	1																						AS MENU_LEVEL
 						,	CAST(ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ) AS VARCHAR(MAX))							AS SEQ_NO
-					FROM	jwa.Menus AA WITH (NOLOCK)
+					FROM	UAA.MENUS AA WITH (NOLOCK)
 					WHERE	AA.PARENT_ID IS NULL
 					AND		(
 								CONVERT(VARCHAR, #USER_ID#) = ISNULL((	SELECT	VALUE
-																		FROM	jwa.Codes
+																		FROM	UAA.CODES
 																		WHERE	PARENT_CODE = 'SYSTEM'
 																		AND		CODE		= 'ADMIN'),'')
 								OR
-								AA.ID IN (	SELECT	MENU_ID
-											FROM	jwa.UserMenus
-											WHERE	USER_ID = #USER_ID# )
+								AA.MENU_ID IN (	SELECT	MENU_ID
+												FROM	UAA.USER_MENUS
+												WHERE	USER_ID = #USER_ID# )
 							)
 					UNION ALL
-					SELECT	AA.ID
+					SELECT	AA.MENU_ID
 						,	CAST(BB.HIER_ID + 
 								 RIGHT('0000' + 
 										CONVERT(VARCHAR, ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ)), 4) AS VARCHAR(MAX))	AS HIER_ID
 						,	BB.MENU_LEVEL + 1																			AS MENU_LEVEL
 						,	CAST(BB.SEQ_NO + '.' + 
 								 CONVERT(VARCHAR, ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ)) AS VARCHAR(MAX))			AS SEQ_NO
-					FROM	jwa.Menus AA WITH (NOLOCK)
+					FROM	UAA.MENUS AA WITH (NOLOCK)
 							INNER JOIN 
-								MENULIST BB ON AA.PARENT_ID = BB.MENU_ID
+								MENULIST BB 
+									ON AA.PARENT_ID = BB.MENU_ID
 					WHERE	(
 								CONVERT(VARCHAR, #USER_ID#) = ISNULL((	SELECT	VALUE
-																		FROM	jwa.Codes
+																		FROM	UAA.CODES
 																		WHERE	PARENT_CODE = 'SYSTEM'
 																		AND		CODE		= 'ADMIN'),'')
 								OR
-								AA.ID IN (	SELECT	MENU_ID
-											FROM	jwa.UserMenus
-											WHERE	USER_ID = #USER_ID# )
+								AA.MENU_ID IN (	SELECT	MENU_ID
+												FROM	UAA.USER_MENUS
+												WHERE	USER_ID = #USER_ID# )
 							)
 				)
 				SELECT  ROW_NUMBER() OVER (ORDER BY BB.HIER_ID)	AS ROW_NO
 					,	BB.HIER_ID
-					,	REPLICATE(' ', (BB.MENU_LEVEL -1) * 5) + BB.SEQ_NO + '. ' + AA.NAME	AS HIER_NAME
-					,	AA.ID
+					,	REPLICATE(' ', (BB.MENU_LEVEL -1) * 5) + BB.SEQ_NO + '. ' + AA.MENU_NAME	AS HIER_NAME
+					,	AA.MENU_ID
 					,	ISNULL(UM.VIEW_YN,'N')	AS VIEW_YN
 					,	ISNULL(UM.EDIT_YN,'N')	AS EDIT_YN
 					,	UM.INS_TIME
 					,	UM.INS_USER
-					,	U1.NAME			AS INS_USER_NAME
+					,	U1.USER_NAME					AS INS_USER_NAME
 					,	UM.UPD_TIME
 					,	UM.UPD_USER
-					,	U2.NAME			AS UPD_USER_NAME
-				FROM	jwa.Menus AA WITH (NOLOCK)
+					,	U2.USER_NAME					AS UPD_USER_NAME
+				FROM	UAA.MENUS AA WITH (NOLOCK)
 						INNER JOIN 
-							MENULIST BB ON AA.ID = BB.MENU_ID
+							MENULIST BB 
+								ON AA.MENU_ID = BB.MENU_ID
 						LEFT JOIN
-							jwa.Menus CC ON AA.PARENT_ID = CC.ID
+							UAA.MENUS CC 
+								ON AA.PARENT_ID = CC.MENU_ID
 						LEFT JOIN
-							jwa.UserMenus UM 
-								ON AA.ID = UM.MENU_ID
+							UAA.USER_MENUS UM 
+								ON AA.MENU_ID = UM.MENU_ID
 									AND UM.USER_ID = #USER_ID#
 						LEFT JOIN 
-							jwa.Users U1 WITH (NOLOCK) 
-								ON UM.INS_USER = U1.ID
+							UAA.USERS U1 WITH (NOLOCK) 
+								ON UM.INS_USER = U1.USER_ID
 						LEFT JOIN 
-							jwa.Users U2 WITH (NOLOCK) 
-								ON UM.UPD_USER = U2.ID
+							UAA.USERS U2 WITH (NOLOCK) 
+								ON UM.UPD_USER = U2.USER_ID
 				ORDER BY BB.HIER_ID
 			]]>
 		</select>
 		<insert id="UpsertUserMenus" parameterClass="DataMap" >
 			<![CDATA[
 				IF EXISTS (	SELECT	1
-							FROM	jwa.UserMenus
+							FROM	UAA.USER_MENUS
 							WHERE	USER_ID	= #USER_ID#
 							AND		MENU_ID = #MENU_ID# )
 				BEGIN
-					UPDATE  jwa.UserMenus
+					UPDATE  UAA.USER_MENUS
 					SET     VIEW_YN		= #VIEW_YN#
 						,	EDIT_YN		= #EDIT_YN#
 						,	UPD_TIME	= GETDATE()
@@ -96,7 +99,7 @@
 				END
 				ELSE
 				BEGIN
-					INSERT INTO jwa.UserMenus
+					INSERT INTO UAA.USER_MENUS
 					( 
 						USER_ID, MENU_ID, VIEW_YN, EDIT_YN, INS_TIME, INS_USER
 					)

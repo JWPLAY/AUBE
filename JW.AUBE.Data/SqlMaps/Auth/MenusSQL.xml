@@ -10,11 +10,11 @@
 				WITH MENULIST (MENU_ID, HIER_ID, MENU_LEVEL, SEQ_NO)
 				AS
 				(
-					SELECT	AA.ID
+					SELECT	AA.MENU_ID
 						,	CAST(RIGHT('0000' + CONVERT(VARCHAR, ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ)), 4) AS VARCHAR(MAX))	AS HIER_ID
-						,	1											AS MENU_LEVEL
+						,	1																AS MENU_LEVEL
 						,	CAST(ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ) AS VARCHAR(MAX))	AS SEQ_NO
-					FROM	jwa.Menus AA WITH (NOLOCK)
+					FROM	UAA.MENUS AA WITH (NOLOCK)
 					WHERE	1=1
 			]]>
 			<isNotEmpty property="PARENT_ID">
@@ -22,12 +22,12 @@
 					And	AA.PARENT_ID = #PARENT_ID#
 				]]>
 			</isNotEmpty>
-			<isNotEmpty property="ID">
+			<isNotEmpty property="MENU_ID">
 				<![CDATA[
-					And	AA.ID = #ID#
+					And	AA.ID = #MENU_ID#
 				]]>
 			</isNotEmpty>
-			<isEmpty property="ID">
+			<isEmpty property="MENU_ID">
 				<isEmpty property="PARENT_ID">
 					<![CDATA[
 						And	AA.PARENT_ID IS NULL
@@ -36,21 +36,22 @@
 			</isEmpty>
 			<![CDATA[
 					UNION ALL
-					SELECT	AA.ID
+					SELECT	AA.MENU_ID
 						,	CAST(BB.HIER_ID + 
 								 RIGHT('0000' + CONVERT(VARCHAR, ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ)), 4) AS VARCHAR(MAX))	AS HIER_ID
-						,	BB.MENU_LEVEL + 1							AS MENU_LEVEL
+						,	BB.MENU_LEVEL + 1																	AS MENU_LEVEL
 						,	CAST(BB.SEQ_NO + '.' + 
 								 CONVERT(VARCHAR, ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ)) AS VARCHAR(MAX))	AS SEQ_NO
-					FROM	jwa.Menus AA WITH (NOLOCK)
+					FROM	UAA.MENUS AA WITH (NOLOCK)
 							INNER JOIN 
-								MENULIST BB ON AA.PARENT_ID = BB.MENU_ID
+								MENULIST BB 
+									ON AA.PARENT_ID = BB.MENU_ID
 				)
 				SELECT  ROW_NUMBER() OVER (ORDER BY BB.HIER_ID)	AS ROW_NO
 					,	BB.HIER_ID
-					,	REPLICATE(' ', (BB.MENU_LEVEL -1) * 5) + BB.SEQ_NO + '. ' + AA.NAME	AS HIER_NAME
-					,	AA.ID
-					,	AA.NAME
+					,	REPLICATE(' ', (BB.MENU_LEVEL -1) * 5) + BB.SEQ_NO + '. ' + AA.MENU_NAME	AS HIER_NAME
+					,	AA.MENU_ID
+					,	AA.MENU_NAME
 					,	AA.PARENT_ID
 					,	CC.NAME			AS PARENT_NAME
 					,	AA.SORT_SEQ
@@ -62,21 +63,21 @@
 					,	AA.REMARKS
 					,	AA.INS_TIME
 					,	AA.INS_USER
-					,	U1.NAME			AS INS_USER_NAME
+					,	U1.USER_NAME			AS INS_USER_NAME
 					,	AA.UPD_TIME
 					,	AA.UPD_USER
-					,	U2.NAME			AS UPD_USER_NAME
-				FROM	jwa.Menus AA WITH (NOLOCK)
+					,	U2.USER_NAME			AS UPD_USER_NAME
+				FROM	UAA.MENUS AA WITH (NOLOCK)
 						INNER JOIN 
-							MENULIST BB ON AA.ID = BB.MENU_ID
+							MENULIST BB ON AA.MENU_ID = BB.MENU_ID
 						LEFT JOIN
-							jwa.Menus CC ON AA.PARENT_ID = CC.ID
+							UAA.MENUS CC ON AA.PARENT_ID = CC.MENU_ID
 						LEFT JOIN 
-							jwa.Users U1 WITH (NOLOCK) 
-								ON AA.INS_USER = U1.ID
+							UAA.USERS U1 WITH (NOLOCK) 
+								ON AA.INS_USER = U1.USER_ID
 						LEFT JOIN 
-							jwa.Users U2 WITH (NOLOCK) 
-								ON AA.UPD_USER = U2.ID
+							UAA.USERS U2 WITH (NOLOCK) 
+								ON AA.UPD_USER = U2.USER_ID
 				Where	1=1				
 			]]>
 			<isNotEmpty property="FIND_TEXT">
@@ -84,9 +85,9 @@
 					And	AA.NAME LIKE '%' + #FIND_TEXT# + '%'
 				]]>
 			</isNotEmpty>
-			<isNotEmpty property="ID">
+			<isNotEmpty property="MENU_ID">
 				<![CDATA[
-					And	AA.ID = #ID#
+					And	AA.MENU_ID = #MENU_ID#
 				]]>
 			</isNotEmpty>
 			<![CDATA[
@@ -95,25 +96,25 @@
 		</select>
 		<insert id="InsertMenus" parameterClass="DataMap" >
 			<![CDATA[
-				INSERT INTO jwa.Menus
+				INSERT INTO UAA.MENUS
 				( 
-					NAME, PARENT_ID, SORT_SEQ, ASSEMBLY, NAMESPACE, INSTANCE, FORM_TYPE, REMARKS, USE_YN, INS_TIME, INS_USER
+					MENU_NAME, PARENT_ID, SORT_SEQ, ASSEMBLY, NAMESPACE, INSTANCE, FORM_TYPE, REMARKS, USE_YN, INS_TIME, INS_USER
 				)
 				VALUES
 				(
-					#NAME#, #PARENT_ID#, #SORT_SEQ#, #ASSEMBLY#, #NAMESPACE#, #INSTANCE#, #FORM_TYPE#, #REMARKS#, #USE_YN#, GETDATE(), #INS_USER#
+					#MENU_NAME#, #PARENT_ID#, #SORT_SEQ#, #ASSEMBLY#, #NAMESPACE#, #INSTANCE#, #FORM_TYPE#, #REMARKS#, #USE_YN#, GETDATE(), #INS_USER#
 				)
 			]]>
-			<selectKey type="post" property="ID" resultClass="Int">
+			<selectKey type="post" property="MENU_ID" resultClass="Int">
 				<![CDATA[
-					Select @@IDENTITY AS ID
+					Select @@IDENTITY AS MENU_ID
 				]]>
 			</selectKey>
 		</insert>
 		<update id="UpdateMenus" parameterClass="DataMap">
 			<![CDATA[
-				UPDATE  jwa.Menus
-				SET     NAME		= #NAME#
+				UPDATE  UAA.MENUS
+				SET     MENU_NAME	= #MENU_NAME#
 					,	PARENT_ID	= #PARENT_ID#
 					,	SORT_SEQ	= #SORT_SEQ#
 					,	ASSEMBLY	= #ASSEMBLY#
@@ -124,14 +125,14 @@
 					,	USE_YN		= #USE_YN#
 					,	UPD_TIME	= GETDATE()
 					,	UPD_USER	= #INS_USER#
-				WHERE	ID			= #ID#
+				WHERE	MENU_ID		= #MENU_ID#
 			]]>
 		</update>
 		<delete id="DeleteMenus" parameterClass="DataMap">
 			<![CDATA[
 				DELETE 
-				FROM	jwa.Menus 
-				WHERE	ID = #ID#
+				FROM	UAA.MENUS 
+				WHERE	MENU_ID = #MENU_ID#
 			]]>
 		</delete>
 	</statements>

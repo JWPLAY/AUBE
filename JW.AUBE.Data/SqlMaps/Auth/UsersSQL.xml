@@ -7,26 +7,27 @@
 	<statements>
 		<select id="SelectUsers" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
-				SELECT  ROW_NUMBER() OVER (ORDER BY AA.ID DESC)	AS ROW_NO
-					,	AA.ID
-					,	AA.NAME
+				SELECT  ROW_NUMBER() OVER (ORDER BY AA.USER_ID DESC)	AS ROW_NO
+					,	AA.USER_ID
+					,	AA.USER_NAME
+					,	AA.USER_TYPE
 					,	AA.LOGIN_ID
 					,	AA.LOGIN_PW
 					,	AA.USE_YN
 					,	AA.REMARKS
 					,	AA.INS_TIME
 					,	AA.INS_USER
-					,	U1.NAME			AS INS_USER_NAME
+					,	U1.USER_NAME			AS INS_USER_NAME
 					,	AA.UPD_TIME
 					,	AA.UPD_USER
-					,	U2.NAME			AS UPD_USER_NAME
-				FROM	jwa.Users AA WITH (NOLOCK)
+					,	U2.USER_NAME			AS UPD_USER_NAME
+				FROM	UAA.USERS AA WITH (NOLOCK)
 						LEFT JOIN 
-							jwa.Users U1 WITH (NOLOCK) 
-								ON AA.INS_USER = U1.ID
+							UAA.USERS U1 WITH (NOLOCK) 
+								ON AA.INS_USER = U1.USER_ID
 						LEFT JOIN 
-							jwa.Users U2 WITH (NOLOCK) 
-								ON AA.UPD_USER = U2.ID
+							UAA.USERS U2 WITH (NOLOCK) 
+								ON AA.UPD_USER = U2.USER_ID
 				WHERE	1=1
 			]]>
 			<isNotEmpty property="FIND_TEXT">
@@ -36,7 +37,7 @@
 			</isNotEmpty>
 			<isNotEmpty property="USER_ID">
 				<![CDATA[
-					AND	AA.ID = #ID#
+					AND	AA.USER_ID = #USER_ID#
 				]]>
 			</isNotEmpty>
 			<![CDATA[
@@ -45,13 +46,14 @@
 		</select>
 		<insert id="InsertUsers" parameterClass="DataMap" >
 			<![CDATA[
-				INSERT INTO jwa.Users
+				INSERT INTO UAA.USERS
 				( 
-					NAME, LOGIN_ID, LOGIN_PW, USE_YN, REMARKS, INS_TIME, INS_USER
+					USER_NAME, USER_TYPE, LOGIN_ID, LOGIN_PW, USE_YN, REMARKS, INS_TIME, INS_USER
 				)
 				VALUES
 				( 
-					#NAME#
+					#USER_NAME#
+				,	#USER_TYPE#
 				,	#LOGIN_ID#
 				,	#LOGIN_PW#
 				,	#USE_YN#
@@ -60,29 +62,30 @@
 				,	#INS_USER#
 				)
 			]]>
-			<selectKey type="post" property="ID" resultClass="Int">
+			<selectKey type="post" property="USER_ID" resultClass="Int">
 				<![CDATA[
-					SELECT @@IDENTITY AS ID
+					SELECT @@IDENTITY AS USER_ID
 				]]>
 			</selectKey>
 		</insert>
 		<update id="UpdateUsers" parameterClass="DataMap">
 			<![CDATA[
-				UPDATE  jwa.Users
-				SET     NAME		= #NAME#
+				UPDATE  UAA.USERS
+				SET     USER_NAME	= #USER_NAME#
+					,	USER_TYPE	= #USER_TYPE#
 					,	LOGIN_ID	= #LOGIN_ID#
 					,	USE_YN		= #USE_YN#
 					,	REMARKS		= #REMARKS#
 					,	UPD_TIME	= GETDATE()
 					,	UPD_USER	= #INS_USER#
-				WHERE	ID			= #ID#
+				WHERE	USER_ID		= #USER_ID#
 			]]>
 		</update>
 		<delete id="DeleteUsers" parameterClass="DataMap">
 			<![CDATA[
 				DELETE 
-				FROM	jwa.Users
-				WHERE	ID = #ID#
+				FROM	UAA.USERS
+				WHERE	USER_ID = #USER_ID#
 			]]>
 		</delete>
 	</statements>

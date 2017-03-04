@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+	namespace="JW.AUBE.Data.SqlMaps"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<statements>
+		<select id="SelectProducts" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT  ROW_NUMBER() OVER (ORDER BY AA.USE_YN DESC, AA.PRODUCT_TYPE, AA.PRODUCT_NAME)	AS ROW_NO
+					,	AA.PRODUCT_ID
+					,	AA.PRODUCT_CODE
+					,	AA.PRODUCT_NAME
+					,	M1.NAME			AS PRODUCT_TYPE
+					,	AA.USE_YN
+				FROM	UCD.PRODUCTS AA WITH (NOLOCK)
+						LEFT JOIN 
+							UAA.CODES M1 WITH (NOLOCK)
+								ON AA.PRODUCT_TYPE = M1.CODE 
+									AND M1.PARENT_CODE = 'PRODUCT_TYPE'
+				WHERE	1=1				
+			]]>
+			<isNotEmpty property="FIND_TEXT">
+			<![CDATA[
+				AND		(
+							AA.PRODUCT_NAME LIKE '%' + #FIND_TEXT# + '%'	OR
+							AA.PRODUCT_CODE LIKE '%' + #FIND_TEXT# + '%'	OR
+							AA.BARCODE		LIKE '%' + #FIND_TEXT# + '%'
+						)
+			]]>
+			</isNotEmpty>
+			<![CDATA[
+				ORDER BY ROW_NO
+			]]>
+		</select>
+		<select id="SelectProduct" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT  AA.PRODUCT_ID
+					,	AA.PRODUCT_CODE
+					,	AA.PRODUCT_NAME
+					,	AA.BARCODE
+					,	AA.PRODUCT_TYPE
+					,	AA.CATEGORY
+					,	AA.USE_YN
+					,	AA.REMARKS
+					
+					,	AA.INS_TIME
+					,	AA.INS_USER
+					,	U1.USER_NAME			AS INS_USER_NAME
+					,	AA.UPD_TIME
+					,	AA.UPD_USER
+					,	U2.USER_NAME			AS UPD_USER_NAME
+					
+				FROM	UCD.CUSTOMERS AA WITH (NOLOCK)
+						LEFT JOIN 
+							UAA.USERS U1 WITH (NOLOCK)
+								ON AA.INS_USER = U1.USER_ID
+						LEFT JOIN
+							UAA.USERS U2 WITH (NOLOCK)
+								ON AA.UPD_USER = U2.USER_ID
+				WHERE	AA.PRODUCT_ID = #PRODUCT_ID#
+				]]>
+		</select>
+		<insert id="InsertProduct" parameterClass="DataMap" >
+			<![CDATA[
+				INSERT INTO UCD.PRODUCTS
+				( 
+					PRODUCT_CODE, PRODUCT_NAME, BARCODE, PRODUCT_TYPE, CATEGORY, USE_YN, REMARKS, INS_TIME, INS_USER 
+				)
+				VALUES
+				( 
+					#PRODUCT_CODE#, #PRODUCT_NAME#, #BARCODE#, #PRODUCT_TYPE#, #CATEGORY#, #USE_YN#, #REMARKS#, GETDATE(), #INS_USER# 
+				)
+			]]>
+			<selectKey type="post" property="PRODUCT_ID" resultClass="Int">
+				<![CDATA[
+					SELECT @@IDENTITY AS PRODUCT_ID
+				]]>
+			</selectKey>
+		</insert>
+		<update id="UpdateProduct" parameterClass="DataMap">
+			<![CDATA[
+				UPDATE  UCD.PRODUCTS
+				SET     PRODUCT_CODE	= #PRODUCT_CODE#
+					,	PRODUCT_NAME	= #PRODUCT_NAME#
+					,	BARCODE			= #BARCODE#
+					,	PRODUCT_TYPE	= #PRODUCT_TYPE#
+					,	CATEGORY		= #CATEGORY#
+					,	USE_YN			= #USE_YN#
+					,	REMARKS			= #REMARKS#
+					,	UPD_TIME		= GETDATE()
+					,	UPD_USER		= #INS_USER#
+				WHERE	PRODUCT_ID		= #PRODUCT_ID#
+			]]>
+		</update>
+		<delete id="DeleteProduct" parameterClass="DataMap">
+			<![CDATA[
+				DELETE
+				FROM	UCD.PRODUCTS
+				WHERE	PRODUCT_ID = #PRODUCT_ID#
+			]]>
+		</delete>
+	</statements>
+</sqlMap>

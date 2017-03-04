@@ -95,7 +95,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SqlMaps\Auth\MessagesSQL.xml" />
     <EmbeddedResource Include="SqlMaps\Common\CodeHelpSQL.xml" />
     <EmbeddedResource Include="SqlMaps\Code\BusinessSQL.xml" />
     <EmbeddedResource Include="SqlMaps\Auth\CalendarSQL.xml" />
@@ -132,6 +131,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SqlMaps\Code\CustomerAddressSQL.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SqlMaps\Code\ProductsSQL.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

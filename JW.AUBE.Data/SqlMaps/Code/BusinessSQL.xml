@@ -7,10 +7,9 @@
 	<statements>
 		<select id="SelectBusiness" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
-				SELECT  AA.ID
-					,	AA.REG_NO
-					,	AA.CORP_NO
-					,	AA.NAME
+				SELECT  AA.BIZ_REG_ID
+					,	AA.BIZ_REG_NO
+					,	AA.BIZ_NAME
 					,	AA.REP_NAME
 					,	AA.BIZ_TYPE
 					,	AA.BIZ_ITEM
@@ -18,10 +17,10 @@
 					,	AA.USE_YN
 					,	AA.INS_TIME
 					,	AA.INS_USER
-					,	U1.NAME			AS INS_USER_NAME
+					,	U1.USER_NAME			AS INS_USER_NAME
 					,	AA.UPD_TIME
 					,	AA.UPD_USER
-					,	U2.NAME			AS UPD_USER_NAME
+					,	U2.USER_NAME			AS UPD_USER_NAME
 					
 					,	AA.ADDRESS_ID
 					,	AD.POST_NO
@@ -29,62 +28,64 @@
 					,	AD.ADDRESS1
 					,	AD.ADDRESS2
 					
-				FROM	jwm.Business AA WITH (NOLOCK)
+				FROM	UCD.BIZ_REG_CE AA WITH (NOLOCK)
 						LEFT JOIN
-							jwm.Address AD WITH (NOLOCK)
-								ON AA.ADDRESS_ID = AD.ID
+							UCD.ADDRESS AD WITH (NOLOCK)
+								ON AA.ADDRESS_ID = AD.ADDRESS_ID
 						LEFT JOIN
-							jwa.Users U1 
-								ON AA.INS_USER = U1.ID
+							UAA.USERS U1 
+								ON AA.INS_USER = U1.USER_ID
 						LEFT JOIN
-							jwa.Users U2
-								ON AA.UPD_USER = U2.ID
+							UAA.USERS U2
+								ON AA.UPD_USER = U2.USER_ID
 				WHERE	1=1				
 			]]>
 			<isNotEmpty property="FIND_TEXT">
 				<![CDATA[
-					AND	AA.REG_NO LIKE '%' + #FIND_TEXT# + '%'
+					AND	(
+							AA.BIZ_REG_NO	LIKE '%' + #FIND_TEXT# + '%'	OR
+							AA.BIZ_NAME		LIKE '%' + #FIND_TEXT# + '%'
+						)
 				]]>
 			</isNotEmpty>
-			<isNotEmpty property="ID">
+			<isNotEmpty property="BIZ_REG_ID">
 				<![CDATA[
-					AND	AA.ID = #ID#
+					AND	AA.BIZ_REG_ID = #BIZ_REG_ID#
 				]]>
 			</isNotEmpty>
 			<![CDATA[
-				ORDER BY AA.NAME
+				ORDER BY AA.BIZ_NAME
 			]]>
 		</select>
 		<select id="SelectBusinessByRegNo" parameterClass="DataMap" resultClass="Int">
 			<![CDATA[
-				SELECT	ID
-				FROM	jwm.Business WITH (NOLOCK)
-				WHERE	REG_NO	= #REG_NO#
+				SELECT	BIZ_REG_ID
+				FROM	UCD.BIZ_REG_CE WITH (NOLOCK)
+				WHERE	BIZ_REG_NO	= #BIZ_REG_NO#
 			]]>
 		</select>
 		<insert id="InsertBusiness" parameterClass="DataMap" >
 			<![CDATA[
-				INSERT INTO jwm.Business
+				INSERT INTO UCD.BIZ_REG_CE
 				( 
-					REG_NO, CORP_NO, NAME, REP_NAME, BIZ_TYPE, BIZ_ITEM, REMARKS, USE_YN, INS_TIME, INS_USER
+					BIZ_REG_NO, BIZ_NAME, REP_NAME, BIZ_TYPE, BIZ_ITEM, REMARKS, USE_YN, INS_TIME, INS_USER
 				)
 				VALUES
 				( 
-					#REG_NO#, #CORP_NO#, #NAME#, #REP_NAME#, #BIZ_TYPE#, #BIZ_ITEM#, #REMARKS#, #USE_YN#, GETDATE(), #INS_USER#
+					#BIZ_REG_NO#, #BIZ_NAME#, #REP_NAME#, #BIZ_TYPE#, #BIZ_ITEM#, #REMARKS#, #USE_YN#, GETDATE(), #INS_USER#
 				)
 			]]>
-			<selectKey type="post" property="ID" resultClass="Int">
+			<selectKey type="post" property="BIZ_REG_ID" resultClass="Int">
 				<![CDATA[
-					SELECT @@IDENTITY AS ID
+					SELECT @@IDENTITY AS BIZ_REG_ID
 				]]>
 			</selectKey>
 		</insert>
 		<update id="UpdateBusiness" parameterClass="DataMap">
 			<![CDATA[
-				UPDATE	jwm.Business
-				SET     NAME		= #NAME#
-					,	REG_NO		= #REG_NO#
-					,	CORP_NO		= #CORP_NO#
+				UPDATE	UCD.BIZ_REG_CE
+				SET     BIZ_NAME	= #BIZ_NAME#
+					,	BIZ_REG_NO	= #BIZ_REG_NO#
 					,	REP_NAME	= #REP_NAME#
 					,	BIZ_TYPE	= #BIZ_TYPE#
 					,	BIZ_ITEM	= #BIZ_ITEM#
@@ -93,14 +94,14 @@
 					,	ADDRESS_ID	= #ADDRESS_ID#
 					,	UPD_TIME	= GETDATE()
 					,	UPD_USER	= #INS_USER#
-				WHERE	ID			= #ID#
+				WHERE	BIZ_REG_ID	= #BIZ_REG_ID#
 			]]>
 		</update>
 		<delete id="DeleteBusiness" parameterClass="DataMap">
 			<![CDATA[
 				DELETE
-				FROM	jwm.Business
-				WHERE	ID = #ID#
+				FROM	UCD.BIZ_REG_CE
+				WHERE	BIZ_REG_ID = #BIZ_REG_ID#
 			]]>
 		</delete>
 	</statements>

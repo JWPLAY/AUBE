@@ -7,7 +7,7 @@
 	<statements>
 		<select id="SelectCustomerPhones" parameterClass="DataMap">
 			<![CDATA[
-				SELECT  AA.ID
+				SELECT  AA.REG_ID
 					,	AA.CUSTOMER_ID
 					,	AA.PHONE_NUMBER
 					,	AA.PHONE_TYPE
@@ -15,18 +15,18 @@
 					
 					,	AA.INS_TIME
 					,	AA.INS_USER
-					,	U1.NAME			AS INS_USER_NAME
+					,	U1.USER_NAME			AS INS_USER_NAME
 					,	AA.UPD_TIME
 					,	AA.UPD_USER
-					,	U2.NAME			AS UPD_USER_NAME
+					,	U2.USER_NAME			AS UPD_USER_NAME
 					
-				FROM	jwm.CustomerPhones AA WITH (NOLOCK)
+				FROM	UCD.CUSTOMER_PHONES AA WITH (NOLOCK)
 						LEFT JOIN 
-							jwa.Users U1 WITH (NOLOCK)
-								ON AA.INS_USER = U1.ID
+							UAA.USERS U1 WITH (NOLOCK)
+								ON AA.INS_USER = U1.USER_ID
 						LEFT JOIN
-							jwa.Users U2 WITH (NOLOCK)
-								ON AA.UPD_USER = U2.ID
+							UAA.USERS U2 WITH (NOLOCK)
+								ON AA.UPD_USER = U2.USER_ID
 				WHERE	1=1
 			]]>
 			<isNotEmpty property="CUSTOMER_ID">
@@ -34,18 +34,18 @@
 				AND		AA.CUSTOMER_ID = #CUSTOMER_ID#
 			]]>
 			</isNotEmpty>
-			<isNotEmpty property="ID">
+			<isNotEmpty property="REG_ID">
 				<![CDATA[
-				AND		AA.ID = #ID#
+				AND		AA.REG_ID = #REG_ID#
 			]]>
 			</isNotEmpty>
 			<![CDATA[
-				ORDER BY AA.ID DESC
+				ORDER BY AA.REG_ID DESC
 			]]>
 		</select>
 		<insert id="InsertCustomerPhones" parameterClass="DataMap" >
 			<![CDATA[
-				INSERT INTO jwm.CustomerPhones
+				INSERT INTO UCD.CUSTOMER_PHONES
 				( 
 					CUSTOMER_ID, PHONE_NUMBER, PHONE_TYPE, REMARKS, INS_TIME, INS_USER 
 				)
@@ -54,28 +54,28 @@
 					#CUSTOMER_ID#, #PHONE_NUMBER#, #PHONE_TYPE#, #REMARKS#, GETDATE(), #INS_USER# 
 				)
 			]]>
-			<selectKey type="post" property="ID" resultClass="Int">
+			<selectKey type="post" property="REG_ID" resultClass="Int">
 				<![CDATA[
-					SELECT @@IDENTITY AS ID
+					SELECT @@IDENTITY AS REG_ID
 				]]>
 			</selectKey>
 		</insert>
 		<update id="UpdateCustomerPhones" parameterClass="DataMap">
 			<![CDATA[
-				UPDATE  jwm.CustomerPhones
+				UPDATE  UCD.CUSTOMER_PHONES
 				SET     PHONE_NUMBER= #PHONE_NUMBER#
 					,	PHONE_TYPE	= #PHONE_TYPE#
 					,	REMARKS		= #REMARKS#
 					,	UPD_TIME	= GETDATE()
 					,	UPD_USER	= #INS_USER#
-				WHERE	ID			= #ID#
+				WHERE	REG_ID		= #REG_ID#
 			]]>
 		</update>
 		<delete id="DeleteCustomerPhones" parameterClass="DataMap">
 			<![CDATA[
 				DELETE
-				FROM	jwm.CustomerPhones
-				WHERE	ID = #ID#
+				FROM	UCD.CUSTOMER_PHONES
+				WHERE	REG_ID = #REG_ID#
 			]]>
 		</delete>
 	</statements>

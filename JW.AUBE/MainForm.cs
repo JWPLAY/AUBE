@@ -55,11 +55,11 @@ namespace JW.AUBE
 						if (e.Link.Item.Tag is DataRow)
 						{
 							DataRow row = e.Link.Item.Tag as DataRow;
-							OpenForm(new FormData()
+							OpenForm(new MenuData()
 							{
-								ID = row["ID"].ToIntegerNullToZero(),
-								NAME = row["NAME"].ToStringNullToEmpty(),
-								CAPTION = row["NAME"].ToStringNullToEmpty(),
+								MENU_ID = row["MENU_ID"].ToIntegerNullToZero(),
+								MENU_NAME = row["MENU_NAME"].ToStringNullToEmpty(),
+								CAPTION = row["MENU_NAME"].ToStringNullToEmpty(),
 								IMAGE = e.Link.Item.SmallImage,
 								ASSEMBLY = row["ASSEMBLY"].ToStringNullToEmpty(),
 								NAMESPACE = row["NAMESPACE"].ToStringNullToEmpty(),
@@ -512,11 +512,11 @@ namespace JW.AUBE
 
 								if (info.HitInfoType == HitInfoType.Cell && !info.Node.HasChildren)
 								{
-									OpenForm(new FormData()
+									OpenForm(new MenuData()
 									{
-										ID = info.Node["ID"].ToIntegerNullToZero(),
-										NAME = info.Node["NAME"].ToStringNullToEmpty(),
-										CAPTION = info.Node["NAME"].ToStringNullToEmpty(),
+										MENU_ID = info.Node["MENU_ID"].ToIntegerNullToZero(),
+										MENU_NAME = info.Node["MENU_NAME"].ToStringNullToEmpty(),
+										CAPTION = info.Node["MENU_NAME"].ToStringNullToEmpty(),
 										IMAGE = imageCollection.Images[2],
 										ASSEMBLY = info.Node["ASSEMBLY"].ToStringNullToEmpty(),
 										NAMESPACE = info.Node["NAMESPACE"].ToStringNullToEmpty(),
@@ -560,8 +560,8 @@ namespace JW.AUBE
 						}
 					};
 
-					mainMenu.AddColumn("NAME");
-					mainMenu.AddColumn("ID", false);
+					mainMenu.AddColumn("MENU_NAME");
+					mainMenu.AddColumn("MENU_ID", false);
 					mainMenu.AddColumn("PARENT_ID", false);
 					mainMenu.AddColumn("HIER_ID", false);
 					mainMenu.AddColumn("ASSEMBLY", false);
@@ -574,7 +574,7 @@ namespace JW.AUBE
 					mainMenu.AddColumn("EDIT_YN", false);
 
 					mainMenu.ParentFieldName = "PARENT_ID";
-					mainMenu.KeyFieldName = "ID";
+					mainMenu.KeyFieldName = "MENU_ID";
 					mainMenu.RootValue = "MENU_GROUP_BIZ";
 
 					LoadMainMenu();
@@ -637,7 +637,7 @@ namespace JW.AUBE
 						{
 							navGroup.ItemLinks.Add(navBarNavigate.Items.Add(new NavBarItem()
 							{
-								Caption = row["NAME"].ToStringNullToEmpty(),
+								Caption = row["MENU_NAME"].ToStringNullToEmpty(),
 								Tag = row,
 								SmallImage = ImageResource.menu_system_16x16,
 								SmallImageSize = new Size(16, 16)
@@ -673,10 +673,10 @@ namespace JW.AUBE
 		{
 			try
 			{
-				CreateChildForm(new FormData()
+				CreateChildForm(new MenuData()
 				{
-					ID = 0,
-					NAME = "HomeForm",
+					MENU_ID = 0,
+					MENU_NAME = "HomeForm",
 					CAPTION = "HOME",
 					IMAGE = null,
 					ASSEMBLY = "JW.AUBE.exe",
@@ -697,10 +697,10 @@ namespace JW.AUBE
 		{
 			try
 			{
-				CreateChildForm(new FormData()
+				CreateChildForm(new MenuData()
 				{
-					ID = 0,
-					NAME = "CodesForm",
+					MENU_ID = 0,
+					MENU_NAME = "CodesForm",
 					CAPTION = "공통코드",
 					IMAGE = null,
 					ASSEMBLY = "JW.AUBE.Core.dll",
@@ -827,11 +827,11 @@ namespace JW.AUBE
 			return mdiManager.Pages.Where(x => x.MdiChild.Name.Equals(childName)).Any();
 		}
 
-		public void CreateChildForm(FormData data)
+		public void CreateChildForm(MenuData data)
 		{
 			try
 			{
-				var formName = string.Format("{0}_{1}", data.ID.ToString("000000"), data.INSTANCE);
+				var formName = string.Format("{0}_{1}", data.MENU_ID.ToString("000000"), data.INSTANCE);
 				var bOpened = ExistsChildForm(formName);
 				if (bOpened)
 				{
@@ -860,7 +860,7 @@ namespace JW.AUBE
 				form.Text = data.CAPTION;
 				form.MdiParent = this;
 				form.Padding = new Padding(2);
-				form.MenuId = data.ID;
+				form.MenuId = data.MENU_ID;
 				form.TabImage = data.IMAGE;
 				if (!string.IsNullOrEmpty(data.FORM_TYPE))
 				{
@@ -901,7 +901,7 @@ namespace JW.AUBE
 			}
 		}
 
-		public void OpenForm(FormData formData)
+		public void OpenForm(MenuData formData)
 		{
 			try
 			{

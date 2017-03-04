@@ -24,7 +24,7 @@
 			</isNotEmpty>
 			<isNotEmpty property="MENU_ID">
 				<![CDATA[
-					And	AA.ID = #MENU_ID#
+					And	AA.MENU_ID = #MENU_ID#
 				]]>
 			</isNotEmpty>
 			<isEmpty property="MENU_ID">
@@ -53,7 +53,7 @@
 					,	AA.MENU_ID
 					,	AA.MENU_NAME
 					,	AA.PARENT_ID
-					,	CC.NAME			AS PARENT_NAME
+					,	CC.MENU_NAME	AS PARENT_NAME
 					,	AA.SORT_SEQ
 					,	AA.ASSEMBLY
 					,	AA.NAMESPACE
@@ -82,7 +82,7 @@
 			]]>
 			<isNotEmpty property="FIND_TEXT">
 				<![CDATA[
-					And	AA.NAME LIKE '%' + #FIND_TEXT# + '%'
+					And	AA.MENU_NAME LIKE '%' + #FIND_TEXT# + '%'
 				]]>
 			</isNotEmpty>
 			<isNotEmpty property="MENU_ID">

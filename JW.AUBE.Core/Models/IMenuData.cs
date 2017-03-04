@@ -2,10 +2,10 @@
 
 namespace JW.AUBE.Core.Models
 {
-	public interface IFormData
+	public interface IMenuData
 	{
-		int ID { get; set; }
-		string NAME { get; set; }
+		int MENU_ID { get; set; }
+		string MENU_NAME { get; set; }
 		string CAPTION { get; set; }
 		Image IMAGE { get; set; }
 		string ASSEMBLY { get; set; }

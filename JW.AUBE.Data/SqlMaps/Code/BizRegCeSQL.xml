@@ -5,7 +5,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
 
 	<statements>
-		<select id="SelectBusiness" parameterClass="DataMap" resultClass="DataMap" >
+		<select id="SelectBizRegCe" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
 				SELECT  AA.BIZ_REG_ID
 					,	AA.BIZ_REG_NO
@@ -57,14 +57,14 @@
 				ORDER BY AA.BIZ_NAME
 			]]>
 		</select>
-		<select id="SelectBusinessByRegNo" parameterClass="DataMap" resultClass="Int">
+		<select id="GetBizRegIdByRegNo" parameterClass="DataMap" resultClass="Int">
 			<![CDATA[
 				SELECT	BIZ_REG_ID
 				FROM	UCD.BIZ_REG_CE WITH (NOLOCK)
 				WHERE	BIZ_REG_NO	= #BIZ_REG_NO#
 			]]>
 		</select>
-		<insert id="InsertBusiness" parameterClass="DataMap" >
+		<insert id="InsertBizRegCe" parameterClass="DataMap" >
 			<![CDATA[
 				INSERT INTO UCD.BIZ_REG_CE
 				( 
@@ -81,7 +81,7 @@
 				]]>
 			</selectKey>
 		</insert>
-		<update id="UpdateBusiness" parameterClass="DataMap">
+		<update id="UpdateBizRegCe" parameterClass="DataMap">
 			<![CDATA[
 				UPDATE	UCD.BIZ_REG_CE
 				SET     BIZ_NAME	= #BIZ_NAME#
@@ -97,7 +97,7 @@
 				WHERE	BIZ_REG_ID	= #BIZ_REG_ID#
 			]]>
 		</update>
-		<delete id="DeleteBusiness" parameterClass="DataMap">
+		<delete id="DeleteBizRegCe" parameterClass="DataMap">
 			<![CDATA[
 				DELETE
 				FROM	UCD.BIZ_REG_CE

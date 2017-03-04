@@ -196,8 +196,8 @@
     </Compile>
     <Compile Include="Messages\MsgBox.cs" />
     <Compile Include="Models\ElapseTime.cs" />
-    <Compile Include="Models\FormData.cs" />
-    <Compile Include="Models\IFormData.cs" />
+    <Compile Include="Models\MenuData.cs" />
+    <Compile Include="Models\IMenuData.cs" />
     <Compile Include="Models\IToolbarButtons.cs" />
     <Compile Include="Models\ToolbarButtons.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

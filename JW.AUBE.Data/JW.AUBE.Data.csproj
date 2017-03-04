@@ -96,7 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SqlMaps\Common\CodeHelpSQL.xml" />
-    <EmbeddedResource Include="SqlMaps\Code\BusinessSQL.xml" />
+    <EmbeddedResource Include="SqlMaps\Code\BizRegCeSQL.xml" />
     <EmbeddedResource Include="SqlMaps\Auth\CalendarSQL.xml" />
     <EmbeddedResource Include="SqlMaps\Auth\CodesSQL.xml">
       <SubType>Designer</SubType>

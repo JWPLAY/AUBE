@@ -43,64 +43,61 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			base.InitControls();
 
-			lcItemName.Tag = true;
+			lcItemUserName.Tag = true;
 
 			SetFieldNames();
 
-			lcItemId.SetFieldName("USER_ID");
-			lcItemName.SetFieldName("USER_NAME");
-
-			txtId.SetEnable(false);
+			txtUserId.SetEnable(false);
 			txtInsTime.SetEnable(false);
 			txtInsUser.SetEnable(false);
 			txtUpdTime.SetEnable(false);
 			txtUpdUser.SetEnable(false);
 
+			InitCombo();
 			InitGrid();
+		}
+
+		void InitCombo()
+		{
+			lupUserType.BindData("USER_TYPE", null, null, true);
 		}
 
 		void InitGrid()
 		{
 			gridList.Init();
-			gridList.AddGridColumns(new XGridColumn[]
-			{
+			gridList.AddGridColumns(
 				new XGridColumn()
 				{
-					FieldName="ROW_NO",
-					Caption = "NO",
-					HorzAlignment = HorzAlignment.Center
+					FieldName = "ROW_NO",
+					HorzAlignment = HorzAlignment.Center,
+					Width = 40
 				},
 				new XGridColumn()
 				{
-					FieldName="ID",
-					Caption = "사용자ID",
+					FieldName = "USER_ID",
 					HorzAlignment = HorzAlignment.Center,
 					Visible = false
 				},
 				new XGridColumn()
 				{
-					FieldName="NAME",
-					Caption="사용자명",
-					HorzAlignment = HorzAlignment.Near
-				},
-				new XGridColumn()
-				{
-					FieldName="LOGIN_ID",
-					Caption="로그인ID",
-					HorzAlignment = HorzAlignment.Near
-				},
-				new XGridColumn()
-				{
-					FieldName="USE_YN",
-					Caption="사용여부",
+					FieldName = "USER_NAME",
 					HorzAlignment = HorzAlignment.Near,
+					Width = 100
+				},
+				new XGridColumn()
+				{
+					FieldName = "LOGIN_ID",
+					HorzAlignment = HorzAlignment.Near,
+					Width = 100
+				},
+				new XGridColumn()
+				{
+					FieldName = "USE_YN",
+					HorzAlignment = HorzAlignment.Near,
+					Width = 80,
 					RepositoryItem = gridList.GetRepositoryItemCheckEdit()
 				}
-			});
-			gridList.SetWidth("ROW_NO", 40);
-			gridList.SetWidth("NAME", 100);
-			gridList.SetWidth("LOGIN_ID", 100);
-			gridList.SetWidth("USE_YN", 80);
+			);
 
 			gridList.RowCellClick += delegate (object sender, RowCellClickEventArgs e)
 			{
@@ -112,7 +109,7 @@ namespace JW.AUBE.Core.Forms.Auth
 					if (e.Button == System.Windows.Forms.MouseButtons.Left && e.Clicks == 1)
 					{
 						GridView view = sender as GridView;
-						DetailDataLoad(view.GetRowCellValue(e.RowHandle, "ID"));
+						DetailDataLoad(view.GetRowCellValue(e.RowHandle, "USER_ID"));
 					}
 				}
 				catch(Exception ex)
@@ -128,8 +125,8 @@ namespace JW.AUBE.Core.Forms.Auth
 		}
 		protected override void DataInit()
 		{
-			txtId.Clear();
-			txtName.Clear();
+			txtUserId.Clear();
+			txtUserName.Clear();
 			txtLoginId.Clear();
 			txtLoginPw.Clear();
 			chkUseYn.Checked = true;
@@ -141,7 +138,7 @@ namespace JW.AUBE.Core.Forms.Auth
 			txtUpdUser.Clear();
 
 			this.EditMode = EditModeEnum.New;
-			txtName.Focus();
+			txtUserName.Focus();
 		}
 
 		protected override void DataLoad(object param = null)
@@ -158,25 +155,27 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			try
 			{
-				DataTable dt = ServerRequest.SingleRequest("Base", "GetData", "SelectUsers", new DataMap() { { "ID", id } });
+				DataTable dt = ServerRequest.SingleRequest("Base", "GetData", "SelectUsers", new DataMap() { { "USER_ID", id } });
 				if (dt == null || dt.Rows.Count == 0)
 					throw new Exception("조회할 데이터가 없습니다.");
 
 				DataRow row = dt.Rows[0];
 
-				txtId.EditValue = row["ID"];
-				txtName.EditValue = row["NAME"];
+				txtUserId.EditValue = row["USER_ID"];
+				txtUserName.EditValue = row["USER_NAME"];
+				lupUserType.EditValue = row["USER_TYPE"];
 				txtLoginId.EditValue = row["LOGIN_ID"];
 				txtLoginPw.EditValue = row["LOGIN_PW"];
 				chkUseYn.EditValue = row["USE_YN"];
 				memeRemarks.EditValue = row["REMARKS"];
+
 				txtInsTime.EditValue = row["INS_TIME"];
 				txtInsUser.EditValue = row["INS_USER_NAME"];
 				txtUpdTime.EditValue = row["UPD_TIME"];
 				txtUpdUser.EditValue = row["UPD_USER_NAME"];
 
 				this.EditMode = EditModeEnum.Modify;
-				txtName.Focus();
+				txtUserName.Focus();
 
 			}
 			catch(Exception ex)
@@ -191,32 +190,17 @@ namespace JW.AUBE.Core.Forms.Auth
 			{
 				DataTable dt = (new DataMap()
 				{
-					{ "ID", txtId.EditValue },
-					{ "NAME", txtName.EditValue },
+					{ "USER_ID", txtUserId.EditValue },
+					{ "USER_NAME", txtUserName.EditValue },
+					{ "USER_TYPE", lupUserType.EditValue },
 					{ "LOGIN_ID", txtLoginId.EditValue },
 					{ "LOGIN_PW", txtLoginPw.EditValue },
 					{ "USE_YN", chkUseYn.EditValue },
 					{ "REMARKS", memeRemarks.EditValue },
-					{ "INS_USER", GlobalVar.Settings.GetValue("USER_ID") },
 					{ "ROWSTATE", (this.EditMode== EditModeEnum.New)?"INSERT":"UPDATE" }
 				}).ToDataTable();
-				
-				var res = ServerRequest.Request(new WasRequest()
-				{
-					ServiceId = "Base",
-					ProcessId = "Save",
-					IsTransaction = true,
-					DataList = new List<WasRequestData>()
-					{
-						new WasRequestData()
-						{
-							SqlId = "Users",
-							KeyField = "ID",
-							Data = dt
-						}
-					}
-				});
 
+				var res = ServerRequest.SingleRequest("Base", "Save", "User", dt, "USER_ID");
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -236,27 +220,11 @@ namespace JW.AUBE.Core.Forms.Auth
 			{
 				DataTable dt = (new DataMap()
 				{
-					{ "ID", txtId.EditValue },
-					{ "INS_USER", GlobalVar.Settings.GetValue("USER_ID") },
+					{ "USER_ID", txtUserId.EditValue },
 					{ "ROWSTATE", "DELETE" }
 				}).ToDataTable();
 
-				var res = ServerRequest.Request(new WasRequest()
-				{
-					ServiceId = "Base",
-					ProcessId = "Save",
-					IsTransaction = true,
-					DataList = new List<WasRequestData>()
-					{
-						new WasRequestData()
-						{
-							SqlId = "Users",
-							KeyField = "ID",
-							Data = dt
-						}
-					}
-				});
-
+				var res = ServerRequest.SingleRequest("Base", "Save", "User", dt, "USER_ID");
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

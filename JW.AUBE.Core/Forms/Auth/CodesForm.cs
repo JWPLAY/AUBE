@@ -48,18 +48,18 @@ namespace JW.AUBE.Core.Forms.Auth
 			lcItemCode.Tag = true;
 
 			SetFieldNames();
-
-			lcItemId.SetFieldName("CODE_ID");
+			
 			lcItemName.SetFieldName("CODE_NAME");
 			lcItemValue.SetFieldName("CODE_VALUE");
 		
-			txtId.SetEnable(false);
+			txtCodeId.SetEnable(false);
 			txtInsTime.SetEnable(false);
 			txtInsUser.SetEnable(false);
 			txtUpdTime.SetEnable(false);
 			txtUpdUser.SetEnable(false);
 
 			spnSortSeq.SetFormat("D", false, HorzAlignment.Near);
+			spnMaxLength.SetFormat("D", false, HorzAlignment.Near);
 			chkUseYn.Init();
 
 			InitCombo();
@@ -74,103 +74,85 @@ namespace JW.AUBE.Core.Forms.Auth
 		void InitGrid()
 		{
 			gridList.Init();
-			gridList.AddGridColumns(new XGridColumn[]
-			{
+			gridList.AddGridColumns(
 				new XGridColumn()
 				{
-					FieldName="ROW_NO",
-					Caption = "NO",
-					HorzAlignment = HorzAlignment.Center
+					FieldName = "ROW_NO",
+					HorzAlignment = HorzAlignment.Center,
+					Width = 40
 				},
 				new XGridColumn()
 				{
-					FieldName="HIER_ID",
-					Caption="계층ID",
+					FieldName = "HIER_ID",
 					HorzAlignment = HorzAlignment.Near,
 					Visible = false
 				},
 				new XGridColumn()
 				{
-					FieldName="HIER_NAME",
-					Caption="코드계층명",
-					HorzAlignment = HorzAlignment.Near
+					FieldName = "HIER_NAME",
+					CaptionCode = "CODE_NAME",
+					HorzAlignment = HorzAlignment.Near,
+					Width = 250
 				},
 				new XGridColumn()
 				{
-					FieldName="ID",
+					FieldName = "CODE_ID",
 					Caption = "ID",
 					HorzAlignment = HorzAlignment.Center,
+					Width = 80,
 					Visible = false
 				},
 				new XGridColumn()
 				{
-					FieldName="CODE",
-					Caption="코드",
-					HorzAlignment = HorzAlignment.Near
-				},
-				new XGridColumn()
-				{
-					FieldName="NAME",
-					Caption="코드명",
+					FieldName = "CODE",
 					HorzAlignment = HorzAlignment.Near,
-					Visible = false
+					Width = 120
 				},
 				new XGridColumn()
 				{
-					FieldName="VALUE",
-					Caption="값",
-					HorzAlignment = HorzAlignment.Near
+					FieldName = "VALUE",
+					CaptionCode = "CODE_VALUE",
+					HorzAlignment = HorzAlignment.Near,
+					Width = 120
 				},
 				new XGridColumn()
 				{
-					FieldName="USE_YN",
-					Caption="사용여부",
+					FieldName = "USE_YN",
 					HorzAlignment = HorzAlignment.Center,
+					Width = 80,
 					RepositoryItem = gridList.GetRepositoryItemCheckEdit()
 				},
 				new XGridColumn()
 				{
-					FieldName="OPTION_VALUE1",
-					Caption="옵션값1",
-					HorzAlignment = HorzAlignment.Near
+					FieldName = "OPTION_VALUE1",
+					HorzAlignment = HorzAlignment.Near,
+					Width = 100
 				},
 				new XGridColumn()
 				{
-					FieldName="OPTION_VALUE2",
-					Caption="옵션값2",
-					HorzAlignment = HorzAlignment.Near
+					FieldName = "OPTION_VALUE2",
+					HorzAlignment = HorzAlignment.Near,
+					Width = 100
 				},
 				new XGridColumn()
 				{
-					FieldName="OPTION_VALUE3",
-					Caption="옵션값3",
-					HorzAlignment = HorzAlignment.Near
+					FieldName = "OPTION_VALUE3",
+					HorzAlignment = HorzAlignment.Near,
+					Width = 100
 				},
 				new XGridColumn()
 				{
-					FieldName="OPTION_VALUE4",
-					Caption="옵션값4",
-					HorzAlignment = HorzAlignment.Near
+					FieldName = "OPTION_VALUE4",
+					HorzAlignment = HorzAlignment.Near,
+					Width = 100
 				},
 				new XGridColumn()
 				{
-					FieldName="OPTION_VALUE5",
-					Caption="옵션값5",
-					HorzAlignment = HorzAlignment.Near
+					FieldName = "OPTION_VALUE5",
+					HorzAlignment = HorzAlignment.Near,
+					Width = 100
 				}
-			});
-			gridList.SetWidth("ROW_NO", 40);
-			gridList.SetWidth("HIER_NAME", 250);
-			gridList.SetWidth("ID", 80);
-			gridList.SetWidth("CODE", 120);
-			gridList.SetWidth("NAME", 200);
-			gridList.SetWidth("VALUE", 120);
-			gridList.SetWidth("USE_YN", 80);
-			gridList.SetWidth("OPTION_VALUE1", 100);
-			gridList.SetWidth("OPTION_VALUE2", 100);
-			gridList.SetWidth("OPTION_VALUE3", 100);
-			gridList.SetWidth("OPTION_VALUE4", 100);
-			gridList.SetWidth("OPTION_VALUE5", 100);
+			);
 
 			gridList.RowCellClick += delegate (object sender, RowCellClickEventArgs e)
 			{
@@ -182,7 +164,7 @@ namespace JW.AUBE.Core.Forms.Auth
 					if (e.Button == System.Windows.Forms.MouseButtons.Left && e.Clicks == 1)
 					{
 						GridView view = sender as GridView;
-						DetailDataLoad(view.GetRowCellValue(e.RowHandle, "ID"));
+						DetailDataLoad(view.GetRowCellValue(e.RowHandle, "CODE_ID"));
 					}
 				}
 				catch(Exception ex)
@@ -200,7 +182,7 @@ namespace JW.AUBE.Core.Forms.Auth
 
 		protected override void DataInit()
 		{
-			txtId.Clear();
+			txtCodeId.Clear();
 
 			object group_code = lupParentCode.EditValue;
 			lupParentCode.BindData("CodeGroup", null, "ROOT", true);
@@ -240,19 +222,20 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			try
 			{
-				DataTable dt = ServerRequest.SingleRequest("Base", "GetData", "SelectCode", new DataMap() { { "ID", id } });
+				DataTable dt = ServerRequest.SingleRequest("Base", "GetData", "SelectCode", new DataMap() { { "CODE_ID", id } });
 				if (dt == null || dt.Rows.Count == 0)
 					throw new Exception("조회할 데이터가 없습니다.");
 
 				DataRow row = dt.Rows[0];
 
-				txtId.EditValue = row["ID"];
+				txtCodeId.EditValue = row["CODE_ID"];
 				lupParentCode.BindData("CodeGroup", null, "ROOT", true);
 				lupParentCode.EditValue = row["PARENT_CODE"];
 				txtCode.EditValue = row["CODE"];
 				txtName.EditValue = row["NAME"];
 				txtValue.EditValue = row["VALUE"];
 				spnSortSeq.EditValue = row["SORT_SEQ"];
+				spnMaxLength.EditValue = row["MAX_LENGTH"];
 				chkUseYn.EditValue = row["USE_YN"];
 				memDescription.EditValue = row["DESCRIPTION"];
 				txtOptionValue1.EditValue = row["OPTION_VALUE1"];
@@ -260,6 +243,7 @@ namespace JW.AUBE.Core.Forms.Auth
 				txtOptionValue3.EditValue = row["OPTION_VALUE3"];
 				txtOptionValue4.EditValue = row["OPTION_VALUE4"];
 				txtOptionValue5.EditValue = row["OPTION_VALUE5"];
+
 				txtInsTime.EditValue = row["INS_TIME"];
 				txtInsUser.EditValue = row["INS_USER_NAME"];
 				txtUpdTime.EditValue = row["UPD_TIME"];
@@ -282,12 +266,13 @@ namespace JW.AUBE.Core.Forms.Auth
 
 				DataTable dt = (new DataMap()
 				{
-					{ "ID", txtId.EditValue },
+					{ "CODE_ID", txtCodeId.EditValue },
 					{ "PARENT_CODE", lupParentCode.EditValue },
 					{ "CODE", txtCode.EditValue },
 					{ "NAME", txtName.EditValue },
 					{ "VALUE", txtValue.EditValue },
 					{ "SORT_SEQ", spnSortSeq.EditValue },
+					{ "MAX_LENGTH", spnMaxLength.EditValue },
 					{ "USE_YN", chkUseYn.EditValue },
 					{ "DESCRIPTION", memDescription.EditValue },
 					{ "OPTION_VALUE1", txtOptionValue1.EditValue },
@@ -295,26 +280,10 @@ namespace JW.AUBE.Core.Forms.Auth
 					{ "OPTION_VALUE3", txtOptionValue3.EditValue },
 					{ "OPTION_VALUE4", txtOptionValue4.EditValue },
 					{ "OPTION_VALUE5", txtOptionValue5.EditValue },
-					{ "INS_USER", GlobalVar.Settings.GetValue("USER_ID") },
 					{ "ROWSTATE", ( this.EditMode == EditModeEnum.New ) ? "INSERT" : "UPDATE" }
 				}).ToDataTable();
-				
-				var res = ServerRequest.Request(new WasRequest()
-				{
-					ServiceId = "Base",
-					ProcessId = "Save",
-					IsTransaction = true,
-					DataList = new List<WasRequestData>()
-					{
-						new WasRequestData()
-						{
-							SqlId = "Codes",
-							KeyField = "ID",
-							Data = dt
-						}
-					}
-				});
 
+				var res = ServerRequest.SingleRequest("Base", "Save", "Code", dt, "CODE_ID");
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -333,27 +302,11 @@ namespace JW.AUBE.Core.Forms.Auth
 			{
 				DataTable dt = (new DataMap()
 				{
-					{ "ID", txtId.EditValue },
-					{ "INS_USER", GlobalVar.Settings.GetValue("USER_ID") },
+					{ "CODE_ID", txtCodeId.EditValue },
 					{ "ROWSTATE", "DELETE" }
 				}).ToDataTable();
 
-				var res = ServerRequest.Request(new WasRequest()
-				{
-					ServiceId = "Base",
-					ProcessId = "Save",
-					IsTransaction = true,
-					DataList = new List<WasRequestData>()
-					{
-						new WasRequestData()
-						{
-							SqlId = "Codes",
-							KeyField = "ID",
-							Data = dt
-						}
-					}
-				});
-
+				var res = ServerRequest.SingleRequest("Base", "Save", "Code", dt, "CODE_ID");
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

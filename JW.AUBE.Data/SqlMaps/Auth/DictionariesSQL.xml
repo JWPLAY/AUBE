@@ -29,7 +29,7 @@
 			]]>
 			<isNotEmpty property="FIND_TEXT">
 				<![CDATA[
-					AND	AA.NAME LIKE '%' + #FIND_TEXT# + '%'
+					AND	AA.LOGICAL_NAME LIKE '%' + #FIND_TEXT# + '%'
 				]]>
 			</isNotEmpty>
 			<isNotEmpty property="DICTIONARY_ID">
@@ -41,7 +41,7 @@
 				ORDER BY ROW_NO
 			]]>
 		</select>
-		<insert id="InsertDictionaries" parameterClass="DataMap" >
+		<insert id="InsertDictionary" parameterClass="DataMap" >
 			<![CDATA[
 				INSERT INTO UAA.DICTIONARIES
 				( 
@@ -58,7 +58,7 @@
 				]]>
 			</selectKey>
 		</insert>
-		<update id="UpdateDictionaries" parameterClass="DataMap">
+		<update id="UpdateDictionary" parameterClass="DataMap">
 			<![CDATA[
 				UPDATE	UAA.DICTIONARIES
 				SET     LOGICAL_NAME	= #LOGICAL_NAME#
@@ -69,7 +69,7 @@
 				WHERE	DICTIONARY_ID	= #DICTIONARY_ID#
 			]]>
 		</update>
-		<delete id="DeleteDictionaries" parameterClass="DataMap">
+		<delete id="DeleteDictionary" parameterClass="DataMap">
 			<![CDATA[
 				DELETE 
 				FROM	UAA.DICTIONARIES 

@@ -11,7 +11,8 @@
 				AS
 				(
 					SELECT	AA.MENU_ID
-						,	CAST(RIGHT('0000' + CONVERT(VARCHAR, ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ)), 4) AS VARCHAR(MAX))	AS HIER_ID
+						,	CAST(RIGHT('0000' + 
+									CONVERT(VARCHAR, ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ)), 4) AS VARCHAR(MAX))	AS HIER_ID
 						,	1																AS MENU_LEVEL
 						,	CAST(ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ) AS VARCHAR(MAX))	AS SEQ_NO
 					FROM	UAA.MENUS AA WITH (NOLOCK)
@@ -30,7 +31,7 @@
 			<isEmpty property="MENU_ID">
 				<isEmpty property="PARENT_ID">
 					<![CDATA[
-						And	AA.PARENT_ID IS NULL
+						AND	AA.PARENT_ID IS NULL
 					]]>
 				</isEmpty>
 			</isEmpty>
@@ -94,7 +95,35 @@
 				ORDER BY BB.HIER_ID
 			]]>
 		</select>
-		<insert id="InsertMenus" parameterClass="DataMap" >
+		<select id="SelectMenu" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[				
+				SELECT  AA.MENU_ID
+					,	AA.MENU_NAME
+					,	AA.PARENT_ID
+					,	AA.SORT_SEQ
+					,	AA.ASSEMBLY
+					,	AA.NAMESPACE
+					,	AA.INSTANCE
+					,	AA.FORM_TYPE
+					,	AA.USE_YN
+					,	AA.REMARKS
+					,	AA.INS_TIME
+					,	AA.INS_USER
+					,	U1.USER_NAME			AS INS_USER_NAME
+					,	AA.UPD_TIME
+					,	AA.UPD_USER
+					,	U2.USER_NAME			AS UPD_USER_NAME
+				FROM	UAA.MENUS AA WITH (NOLOCK)
+						LEFT JOIN 
+							UAA.USERS U1 WITH (NOLOCK) 
+								ON AA.INS_USER = U1.USER_ID
+						LEFT JOIN 
+							UAA.USERS U2 WITH (NOLOCK) 
+								ON AA.UPD_USER = U2.USER_ID
+				WHERE	AA.MENU_ID = #MENU_ID#
+			]]>
+		</select>
+		<insert id="InsertMenu" parameterClass="DataMap" >
 			<![CDATA[
 				INSERT INTO UAA.MENUS
 				( 
@@ -111,7 +140,7 @@
 				]]>
 			</selectKey>
 		</insert>
-		<update id="UpdateMenus" parameterClass="DataMap">
+		<update id="UpdateMenu" parameterClass="DataMap">
 			<![CDATA[
 				UPDATE  UAA.MENUS
 				SET     MENU_NAME	= #MENU_NAME#
@@ -128,7 +157,7 @@
 				WHERE	MENU_ID		= #MENU_ID#
 			]]>
 		</update>
-		<delete id="DeleteMenus" parameterClass="DataMap">
+		<delete id="DeleteMenu" parameterClass="DataMap">
 			<![CDATA[
 				DELETE 
 				FROM	UAA.MENUS 

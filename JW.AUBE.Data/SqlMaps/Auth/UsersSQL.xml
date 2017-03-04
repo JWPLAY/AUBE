@@ -44,7 +44,7 @@
 				ORDER BY ROW_NO
 			]]>
 		</select>
-		<insert id="InsertUsers" parameterClass="DataMap" >
+		<insert id="InsertUser" parameterClass="DataMap" >
 			<![CDATA[
 				INSERT INTO UAA.USERS
 				( 
@@ -68,7 +68,7 @@
 				]]>
 			</selectKey>
 		</insert>
-		<update id="UpdateUsers" parameterClass="DataMap">
+		<update id="UpdateUser" parameterClass="DataMap">
 			<![CDATA[
 				UPDATE  UAA.USERS
 				SET     USER_NAME	= #USER_NAME#
@@ -81,7 +81,7 @@
 				WHERE	USER_ID		= #USER_ID#
 			]]>
 		</update>
-		<delete id="DeleteUsers" parameterClass="DataMap">
+		<delete id="DeleteUser" parameterClass="DataMap">
 			<![CDATA[
 				DELETE 
 				FROM	UAA.USERS

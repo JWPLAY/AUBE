@@ -44,14 +44,11 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			base.InitControls();
 
-			lcItemName.Tag = true;
+			lcItemMenuName.Tag = true;
 
 			SetFieldNames();
 
-			lcItemId.SetFieldName("MENU_ID");
-			lcItemName.SetFieldName("MENU_NAME");
-
-			txtId.SetEnable(false);
+			txtMenuId.SetEnable(false);
 			txtInsTime.SetEnable(false);
 			txtInsUserName.SetEnable(false);
 			txtUpdTime.SetEnable(false);
@@ -71,58 +68,46 @@ namespace JW.AUBE.Core.Forms.Auth
 		void InitGrid()
 		{
 			gridList.Init();
-			gridList.AddGridColumns(new XGridColumn[]
-			{
+			gridList.AddGridColumns(
 				new XGridColumn()
 				{
-					FieldName="ROW_NO",
-					Caption = "NO",
-					HorzAlignment = HorzAlignment.Center
+					FieldName = "ROW_NO",
+					HorzAlignment = HorzAlignment.Center,
+					Width = 40
 				},
 				new XGridColumn()
 				{
-					FieldName="HIER_ID",
-					Caption="메뉴계층ID",
+					FieldName = "HIER_ID",
 					HorzAlignment = HorzAlignment.Near,
 					Visible = false
 				},
 				new XGridColumn()
 				{
-					FieldName="HIER_NAME",
-					Caption="메뉴계층명",
-					HorzAlignment = HorzAlignment.Near
-				},
-				new XGridColumn()
-				{
-					FieldName="ID",
-					Caption = "메뉴ID",
-					HorzAlignment = HorzAlignment.Center
-				},
-				new XGridColumn()
-				{
-					FieldName="NAME",
-					Caption="메뉴명",
+					FieldName = "HIER_NAME",
+					CaptionCode = "MENU_NAME",
 					HorzAlignment = HorzAlignment.Near,
-					Visible = false
+					Width = 300
 				},
 				new XGridColumn()
 				{
-					FieldName="SORT_SEQ",
-					Caption="정렬순서",
-					HorzAlignment = HorzAlignment.Center
+					FieldName = "MENU_ID",
+					HorzAlignment = HorzAlignment.Center,
+					Width = 80
 				},
 				new XGridColumn()
 				{
-					FieldName="USE_YN",
-					Caption="사용여부",
+					FieldName = "SORT_SEQ",
+					HorzAlignment = HorzAlignment.Center,
+					Width = 80
+				},
+				new XGridColumn()
+				{
+					FieldName = "USE_YN",
 					HorzAlignment = HorzAlignment.Near,
+					Width = 80,
 					RepositoryItem = gridList.GetRepositoryItemCheckEdit()
 				}
-			});
-			gridList.SetWidth("ROW_NO", 40);
-			gridList.SetWidth("HIER_NAME", 300);
-			gridList.SetWidth("ID", 80);
-			gridList.SetWidth("USE_YN", 80);
+			);
 
 			gridList.RowCellClick += delegate (object sender, RowCellClickEventArgs e)
 			{
@@ -134,7 +119,7 @@ namespace JW.AUBE.Core.Forms.Auth
 					if (e.Button == System.Windows.Forms.MouseButtons.Left && e.Clicks == 1)
 					{
 						GridView view = sender as GridView;
-						DetailDataLoad(view.GetRowCellValue(e.RowHandle, "ID"));
+						DetailDataLoad(view.GetRowCellValue(e.RowHandle, "MENU_ID"));
 					}
 				}
 				catch(Exception ex)
@@ -152,8 +137,8 @@ namespace JW.AUBE.Core.Forms.Auth
 
 		protected override void DataInit()
 		{
-			txtId.Clear();
-			txtName.Clear();
+			txtMenuId.Clear();
+			txtMenuName.Clear();
 			txtParentId.Clear();
 			numSortSeq.Clear();
 			txtAssembly.Clear();
@@ -168,7 +153,7 @@ namespace JW.AUBE.Core.Forms.Auth
 			txtUpdUserName.Clear();
 
 			this.EditMode = EditModeEnum.New;
-			txtName.Focus();
+			txtMenuName.Focus();
 		}
 
 		protected override void DataLoad(object param = null)
@@ -185,14 +170,14 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			try
 			{
-				DataTable dt = ServerRequest.SingleRequest("Base", "GetData", "SelectMenus", new DataMap() { { "ID", id } });
+				DataTable dt = ServerRequest.SingleRequest("Base", "GetData", "SelectMenu", new DataMap() { { "MENU_ID", id } });
 				if (dt == null || dt.Rows.Count == 0)
 					throw new Exception("조회할 데이터가 없습니다.");
 
 				DataRow row = dt.Rows[0];
 
-				txtId.EditValue = row["ID"];
-				txtName.EditValue = row["NAME"];
+				txtMenuId.EditValue = row["MENU_ID"];
+				txtMenuName.EditValue = row["MENU_NAME"];
 				txtParentId.EditValue = row["PARENT_ID"];
 				numSortSeq.EditValue = row["SORT_SEQ"];
 				txtAssembly.EditValue = row["ASSEMBLY"];
@@ -201,13 +186,14 @@ namespace JW.AUBE.Core.Forms.Auth
 				lupFormType.EditValue = row["FORM_TYPE"];
 				chkUseYn.EditValue = row["USE_YN"];
 				memRemarks.EditValue = row["REMARKS"];
+
 				txtInsTime.EditValue = row["INS_TIME"];
 				txtInsUserName.EditValue = row["INS_USER_NAME"];
 				txtUpdTime.EditValue = row["UPD_TIME"];
 				txtUpdUserName.EditValue = row["UPD_USER_NAME"];
 
 				this.EditMode = EditModeEnum.Modify;
-				txtName.Focus();
+				txtMenuName.Focus();
 
 			}
 			catch(Exception ex)
@@ -221,25 +207,9 @@ namespace JW.AUBE.Core.Forms.Auth
 			try
 			{
 				DataMap map = lc.ItemToDataMap();
-				map.SetValue("INS_USER", GlobalVar.Settings.GetValue("USER_ID"));
 				map.SetValue("ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE");
-				
-				var res = ServerRequest.Request(new WasRequest()
-				{
-					ServiceId = "Base",
-					ProcessId = "Save",
-					IsTransaction = true,
-					DataList = new List<WasRequestData>()
-					{
-						new WasRequestData()
-						{
-							SqlId = "Menus",
-							KeyField = "ID",
-							Data = map.ToDataTable()
-						}
-					}
-				});
 
+				var res = ServerRequest.SingleRequest("Base", "Save", "Menu", map.ToDataTable(), "MENU_ID");
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -258,27 +228,11 @@ namespace JW.AUBE.Core.Forms.Auth
 			{
 				DataTable dt = (new DataMap()
 				{
-					{ "ID", txtId.EditValue },
-					{ "INS_USER", GlobalVar.Settings.GetValue("USER_ID") },
+					{ "MENU_ID", txtMenuId.EditValue },
 					{ "ROWSTATE", "DELETE" }
 				}).ToDataTable();
 
-				var res = ServerRequest.Request(new WasRequest()
-				{
-					ServiceId = "Base",
-					ProcessId = "Save",
-					IsTransaction = true,
-					DataList = new List<WasRequestData>()
-					{
-						new WasRequestData()
-						{
-							SqlId = "Menus",
-							KeyField = "ID",
-							Data = dt
-						}
-					}
-				});
-
+				var res = ServerRequest.SingleRequest("Base", "Save", "Menu", dt, "MENU_ID");
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

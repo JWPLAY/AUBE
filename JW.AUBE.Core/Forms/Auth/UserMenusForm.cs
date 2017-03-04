@@ -49,30 +49,26 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			#region gridUsers
 			gridUsers.Init();
-			gridUsers.AddGridColumns(new XGridColumn[]
-			{
+			gridUsers.AddGridColumns(
 				new XGridColumn()
 				{
-					FieldName="ROW_NO",
-					Caption = "NO",
-					HorzAlignment = HorzAlignment.Center
+					FieldName = "ROW_NO",
+					HorzAlignment = HorzAlignment.Center,
+					Width = 40
 				},
 				new XGridColumn()
 				{
-					FieldName="ID",
-					Caption = "사용자ID",
+					FieldName = "USER_ID",
 					HorzAlignment = HorzAlignment.Center,
 					Visible = false
 				},
 				new XGridColumn()
 				{
-					FieldName="NAME",
-					Caption="사용자명",
-					HorzAlignment = HorzAlignment.Near
+					FieldName = "USER_NAME",
+					HorzAlignment = HorzAlignment.Near,
+					Width = 150
 				}
-			});
-			gridUsers.SetWidth("ROW_NO", 40);
-			gridUsers.SetWidth("NAME", 150);
+			);
 
 			gridUsers.RowCellClick += delegate (object sender, RowCellClickEventArgs e)
 			{
@@ -84,7 +80,7 @@ namespace JW.AUBE.Core.Forms.Auth
 					if (e.Button == System.Windows.Forms.MouseButtons.Left && e.Clicks == 1)
 					{
 						GridView view = sender as GridView;
-						DetailLoad(view.GetRowCellValue(e.RowHandle, "ID"));
+						DetailLoad(view.GetRowCellValue(e.RowHandle, "USER_ID"));
 					}
 				}
 				catch(Exception ex)
@@ -96,82 +92,72 @@ namespace JW.AUBE.Core.Forms.Auth
 
 			#region gridMenus
 			gridMenus.Init();
-			gridMenus.AddGridColumns(new XGridColumn[]
-			{
+			gridMenus.AddGridColumns(
 				new XGridColumn()
 				{
-					FieldName="ROW_NO",
-					Caption = "NO",
-					HorzAlignment = HorzAlignment.Center
+					FieldName = "ROW_NO",
+					HorzAlignment = HorzAlignment.Center,
+					Width = 40
 				},
 				new XGridColumn()
 				{
-					FieldName="HIER_ID",
-					Caption="메뉴계층ID",
+					FieldName = "HIER_ID",
 					HorzAlignment = HorzAlignment.Near,
 					Visible = false
 				},
 				new XGridColumn()
 				{
-					FieldName="HIER_NAME",
-					Caption="메뉴명",
-					HorzAlignment = HorzAlignment.Near
+					FieldName = "HIER_NAME",
+					Caption = "메뉴명",
+					HorzAlignment = HorzAlignment.Near,
+					Width = 300
 				},
 				new XGridColumn()
 				{
-					FieldName="ID",
-					Caption = "메뉴ID",
+					FieldName = "MENU_ID",
 					HorzAlignment = HorzAlignment.Center,
+					Width = 80,
 					Visible = false
 				},
 				new XGridColumn()
 				{
-					FieldName="VIEW_YN",
-					Caption = "조회권한",
+					FieldName = "VIEW_YN",
 					HorzAlignment = HorzAlignment.Center,
+					Width = 80,
+					RepositoryItem = gridMenus.GetRepositoryItemCheckEdit()					
+				},
+				new XGridColumn()
+				{
+					FieldName = "EDIT_YN",
+					HorzAlignment = HorzAlignment.Center,
+					Width = 80,
 					RepositoryItem = gridMenus.GetRepositoryItemCheckEdit()
 				},
 				new XGridColumn()
 				{
-					FieldName="EDIT_YN",
-					Caption = "편집권한",
+					FieldName = "INS_TIME",
 					HorzAlignment = HorzAlignment.Center,
-					RepositoryItem = gridMenus.GetRepositoryItemCheckEdit()
+					Width = 180
 				},
 				new XGridColumn()
 				{
-					FieldName="INS_TIME",
-					Caption = "최초등록일시",
-					HorzAlignment = HorzAlignment.Center
+					FieldName = "INS_USER_NAME",
+					HorzAlignment = HorzAlignment.Center,
+					Width = 100
 				},
 				new XGridColumn()
 				{
-					FieldName="INS_USER_NAME",
-					Caption = "최초등록자명",
-					HorzAlignment = HorzAlignment.Center
+					FieldName = "UPD_TIME",
+					HorzAlignment = HorzAlignment.Center,
+					Width = 180
 				},
 				new XGridColumn()
 				{
-					FieldName="UPD_TIME",
-					Caption = "최종수정일시",
-					HorzAlignment = HorzAlignment.Center
-				},
-				new XGridColumn()
-				{
-					FieldName="UPD_USER_NAME",
-					Caption = "최종수정자명",
-					HorzAlignment = HorzAlignment.Center
+					FieldName = "UPD_USER_NAME",
+					HorzAlignment = HorzAlignment.Center,
+					Width = 100
 				}
-			});
-			gridMenus.SetWidth("ROW_NO", 40);
-			gridMenus.SetWidth("HIER_NAME", 300);
-			gridMenus.SetWidth("ID", 80);
-			gridMenus.SetWidth("VIEW_YN", 80);
-			gridMenus.SetWidth("EDIT_YN", 80);
-			gridMenus.SetWidth("INS_TIME", 180);
-			gridMenus.SetWidth("INS_USER_NAME", 100);
-			gridMenus.SetWidth("UPD_TIME", 180);
-			gridMenus.SetWidth("UPD_USER_NAME", 100);
+			);
 
 			gridMenus.SetEditable("VIEW_YN", "EDIT_YN");
 			#endregion
@@ -211,8 +197,8 @@ namespace JW.AUBE.Core.Forms.Auth
 						))
 					{
 						dt.Rows.Add(
-							gridUsers.GetValue(gridUsers.MainView.FocusedRowHandle, "ID"),
-							row["ID"],
+							gridUsers.GetValue(gridUsers.MainView.FocusedRowHandle, "USER_ID"),
+							row["MENU_ID"],
 							row["VIEW_YN"],
 							row["EDIT_YN"],
 							GlobalVar.Settings.GetValue("USER_ID"),
@@ -225,28 +211,14 @@ namespace JW.AUBE.Core.Forms.Auth
 					ShowMsgBox("저장할 내역이 없습니다.");
 					return;
 				}
-				
-				var res = ServerRequest.Request(new WasRequest()
-				{
-					ServiceId = "Base",
-					ProcessId = "Save",
-					IsTransaction = true,
-					DataList = new List<WasRequestData>()
-					{
-						new WasRequestData()
-						{
-							SqlId = "UserMenus",
-							Data = dt
-						}
-					}
-				});
 
+				var res = ServerRequest.SingleRequest("Base", "Save", "UserMenus", dt);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
 				ShowMsgBox("저장하였습니다.");
 				int rowhandle = gridUsers.MainView.FocusedRowHandle;
-				object userId = gridUsers.GetValue(rowhandle, "ID");
+				object userId = gridUsers.GetValue(rowhandle, "USER_ID");
 				DataLoad();
 				gridUsers.MainView.FocusedRowHandle = rowhandle;
 				DetailLoad(userId);

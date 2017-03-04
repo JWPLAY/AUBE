@@ -11,7 +11,8 @@
 				(
 					SELECT	AA.CODE_ID
 						,	AA.CODE
-						,	CAST(RIGHT('0000' + CONVERT(VARCHAR, ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ, AA.CODE)), 4) AS VARCHAR(MAX))	AS HIER_ID
+						,	CAST(RIGHT('0000' + 
+									   CONVERT(VARCHAR, ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ, AA.CODE)), 4) AS VARCHAR(MAX))	AS HIER_ID
 						,	1	AS LEVEL
 					FROM	UAA.CODES AA
 					WHERE	AA.PARENT_CODE IS NULL
@@ -19,9 +20,9 @@
 			<isNotEmpty property="FIND_TEXT">
 			<![CDATA[
 					AND	(	
-							AA.CODE	LIKE '%'+#FIND_TEXT#+'%'	OR
-							AA.NAME	LIKE '%'+#FIND_TEXT#+'%'	OR
-							AA.PARENT_CODE LIKE '%'+#FIND_TEXT#+'%'
+							AA.CODE			LIKE '%'+#FIND_TEXT#+'%'	OR
+							AA.NAME			LIKE '%'+#FIND_TEXT#+'%'	OR
+							AA.PARENT_CODE	LIKE '%'+#FIND_TEXT#+'%'
 						)
 			]]>
 			</isNotEmpty>
@@ -30,7 +31,8 @@
 					SELECT	AA.CODE_ID
 						,	AA.CODE
 						,	CAST(BB.HIER_ID + 
-								 RIGHT('0000' + CONVERT(VARCHAR, ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ, AA.CODE)), 4) AS VARCHAR(MAX))	AS HIER_ID
+								 RIGHT('0000' + 
+									   CONVERT(VARCHAR, ROW_NUMBER() OVER (ORDER BY AA.SORT_SEQ, AA.CODE)), 4) AS VARCHAR(MAX))	AS HIER_ID
 						,	BB.LEVEL + 1	AS LEVEL
 					FROM	UAA.CODES AA
 							INNER JOIN
@@ -72,7 +74,7 @@
 				FROM	UAA.CODES AA WITH (NOLOCK)
 						INNER JOIN
 							CODELIST BB
-								ON AA.ID = BB.ID
+								ON AA.CODE_ID = BB.CODE_ID
 						LEFT JOIN 
 							UAA.USERS U1 WITH (NOLOCK) 
 								ON AA.INS_USER = U1.USER_ID
@@ -111,10 +113,10 @@
 						LEFT JOIN 
 							UAA.USERS U2 WITH (NOLOCK) 
 								ON AA.UPD_USER = U2.USER_ID
-				WHERE	AA.ID = #ID#
+				WHERE	AA.CODE_ID = #CODE_ID#
 			]]>
 		</select>
-		<insert id="InsertCodes" parameterClass="DataMap" resultClass="Int">
+		<insert id="InsertCode" parameterClass="DataMap" resultClass="Int">
 			<![CDATA[
 				INSERT INTO UAA.CODES
 				(
@@ -135,7 +137,7 @@
 				]]>
 			</selectKey>
 		</insert>
-		<update id="UpdateCodes" parameterClass="DataMap">
+		<update id="UpdateCode" parameterClass="DataMap">
 			<![CDATA[
 				UPDATE	UAA.CODES
 				SET		CODE			= #CODE#
@@ -156,7 +158,7 @@
 				WHERE	CODE_ID			= #CODE_ID#
 			]]>
 		</update>
-		<delete id="DeleteCodes" parameterClass="DataMap">
+		<delete id="DeleteCode" parameterClass="DataMap">
 			<![CDATA[
 				DELETE
 				FROM	UAA.CODES

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using DevExpress.Utils;
 using DevExpress.XtraGrid.Views.Grid;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
-using JW.AUBE.Base.Variables;
-using JW.AUBE.Base.Was.Models;
 using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Controls.Grid;
 using JW.AUBE.Core.Enumerations;
@@ -44,16 +41,12 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			base.InitControls();
 
-			lcItemName.Tag = true;
-			lcItemValue.Tag = true;
+			lcItemLogicalName.Tag = true;
+			lcItemPhysicalName.Tag = true;
 
 			SetFieldNames();
 
-			lcItemId.SetFieldName("DICTIONARY_ID");
-			lcItemName.SetFieldName("DICTIONARY_NAME");
-			lcItemValue.SetFieldName("FIELD_NAME");
-
-			txtId.SetEnable(false);
+			txtDictionaryId.SetEnable(false);
 			txtInsTime.SetEnable(false);
 			txtInsUser.SetEnable(false);
 			txtUpdTime.SetEnable(false);
@@ -70,32 +63,28 @@ namespace JW.AUBE.Core.Forms.Auth
 				new XGridColumn()
 				{
 					FieldName = "ROW_NO",
-					Caption = "NO",
-					HorzAlignment = HorzAlignment.Center
+					HorzAlignment = HorzAlignment.Center,
+					Width = 40
 				},
 				new XGridColumn()
 				{
-					FieldName = "ID",
-					Caption = "용어ID",
-					HorzAlignment = HorzAlignment.Center
+					FieldName = "DICTIONARY_ID",
+					HorzAlignment = HorzAlignment.Center,
+					Width = 80
 				},
 				new XGridColumn()
 				{
-					FieldName = "NAME",
-					Caption = "용어명",
-					HorzAlignment = HorzAlignment.Near
+					FieldName = "LOGICAL_NAME",
+					HorzAlignment = HorzAlignment.Near,
+					Width = 200
 				},
 				new XGridColumn()
 				{
-					FieldName = "VALUE",
-					Caption = "필드명",
-					HorzAlignment = HorzAlignment.Near
+					FieldName = "PHYSICAL_NAME",
+					HorzAlignment = HorzAlignment.Near,
+					Width = 200
 				}
 			);
-			gridList.SetWidth("ROW_NO", 40);
-			gridList.SetWidth("ID", 80);
-			gridList.SetWidth("NAME", 200);
-			gridList.SetWidth("VALUE", 150);
 
 			gridList.RowCellClick += delegate (object sender, RowCellClickEventArgs e)
 			{
@@ -107,7 +96,7 @@ namespace JW.AUBE.Core.Forms.Auth
 					if (e.Button == System.Windows.Forms.MouseButtons.Left && e.Clicks == 1)
 					{
 						GridView view = sender as GridView;
-						DetailDataLoad(view.GetRowCellValue(e.RowHandle, "ID"));
+						DetailDataLoad(view.GetRowCellValue(e.RowHandle, "DICTIONARY_ID"));
 					}
 				}
 				catch(Exception ex)
@@ -123,9 +112,9 @@ namespace JW.AUBE.Core.Forms.Auth
 		}
 		protected override void DataInit()
 		{
-			txtId.Clear();
-			txtName.Clear();
-			txtValue.Clear();
+			txtDictionaryId.Clear();
+			txtLogicalName.Clear();
+			txtPhysicalName.Clear();
 			memDescription.Clear();
 
 			txtInsTime.Clear();
@@ -134,7 +123,7 @@ namespace JW.AUBE.Core.Forms.Auth
 			txtUpdUser.Clear();
 
 			this.EditMode = EditModeEnum.New;
-			txtName.Focus();
+			txtLogicalName.Focus();
 		}
 
 		protected override void DataLoad(object param = null)
@@ -151,15 +140,15 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			try
 			{
-				DataTable dt = ServerRequest.SingleRequest("Base", "GetData", "SelectDictionaries", new DataMap() { { "ID", id } });
+				DataTable dt = ServerRequest.SingleRequest("Base", "GetData", "SelectDictionaries", new DataMap() { { "DICTIONARY_ID", id } });
 				if (dt == null || dt.Rows.Count == 0)
 					throw new Exception("조회할 데이터가 없습니다.");
 
 				DataRow row = dt.Rows[0];
 
-				txtId.EditValue = row["ID"];
-				txtName.EditValue = row["NAME"];
-				txtValue.EditValue = row["VALUE"];
+				txtDictionaryId.EditValue = row["DICTIONARY_ID"];
+				txtLogicalName.EditValue = row["LOGICAL_NAME"];
+				txtPhysicalName.EditValue = row["PHYSICAL_NAME"];
 				memDescription.EditValue = row["DESCRIPTION"];
 				txtInsTime.EditValue = row["INS_TIME"];
 				txtInsUser.EditValue = row["INS_USER_NAME"];
@@ -167,7 +156,7 @@ namespace JW.AUBE.Core.Forms.Auth
 				txtUpdUser.EditValue = row["UPD_USER_NAME"];
 
 				this.EditMode = EditModeEnum.Modify;
-				txtName.Focus();
+				txtLogicalName.Focus();
 
 			}
 			catch(Exception ex)
@@ -182,30 +171,14 @@ namespace JW.AUBE.Core.Forms.Auth
 			{
 				DataTable dt = (new DataMap()
 				{
-					{ "ID", txtId.EditValue },
-					{ "NAME", txtName.EditValue },
-					{ "VALUE", txtValue.EditValue },
+					{ "DICTIONARY_ID", txtDictionaryId.EditValue },
+					{ "LOGICAL_NAME", txtLogicalName.EditValue },
+					{ "PHYSICAL_NAME", txtPhysicalName.EditValue },
 					{ "DESCRIPTION", memDescription.EditValue },
-					{ "INS_USER", GlobalVar.Settings.GetValue("USER_ID") },
 					{ "ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE" }
 				}).ToDataTable();
-				
-				var res = ServerRequest.Request(new WasRequest()
-				{
-					ServiceId = "Base",
-					ProcessId = "Save",
-					IsTransaction = true,
-					DataList = new List<WasRequestData>()
-					{
-						new WasRequestData()
-						{
-							SqlId = "Dictionaries",
-							KeyField = "ID",
-							Data = dt
-						}
-					}
-				});
 
+				var res = ServerRequest.SingleRequest("Base", "Save", "Dictionary", dt, "DICTIONARY_ID");
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -224,27 +197,11 @@ namespace JW.AUBE.Core.Forms.Auth
 			{
 				DataTable dt = (new DataMap()
 				{
-					{ "ID", txtId.EditValue },
-					{ "INS_USER", GlobalVar.Settings.GetValue("USER_ID") },
+					{ "DICTIONARY_ID", txtDictionaryId.EditValue },
 					{ "ROWSTATE", "DELETE" }
 				}).ToDataTable();
 
-				var res = ServerRequest.Request(new WasRequest()
-				{
-					ServiceId = "Base",
-					ProcessId = "Save",
-					IsTransaction = true,
-					DataList = new List<WasRequestData>()
-					{
-						new WasRequestData()
-						{
-							SqlId = "Dictionaries",
-							KeyField = "ID",
-							Data = dt
-						}
-					}
-				});
-
+				var res = ServerRequest.SingleRequest("Base", "Save", "Dictionary", dt, "DICTIONARY_ID");
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

@@ -5,9 +5,9 @@ using DevExpress.Utils;
 using DevExpress.XtraGrid.Views.Grid;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
+using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Controls.Grid;
 using JW.AUBE.Core.Enumerations;
-using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Models;
 using JW.AUBE.Core.Utils;
 
@@ -41,8 +41,7 @@ namespace JW.AUBE.Core.Forms.Code
 			btnLineAdd.Click += delegate (object sender, EventArgs e)
 			{
 				int rowindex = gridMaterials.AddNewRow();
-				gridMaterials.SetValue(rowindex, "ADDRESS_TYPE", "20");
-				gridMaterials.SetFocus(rowindex, "ADDRESS_TYPE");
+				gridMaterials.SetFocus(rowindex, "MATERIAL_NAME");
 			};
 			btnLineDel.Click += delegate (object sender, EventArgs e)
 			{
@@ -52,7 +51,7 @@ namespace JW.AUBE.Core.Forms.Code
 			};
 			btnSave.Click += delegate (object sender, EventArgs e)
 			{
-				DataSaveMaterials(true);
+				DataSaveMaterials();
 			};
 		}
 
@@ -60,15 +59,12 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			base.InitControls();
 
-			lcItemName.Tag = true;
+			lcItemProductName.Tag = true;
 
 			SetFieldNames();
-
-			lcItemId.SetFieldName("PRODUCT_ID");
-			lcItemName.SetFieldName("PRODUCT_NAME");
-			lcItemCode.SetFieldName("PRODUCT_CODE");
 			
-			txtId.SetEnable(false);
+			txtProductId.SetEnable(false);
+			txtProductCode.SetEnable(false);
 			txtInsTime.SetEnable(false);
 			txtInsUserName.SetEnable(false);
 			txtUpdTime.SetEnable(false);
@@ -83,6 +79,7 @@ namespace JW.AUBE.Core.Forms.Code
 		void InitCombo()
 		{
 			lupProductType.BindData("PRODUCT_TYPE", null, null, true);
+			lupCategory.BindData("CATEGORY", null, null, true);
 		}
 
 		void InitGrid()
@@ -94,43 +91,43 @@ namespace JW.AUBE.Core.Forms.Code
 				new XGridColumn()
 				{
 					FieldName="ROW_NO",
-					Caption = "NO",
 					HorzAlignment = HorzAlignment.Center,
 					Width = 50
 				},
 				new XGridColumn()
 				{
-					FieldName="ID",
-					Caption = "제품ID",
+					FieldName="PRODUCT_ID",
 					HorzAlignment = HorzAlignment.Center,
 					Width = 60,
 					Visible = false
 				},
 				new XGridColumn()
 				{
-					FieldName="CODE",
-					Caption = "제품코드",
+					FieldName="PRODUCT_CODE",
 					HorzAlignment = HorzAlignment.Center,
 					Width = 80
 				},
 				new XGridColumn()
 				{
-					FieldName="NAME",
-					Caption="제품명",
+					FieldName="PRODUCT_NAME",
 					HorzAlignment = HorzAlignment.Near,
 					Width = 200
 				},
 				new XGridColumn()
 				{
 					FieldName="PRODUCT_TYPE",
-					Caption="제품유형",
+					HorzAlignment = HorzAlignment.Center,
+					Width = 100
+				},
+				new XGridColumn()
+				{
+					FieldName="CATEGORY",
 					HorzAlignment = HorzAlignment.Center,
 					Width = 100
 				},
 				new XGridColumn()
 				{
 					FieldName="USE_YN",
-					Caption="사용여부",
 					HorzAlignment = HorzAlignment.Center,
 					RepositoryItem = gridList.GetRepositoryItemCheckEdit(),
 					Width = 80
@@ -150,7 +147,7 @@ namespace JW.AUBE.Core.Forms.Code
 					if (e.Button == System.Windows.Forms.MouseButtons.Left && e.Clicks == 1)
 					{
 						GridView view = sender as GridView;
-						DetailDataLoad(view.GetRowCellValue(e.RowHandle, "ID"));
+						DetailDataLoad(view.GetRowCellValue(e.RowHandle, "PRODUCT_ID"));
 					}
 				}
 				catch(Exception ex)
@@ -171,7 +168,7 @@ namespace JW.AUBE.Core.Forms.Code
 				},
 				new XGridColumn()
 				{
-					FieldName = "ID",
+					FieldName = "REG_ID",
 					HorzAlignment = HorzAlignment.Center,
 					Width = 40,
 					Visible = false
@@ -248,9 +245,9 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				txtId.Clear();
-				txtCode.Clear();
-				txtName.Clear();
+				txtProductId.Clear();
+				txtProductCode.Clear();
+				txtProductName.Clear();
 				txtBarcode.Clear();
 				chkUseYn.Checked = true;
 				memRemarks.Clear();
@@ -263,8 +260,10 @@ namespace JW.AUBE.Core.Forms.Code
 				gridMaterials.DataSource = null;
 				gridMaterials.EmptyDataTableBinding();
 
+				btnSave.Enabled = false;
+
 				this.EditMode = EditModeEnum.New;
-				txtName.Focus();
+				txtProductName.Focus();
 			}
 			catch(Exception ex)
 			{
@@ -293,30 +292,38 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				DataTable dt = ServerRequest.SingleRequest("Base", "GetData", "SelectProduct", new DataMap() { { "ID", id } });
-				if (dt == null || dt.Rows.Count == 0)
-					throw new Exception("조회할 데이터가 없습니다.");
+				var res = ServerRequest.GetData("Product", new DataMap() { { "PRODUCT_ID", id } });
+				if (res.DataList.Count > 0)
+				{
+					if (res.DataList[0].Data == null || res.DataList[0].Data.Rows.Count == 0)
+						throw new Exception("조회 데이터가 없습니다.");
 
-				DataRow row = dt.Rows[0];
+					DataRow row = res.DataList[0].Data.Rows[0];
 
-				txtId.EditValue = row["ID"];
-				txtCode.EditValue = row["CODE"];
-				txtName.EditValue = row["NAME"];
-				txtBarcode.EditValue = row["BARCODE"];
-				lupProductType.EditValue = row["PRODUCT_TYPE"];
-				txtBarcode.EditValue = row["BARCODE"];
-				chkUseYn.EditValue = row["USE_YN"];
-				memRemarks.EditValue = row["REMARKS"];
+					txtProductId.EditValue = row["PRODUCT_ID"];
+					txtProductCode.EditValue = row["PRODUCT_CODE"];
+					txtProductName.EditValue = row["PRODUCT_NAME"];
+					txtBarcode.EditValue = row["BARCODE"];
+					lupProductType.EditValue = row["PRODUCT_TYPE"];
+					lupCategory.EditValue = row["CATEGORY"];
+					txtBarcode.EditValue = row["BARCODE"];
+					chkUseYn.EditValue = row["USE_YN"];
+					memRemarks.EditValue = row["REMARKS"];
 
-				txtInsTime.EditValue = row["INS_TIME"];
-				txtInsUserName.EditValue = row["INS_USER_NAME"];
-				txtUpdTime.EditValue = row["UPD_TIME"];
-				txtUpdUserName.EditValue = row["UPD_USER_NAME"];
+					txtInsTime.EditValue = row["INS_TIME"];
+					txtInsUserName.EditValue = row["INS_USER_NAME"];
+					txtUpdTime.EditValue = row["UPD_TIME"];
+					txtUpdUserName.EditValue = row["UPD_USER_NAME"];
+				}
 
-				DataLoadMaterials();
+				if (res.DataList.Count > 1)
+				{
+					gridMaterials.DataSource = res.DataList[1].Data;
+				}
 
+				btnSave.Enabled = true;
 				this.EditMode = EditModeEnum.Modify;
-				txtName.Focus();
+				txtProductName.Focus();
 
 			}
 			catch(Exception ex)
@@ -329,14 +336,12 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				DataMap map = lc.ItemToDataMap();
+				DataMap map = lcGroupEdit.ItemToDataMap();
 				map.SetValue("ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE");
 
-				var res = ServerRequest.SingleRequest("Base", "Save", "Product", map.ToDataTable(), "ID");
+				var res = ServerRequest.Execute("Product", "Save", new DataTable[] { map.ToDataTable(), GetMaterialData() });
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
-
-				DataLoadMaterials();
 
 				ShowMsgBox("저장하였습니다.");
 				callback(arg, res.DataList[0].ReturnValue);
@@ -353,11 +358,11 @@ namespace JW.AUBE.Core.Forms.Code
 			{
 				DataTable dt = (new DataMap()
 				{
-					{ "ID", txtId.EditValue },
+					{ "PRODUCT_ID", txtProductId.EditValue },
 					{ "ROWSTATE", "DELETE" }
 				}).ToDataTable();
 
-				var res = ServerRequest.SingleRequest("Base", "Save", "Product", dt, "ID");
+				var res = ServerRequest.SingleRequest("Base", "Save", "Product", dt, "PRODUCT_ID");
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -375,21 +380,43 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				gridMaterials.BindData("Base", "GetList", "SelectProductMaterialInput", new DataMap() { { "PRODUCT_ID", txtId.EditValue } });
+				gridMaterials.BindData("Base", "GetList", "SelectProductMaterials", new DataMap() { { "PRODUCT_ID", txtProductId.EditValue } });
 			}
 			catch (Exception ex)
 			{
 				ShowErrBox(ex);
 			}
 		}
-		void DataSaveMaterials(bool reload = false)
+		void DataSaveMaterials()
+		{
+			try
+			{
+				DataTable dt = GetMaterialData();
+
+				if (dt == null || dt.Rows.Count == 0)
+					throw new Exception("저장할 건이 없습니다.");
+
+				var res = ServerRequest.SingleRequest("Base", "Save", "ProductMaterial", dt);
+				if (res.ErrorNumber != 0)
+					throw new Exception(res.ErrorMessage);
+
+				ShowMsgBox("저장하였습니다.");
+				DataLoadMaterials();
+			}
+			catch (Exception ex)
+			{
+				ShowErrBox(ex);
+			}
+		}
+
+		private DataTable GetMaterialData()
 		{
 			try
 			{
 				DataTable dt = new DataTable();
 				dt.Columns.AddRange(new DataColumn[]
 				{
-					new DataColumn("ID", typeof(int)),
+					new DataColumn("REG_ID", typeof(int)),
 					new DataColumn("PRODUCT_ID", typeof(int)),
 					new DataColumn("MATERIAL_ID", typeof(int)),
 					new DataColumn("INPUT_QTY", typeof(int)),
@@ -406,8 +433,8 @@ namespace JW.AUBE.Core.Forms.Code
 						string rowstate = row["ROWSTATE"].ToString();
 
 						dt.Rows.Add(
-							row["ID"],
-							txtId.EditValue,
+							row["REG_ID"],
+							txtProductId.EditValue,
 							row["MATERIAL_ID"],
 							row["INPUT_QTY"],
 							rowstate
@@ -415,27 +442,11 @@ namespace JW.AUBE.Core.Forms.Code
 					}
 				}
 
-				if (dt == null || dt.Rows.Count == 0)
-				{
-					if (reload)
-						throw new Exception("저장할 건이 없습니다.");
-				}
-				else
-				{
-					var res = ServerRequest.SingleRequest("Base", "Save", "ProductMaterialInput", dt);
-					if (res.ErrorNumber != 0)
-						throw new Exception(res.ErrorMessage);
-
-					if (reload)
-					{
-						ShowMsgBox("저장하였습니다.");
-						DataLoadMaterials();
-					}
-				}
+				return dt;
 			}
-			catch (Exception ex)
+			catch
 			{
-				ShowErrBox(ex);
+				throw;
 			}
 		}
 	}

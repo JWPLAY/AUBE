@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+	namespace="JW.AUBE.Data.SqlMaps"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<statements>
+		<select id="SelectProductMaterials" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT  ROW_NUMBER() OVER (ORDER BY AA.REG_ID DESC)	AS ROW_NO
+					,	AA.REG_ID
+					,	AA.PRODUCT_ID
+					,	AA.MATERIAL_ID
+					,	BB.PRODUCT_NAME	AS MATERIAL_NAME
+					,	AA.INPUT_QTY
+					
+					,	AA.INS_TIME
+					,	AA.INS_USER
+					,	U1.USER_NAME			AS INS_USER_NAME
+					,	AA.UPD_TIME
+					,	AA.UPD_USER
+					,	U2.USER_NAME			AS UPD_USER_NAME
+					
+				FROM	UCD.PRODUCT_MATERIALS AA WITH (NOLOCK)
+						LEFT JOIN
+							UCD.PRODUCTS BB
+								ON AA.MATERIAL_ID = BB.PRODUCT_ID
+						LEFT JOIN 
+							UAA.USERS U1 WITH (NOLOCK)
+								ON AA.INS_USER = U1.USER_ID
+						LEFT JOIN
+							UAA.USERS U2 WITH (NOLOCK)
+								ON AA.UPD_USER = U2.USER_ID
+				WHERE	AA.PRODUCT_ID = #PRODUCT_ID#
+				]]>
+		</select>
+		<select id="SelectProductMaterial" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT	AA.REG_ID
+					,	AA.PRODUCT_ID
+					,	AA.MATERIAL_ID
+					,	BB.PRODUCT_NAME			AS MATERIAL_NAME
+					,	AA.INPUT_QTY
+					
+					,	AA.INS_TIME
+					,	AA.INS_USER
+					,	U1.USER_NAME			AS INS_USER_NAME
+					,	AA.UPD_TIME
+					,	AA.UPD_USER
+					,	U2.USER_NAME			AS UPD_USER_NAME
+					
+				FROM	UCD.PRODUCT_MATERIALS AA WITH (NOLOCK)
+						LEFT JOIN
+							UCD.PRODUCTS BB
+								ON AA.MATERIAL_ID = BB.PRODUCT_ID
+						LEFT JOIN 
+							UAA.USERS U1 WITH (NOLOCK)
+								ON AA.INS_USER = U1.USER_ID
+						LEFT JOIN
+							UAA.USERS U2 WITH (NOLOCK)
+								ON AA.UPD_USER = U2.USER_ID
+				WHERE	AA.REG_ID = #REG_ID#
+				]]>
+		</select>
+		<insert id="InsertProductMaterial" parameterClass="DataMap" >
+			<![CDATA[
+				INSERT INTO UCD.PRODUCT_MATERIALS
+				( 
+					PRODUCT_ID, MATERIAL_ID, INPUT_QTY, INS_TIME, INS_USER 
+				)
+				VALUES
+				( 
+					#PRODUCT_ID#, #MATERIAL_ID#, #INPUT_QTY#, GETDATE(), #INS_USER# 
+				)
+			]]>
+			<selectKey type="post" property="REG_ID" resultClass="Int">
+				<![CDATA[
+					SELECT @@IDENTITY AS REG_ID
+				]]>
+			</selectKey>
+		</insert>
+		<update id="UpdateProductMaterial" parameterClass="DataMap">
+			<![CDATA[
+				UPDATE  UCD.PRODUCT_MATERIALS
+				SET     PRODUCT_ID	= #PRODUCT_ID#
+					,	MATERIAL_ID	= #MATERIAL_ID#
+					,	INPUT_QTY	= #INPUT_QTY#
+					,	UPD_TIME	= GETDATE()
+					,	UPD_USER	= #INS_USER#
+				WHERE	REG_ID		= #REG_ID#
+			]]>
+		</update>
+		<delete id="DeleteProductMaterial" parameterClass="DataMap">
+			<![CDATA[
+				DELETE
+				FROM	UCD.PRODUCT_MATERIALS
+				WHERE	REG_ID = #REG_ID#
+			]]>
+		</delete>
+	</statements>
+</sqlMap>

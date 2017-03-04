@@ -12,12 +12,17 @@
 					,	AA.PRODUCT_CODE
 					,	AA.PRODUCT_NAME
 					,	M1.NAME			AS PRODUCT_TYPE
+					,	M2.NAME			AS CATEGORY
 					,	AA.USE_YN
 				FROM	UCD.PRODUCTS AA WITH (NOLOCK)
 						LEFT JOIN 
 							UAA.CODES M1 WITH (NOLOCK)
 								ON AA.PRODUCT_TYPE = M1.CODE 
 									AND M1.PARENT_CODE = 'PRODUCT_TYPE'
+						LEFT JOIN
+							UAA.CODES M2 WITH (NOLOCK)
+								ON AA.CATEGORY = M2.CODE
+									AND M2.PARENT_CODE = 'CATEGORY'
 				WHERE	1=1				
 			]]>
 			<isNotEmpty property="FIND_TEXT">
@@ -51,7 +56,7 @@
 					,	AA.UPD_USER
 					,	U2.USER_NAME			AS UPD_USER_NAME
 					
-				FROM	UCD.CUSTOMERS AA WITH (NOLOCK)
+				FROM	UCD.PRODUCTS AA WITH (NOLOCK)
 						LEFT JOIN 
 							UAA.USERS U1 WITH (NOLOCK)
 								ON AA.INS_USER = U1.USER_ID
@@ -100,5 +105,13 @@
 				WHERE	PRODUCT_ID = #PRODUCT_ID#
 			]]>
 		</delete>
+
+		<select id="GetProductCode" parameterClass="DataMap" resultClass="String" >
+			<![CDATA[
+				SELECT  ISNULL(MAX(PRODUCT_CODE), #PRODUCT_CODE#+'000')	AS PRODUCT_CODE
+				FROM	UCD.PRODUCTS AA WITH (NOLOCK)
+				WHERE	AA.PRODUCT_CODE LIKE #PRODUCT_CODE# + '%'
+				]]>
+		</select>
 	</statements>
 </sqlMap>

@@ -22,6 +22,81 @@ namespace JW.AUBE.Core.Utils
 				throw;
 			}
 		}
+		public static WasRequest GetData(string serviceId, DataMap parameter)
+		{
+			try
+			{
+				if (string.IsNullOrEmpty(serviceId))
+					serviceId = "Base";
+
+				if (parameter == null)
+					parameter = new DataMap();
+
+				if (parameter.ContainsKey("INS_USER") == false)
+					parameter.SetValue("INS_USER", GlobalVar.Settings.GetValue("USER_ID"));
+
+				var res = (new WasRequest()
+							{
+								ServiceId = serviceId,
+								ProcessId = "GetData",
+								Parameter = parameter
+							}).Request();
+
+				if (res == null)
+					throw new Exception("요청결과가 없습니다.");
+
+				if (res.DataList == null || res.DataList.Count == 0)
+					throw new Exception("요청결과의 데이터가 없습니다.");
+
+				return res;
+			}
+			catch
+			{
+				throw;
+			}
+		}
+		public static WasRequest Execute(string serviceId, string processId, DataTable[] datalist)
+		{
+			try
+			{
+				if (datalist == null || datalist.Length == 0)
+					throw new Exception("처리할 데이터가 없습니다.");
+
+				if (string.IsNullOrEmpty(serviceId))
+					serviceId = "Base";
+
+				List<WasRequestData> reqdatalist = new List<WasRequestData>();
+				foreach(DataTable dt in datalist)
+				{
+					if (dt.Columns.Contains("INS_USER") == false)
+						dt.Columns.Add("INS_USER", typeof(int));
+
+					foreach (DataRow dr in dt.Rows)
+						dr["INS_USER"] = GlobalVar.Settings.GetValue("USER_ID");
+
+					reqdatalist.Add(new WasRequestData() { Data = dt });
+				}
+
+				var res = (new WasRequest()
+				{
+					ServiceId = serviceId,
+					ProcessId = processId,
+					DataList = reqdatalist
+				}).Request();
+
+				if (res == null)
+					throw new Exception("요청결과가 없습니다.");
+
+				if (res.DataList == null || res.DataList.Count == 0)
+					throw new Exception("요청결과의 데이터가 없습니다.");
+
+				return res;
+			}
+			catch
+			{
+				throw;
+			}
+		}
 
 		public static DataTable SingleRequest(this WasRequest req)
 		{
@@ -100,6 +175,7 @@ namespace JW.AUBE.Core.Utils
 				throw;
 			}
 		}
+
 		public static WasRequest SingleRequest(string serviceId, string processId, string sqlId, DataTable data, string keyField = null)
 		{
 			if (data != null && data.Rows.Count > 0)
@@ -128,7 +204,6 @@ namespace JW.AUBE.Core.Utils
 					}
 			});
 		}
-
 		public static WasRequest ProcedureCall(string sqlId, DataMap parameter)
 		{
 			try

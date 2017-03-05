@@ -15,9 +15,6 @@ namespace JW.AUBE.Core.Forms.Code
 {
 	public partial class CustomersForm : EditForm
 	{
-		private object m_biz_id = null;
-		private object m_address_id = null;
-
 		public CustomersForm()
 		{
 			InitializeComponent();
@@ -87,19 +84,17 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			base.InitControls();
 
-			lcItemName.Tag = true;
+			lcItemCustomerName.Tag = true;
 
 			SetFieldNames();
 
-			lcItemId.SetFieldName("CUSTOMER_ID");
-			lcItemName.SetFieldName("CUSTOMER_NAME");
-
-			txtId.SetEnable(false);
+			txtCustomerId.SetEnable(false);
 			txtInsTime.SetEnable(false);
 			txtInsUserName.SetEnable(false);
 			txtUpdTime.SetEnable(false);
 			txtUpdUserName.SetEnable(false);
-			txtBizId.SetEnable(false);
+			txtBizRegId.SetEnable(false);
+			txtAddressId.SetEnable(false);
 
 			InitCombo();
 			InitGrid();
@@ -109,7 +104,7 @@ namespace JW.AUBE.Core.Forms.Code
 
 		void InitCombo()
 		{
-			lupCustType.BindData("CUST_TYPE", null, null, true);
+			lupCustomerType.BindData("CUSTOMER_TYPE", null, null, true);
 		}
 
 		void InitGrid()
@@ -360,20 +355,21 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				txtId.Clear();
-				txtName.Clear();
+				txtCustomerId.Clear();
+				txtCustomerName.Clear();
 				txtEmail.Clear();
 				txtHpage.Clear();
 				chkUseYn.Checked = true;
 				memRemarks.Clear();
 
-				txtBizId.Clear();
+				txtBizRegId.Clear();
 				txtBizRegNo.Clear();
-				txtBizCorpNo.Clear();
+				txtRepName.Clear();
 				txtBizName.Clear();
-				txtBizRepName.Clear();
 				txtBizType.Clear();
 				txtBizItem.Clear();
+
+				txtAddressId.Clear();
 				txtPostNo.Clear();
 				txtZoneNo.Clear();
 				txtAddress1.Clear();
@@ -390,11 +386,8 @@ namespace JW.AUBE.Core.Forms.Code
 				gridAddress.DataSource = null;
 				gridAddress.EmptyDataTableBinding();
 
-				m_biz_id = null;
-				m_address_id = null;
-
 				this.EditMode = EditModeEnum.New;
-				txtName.Focus();
+				txtCustomerName.Focus();
 			}
 			catch(Exception ex)
 			{
@@ -423,44 +416,65 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				DataTable dt = ServerRequest.SingleRequest("Base", "GetData", "SelectCustomer", new DataMap() { { "ID", id } });
-				if (dt == null || dt.Rows.Count == 0)
-					throw new Exception("조회할 데이터가 없습니다.");
+				var res = ServerRequest.GetData("Customer", new DataMap() { { "CUSTOMER_ID", id } });
 
-				DataRow row = dt.Rows[0];
+				if (res == null)
+					throw new Exception("처리결과를 수신하지 못했습니다.");
 
-				txtId.EditValue = row["ID"];
-				txtName.EditValue = row["NAME"];
-				lupCustType.EditValue = row["CUST_TYPE"];
-				txtEmail.EditValue = row["EMAIL"];
-				txtHpage.EditValue = row["HPAGE"];
-				chkUseYn.EditValue = row["USE_YN"];
-				memRemarks.EditValue = row["REMARKS"];
+				if (res.ErrorNumber != 0)
+					throw new Exception(res.ErrorMessage);
 
-				txtBizId.EditValue = row["BIZ_ID"];
-				txtBizRegNo.EditValue = row["BIZ_REG_NO"];
-				txtBizCorpNo.EditValue = row["BIZ_CORP_NO"];
-				txtBizName.EditValue = row["BIZ_NAME"];
-				txtBizType.EditValue = row["BIZ_TYPE"];
-				txtBizItem.EditValue = row["BIZ_ITEM"];
-				txtPostNo.EditValue = row["POST_NO"];
-				txtZoneNo.EditValue = row["ZONE_NO"];
-				txtAddress1.EditValue = row["ADDRESS1"];
-				txtAddress2.EditValue = row["ADDRESS2"];
+				if (res.DataList == null || res.DataList.Count == 0)
+					throw new Exception("처리결과 데이터가 없습니다.");
 
-				txtInsTime.EditValue = row["INS_TIME"];
-				txtInsUserName.EditValue = row["INS_USER_NAME"];
-				txtUpdTime.EditValue = row["UPD_TIME"];
-				txtUpdUserName.EditValue = row["UPD_USER_NAME"];
+				if (res.DataList.Count > 0)
+				{
+					if (res.DataList[0].Data == null || res.DataList[0].Data.Rows.Count == 0)
+						throw new Exception("조회할 데이터가 없습니다.");
 
-				DataLoadPhones();
-				DataLoadAddress();
+					DataRow row = res.DataList[0].Data.Rows[0];
+
+					txtCustomerId.EditValue = row["CUSTOMER_ID"];
+					txtCustomerName.EditValue = row["CUSTOMER_NAME"];
+					lupCustomerType.EditValue = row["CUSTOMER_TYPE"];
+					txtEmail.EditValue = row["EMAIL"];
+					txtHpage.EditValue = row["HPAGE"];
+					chkUseYn.EditValue = row["USE_YN"];
+					memRemarks.EditValue = row["REMARKS"];
+
+					txtBizRegId.EditValue = row["BIZ_REG_ID"];
+					txtBizRegNo.EditValue = row["BIZ_REG_NO"];
+					txtBizName.EditValue = row["BIZ_NAME"];
+					txtRepName.EditValue = row["REP_NAME"];
+					txtBizType.EditValue = row["BIZ_TYPE"];
+					txtBizItem.EditValue = row["BIZ_ITEM"];
+
+					txtPostNo.EditValue = row["POST_NO"];
+					txtZoneNo.EditValue = row["ZONE_NO"];
+					txtAddress1.EditValue = row["ADDRESS1"];
+					txtAddress2.EditValue = row["ADDRESS2"];
+
+					txtInsTime.EditValue = row["INS_TIME"];
+					txtInsUserName.EditValue = row["INS_USER_NAME"];
+					txtUpdTime.EditValue = row["UPD_TIME"];
+					txtUpdUserName.EditValue = row["UPD_USER_NAME"];
+				}
+
+				if (res.DataList.Count > 1)
+				{
+					gridPhones.DataSource = res.DataList[1].Data;
+				}
+
+				if (res.DataList.Count > 2)
+				{
+					gridAddress.DataSource = res.DataList[2].Data;
+				}
 
 				btnAddressSave.Enabled =
 					btnPhoneSave.Enabled = true;
 
 				this.EditMode = EditModeEnum.Modify;
-				txtName.Focus();
+				txtCustomerName.Focus();
 
 			}
 			catch(Exception ex)
@@ -498,7 +512,7 @@ namespace JW.AUBE.Core.Forms.Code
 			{
 				DataTable dt = (new DataMap()
 				{
-					{ "ID", txtId.EditValue },
+					{ "ID", txtCustomerId.EditValue },
 					{ "ROWSTATE", "DELETE" }
 				}).ToDataTable();
 
@@ -520,7 +534,7 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				gridPhones.BindData("Base", "GetList", "SelectCustomerPhones", new DataMap() { { "CUSTOMER_ID", txtId.EditValue } });
+				gridPhones.BindData("Base", "GetList", "SelectCustomerPhones", new DataMap() { { "CUSTOMER_ID", txtCustomerId.EditValue } });
 			}
 			catch (Exception ex)
 			{
@@ -553,7 +567,7 @@ namespace JW.AUBE.Core.Forms.Code
 
 						dt.Rows.Add(
 							row["ID"],
-							txtId.EditValue,
+							txtCustomerId.EditValue,
 							row["PHONE_NUMBER"],
 							row["PHONE_TYPE"],
 							row["REMARKS"],
@@ -590,7 +604,7 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				gridAddress.BindData("Base", "GetList", "SelectCustomerAddress", new DataMap() { { "CUSTOMER_ID", txtId.EditValue } });
+				gridAddress.BindData("Base", "GetList", "SelectCustomerAddress", new DataMap() { { "CUSTOMER_ID", txtCustomerId.EditValue } });
 			}
 			catch (Exception ex)
 			{
@@ -633,7 +647,7 @@ namespace JW.AUBE.Core.Forms.Code
 
 						dt.Rows.Add(
 							row["ID"],
-							txtId.EditValue,
+							txtCustomerId.EditValue,
 							row["ADDRESS_TYPE"],
 							addressId,
 							row["REMARKS"],

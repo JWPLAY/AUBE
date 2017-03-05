@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -69,7 +70,7 @@ namespace JW.AUBE.Base.Utils
 		/// </summary>
 		/// <param name="str"></param>
 		/// <returns></returns>
-		public static string ToUpperUnderBarBySb(this string str)
+		public static string ToUpperUnderscoreBySb(this string str)
 		{
 			var i = 0;
 			var sb = new StringBuilder();
@@ -85,7 +86,7 @@ namespace JW.AUBE.Base.Utils
 			return sb.ToString().ToUpper();
 		}
 
-		public static string ToUpperUnderBarByLinq(this string str)
+		public static string ToUpperUnderscoreByLinq(this string str)
 		{
 			var converted = str.Select(x => char.IsUpper(x) ? string.Concat("_", x) : x.ToString());
 			var singleString = converted.Aggregate((a, b) => a + b);
@@ -96,9 +97,26 @@ namespace JW.AUBE.Base.Utils
 			return singleString.ToUpper();
 		}
 
-		public static string ToUpperUnderBarByPattern(this string str)
+		public static string ToUpperUnderscoreByPattern(this string str)
 		{
 			return Regex.Replace(str, "([a-z])([A-Z])", "$1_$2").ToUpper();
+		}
+
+		public static string ToUnderscore(this string str)
+		{
+			return string.Concat(str.Select((x, i) => i > 0 && char.IsUpper(x) ? "_" + x : x.ToString()));
+		}
+
+		public static string ToCamelCase(this string str)
+		{
+			string[] atoms = str.Split('_');
+			StringBuilder camel = new StringBuilder();
+			TextInfo ti = new CultureInfo("en-US", false).TextInfo;
+			foreach (string atom in atoms)
+			{
+				camel.Append(ti.ToTitleCase(atom.ToLower()));
+			}
+			return camel.ToString();
 		}
 
 		public static string NumberCheck(string num)

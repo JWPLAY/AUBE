@@ -7,7 +7,7 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
-using JW.AUBE.Core.Base.Forms;
+using JW.AUBE.Core.Helper;
 using JW.AUBE.Core.Messages;
 using JW.AUBE.Core.Utils;
 
@@ -221,7 +221,7 @@ namespace JW.AUBE.Core.Controls.Common
 					Parameters.SetValue("FindText", txtCodeName.EditValue);
 				}
 
-				var data = CodeHelpUtils.GetCodeHelpLookup(CodeGroup, Parameters);
+				var data = CodeHelper.Lookup(CodeGroup, Parameters);
 				if (data != null)
 				{
 					if (data.Rows.Count == 0)
@@ -252,9 +252,9 @@ namespace JW.AUBE.Core.Controls.Common
 
 		private void SearchForm(DataTable data = null)
 		{
-			using (var form = new CodeHelpForm()
+			using (var form = new CodeHelperForm()
 			{
-				Name = "CodeHelpForm",
+				Name = "CodeHelperForm",
 				Text = (this.Text.IsNullOrEmpty()) ? "코드검색" : this.Text,
 				StartPosition = FormStartPosition.CenterScreen,
 				CodeField = this.CodeField,

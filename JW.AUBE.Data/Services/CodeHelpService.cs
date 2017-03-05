@@ -14,30 +14,32 @@ namespace JW.AUBE.Data.Services
 			try
 			{
 				IList<DataMap> list;
-				var parentCode = req.Parameter.GetValue("PARENT_CODE").ToStringNullToEmpty();
+				var parentCode = req.Parameter.GetValue("PARENT_CODE").ToStringNullToEmpty().ToCamelCase();
 				switch (parentCode)
 				{
-					case "Modules":
-					case "Views":
-					case "Menus":
-					case "Groups":
-					case "Roles":
-					case "Helps":
-					case "Codes":
+					case "Module":
+					case "View":
+					case "Menu":
+					case "Group":
+					case "Role":
+					case "Help":
+					case "Code":
 					case "CodeGroup":
-					case "Customers":
-					case "Departments":
-					case "Employees":
-					case "Projects":
-					case "Works":
-					case "Tasks":
-					case "MasterPlanResources":
-					case "MasterPlans":
-					case "Systems":
-						list = DaoFactory.Instance.QueryForList<DataMap>(string.Format("GetCodeHelpLookupBy{0}", parentCode), req.Parameter);
+					case "Customer":
+					case "Product":
+					case "Material":
+					case "Department":
+					case "Employee":
+					case "Project":
+					case "Work":
+					case "Task":
+					case "MasterPlanResource":
+					case "MasterPlan":
+					case "System":
+						list = DaoFactory.Instance.QueryForList<DataMap>(string.Format("GetCodeHelp{0}List", parentCode), req.Parameter);
 						break;
 					default:
-						list = DaoFactory.Instance.QueryForList<DataMap>("GetCodeHelpLookup", req.Parameter);
+						list = DaoFactory.Instance.QueryForList<DataMap>("GetCodeHelp", req.Parameter);
 						break;
 				}
 

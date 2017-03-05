@@ -1,0 +1,129 @@
+﻿using System.Data;
+using System.Windows.Forms;
+using JW.AUBE.Base.Map;
+using JW.AUBE.Base.Utils;
+using JW.AUBE.Core.Utils;
+
+namespace JW.AUBE.Core.Helper
+{
+	public static class CodeHelper
+	{
+		public static DataTable Lookup(string parentCodeId, DataMap parameters = null)
+		{
+			try
+			{
+				if (parameters == null)
+				{
+					parameters = new DataMap();
+				}
+				parameters.SetValue("PARENT_CODE", parentCodeId);
+				return ServerRequest.SingleRequest("CodeHelp", "GetCodeHelpLookup", string.Empty, parameters);
+			}
+			catch
+			{
+				throw;
+			}
+		}
+		public static DataTable Search(string parentCodeId, DataMap parameters = null)
+		{
+			try
+			{
+				if (parameters == null)
+				{
+					parameters = new DataMap();
+				}
+				parameters.SetValue("PARENT_CODE", parentCodeId);
+				return ServerRequest.SingleRequest("CodeHelp", "GetCodeHelpLookup", string.Empty, parameters);
+			}
+			catch
+			{
+				throw;
+			}
+		}
+		public static DataMap ShowForm(string parentCodeId, DataMap parameters = null)
+		{
+			DataMap resultMap = new DataMap();
+			try
+			{
+				if (parameters == null)
+				{
+					parameters = new DataMap();
+				}
+				parameters.SetValue("PARENT_CODE", parentCodeId);
+				DataTable data = Search(parentCodeId, parameters);
+				if (data != null && data.Rows.Count == 1)
+				{
+					resultMap = data.ToDataMap();
+				}
+				else
+				{
+					string formName = "CodeHelperForm_" + parentCodeId;
+					string formText = "코드검색";
+					string codeField = "CODE";
+					string nameField = "NAME";
+					string[] displayFields = new string[] { "CODE", "NAME" };
+
+					switch (parentCodeId)
+					{
+						case "MATERIAL":
+							formText = "원부자재검색";
+							codeField = "MATERIAL_ID";
+							nameField = "MATERIAL_NAME";
+							displayFields = new string[] { "MATERIAL_ID", "MATERIAL_NAME" };
+							break;
+						case "PRODUCT":
+							formText = "제품검색";
+							codeField = "PRODUCT_ID";
+							nameField = "PRODUCT_NAME";
+							displayFields = new string[] { "PRODUCT_ID", "PRODUCT_NAME" };
+							break;
+						case "CUSTOMER":
+							formText = "거래처검색";
+							codeField = "CUSTOMER_ID";
+							nameField = "CUSTOMER_NAME";
+							displayFields = new string[] { "CUSTOMER_ID", "CUSTOMER_NAME", "BIZ_REG_NO", "REP_NAME" };
+							break;
+						case "USER":
+							formText = "사용자검색";
+							codeField = "USER_ID";
+							nameField = "USER_NAME";
+							displayFields = new string[] { "USER_ID", "USER_NAME" };
+							break;
+					}
+
+					using (var form = new CodeHelperForm()
+					{
+						Name = formName,
+						Text = formText,
+						StartPosition = FormStartPosition.CenterScreen,
+						CodeField = codeField,
+						NameField = nameField,
+						CodeGroup = parentCodeId,
+						Parameters = parameters,
+						DisplayFields = displayFields
+					})
+					{
+						form.Init();
+						if (data != null)
+						{
+							form.BindData(data);
+						}
+
+						if (form.ShowDialog() == DialogResult.OK)
+						{
+							if (form.ReturnData != null && form.ReturnData.GetType() == typeof(DataMap))
+							{
+								resultMap = (form.ReturnData as DataMap);
+							}
+						}
+					}
+				}
+				return resultMap;
+			}
+			catch
+			{
+				throw;
+			}
+		}
+	}
+}

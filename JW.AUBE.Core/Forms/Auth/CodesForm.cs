@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using DevExpress.Utils;
 using DevExpress.XtraGrid.Views.Grid;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
-using JW.AUBE.Base.Variables;
-using JW.AUBE.Base.Was.Models;
 using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Controls.Grid;
 using JW.AUBE.Core.Enumerations;
@@ -68,7 +65,7 @@ namespace JW.AUBE.Core.Forms.Auth
 
 		void InitCombo()
 		{
-			lupParentCode.BindData("CodeGroup", null, "ROOT", true);
+			lupParentCode.BindData("CODE_GROUP", null, "ROOT", true);
 		}
 
 		void InitGrid()
@@ -185,7 +182,7 @@ namespace JW.AUBE.Core.Forms.Auth
 			txtCodeId.Clear();
 
 			object group_code = lupParentCode.EditValue;
-			lupParentCode.BindData("CodeGroup", null, "ROOT", true);
+			lupParentCode.BindData("CODE_GROUP", null, "ROOT", true);
 			lupParentCode.EditValue = group_code;
 
 			txtName.Clear();
@@ -229,7 +226,7 @@ namespace JW.AUBE.Core.Forms.Auth
 				DataRow row = dt.Rows[0];
 
 				txtCodeId.EditValue = row["CODE_ID"];
-				lupParentCode.BindData("CodeGroup", null, "ROOT", true);
+				lupParentCode.BindData("CODE_GROUP", null, "ROOT", true);
 				lupParentCode.EditValue = row["PARENT_CODE"];
 				txtCode.EditValue = row["CODE"];
 				txtName.EditValue = row["NAME"];

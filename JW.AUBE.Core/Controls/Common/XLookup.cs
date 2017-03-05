@@ -4,12 +4,13 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using JW.AUBE.Base.Map;
-using JW.AUBE.Base.Utils;
-using JW.AUBE.Core.Utils;
 using DevExpress.Utils;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using JW.AUBE.Base.Map;
+using JW.AUBE.Base.Utils;
+using JW.AUBE.Core.Helper;
+using JW.AUBE.Core.Utils;
 
 namespace JW.AUBE.Core.Controls.Common
 {
@@ -347,7 +348,7 @@ namespace JW.AUBE.Core.Controls.Common
 			{
 				value = EditValue;
 			}
-			DataSource = CodeHelpUtils.GetCodeHelpLookup(GroupCode, parameters);
+			DataSource = CodeHelper.Lookup(GroupCode, parameters);
 			if (RowCount > 0)
 			{
 				if (value != null)
@@ -396,7 +397,7 @@ namespace JW.AUBE.Core.Controls.Common
 		{
 			try
 			{
-				var columnName = string.Format("OPTION_VALUE{0}", index.ToString());
+				var columnName = string.Format("OPTION_VALUE{0}", index);
 				var data = GetSelectedDataRow();
 
 				if (data == null)

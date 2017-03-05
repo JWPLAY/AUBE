@@ -1,13 +1,17 @@
 ﻿using System;
 using System.Data;
 using System.Drawing;
+using System.Windows.Forms;
 using DevExpress.Utils;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid.Views.Grid;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Controls.Grid;
 using JW.AUBE.Core.Enumerations;
+using JW.AUBE.Core.Helper;
 using JW.AUBE.Core.Models;
 using JW.AUBE.Core.Utils;
 
@@ -18,6 +22,37 @@ namespace JW.AUBE.Core.Forms.Code
 		public ProductsForm()
 		{
 			InitializeComponent();
+
+			lupProductType.EditValueChanged += delegate (object sender, EventArgs e)
+			{
+				if (this.IsLoaded)
+					onProductTypeChanged();
+			};
+		}
+
+		void onProductTypeChanged()
+		{
+			if (lupProductType.EditValue.ToStringNullToEmpty() == "M")
+			{
+				btnLineAdd.Enabled =
+					btnLineDel.Enabled =
+					btnSave.Enabled = false;
+			}
+			else
+			{
+				if (this.EditMode == EditModeEnum.New)
+				{
+					btnLineAdd.Enabled =
+						btnLineDel.Enabled = true;
+					btnSave.Enabled = false;
+				}
+				else
+				{
+					btnLineAdd.Enabled =
+						btnLineDel.Enabled =
+						btnSave.Enabled = true;
+				}
+			}
 		}
 
 		protected override void OnShown(EventArgs e)
@@ -80,6 +115,7 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			lupProductType.BindData("PRODUCT_TYPE", null, null, true);
 			lupCategory.BindData("CATEGORY", null, null, true);
+			lupUnitType.BindData("UNIT_TYPE", null, null, true);
 		}
 
 		void InitGrid()
@@ -159,6 +195,8 @@ namespace JW.AUBE.Core.Forms.Code
 
 			#region 원부자재목록
 			gridMaterials.Init();
+
+			#region Grid Add Columns
 			gridMaterials.AddGridColumns(
 				new XGridColumn()
 				{
@@ -190,8 +228,7 @@ namespace JW.AUBE.Core.Forms.Code
 				{
 					FieldName = "MATERIAL_ID",
 					HorzAlignment = HorzAlignment.Center,
-					Width = 100,
-					Visible = false
+					Width = 100
 				},
 				new XGridColumn()
 				{
@@ -225,6 +262,7 @@ namespace JW.AUBE.Core.Forms.Code
 					HorzAlignment = HorzAlignment.Center,
 					Width = 100
 				});
+			#endregion
 
 			gridMaterials.SetRepositoryItemButtonEdit("MATERIAL_NAME");
 			gridMaterials.SetEditable("MATERIAL_NAME", "INPUT_QTY");
@@ -232,7 +270,53 @@ namespace JW.AUBE.Core.Forms.Code
 			gridMaterials.SetColumnBackColor(Color.Black, "ROW_NO");
 			gridMaterials.SetColumnForeColor(Color.Yellow, "ROW_NO");
 			gridMaterials.ColumnFix("ROW_NO");
+
+			#region Grid Events
+			(gridMaterials.MainView.Columns["MATERIAL_NAME"].ColumnEdit as RepositoryItemButtonEdit).KeyDown += delegate (object sender, KeyEventArgs e)
+			{
+				if (e.KeyCode == Keys.Enter)
+				{
+					doSearchMaterial();
+				}
+			};
+			(gridMaterials.MainView.Columns["MATERIAL_NAME"].ColumnEdit as RepositoryItemButtonEdit).EditValueChanged += delegate (object sender, EventArgs e)
+			{
+				if (gridMaterials.GetValue(gridMaterials.MainView.FocusedRowHandle, "MATERIAL_NAME").ToStringNullToEmpty() == "")
+				{
+					gridMaterials.SetValue(gridMaterials.MainView.FocusedRowHandle, "MATERIAL_NAME", null);
+					gridMaterials.SetValue(gridMaterials.MainView.FocusedRowHandle, "MATERIAL_ID", null);
+				}
+			};
+			(gridMaterials.MainView.Columns["MATERIAL_NAME"].ColumnEdit as RepositoryItemButtonEdit).ButtonClick += delegate (object sender, ButtonPressedEventArgs e)
+			{
+				doSearchMaterial();
+			};
 			#endregion
+
+			#endregion
+		}
+
+		void doSearchMaterial()
+		{
+			try
+			{
+				gridMaterials.PostEditor();
+				gridMaterials.UpdateCurrentRow();
+
+				int rowIndex = gridMaterials.MainView.FocusedRowHandle;
+				object findtext = gridMaterials.GetValue(rowIndex, "MATERIAL_NAME");
+				DataMap map = CodeHelper.ShowForm("MATERIAL", new DataMap() { { "FIND_TEXT", findtext } });
+				if (map != null && map.GetType() == typeof(DataMap) && map.GetValue("MATERIAL_ID").ToStringNullToEmpty() != "")
+				{
+					gridMaterials.SetValue(rowIndex, "MATERIAL_NAME", map.GetValue("MATERIAL_NAME"));
+					gridMaterials.SetValue(rowIndex, "MATERIAL_ID", map.GetValue("MATERIAL_ID"));
+					gridMaterials.SetFocus(rowIndex, "INPUT_QTY");
+				}
+			}
+			catch(Exception ex)
+			{
+				ShowErrBox(ex);
+			}
 		}
 
 		protected override void LoadForm()
@@ -260,7 +344,7 @@ namespace JW.AUBE.Core.Forms.Code
 				gridMaterials.DataSource = null;
 				gridMaterials.EmptyDataTableBinding();
 
-				btnSave.Enabled = false;
+				onProductTypeChanged();
 
 				this.EditMode = EditModeEnum.New;
 				txtProductName.Focus();
@@ -313,7 +397,7 @@ namespace JW.AUBE.Core.Forms.Code
 					txtInsTime.EditValue = row["INS_TIME"];
 					txtInsUserName.EditValue = row["INS_USER_NAME"];
 					txtUpdTime.EditValue = row["UPD_TIME"];
-					txtUpdUserName.EditValue = row["UPD_USER_NAME"];
+					txtUpdUserName.EditValue = row["UPD_USER_NAME"];					
 				}
 
 				if (res.DataList.Count > 1)
@@ -321,7 +405,8 @@ namespace JW.AUBE.Core.Forms.Code
 					gridMaterials.DataSource = res.DataList[1].Data;
 				}
 
-				btnSave.Enabled = true;
+				onProductTypeChanged();
+
 				this.EditMode = EditModeEnum.Modify;
 				txtProductName.Focus();
 

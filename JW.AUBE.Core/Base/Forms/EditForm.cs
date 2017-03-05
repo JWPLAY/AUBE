@@ -815,7 +815,7 @@ namespace JW.AUBE.Core.Base.Forms
 		protected virtual void SetFieldName(LayoutControlItem item)
 		{
 			var itemName = item.Name.Replace("lcItem", string.Empty);
-			itemName = StringUtils.ToUpperUnderBarByPattern(itemName).Replace("_", " ");
+			itemName = StringUtils.ToUpperUnderscoreByPattern(itemName).Replace("_", " ");
 			SetFieldName(item, itemName, HorzAlignment.Far, VertAlignment.Center);
 		}
 		protected virtual void SetFieldName(LayoutControlItem item, string fieldName)
@@ -874,7 +874,7 @@ namespace JW.AUBE.Core.Base.Forms
 							((LayoutControlItem)item).AppearanceItemCaption.TextOptions.VAlignment = VertAlignment.Center;
 
 							var itemName = ((LayoutControlItem)item).Name.Replace("lcItem", string.Empty);
-							itemName = StringUtils.ToUpperUnderBarByPattern(itemName);
+							itemName = StringUtils.ToUpperUnderscoreByPattern(itemName);
 
 							var itemText = DomainUtils.GetFieldName(itemName);
 							if (string.IsNullOrEmpty(itemText))

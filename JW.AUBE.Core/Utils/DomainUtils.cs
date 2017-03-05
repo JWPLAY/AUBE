@@ -40,7 +40,7 @@ namespace JW.AUBE.Core.Utils
 
 		public static string GetFieldName(string key)
 		{
-			var ucaseName = StringUtils.ToUpperUnderBarByPattern(key).Trim();
+			var ucaseName = StringUtils.ToUpperUnderscoreByPattern(key).Trim();
 			var ret = DomainResource.Fields.GetValue(ucaseName);
 			if (string.IsNullOrEmpty(ret))
 			{

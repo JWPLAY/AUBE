@@ -227,7 +227,7 @@
     <Compile Include="Splash\WaitFormEx.Designer.cs">
       <DependentUpon>WaitFormEx.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utils\CodeHelpUtils.cs" />
+    <Compile Include="Helper\CodeHelper.cs" />
     <Compile Include="Utils\CommonRequest.cs" />
     <Compile Include="Utils\ControlUtils.cs" />
     <Compile Include="Utils\DomainUtils.cs" />
@@ -246,11 +246,11 @@
     <Compile Include="Base\Forms\BaseForm.designer.cs">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Base\Forms\CodeHelpForm.cs">
+    <Compile Include="Helper\CodeHelperForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Base\Forms\CodeHelpForm.designer.cs">
-      <DependentUpon>CodeHelpForm.cs</DependentUpon>
+    <Compile Include="Helper\CodeHelperForm.designer.cs">
+      <DependentUpon>CodeHelperForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Base\Forms\EditForm.cs">
       <SubType>Form</SubType>
@@ -279,7 +279,6 @@
     <Folder Include="Forms\Production\" />
     <Folder Include="Forms\Profit\" />
     <Folder Include="Forms\Purchase\" />
-    <Folder Include="Helper\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Controls\Common\XPeriod.resx">
@@ -353,8 +352,8 @@
     <EmbeddedResource Include="Splash\WaitFormEx.resx">
       <DependentUpon>WaitFormEx.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Base\Forms\CodeHelpForm.resx">
-      <DependentUpon>CodeHelpForm.cs</DependentUpon>
+    <EmbeddedResource Include="Helper\CodeHelperForm.resx">
+      <DependentUpon>CodeHelperForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Base\Forms\EditForm.resx">
       <DependentUpon>EditForm.cs</DependentUpon>

@@ -5,7 +5,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
 
 	<statements>
-		<select id="GetCodeHelpLookup" parameterClass="DataMap" resultClass="DataMap" >
+		<select id="GetCodeHelp" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
 				SELECT	AA.CODE
 					,	AA.NAME
@@ -17,7 +17,7 @@
 			]]>
 		</select>
 
-		<select id="GetCodeHelpLookupByCodeGroup" parameterClass="DataMap" resultClass="DataMap" >
+		<select id="GetCodeHelpCodeGroupList" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
 				SELECT	AA.CODE
 					,	AA.NAME
@@ -29,7 +29,7 @@
 			]]>
 		</select>
 		
-		<select id="GetCodeHelpLookupBySysMenu" parameterClass="DataMap" resultClass="DataMap" >
+		<select id="GetCodeHelpMenuList" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
 				WITH MenusCTE (id, name, path, pid, hier_id, level)
 				AS
@@ -62,7 +62,7 @@
 			]]>
 		</select>
 		
-		<select id="GetCodeHelpLookupBySysCode" parameterClass="DataMap" resultClass="DataMap" >
+		<select id="GetCodeHelpCodeList" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
 				SELECT	AA.CODE			AS CODE
 					,	AA.NAME			AS NAME
@@ -73,23 +73,88 @@
 			]]>
 		</select>
 		
-		<select id="GetCodeHelpLookupByCustomer" parameterClass="DataMap" resultClass="DataMap" >
+		<select id="GetCodeHelpCustomerList" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
-				SELECT	CONVERT(VARCHAR, AA.ID)	AS CODE
-					,	AA.CUSTOMER_NAME		AS NAME
-					,	AA.CUSTOMER_NAME		AS LIST_NAME
+				SELECT	AA.CUSTOMER_ID
+					,	AA.CUSTOMER_NAME
+					,	BZ.BIZ_REG_NO
+					,	BZ.REP_NAME
 				FROM	UCD.CUSTOMERS AA WITH (NOLOCK)
+						LEFT JOIN
+							UCD.BIZ_REG_CE BZ
+								ON AA.BIZ_REG_ID = BZ.BIZ_REG_ID
 				WHERE	1=1
 			]]>
+			<isNotEmpty property="FIND_TEXT">
+				<![CDATA[
+				AND		(
+							AA.CUSTOMER_NAME	LIKE '%' + #FIND_TEXT# + '%'	OR
+							BZ.BIZ_REG_NO		= #FIND_TEXT#					OR
+							BZ.REP_NAME			= #FIND_TEXT#					OR
+							BZ.BIZ_NAME			LIKE '%' + #FIND_TEXT# + '%'							
+						)
+				]]>
+			</isNotEmpty>
 			<isNotEmpty property="USE_YN">
-				<isEqual compareProperty="USE_YN" compareValue="Y">
-					<![CDATA[
-						AND	AA.USE_YN = 'Y'
-					]]>
-				</isEqual>
+				<![CDATA[
+					AND	AA.USE_YN = #USE_YN#
+				]]>
 			</isNotEmpty>
 			<![CDATA[
 				ORDER BY AA.CUSTOMER_NAME ASC
+			]]>
+		</select>
+
+		<select id="GetCodeHelpProductList" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT	AA.PRODUCT_ID
+					,	AA.PRODUCT_NAME
+				FROM	UCD.PRODUCTS AA WITH (NOLOCK)
+				WHERE	1=1
+				AND		AA.PRODUCT_TYPE IN ('P','G')
+			]]>
+			<isNotEmpty property="FIND_TEXT">
+				<![CDATA[
+				AND		(
+							AA.PRODUCT_NAME	LIKE '%' + #FIND_TEXT# + '%'	OR
+							AA.PRODUCT_CODE	LIKE #FIND_TEXT# + '%'			OR
+							AA.BARCODE		= #FIND_TEXT#
+						)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty property="USE_YN">
+				<![CDATA[
+					AND	AA.USE_YN = #USE_YN#
+				]]>
+			</isNotEmpty>
+			<![CDATA[
+				ORDER BY AA.PRODUCT_NAME ASC
+			]]>
+		</select>
+
+		<select id="GetCodeHelpMaterialList" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT	AA.PRODUCT_ID			AS MATERIAL_ID
+					,	AA.PRODUCT_NAME			AS MATERIAL_NAME
+				FROM	UCD.PRODUCTS AA WITH (NOLOCK)
+				WHERE	1=1
+				AND		AA.PRODUCT_TYPE IN ('M')
+			]]>
+			<isNotEmpty property="FIND_TEXT">
+				<![CDATA[
+				AND		(
+							AA.PRODUCT_NAME	LIKE '%' + #FIND_TEXT# + '%'	OR
+							AA.PRODUCT_CODE	LIKE #FIND_TEXT# + '%'
+						)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty property="USE_YN">
+				<![CDATA[
+					AND	AA.USE_YN = #USE_YN#
+				]]>
+			</isNotEmpty>
+			<![CDATA[
+				ORDER BY AA.PRODUCT_NAME ASC
 			]]>
 		</select>
 	</statements>

@@ -364,7 +364,7 @@ namespace JW.AUBE.Base.Utils
 			var dt = new DataTable();
 			foreach (KeyValuePair<string, object> kv in dic)
 			{
-				colname = kv.Key.ToUpperUnderBarByPattern();
+				colname = kv.Key.ToUpperUnderscoreByPattern();
 				if (kv.Value == null || kv.Value == DBNull.Value)
 				{
 					dt.Columns.Add(colname, typeof(string));
@@ -377,7 +377,7 @@ namespace JW.AUBE.Base.Utils
 			var newRow = dt.NewRow();
 			foreach (KeyValuePair<string, object> kv in dic)
 			{
-				colname = kv.Key.ToUpperUnderBarByPattern();
+				colname = kv.Key.ToUpperUnderscoreByPattern();
 				newRow[colname] = (kv.Value == null) ? DBNull.Value : kv.Value;
 			}
 			dt.Rows.Add(newRow);

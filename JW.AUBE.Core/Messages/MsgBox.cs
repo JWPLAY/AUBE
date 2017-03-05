@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
+using DevExpress.XtraEditors;
 using JW.AUBE.Base.Logging;
 using JW.AUBE.Base.Utils;
-using DevExpress.XtraEditors;
 
 namespace JW.AUBE.Core.Messages
 {

@@ -240,6 +240,12 @@ namespace JW.AUBE.Core.Forms.Code
 				},
 				new XGridColumn()
 				{
+					FieldName = "UNIT_TYPE",
+					HorzAlignment = HorzAlignment.Center,
+					Width = 80
+				},
+				new XGridColumn()
+				{
 					FieldName = "INS_TIME",
 					HorzAlignment = HorzAlignment.Center,
 					Width = 150
@@ -310,6 +316,7 @@ namespace JW.AUBE.Core.Forms.Code
 				{
 					gridMaterials.SetValue(rowIndex, "MATERIAL_NAME", map.GetValue("MATERIAL_NAME"));
 					gridMaterials.SetValue(rowIndex, "MATERIAL_ID", map.GetValue("MATERIAL_ID"));
+					gridMaterials.SetValue(rowIndex, "UNIT_TYPE", map.GetValue("UNIT_TYPE"));
 					gridMaterials.SetFocus(rowIndex, "INPUT_QTY");
 				}
 			}
@@ -390,6 +397,7 @@ namespace JW.AUBE.Core.Forms.Code
 					txtBarcode.EditValue = row["BARCODE"];
 					lupProductType.EditValue = row["PRODUCT_TYPE"];
 					lupCategory.EditValue = row["CATEGORY"];
+					lupUnitType.EditValue = row["UNIT_TYPE"];
 					txtBarcode.EditValue = row["BARCODE"];
 					chkUseYn.EditValue = row["USE_YN"];
 					memRemarks.EditValue = row["REMARKS"];

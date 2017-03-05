@@ -156,11 +156,12 @@ namespace JW.AUBE.Core.Helper
 		private void SetReturnDataAndClose()
 		{
 			var rowHandle = gridList.MainView.FocusedRowHandle;
-			ReturnData = new DataMap()
+			DataMap returnMap = new DataMap();
+			gridList.MainView.Columns.ToList().ForEach(x =>
 			{
-				{ CodeField, gridList.MainView.GetRowCellValue(rowHandle, CodeField) },
-				{ NameField, gridList.MainView.GetRowCellValue(rowHandle, NameField) }
-			};
+				returnMap.SetValue(x.FieldName, gridList.MainView.GetRowCellValue(rowHandle, x.FieldName));
+			});
+			ReturnData = returnMap;
 			SetModifiedCount();
 			Close();
 		}

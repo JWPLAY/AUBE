@@ -69,7 +69,7 @@ namespace JW.AUBE.Core.Helper
 							formText = "원부자재검색";
 							codeField = "MATERIAL_ID";
 							nameField = "MATERIAL_NAME";
-							displayFields = new string[] { "MATERIAL_ID", "MATERIAL_NAME" };
+							displayFields = new string[] { "MATERIAL_ID", "MATERIAL_NAME", "UNIT_TYPE" };
 							break;
 						case "PRODUCT":
 							formText = "제품검색";

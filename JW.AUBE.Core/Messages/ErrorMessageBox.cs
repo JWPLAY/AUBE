@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Windows.Forms;
-using JW.AUBE.Core.Resources;
 using DevExpress.XtraEditors;
+using JW.AUBE.Core.Resources;
 
 namespace JW.AUBE.Core.Messages
 {
@@ -16,21 +16,21 @@ namespace JW.AUBE.Core.Messages
 			{
 				Close();
 			};
-			btnExport.Click += delegate (object sender, System.EventArgs e)
-			{
-				using (var dlg = new SaveFileDialog())
-				{
-					dlg.Filter = "Text files (*.txt)|*.txt";
-					dlg.Title = "Export in Text format";
-					dlg.CheckPathExists = true;
+			//btnExport.Click += delegate (object sender, System.EventArgs e)
+			//{
+			//	using (var dlg = new SaveFileDialog())
+			//	{
+			//		dlg.Filter = "Text files (*.txt)|*.txt";
+			//		dlg.Title = "Export in Text format";
+			//		dlg.CheckPathExists = true;
 
-					if (dlg.ShowDialog() == DialogResult.OK)
-					{
-						var fileName = dlg.FileName;
-						File.WriteAllText(fileName, memMessage.Text);
-					}
-				}
-			};
+			//		if (dlg.ShowDialog() == DialogResult.OK)
+			//		{
+			//			var fileName = dlg.FileName;
+			//			File.WriteAllText(fileName, memMessage.Text);
+			//		}
+			//	}
+			//};
 
 			Shown += delegate (object sender, System.EventArgs e)
 			{

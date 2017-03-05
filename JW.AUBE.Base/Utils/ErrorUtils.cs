@@ -31,7 +31,7 @@ namespace JW.AUBE.Base.Utils
 				{
 					if (startIndex == 0)
 					{
-						exceptionMessage.Append("\r\n===============================================================================");
+						exceptionMessage.Append("\r\n========================================");
 					}
 					else
 					{
@@ -45,16 +45,16 @@ namespace JW.AUBE.Base.Utils
 				}
 				if (!string.IsNullOrEmpty(ex.Source))
 				{
-					exceptionMessage.Append(string.Format("{0}Source : {1}", Environment.NewLine, ex.Source));
+					exceptionMessage.Append(string.Format("{0}{0}Source : {1}", Environment.NewLine, ex.Source));
 				}
 				if (!string.IsNullOrEmpty(ex.StackTrace))
 				{
-					exceptionMessage.Append(string.Format("{0}Stack Trace {0}{1}", Environment.NewLine, ex.StackTrace));
+					exceptionMessage.Append(string.Format("{0}{0}Stack Trace {0}{1}", Environment.NewLine, ex.StackTrace));
 				}
 				ex = ex.InnerException;
 			}
 			while (ex != null);
-			exceptionMessage.Append("\r\n===============================================================================");
+			exceptionMessage.Append("\r\n========================================");
 			return exceptionMessage.ToString();
 		}
 	}

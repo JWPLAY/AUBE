@@ -45,6 +45,9 @@ namespace JW.AUBE.Core.Utils
 				if (res == null)
 					throw new Exception("요청결과가 없습니다.");
 
+				if (res.ErrorNumber != 0)
+					throw new Exception(res.ErrorMessage);
+
 				if (res.DataList == null || res.DataList.Count == 0)
 					throw new Exception("요청결과의 데이터가 없습니다.");
 
@@ -87,8 +90,8 @@ namespace JW.AUBE.Core.Utils
 				if (res == null)
 					throw new Exception("요청결과가 없습니다.");
 
-				if (res.DataList == null || res.DataList.Count == 0)
-					throw new Exception("요청결과의 데이터가 없습니다.");
+				if (res.ErrorNumber != 0)
+					throw new Exception(res.ErrorMessage);
 
 				return res;
 			}
@@ -178,22 +181,24 @@ namespace JW.AUBE.Core.Utils
 
 		public static WasRequest SingleRequest(string serviceId, string processId, string sqlId, DataTable data, string keyField = null)
 		{
-			if (data != null && data.Rows.Count > 0)
+			try
 			{
-				if (data.Columns.Contains("INS_USER") == false)
+				if (data != null && data.Rows.Count > 0)
 				{
-					data.Columns.Add("INS_USER", typeof(int));
-					foreach (DataRow row in data.Rows)
-						row["INS_USER"] = GlobalVar.Settings.GetValue("USER_ID");
+					if (data.Columns.Contains("INS_USER") == false)
+					{
+						data.Columns.Add("INS_USER", typeof(int));
+						foreach (DataRow row in data.Rows)
+							row["INS_USER"] = GlobalVar.Settings.GetValue("USER_ID");
+					}
 				}
-			}
 
-			return Request(new WasRequest()
-			{
-				ServiceId = serviceId,
-				ProcessId = processId,
-				IsTransaction = true,
-				DataList = new List<WasRequestData>()
+				var res = Request(new WasRequest()
+				{
+					ServiceId = serviceId,
+					ProcessId = processId,
+					IsTransaction = true,
+					DataList = new List<WasRequestData>()
 					{
 						new WasRequestData()
 						{
@@ -202,7 +207,20 @@ namespace JW.AUBE.Core.Utils
 							Data = data
 						}
 					}
-			});
+				});
+
+				if (res == null)
+					throw new Exception("처리결과를 수신하지 못했습니다.");
+
+				if (res.ErrorNumber != 0)
+					throw new Exception(res.ErrorMessage);
+
+				return res;
+			}
+			catch
+			{
+				throw;
+			}
 		}
 		public static WasRequest ProcedureCall(string sqlId, DataMap parameter)
 		{
@@ -214,7 +232,7 @@ namespace JW.AUBE.Core.Utils
 				if (parameter.ContainsKey("INS_USER") == false)
 					parameter.SetValue("INS_USER", GlobalVar.Settings.GetValue("USER_ID"));
 
-				return (new WasRequest()
+				var res = (new WasRequest()
 							{
 								ServiceId = "Base",
 								ProcessId = "ProcedureCall",
@@ -222,6 +240,14 @@ namespace JW.AUBE.Core.Utils
 								Parameter = parameter,
 								IsTransaction = true
 							}).Request();
+
+				if (res == null)
+					throw new Exception("처리결과를 수신하지 못했습니다.");
+
+				if (res.ErrorNumber != 0)
+					throw new Exception(res.ErrorMessage);
+
+				return res;
 			}
 			catch
 			{

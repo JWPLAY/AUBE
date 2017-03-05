@@ -31,14 +31,12 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ErrorMessageBox));
 			this.lc = new DevExpress.XtraLayout.LayoutControl();
 			this.btnOk = new DevExpress.XtraEditors.SimpleButton();
-			this.btnExport = new DevExpress.XtraEditors.SimpleButton();
 			this.memMessage = new DevExpress.XtraEditors.MemoEdit();
 			this.lcGroupBase = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.lcItemMessage = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.emptySpaceItem5 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
 			((System.ComponentModel.ISupportInitialize)(this.lc)).BeginInit();
 			this.lc.SuspendLayout();
@@ -48,7 +46,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.lcItemMessage)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -56,7 +53,6 @@
 			// 
 			this.lc.AllowCustomization = false;
 			this.lc.Controls.Add(this.btnOk);
-			this.lc.Controls.Add(this.btnExport);
 			this.lc.Controls.Add(this.memMessage);
 			this.lc.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lc.Location = new System.Drawing.Point(0, 0);
@@ -74,28 +70,13 @@
 			this.btnOk.Appearance.Options.UseFont = true;
 			this.btnOk.Image = ((System.Drawing.Image)(resources.GetObject("btnOk.Image")));
 			this.btnOk.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
-			this.btnOk.Location = new System.Drawing.Point(300, 334);
+			this.btnOk.Location = new System.Drawing.Point(242, 334);
 			this.btnOk.Name = "btnOk";
-			this.btnOk.Size = new System.Drawing.Size(140, 22);
+			this.btnOk.Size = new System.Drawing.Size(114, 22);
 			this.btnOk.StyleController = this.lc;
 			this.btnOk.TabIndex = 0;
 			this.btnOk.TabStop = false;
 			this.btnOk.Text = "확인";
-			// 
-			// btnExport
-			// 
-			this.btnExport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnExport.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
-			this.btnExport.Appearance.Options.UseFont = true;
-			this.btnExport.Image = ((System.Drawing.Image)(resources.GetObject("btnExport.Image")));
-			this.btnExport.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
-			this.btnExport.Location = new System.Drawing.Point(156, 334);
-			this.btnExport.Name = "btnExport";
-			this.btnExport.Size = new System.Drawing.Size(140, 22);
-			this.btnExport.StyleController = this.lc;
-			this.btnExport.TabIndex = 0;
-			this.btnExport.TabStop = false;
-			this.btnExport.Text = "파일저장";
 			// 
 			// memMessage
 			// 
@@ -117,7 +98,6 @@
             this.lcItemMessage,
             this.emptySpaceItem4,
             this.emptySpaceItem5,
-            this.layoutControlItem1,
             this.layoutControlItem2});
 			this.lcGroupBase.Location = new System.Drawing.Point(0, 0);
 			this.lcGroupBase.Name = "Root";
@@ -149,32 +129,26 @@
 			this.emptySpaceItem4.AllowHotTrack = false;
 			this.emptySpaceItem4.Location = new System.Drawing.Point(0, 322);
 			this.emptySpaceItem4.Name = "emptySpaceItem4";
-			this.emptySpaceItem4.Size = new System.Drawing.Size(144, 26);
+			this.emptySpaceItem4.Size = new System.Drawing.Size(230, 26);
 			this.emptySpaceItem4.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// emptySpaceItem5
 			// 
 			this.emptySpaceItem5.AllowHotTrack = false;
-			this.emptySpaceItem5.Location = new System.Drawing.Point(432, 322);
+			this.emptySpaceItem5.Location = new System.Drawing.Point(348, 322);
 			this.emptySpaceItem5.Name = "emptySpaceItem5";
-			this.emptySpaceItem5.Size = new System.Drawing.Size(146, 26);
+			this.emptySpaceItem5.Size = new System.Drawing.Size(230, 26);
 			this.emptySpaceItem5.TextSize = new System.Drawing.Size(0, 0);
-			// 
-			// layoutControlItem1
-			// 
-			this.layoutControlItem1.Control = this.btnExport;
-			this.layoutControlItem1.Location = new System.Drawing.Point(144, 322);
-			this.layoutControlItem1.Name = "layoutControlItem1";
-			this.layoutControlItem1.Size = new System.Drawing.Size(144, 26);
-			this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
-			this.layoutControlItem1.TextVisible = false;
 			// 
 			// layoutControlItem2
 			// 
 			this.layoutControlItem2.Control = this.btnOk;
-			this.layoutControlItem2.Location = new System.Drawing.Point(288, 322);
+			this.layoutControlItem2.Location = new System.Drawing.Point(230, 322);
+			this.layoutControlItem2.MaxSize = new System.Drawing.Size(118, 26);
+			this.layoutControlItem2.MinSize = new System.Drawing.Size(118, 26);
 			this.layoutControlItem2.Name = "layoutControlItem2";
-			this.layoutControlItem2.Size = new System.Drawing.Size(144, 26);
+			this.layoutControlItem2.Size = new System.Drawing.Size(118, 26);
+			this.layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
 			this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem2.TextVisible = false;
 			// 
@@ -195,7 +169,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.lcItemMessage)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
 			this.ResumeLayout(false);
 
@@ -204,14 +177,12 @@
         #endregion
         private DevExpress.XtraEditors.MemoEdit memMessage;
         private  DevExpress.XtraEditors.SimpleButton btnOk;
-        private  DevExpress.XtraEditors.SimpleButton btnExport;
 		private DevExpress.XtraLayout.LayoutControl lc;
 		private DevExpress.XtraLayout.LayoutControlGroup lcGroupBase;
 		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem2;
 		private DevExpress.XtraLayout.LayoutControlItem lcItemMessage;
 		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem4;
 		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem5;
-		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
 	}
 }

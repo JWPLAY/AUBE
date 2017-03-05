@@ -657,10 +657,10 @@
 			// 
 			// imageCollection
 			// 
-			this.imageCollection.ImageStream = ((DevExpress.Utils.ImageCollectionStreamer)(resources.GetObject("imageCollection.ImageStream")));
-			this.imageCollection.Images.SetKeyName(0, "menu_group_small.png");
-			this.imageCollection.Images.SetKeyName(1, "menu_group_select_small.png");
-			this.imageCollection.Images.SetKeyName(2, "menu_item_small.png");
+			//this.imageCollection.ImageStream = ((DevExpress.Utils.ImageCollectionStreamer)(resources.GetObject("imageCollection.ImageStream")));
+			//this.imageCollection.Images.SetKeyName(0, "menu_group_small.png");
+			//this.imageCollection.Images.SetKeyName(1, "menu_group_select_small.png");
+			//this.imageCollection.Images.SetKeyName(2, "menu_item_small.png");
 			// 
 			// mdiManager
 			// 

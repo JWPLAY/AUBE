@@ -7,7 +7,7 @@
 	<statements>
 		<select id="SelectCustomers" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
-				SELECT  ROW_NUMBER() OVER (ORDER BY AA.USE_YN DESC, AA.CUSTOER_NAME)	AS ROW_NO
+				SELECT  ROW_NUMBER() OVER (ORDER BY AA.USE_YN DESC, AA.CUSTOMER_NAME)	AS ROW_NO
 					,	AA.CUSTOMER_ID
 					,	AA.CUSTOMER_NAME
 					,	M1.NAME				AS CUSTOMER_TYPE
@@ -15,8 +15,8 @@
 				FROM	UCD.CUSTOMERS AA WITH (NOLOCK)
 						LEFT JOIN 
 							UAA.CODES M1 WITH (NOLOCK)
-								ON AA.CUST_TYPE = M1.CODE 
-									AND M1.PARENT_CODE = 'CUST_TYPE'
+								ON AA.CUSTOMER_TYPE = M1.CODE 
+									AND M1.PARENT_CODE = 'CUSTOMER_TYPE'
 				WHERE	1=1				
 			]]>
 			<isNotEmpty property="FIND_TEXT">

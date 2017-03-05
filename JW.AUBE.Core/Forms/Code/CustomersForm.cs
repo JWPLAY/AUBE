@@ -111,45 +111,40 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			#region 조회리스트
 			gridList.Init();
-			gridList.AddGridColumns(new XGridColumn[]
-			{
+			gridList.AddGridColumns(
 				new XGridColumn()
 				{
-					FieldName="ROW_NO",
-					Caption = "NO",
-					HorzAlignment = HorzAlignment.Center
-				},
-				new XGridColumn()
-				{
-					FieldName="ID",
-					Caption = "거래처ID",
-					HorzAlignment = HorzAlignment.Center
-				},
-				new XGridColumn()
-				{
-					FieldName="NAME",
-					Caption="거래처명",
-					HorzAlignment = HorzAlignment.Near
-				},
-				new XGridColumn()
-				{
-					FieldName="CUST_TYPE",
-					Caption="거래처형태",
-					HorzAlignment = HorzAlignment.Center
-				},
-				new XGridColumn()
-				{
-					FieldName="USE_YN",
-					Caption="사용여부",
+					FieldName = "ROW_NO",
 					HorzAlignment = HorzAlignment.Center,
+					Width = 40
+				},
+				new XGridColumn()
+				{
+					FieldName = "CUSTOMER_ID",
+					HorzAlignment = HorzAlignment.Center,
+					Width = 80
+				},
+				new XGridColumn()
+				{
+					FieldName = "CUSTOMER_NAME",
+					Caption = "거래처명",
+					HorzAlignment = HorzAlignment.Near,
+					Width = 200
+				},
+				new XGridColumn()
+				{
+					FieldName = "CUSTOMER_TYPE",
+					HorzAlignment = HorzAlignment.Center,
+					Width = 80
+				},
+				new XGridColumn()
+				{
+					FieldName = "USE_YN",
+					HorzAlignment = HorzAlignment.Center,
+					Width = 80,
 					RepositoryItem = gridList.GetRepositoryItemCheckEdit()
 				}
-			});
-			gridList.SetWidth("ROW_NO", 40);
-			gridList.SetWidth("ID", 80);
-			gridList.SetWidth("NAME", 200);
-			gridList.SetWidth("CUST_TYPE", 80);
-			gridList.SetWidth("USE_YN", 80);
+			);
 
 			gridList.RowCellClick += delegate (object sender, RowCellClickEventArgs e)
 			{
@@ -161,7 +156,7 @@ namespace JW.AUBE.Core.Forms.Code
 					if (e.Button == System.Windows.Forms.MouseButtons.Left && e.Clicks == 1)
 					{
 						GridView view = sender as GridView;
-						DetailDataLoad(view.GetRowCellValue(e.RowHandle, "ID"));
+						DetailDataLoad(view.GetRowCellValue(e.RowHandle, "CUSTOMER_ID"));
 					}
 				}
 				catch(Exception ex)
@@ -386,6 +381,9 @@ namespace JW.AUBE.Core.Forms.Code
 				gridAddress.DataSource = null;
 				gridAddress.EmptyDataTableBinding();
 
+				btnAddressSave.Enabled =
+					btnPhoneSave.Enabled = false;
+
 				this.EditMode = EditModeEnum.New;
 				txtCustomerName.Focus();
 			}
@@ -487,15 +485,12 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				DataMap map = lc.ItemToDataMap();
-				map.SetValue("ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE");
+				DataTable dt = lc.GroupToDataTable(lcGroupEdit, lcGroupBizEdit)
+					.SetValue("ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE");
 
-				var res = ServerRequest.SingleRequest("Base", "Save", "Customer", map.ToDataTable(), "ID");
+				var res = ServerRequest.Execute("Customer", "Save", new DataTable[] { dt, GetPhoneData(), GetAddressData() });
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
-
-				DataSavePhones();
-				DataSaveAddress();
 
 				ShowMsgBox("저장하였습니다.");
 				callback(arg, res.DataList[0].ReturnValue);
@@ -527,6 +522,99 @@ namespace JW.AUBE.Core.Forms.Code
 			catch (Exception ex)
 			{
 				ShowErrBox(ex);
+			}
+		}
+
+		private DataTable GetPhoneData()
+		{
+			try
+			{
+				DataTable dt = new DataTable();
+				dt.Columns.AddRange(new DataColumn[]
+				{
+					new DataColumn("REG_ID", typeof(int)),
+					new DataColumn("CUSTOMER_ID", typeof(int)),
+					new DataColumn("PHONE_NUMBER", typeof(string)),
+					new DataColumn("PHONE_TYPE", typeof(string)),
+					new DataColumn("REMARKS", typeof(string)),
+					new DataColumn("ROWSTATE", typeof(string))
+				});
+
+				if (gridPhones.MainView.RowCount > 0)
+				{
+					gridPhones.PostEditor();
+					gridPhones.UpdateCurrentRow();
+
+					foreach (DataRow row in gridPhones.GetDataTable().GetChangedData().Rows)
+					{
+						string rowstate = row["ROWSTATE"].ToString();
+
+						dt.Rows.Add(
+							row["REG_ID"],
+							txtCustomerId.EditValue,
+							row["PHONE_NUMBER"],
+							row["PHONE_TYPE"],
+							row["REMARKS"],
+							rowstate
+							);
+					}
+				}
+
+				return dt;
+			}
+			catch
+			{
+				throw;
+			}
+		}
+		private DataTable GetAddressData()
+		{
+			try
+			{
+				DataTable dt = new DataTable();
+				dt.Columns.AddRange(new DataColumn[]
+				{
+					new DataColumn("REG_ID", typeof(int)),
+					new DataColumn("CUSTOMER_ID", typeof(int)),
+					new DataColumn("ADDRESS_ID", typeof(int)),
+					new DataColumn("ADDRESS_TYPE", typeof(string)),
+					new DataColumn("POST_NO", typeof(string)),
+					new DataColumn("ZONE_NO", typeof(string)),
+					new DataColumn("ADDRESS1", typeof(string)),
+					new DataColumn("ADDRESS2", typeof(string)),
+					new DataColumn("REMARKS", typeof(string)),
+					new DataColumn("ROWSTATE", typeof(string))
+				});
+
+				if (gridAddress.MainView.RowCount > 0)
+				{
+					gridAddress.PostEditor();
+					gridAddress.UpdateCurrentRow();
+
+					foreach (DataRow row in gridAddress.GetDataTable().GetChangedData().Rows)
+					{
+						string rowstate = row["ROWSTATE"].ToString();
+
+						dt.Rows.Add(
+							row["REG_ID"],
+							txtCustomerId.EditValue,
+							row["ADDRESS_ID"],
+							row["ADDRESS_TYPE"],
+							row["POST_NO"],
+							row["ZONE_NO"],
+							row["ADDRESS1"],
+							row["ADDRESS2"],
+							row["REMARKS"],
+							rowstate
+							);
+					}
+				}
+
+				return dt;
+			}
+			catch
+			{
+				throw;
 			}
 		}
 

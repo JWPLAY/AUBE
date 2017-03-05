@@ -20,6 +20,20 @@ namespace JW.AUBE.Base.Utils
 			}
 		}
 
+		public static DataTable SetValue(this DataTable dt, string columnName, object value)
+		{
+			if (dt == null)
+				return null;
+
+			if (dt.Columns.Contains(columnName) == false)
+				dt.Columns.Add(columnName, value.GetType());
+
+			foreach (DataRow dr in dt.Rows)
+				dr[columnName] = value;
+
+			return dt;
+		}
+
 		public static DataTable InputData(this DataTable dt, string columnName, object data)
 		{
 			if (!dt.Columns.Contains(columnName))

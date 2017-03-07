@@ -177,7 +177,7 @@ namespace JW.AUBE.Core.Forms.Code
 				},
 				new XGridColumn()
 				{
-					FieldName = "ID",
+					FieldName = "REG_ID",
 					HorzAlignment = HorzAlignment.Center,
 					Visible = false,
 					Width = 40
@@ -251,7 +251,7 @@ namespace JW.AUBE.Core.Forms.Code
 				},
 				new XGridColumn()
 				{
-					FieldName = "ID",
+					FieldName = "REG_ID",
 					HorzAlignment = HorzAlignment.Center,
 					Visible = false,
 					Width = 40
@@ -447,6 +447,7 @@ namespace JW.AUBE.Core.Forms.Code
 					txtBizType.EditValue = row["BIZ_TYPE"];
 					txtBizItem.EditValue = row["BIZ_ITEM"];
 
+					txtAddressId.EditValue = row["ADDRESS_ID"];
 					txtPostNo.EditValue = row["POST_NO"];
 					txtZoneNo.EditValue = row["ZONE_NO"];
 					txtAddress1.EditValue = row["ADDRESS1"];
@@ -491,6 +492,10 @@ namespace JW.AUBE.Core.Forms.Code
 				var res = ServerRequest.Execute("Customer", "Save", new DataTable[] { dt, GetPhoneData(), GetAddressData() });
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
+
+				txtCustomerId.EditValue = res.DataList[0].ReturnValue;
+				DataSavePhones();
+				DataSaveAddress();
 
 				ShowMsgBox("저장하였습니다.");
 				callback(arg, res.DataList[0].ReturnValue);
@@ -636,7 +641,7 @@ namespace JW.AUBE.Core.Forms.Code
 				DataTable dt = new DataTable();
 				dt.Columns.AddRange(new DataColumn[]
 				{
-					new DataColumn("ID", typeof(int)),
+					new DataColumn("REG_ID", typeof(int)),
 					new DataColumn("CUSTOMER_ID", typeof(int)),
 					new DataColumn("PHONE_NUMBER", typeof(string)),
 					new DataColumn("PHONE_TYPE", typeof(string)),
@@ -654,7 +659,7 @@ namespace JW.AUBE.Core.Forms.Code
 						string rowstate = row["ROWSTATE"].ToString();
 
 						dt.Rows.Add(
-							row["ID"],
+							row["REG_ID"],
 							txtCustomerId.EditValue,
 							row["PHONE_NUMBER"],
 							row["PHONE_TYPE"],
@@ -706,7 +711,7 @@ namespace JW.AUBE.Core.Forms.Code
 				DataTable dt = new DataTable();
 				dt.Columns.AddRange(new DataColumn[]
 				{
-					new DataColumn("ID", typeof(int)),
+					new DataColumn("REG_ID", typeof(int)),
 					new DataColumn("CUSTOMER_ID", typeof(int)),
 					new DataColumn("ADDRESS_TYPE", typeof(string)),
 					new DataColumn("ADDRESS_ID", typeof(string)),
@@ -723,7 +728,7 @@ namespace JW.AUBE.Core.Forms.Code
 					{
 						int addressId = CommonRequest.SaveAddress(new DataMap()
 						{
-							{ "ID", row["ADDRESS_ID"] },
+							{ "REG_ID", row["ADDRESS_ID"] },
 							{ "POST_NO", row["POST_NO"] },
 							{ "ZONE_NO", row["ZONE_NO"] },
 							{ "ADDRESS1", row["ADDRESS1"] },
@@ -734,7 +739,7 @@ namespace JW.AUBE.Core.Forms.Code
 						string rowstate = row["ROWSTATE"].ToString();
 
 						dt.Rows.Add(
-							row["ID"],
+							row["REG_ID"],
 							txtCustomerId.EditValue,
 							row["ADDRESS_TYPE"],
 							addressId,

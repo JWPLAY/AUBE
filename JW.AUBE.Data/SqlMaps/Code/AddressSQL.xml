@@ -82,5 +82,13 @@
 				WHERE	ADDRESS_ID = #ADDRESS_ID#
 			]]>
 		</delete>
+
+		<select id="GetAddressId" parameterClass="DataMap" resultClass="Int" >
+			<![CDATA[
+				SELECT  AA.ADDRESS_ID			
+				FROM	UCD.ADDRESS AA
+				WHERE	AA.ADDRESS_ID = #ADDRESS_ID#
+			]]>
+		</select>
 	</statements>
 </sqlMap>

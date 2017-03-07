@@ -57,13 +57,6 @@
 				ORDER BY AA.BIZ_NAME
 			]]>
 		</select>
-		<select id="GetBizRegIdByRegNo" parameterClass="DataMap" resultClass="Int">
-			<![CDATA[
-				SELECT	BIZ_REG_ID
-				FROM	UCD.BIZ_REG_CE WITH (NOLOCK)
-				WHERE	BIZ_REG_NO	= #BIZ_REG_NO#
-			]]>
-		</select>
 		<insert id="InsertBizRegCe" parameterClass="DataMap" >
 			<![CDATA[
 				INSERT INTO UCD.BIZ_REG_CE
@@ -104,5 +97,20 @@
 				WHERE	BIZ_REG_ID = #BIZ_REG_ID#
 			]]>
 		</delete>
+
+		<select id="GetBizRegId" parameterClass="DataMap" resultClass="Int">
+			<![CDATA[
+				SELECT	BIZ_REG_ID
+				FROM	UCD.BIZ_REG_CE WITH (NOLOCK)
+				WHERE	BIZ_REG_ID	= #BIZ_REG_ID#
+			]]>
+		</select>
+		<select id="GetBizRegIdByRegNo" parameterClass="DataMap" resultClass="Int">
+			<![CDATA[
+				SELECT	BIZ_REG_ID
+				FROM	UCD.BIZ_REG_CE WITH (NOLOCK)
+				WHERE	BIZ_REG_NO	= #BIZ_REG_NO#
+			]]>
+		</select>
 	</statements>
 </sqlMap>

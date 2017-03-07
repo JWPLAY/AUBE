@@ -196,7 +196,7 @@ namespace JW.AUBE.Core.Utils
 			{
 				return null;
 			}
-			var fieldName = item.GetFieldNameByControl();
+			var fieldName = item.GetFieldNameByControl().ToUpperUnderscoreByPattern();
 
 			IDictionary<string, object> dic = new Dictionary<string, object>();
 
@@ -204,55 +204,34 @@ namespace JW.AUBE.Core.Utils
 			{
 				dic.Add(fieldName, ((TextEdit)item.Control).EditValue);
 			}
-			else
+			else if (item.Control.GetType() == typeof(XLookup))
 			{
-				if (item.Control.GetType() == typeof(XLookup))
-				{
-					dic.Add(fieldName, ((XLookup)item.Control).EditValue);
-				}
-				else
-				{
-					if (item.Control.GetType() == typeof(SpinEdit))
-					{
-						dic.Add(fieldName, ((SpinEdit)item.Control).EditValue);
-					}
-					else
-					{
-						if (item.Control.GetType() == typeof(MemoEdit))
-						{
-							dic.Add(fieldName, ((MemoEdit)item.Control).EditValue);
-						}
-						else
-						{
-							if (item.Control.GetType() == typeof(DateEdit))
-							{
-								dic.Add(fieldName, ((DateEdit)item.Control).GetDateChar8());
-							}
-							else
-							{
-								if (item.Control.GetType() == typeof(CheckEdit))
-								{
-									dic.Add(fieldName, ((CheckEdit)item.Control).EditValue);
-								}
-								else
-								{
-									if (item.Control.GetType() == typeof(ButtonEdit))
-									{
-										dic.Add(fieldName, ((ButtonEdit)item.Control).EditValue);
-									}
-									else
-									{
-										if (item.Control.GetType() == typeof(XPeriod))
-										{
-											dic.Add("FR_" + fieldName, ((XPeriod)item.Control).DateFrEdit.GetDateChar8());
-											dic.Add("TO_" + fieldName, ((XPeriod)item.Control).DateToEdit.GetDateChar8());
-										}
-									}
-								}
-							}
-						}
-					}
-				}
+				dic.Add(fieldName, ((XLookup)item.Control).EditValue);
+			}
+			else if (item.Control.GetType() == typeof(SpinEdit))
+			{
+				dic.Add(fieldName, ((SpinEdit)item.Control).EditValue);
+			}
+			else if (item.Control.GetType() == typeof(MemoEdit))
+			{
+				dic.Add(fieldName, ((MemoEdit)item.Control).EditValue);
+			}
+			else if (item.Control.GetType() == typeof(DateEdit))
+			{
+				dic.Add(fieldName, ((DateEdit)item.Control).GetDateChar8());
+			}
+			else if (item.Control.GetType() == typeof(CheckEdit))
+			{
+				dic.Add(fieldName, ((CheckEdit)item.Control).EditValue);
+			}
+			else if (item.Control.GetType() == typeof(ButtonEdit))
+			{
+				dic.Add(fieldName, ((ButtonEdit)item.Control).EditValue);
+			}
+			else if (item.Control.GetType() == typeof(XPeriod))
+			{
+				dic.Add("FR_" + fieldName, ((XPeriod)item.Control).DateFrEdit.GetDateChar8());
+				dic.Add("TO_" + fieldName, ((XPeriod)item.Control).DateToEdit.GetDateChar8());
 			}
 			return dic;
 		}

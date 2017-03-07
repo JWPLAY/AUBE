@@ -130,7 +130,7 @@ namespace JW.AUBE.Base.Utils
 			}
 		}
 
-		public static string ToStringNullToEmpty(this object obj)
+		public static string ToStringNullToEmpty(this object obj, bool emptyRemove = true)
 		{
 			if (obj == null || obj == DBNull.Value)
 			{
@@ -138,7 +138,10 @@ namespace JW.AUBE.Base.Utils
 			}
 			else
 			{
-				return obj.ToString();
+				if (emptyRemove)
+					return obj.ToString().Trim();
+				else
+					return obj.ToString();
 			}
 		}
 

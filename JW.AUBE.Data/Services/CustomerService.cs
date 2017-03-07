@@ -74,6 +74,7 @@ namespace JW.AUBE.Data.Services
 
 				try
 				{
+					string rowState = string.Empty;
 					object customer_id = null;
 					object phone_reg_id = null;
 					object address_reg_id = null;
@@ -88,29 +89,75 @@ namespace JW.AUBE.Data.Services
 
 						DataMap data = ConvertUtils.DataTableToDataMapList(req.DataList[0].Data)[0];
 
+						rowState = data.GetValue("ROWSTATE").ToStringNullToEmpty();
+
+						//주소등록
+						if (rowState == "INSERT" || rowState == "UPDATE")
+						{
+							var addr = DaoFactory.Instance.QueryForObject("GetAddressId", new DataMap() { { "ADDRESS_ID", data.GetValue("ADDRESS_ID") } });
+							if (addr.ToStringNullToEmpty().IsNullOrEmpty())
+							{
+								if (!data.GetValue("POST_NO").ToStringNullToEmpty().IsNullOrEmpty() ||
+									!data.GetValue("ZONE_NO").ToStringNullToEmpty().IsNullOrEmpty() ||
+									!data.GetValue("ADDRESS1").ToStringNullToEmpty().IsNullOrEmpty() ||
+									!data.GetValue("ADDRESS2").ToStringNullToEmpty().IsNullOrEmpty())
+								{
+									biz_address_id = DaoFactory.Instance.Insert("InsertAddress", data);
+
+									if (biz_address_id.ToStringNullToEmpty().IsNullOrEmpty())
+										throw new Exception("사업자정보의 주소를 저장하는 중 오류가 발생하였습니다.");
+
+									data.SetValue("ADDRESS_ID", biz_address_id);
+								}
+							}
+							else
+							{
+								DaoFactory.Instance.Update("UpdateAddress", data);
+							}
+
+							var bizId = DaoFactory.Instance.QueryForObject("GetBizRegId", new DataMap() { { "BIZ_REG_ID", data.GetValue("BIZ_REG_ID") } });
+							if (bizId.ToStringNullToEmpty().IsNullOrEmpty())
+							{
+								if (!data.GetValue("BIZ_REG_NO").ToStringNullToEmpty().IsNullOrEmpty())
+								{
+									biz_reg_id = DaoFactory.Instance.Insert("InsertBizRegCe", data);
+
+									if (biz_reg_id.ToStringNullToEmpty().IsNullOrEmpty())
+										throw new Exception("사업자정보를 저장하지 못했습니다.");
+
+									data.SetValue("BIZ_REG_ID", biz_reg_id);
+								}
+							}
+							else
+							{
+								DaoFactory.Instance.Update("UpdateBizRegCe", data);
+							}
+						}
 
 
+						if (rowState == "INSERT")
+						{
+							customer_id = DaoFactory.Instance.Insert("InsertCustomer", data);
 
-						//if (data.GetValue("ROWSTATE").ToStringNullToEmpty() == "INSERT")
-						//{
-						//	product_id = DaoFactory.Instance.Insert("InsertProduct", data);
-						//}
-						//else if (data.GetValue("ROWSTATE").ToStringNullToEmpty() == "UPDATE")
-						//{
-						//	DaoFactory.Instance.Update("UpdateProduct", data);
-						//	product_id = data.GetValue("PRODUCT_ID");
-						//}
-						//else if (data.GetValue("ROWSTATE").ToStringNullToEmpty() == "DELETE")
-						//{
-						//	DaoFactory.Instance.Update("DeleteProduct", data);
-						//	product_id = data.GetValue("PRODUCT_ID");
-						//}
-						//req.DataList[0].ErrorNumber = 0;
-						//req.DataList[0].ErrorMessage = "SUCCESS";
-						//req.DataList[0].ReturnValue = product_id;
+							if (customer_id.ToStringNullToEmpty().IsNullOrEmpty())
+								throw new Exception("거래처정보를 저장하지 못했습니다.");
+						}
+						else if (rowState == "UPDATE")
+						{
+							DaoFactory.Instance.Update("UpdateCustomer", data);
+							customer_id = data.GetValue("CUSTOMER_ID");
+						}
+						else if (rowState == "DELETE")
+						{
+							DaoFactory.Instance.Update("DeleteCustomer", data);
+							customer_id = data.GetValue("CUSTOMER_ID");
+						}
+						req.DataList[0].ErrorNumber = 0;
+						req.DataList[0].ErrorMessage = "SUCCESS";
+						req.DataList[0].ReturnValue = customer_id;
 					}
 
-					//원부자재정보 저장
+					//연락처정보저장
 					//if (req.DataList.Count > 1)
 					//{
 					//	if (req.DataList[1].Data != null && req.DataList[1].Data.Rows.Count > 0)

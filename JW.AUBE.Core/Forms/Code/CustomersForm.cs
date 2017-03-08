@@ -552,15 +552,13 @@ namespace JW.AUBE.Core.Forms.Code
 
 					foreach (DataRow row in gridPhones.GetDataTable().GetChangedData().Rows)
 					{
-						string rowstate = row["ROWSTATE"].ToString();
-
 						dt.Rows.Add(
 							row["REG_ID"],
 							txtCustomerId.EditValue,
 							row["PHONE_NUMBER"],
 							row["PHONE_TYPE"],
 							row["REMARKS"],
-							rowstate
+							row["ROWSTATE"]
 							);
 					}
 				}
@@ -598,19 +596,17 @@ namespace JW.AUBE.Core.Forms.Code
 
 					foreach (DataRow row in gridAddress.GetDataTable().GetChangedData().Rows)
 					{
-						string rowstate = row["ROWSTATE"].ToString();
-
 						dt.Rows.Add(
-							row["REG_ID"],
+							row.GetValue("REG_ID"),
 							txtCustomerId.EditValue,
-							row["ADDRESS_ID"],
-							row["ADDRESS_TYPE"],
-							row["POST_NO"],
-							row["ZONE_NO"],
-							row["ADDRESS1"],
-							row["ADDRESS2"],
-							row["REMARKS"],
-							rowstate
+							row.GetValue("ADDRESS_ID"),
+							row.GetValue("ADDRESS_TYPE"),
+							row.GetValue("POST_NO"),
+							row.GetValue("ZONE_NO"),
+							row.GetValue("ADDRESS1"),
+							row.GetValue("ADDRESS2"),
+							row.GetValue("REMARKS"),
+							row.GetValue("ROWSTATE")
 							);
 					}
 				}
@@ -638,37 +634,7 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				DataTable dt = new DataTable();
-				dt.Columns.AddRange(new DataColumn[]
-				{
-					new DataColumn("REG_ID", typeof(int)),
-					new DataColumn("CUSTOMER_ID", typeof(int)),
-					new DataColumn("PHONE_NUMBER", typeof(string)),
-					new DataColumn("PHONE_TYPE", typeof(string)),
-					new DataColumn("REMARKS", typeof(string)),
-					new DataColumn("ROWSTATE", typeof(string))
-				});
-
-				if (gridPhones.MainView.RowCount > 0)
-				{
-					gridPhones.PostEditor();
-					gridPhones.UpdateCurrentRow();
-
-					foreach (DataRow row in gridPhones.GetDataTable().GetChangedData().Rows)
-					{
-						string rowstate = row["ROWSTATE"].ToString();
-
-						dt.Rows.Add(
-							row["REG_ID"],
-							txtCustomerId.EditValue,
-							row["PHONE_NUMBER"],
-							row["PHONE_TYPE"],
-							row["REMARKS"],
-							rowstate
-							);
-					}
-				}
-
+				DataTable dt = GetPhoneData();
 				if (dt == null || dt.Rows.Count == 0)
 				{
 					if (reload)
@@ -708,46 +674,7 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				DataTable dt = new DataTable();
-				dt.Columns.AddRange(new DataColumn[]
-				{
-					new DataColumn("REG_ID", typeof(int)),
-					new DataColumn("CUSTOMER_ID", typeof(int)),
-					new DataColumn("ADDRESS_TYPE", typeof(string)),
-					new DataColumn("ADDRESS_ID", typeof(string)),
-					new DataColumn("REMARKS", typeof(string)),
-					new DataColumn("ROWSTATE", typeof(string))
-				});
-
-				if (gridAddress.MainView.RowCount > 0)
-				{
-					gridAddress.PostEditor();
-					gridAddress.UpdateCurrentRow();
-
-					foreach (DataRow row in gridPhones.GetDataTable().GetChangedData().Rows)
-					{
-						int addressId = CommonRequest.SaveAddress(new DataMap()
-						{
-							{ "REG_ID", row["ADDRESS_ID"] },
-							{ "POST_NO", row["POST_NO"] },
-							{ "ZONE_NO", row["ZONE_NO"] },
-							{ "ADDRESS1", row["ADDRESS1"] },
-							{ "ADDRESS2", row["ADDRESS2"] },
-							{ "ROWSTATE", (row["ADDRESS_ID"].ToStringNullToEmpty()=="")?"INSERT":"UPDATE" }
-						});
-
-						string rowstate = row["ROWSTATE"].ToString();
-
-						dt.Rows.Add(
-							row["REG_ID"],
-							txtCustomerId.EditValue,
-							row["ADDRESS_TYPE"],
-							addressId,
-							row["REMARKS"],
-							rowstate
-							);
-					}
-				}
+				DataTable dt = GetAddressData();
 
 				if (dt == null || dt.Rows.Count == 0)
 				{
@@ -756,14 +683,14 @@ namespace JW.AUBE.Core.Forms.Code
 				}
 				else
 				{
-					var res = ServerRequest.SingleRequest("Base", "Save", "CustomerAddress", dt);
+					var res = ServerRequest.SingleRequest("Customer", "SaveCustomerAddress", "CustomerAddress", dt);
 					if (res.ErrorNumber != 0)
 						throw new Exception(res.ErrorMessage);
 
 					if (reload)
 					{
 						ShowMsgBox("저장하였습니다.");
-						DataLoadPhones();
+						DataLoadAddress();
 					}
 				}
 			}

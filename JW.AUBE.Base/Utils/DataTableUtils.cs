@@ -65,15 +65,23 @@ namespace JW.AUBE.Base.Utils
 
 		public static DataMap ToDataMap(this DataTable dt)
 		{
-			var param = new DataMap();
+			if (dt == null || dt.Columns.Count == 0 || dt.Rows.Count == 0)
+				return null;
 
-			if (dt.Rows.Count > 0)
-			{
-				foreach (DataColumn column in dt.Columns)
-				{
-					param.Add(column.ColumnName, dt.Rows[0][column]);
-				}
-			}
+			var param = new DataMap();
+			foreach (DataColumn column in dt.Columns)
+				param.Add(column.ColumnName, dt.Rows[0][column.ColumnName]);
+			return param;
+		}
+
+		public static DataMap ToDataMap(this DataRow dr)
+		{
+			if (dr == null || dr.Table.Columns.Count == 0)
+				return null;
+
+			var param = new DataMap();
+			foreach (DataColumn column in dr.Table.Columns)
+				param.Add(column.ColumnName, dr[column.ColumnName]);
 
 			return param;
 		}

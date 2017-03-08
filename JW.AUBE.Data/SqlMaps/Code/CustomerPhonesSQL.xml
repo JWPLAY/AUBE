@@ -5,9 +5,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
 
 	<statements>
-		<select id="SelectCustomerPhones" parameterClass="DataMap">
+		<select id="SelectCustomerPhones" parameterClass="DataMap" resultClass="DataMap">
 			<![CDATA[
-				SELECT  AA.REG_ID
+				SELECT  ROW_NUMBER() OVER (ORDER BY AA.REG_ID)	AS ROW_NO
+					,	AA.REG_ID
 					,	AA.CUSTOMER_ID
 					,	AA.PHONE_NUMBER
 					,	AA.PHONE_TYPE
@@ -40,7 +41,7 @@
 			]]>
 			</isNotEmpty>
 			<![CDATA[
-				ORDER BY AA.REG_ID DESC
+				ORDER BY ROW_NO
 			]]>
 		</select>
 		<insert id="InsertCustomerPhones" parameterClass="DataMap" >

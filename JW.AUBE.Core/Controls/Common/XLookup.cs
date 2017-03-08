@@ -459,20 +459,20 @@ namespace JW.AUBE.Core.Controls.Common
 
 		protected override void OnEnter(EventArgs e)
 		{
-			if (!Properties.ReadOnly && Enabled)
-			{
-				BackColor = SkinUtils.EditBackColor;
-				ForeColor = SkinUtils.EditForeColor;
-			}
+			//if (!Properties.ReadOnly && Enabled)
+			//{
+			//	BackColor = SkinUtils.EditBackColor;
+			//	ForeColor = SkinUtils.EditForeColor;
+			//}
 			base.OnEnter(e);
 		}
 		protected override void OnLeave(EventArgs e)
 		{
-			if (!Properties.ReadOnly && Enabled)
-			{
-				BackColor = SkinUtils.BackColor();
-				ForeColor = SkinUtils.ForeColor();
-			}
+			//if (!Properties.ReadOnly && Enabled)
+			//{
+			//	BackColor = SkinUtils.BackColor();
+			//	ForeColor = SkinUtils.ForeColor();
+			//}
 			base.OnLeave(e);
 		}
 	}

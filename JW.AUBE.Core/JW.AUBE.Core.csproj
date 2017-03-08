@@ -184,6 +184,18 @@
     <Compile Include="Forms\Code\CustomersForm.Designer.cs">
       <DependentUpon>CustomersForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Sales\SaleRegForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Sales\SaleRegForm.Designer.cs">
+      <DependentUpon>SaleRegForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Sales\SaleRegListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Sales\SaleRegListForm.Designer.cs">
+      <DependentUpon>SaleRegListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Interfaces\IMainForm.cs" />
     <Compile Include="Messages\ErrorMessageBox.cs">
       <SubType>Form</SubType>
@@ -276,7 +288,6 @@
     <Folder Include="Forms\Production\" />
     <Folder Include="Forms\Profit\" />
     <Folder Include="Forms\Purchase\" />
-    <Folder Include="Forms\Sales\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Controls\Common\XPeriod.resx">
@@ -320,6 +331,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Code\CustomersForm.resx">
       <DependentUpon>CustomersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Sales\SaleRegForm.resx">
+      <DependentUpon>SaleRegForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Sales\SaleRegListForm.resx">
+      <DependentUpon>SaleRegListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Messages\ErrorMessageBox.resx">
       <DependentUpon>ErrorMessageBox.cs</DependentUpon>

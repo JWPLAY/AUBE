@@ -72,6 +72,7 @@ namespace JW.AUBE.Core.Forms.Code
 			{
 				if (gridPhones.MainView.FocusedRowHandle < 0)
 					return;
+
 				gridPhones.MainView.DeleteRow(gridPhones.MainView.FocusedRowHandle);
 			};
 			btnPhoneSave.Click += delegate (object sender, EventArgs e)

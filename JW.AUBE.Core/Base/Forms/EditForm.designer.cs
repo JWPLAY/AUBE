@@ -28,8 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditForm));
-			this.barManager = new DevExpress.XtraBars.BarManager();
+			this.barManager = new DevExpress.XtraBars.BarManager(this.components);
 			this.barTools = new DevExpress.XtraBars.Bar();
 			this.barButtonRefresh = new DevExpress.XtraBars.BarButtonItem();
 			this.barButtonNew = new DevExpress.XtraBars.BarButtonItem();
@@ -48,7 +49,7 @@
 			this.barStaticTotalRecords = new DevExpress.XtraBars.BarStaticItem();
 			this.barStaticEditMode = new DevExpress.XtraBars.BarStaticItem();
 			this.barStaticViewName = new DevExpress.XtraBars.BarStaticItem();
-			this.barAndDockingController = new DevExpress.XtraBars.BarAndDockingController();
+			this.barAndDockingController = new DevExpress.XtraBars.BarAndDockingController(this.components);
 			this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -102,8 +103,6 @@
 			// 
 			// barTools
 			// 
-			this.barTools.BarAppearance.Normal.BackColor = System.Drawing.Color.Black;
-			this.barTools.BarAppearance.Normal.Options.UseBackColor = true;
 			this.barTools.BarName = "Tools";
 			this.barTools.DockCol = 0;
 			this.barTools.DockRow = 0;
@@ -132,10 +131,10 @@
 			this.barButtonRefresh.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
 			this.barButtonRefresh.Caption = "Refresh";
 			this.barButtonRefresh.CategoryGuid = new System.Guid("dc5db40c-8502-47c0-9ffc-98d280c2c66a");
-			this.barButtonRefresh.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonRefresh.Glyph")));
 			this.barButtonRefresh.Id = 11;
+			this.barButtonRefresh.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonRefresh.ImageOptions.Image")));
+			this.barButtonRefresh.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonRefresh.ImageOptions.LargeImage")));
 			this.barButtonRefresh.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F5);
-			this.barButtonRefresh.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonRefresh.LargeGlyph")));
 			this.barButtonRefresh.Name = "barButtonRefresh";
 			this.barButtonRefresh.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
 			// 
@@ -144,10 +143,10 @@
 			this.barButtonNew.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
 			this.barButtonNew.Caption = "New";
 			this.barButtonNew.CategoryGuid = new System.Guid("f9353982-6a5e-40af-a175-0d23da100202");
-			this.barButtonNew.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonNew.Glyph")));
 			this.barButtonNew.Id = 1;
+			this.barButtonNew.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonNew.ImageOptions.Image")));
+			this.barButtonNew.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonNew.ImageOptions.LargeImage")));
 			this.barButtonNew.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F2);
-			this.barButtonNew.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonNew.LargeGlyph")));
 			this.barButtonNew.Name = "barButtonNew";
 			this.barButtonNew.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
 			// 
@@ -156,10 +155,10 @@
 			this.barButtonSave.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
 			this.barButtonSave.Caption = "Save";
 			this.barButtonSave.CategoryGuid = new System.Guid("f9353982-6a5e-40af-a175-0d23da100202");
-			this.barButtonSave.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonSave.Glyph")));
 			this.barButtonSave.Id = 2;
+			this.barButtonSave.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonSave.ImageOptions.Image")));
+			this.barButtonSave.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonSave.ImageOptions.LargeImage")));
 			this.barButtonSave.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F6);
-			this.barButtonSave.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonSave.LargeGlyph")));
 			this.barButtonSave.Name = "barButtonSave";
 			this.barButtonSave.PaintStyle = DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph;
 			// 
@@ -168,10 +167,10 @@
 			this.barButtonSaveAndNew.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
 			this.barButtonSaveAndNew.Caption = "Save and new";
 			this.barButtonSaveAndNew.CategoryGuid = new System.Guid("f9353982-6a5e-40af-a175-0d23da100202");
-			this.barButtonSaveAndNew.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonSaveAndNew.Glyph")));
 			this.barButtonSaveAndNew.Id = 3;
+			this.barButtonSaveAndNew.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonSaveAndNew.ImageOptions.Image")));
+			this.barButtonSaveAndNew.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonSaveAndNew.ImageOptions.LargeImage")));
 			this.barButtonSaveAndNew.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F7);
-			this.barButtonSaveAndNew.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonSaveAndNew.LargeGlyph")));
 			this.barButtonSaveAndNew.Name = "barButtonSaveAndNew";
 			// 
 			// barButtonSaveAndClose
@@ -179,10 +178,10 @@
 			this.barButtonSaveAndClose.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
 			this.barButtonSaveAndClose.Caption = "Save and close";
 			this.barButtonSaveAndClose.CategoryGuid = new System.Guid("f9353982-6a5e-40af-a175-0d23da100202");
-			this.barButtonSaveAndClose.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonSaveAndClose.Glyph")));
 			this.barButtonSaveAndClose.Id = 4;
+			this.barButtonSaveAndClose.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonSaveAndClose.ImageOptions.Image")));
+			this.barButtonSaveAndClose.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonSaveAndClose.ImageOptions.LargeImage")));
 			this.barButtonSaveAndClose.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F8);
-			this.barButtonSaveAndClose.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonSaveAndClose.LargeGlyph")));
 			this.barButtonSaveAndClose.Name = "barButtonSaveAndClose";
 			// 
 			// barButtonDelete
@@ -190,10 +189,10 @@
 			this.barButtonDelete.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
 			this.barButtonDelete.Caption = "Delete";
 			this.barButtonDelete.CategoryGuid = new System.Guid("f9353982-6a5e-40af-a175-0d23da100202");
-			this.barButtonDelete.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonDelete.Glyph")));
 			this.barButtonDelete.Id = 5;
+			this.barButtonDelete.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonDelete.ImageOptions.Image")));
+			this.barButtonDelete.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonDelete.ImageOptions.LargeImage")));
 			this.barButtonDelete.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F4);
-			this.barButtonDelete.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonDelete.LargeGlyph")));
 			this.barButtonDelete.Name = "barButtonDelete";
 			// 
 			// barButtonCancel
@@ -201,10 +200,10 @@
 			this.barButtonCancel.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
 			this.barButtonCancel.Caption = "Cancel";
 			this.barButtonCancel.CategoryGuid = new System.Guid("f9353982-6a5e-40af-a175-0d23da100202");
-			this.barButtonCancel.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonCancel.Glyph")));
 			this.barButtonCancel.Id = 7;
+			this.barButtonCancel.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonCancel.ImageOptions.Image")));
+			this.barButtonCancel.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonCancel.ImageOptions.LargeImage")));
 			this.barButtonCancel.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F10);
-			this.barButtonCancel.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonCancel.LargeGlyph")));
 			this.barButtonCancel.Name = "barButtonCancel";
 			// 
 			// barButtonExport
@@ -212,10 +211,10 @@
 			this.barButtonExport.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
 			this.barButtonExport.Caption = "Export";
 			this.barButtonExport.CategoryGuid = new System.Guid("dc5db40c-8502-47c0-9ffc-98d280c2c66a");
-			this.barButtonExport.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonExport.Glyph")));
 			this.barButtonExport.Id = 8;
+			this.barButtonExport.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonExport.ImageOptions.Image")));
+			this.barButtonExport.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonExport.ImageOptions.LargeImage")));
 			this.barButtonExport.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F11);
-			this.barButtonExport.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonExport.LargeGlyph")));
 			this.barButtonExport.Name = "barButtonExport";
 			// 
 			// barButtonPrint
@@ -223,10 +222,10 @@
 			this.barButtonPrint.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
 			this.barButtonPrint.Caption = "Print";
 			this.barButtonPrint.CategoryGuid = new System.Guid("dc5db40c-8502-47c0-9ffc-98d280c2c66a");
-			this.barButtonPrint.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonPrint.Glyph")));
 			this.barButtonPrint.Id = 9;
+			this.barButtonPrint.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonPrint.ImageOptions.Image")));
+			this.barButtonPrint.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonPrint.ImageOptions.LargeImage")));
 			this.barButtonPrint.ItemShortcut = new DevExpress.XtraBars.BarShortcut((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P));
-			this.barButtonPrint.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonPrint.LargeGlyph")));
 			this.barButtonPrint.Name = "barButtonPrint";
 			// 
 			// barButtonHelp
@@ -234,10 +233,10 @@
 			this.barButtonHelp.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
 			this.barButtonHelp.Caption = "Help";
 			this.barButtonHelp.CategoryGuid = new System.Guid("dc5db40c-8502-47c0-9ffc-98d280c2c66a");
-			this.barButtonHelp.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonHelp.Glyph")));
 			this.barButtonHelp.Id = 19;
+			this.barButtonHelp.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonHelp.ImageOptions.Image")));
+			this.barButtonHelp.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonHelp.ImageOptions.LargeImage")));
 			this.barButtonHelp.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F1);
-			this.barButtonHelp.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonHelp.LargeGlyph")));
 			this.barButtonHelp.Name = "barButtonHelp";
 			// 
 			// barButtonClose
@@ -245,10 +244,10 @@
 			this.barButtonClose.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
 			this.barButtonClose.Caption = "Close";
 			this.barButtonClose.CategoryGuid = new System.Guid("dc5db40c-8502-47c0-9ffc-98d280c2c66a");
-			this.barButtonClose.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonClose.Glyph")));
 			this.barButtonClose.Id = 10;
+			this.barButtonClose.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonClose.ImageOptions.Image")));
+			this.barButtonClose.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonClose.ImageOptions.LargeImage")));
 			this.barButtonClose.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F12);
-			this.barButtonClose.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonClose.LargeGlyph")));
 			this.barButtonClose.Name = "barButtonClose";
 			// 
 			// barTitle
@@ -323,6 +322,7 @@
 			this.barDockControlTop.CausesValidation = false;
 			this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
 			this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
+			this.barDockControlTop.Manager = this.barManager;
 			this.barDockControlTop.Size = new System.Drawing.Size(998, 44);
 			// 
 			// barDockControlBottom
@@ -330,6 +330,7 @@
 			this.barDockControlBottom.CausesValidation = false;
 			this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.barDockControlBottom.Location = new System.Drawing.Point(0, 455);
+			this.barDockControlBottom.Manager = this.barManager;
 			this.barDockControlBottom.Size = new System.Drawing.Size(998, 22);
 			// 
 			// barDockControlLeft
@@ -337,6 +338,7 @@
 			this.barDockControlLeft.CausesValidation = false;
 			this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
 			this.barDockControlLeft.Location = new System.Drawing.Point(0, 44);
+			this.barDockControlLeft.Manager = this.barManager;
 			this.barDockControlLeft.Size = new System.Drawing.Size(0, 411);
 			// 
 			// barDockControlRight
@@ -344,6 +346,7 @@
 			this.barDockControlRight.CausesValidation = false;
 			this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
 			this.barDockControlRight.Location = new System.Drawing.Point(998, 44);
+			this.barDockControlRight.Manager = this.barManager;
 			this.barDockControlRight.Size = new System.Drawing.Size(0, 411);
 			// 
 			// barStaticItemBlank

@@ -79,7 +79,7 @@ namespace JW.AUBE.Core.Base.Forms
 		{
 			if (!this.DesignMode)
 			{
-				if (GlobalVar.Settings.GetValue("FORM_SKIN").ToStringNullToEmpty() != "")
+				if (GlobalVar.Settings.GetValue("FORM_SKIN").ToStringNullToEmpty().IsNullOrEmpty() == false)
 				{
 					this.LookAndFeel.UseDefaultLookAndFeel = false;
 					this.LookAndFeel.SetSkinStyle(GlobalVar.Settings.GetValue("FORM_SKIN").ToStringNullToEmpty());
@@ -88,7 +88,7 @@ namespace JW.AUBE.Core.Base.Forms
 				{
 					this.LookAndFeel.UseDefaultLookAndFeel = true;
 				}
-				if (GlobalVar.Settings.GetValue("MAIN_SKIN").ToStringNullToEmpty() != "")
+				if (GlobalVar.Settings.GetValue("MAIN_SKIN").ToStringNullToEmpty().IsNullOrEmpty() == false)
 				{
 					barAndDockingController.LookAndFeel.UseDefaultLookAndFeel = false;
 					barAndDockingController.LookAndFeel.SetSkinStyle(GlobalVar.Settings.GetValue("MAIN_SKIN").ToStringNullToEmpty());
@@ -97,7 +97,7 @@ namespace JW.AUBE.Core.Base.Forms
 				{
 					barAndDockingController.LookAndFeel.UseDefaultLookAndFeel = true;
 				}
-				barTools.Appearance.BackColor = SkinUtils.BackColor();
+				//barTools.Appearance.BackColor = SkinUtils.BackColor();
 				barTools.OptionsBar.AllowQuickCustomization = false;
 
 				ToolbarButtons = new ToolbarButtons();

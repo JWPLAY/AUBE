@@ -190,6 +190,7 @@ namespace JW.AUBE.Core.Base.Forms
 		[Browsable(false)]
 		[Category("Customize")]
 		public bool IsLoaded { get; internal set; }
+
 		private void SetLayout()
 		{
 			try

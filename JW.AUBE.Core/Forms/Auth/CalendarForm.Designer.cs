@@ -33,6 +33,8 @@
 			this.lcItemCalYear = new DevExpress.XtraLayout.LayoutControlItem();
 			this.datCalYear = new DevExpress.XtraEditors.DateEdit();
 			this.emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.lcButtonCreate = new DevExpress.XtraLayout.LayoutControlItem();
+			this.btnCreate = new DevExpress.XtraEditors.SimpleButton();
 			this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.gridList = new JW.AUBE.Core.Controls.Grid.XGrid();
 			this.lcGroupEdit = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -58,8 +60,7 @@
 			this.lcItemInsUserName = new DevExpress.XtraLayout.LayoutControlItem();
 			this.txtInsUser = new DevExpress.XtraEditors.TextEdit();
 			this.emptySpaceItem5 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.btnCreate = new DevExpress.XtraEditors.SimpleButton();
-			this.lcButtonCreate = new DevExpress.XtraLayout.LayoutControlItem();
+			this.lcGroupEdit1 = new DevExpress.XtraLayout.LayoutControlGroup();
 			((System.ComponentModel.ISupportInitialize)(this.lc)).BeginInit();
 			this.lc.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupBase)).BeginInit();
@@ -69,6 +70,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.datCalYear.Properties.CalendarTimeProperties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.datCalYear.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcButtonCreate)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemHolidayName)).BeginInit();
@@ -94,7 +96,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.lcItemInsUserName)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtInsUser.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcButtonCreate)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGroupEdit1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// lc
@@ -110,9 +112,9 @@
 			this.lc.Controls.Add(this.txtInsTime);
 			this.lc.Controls.Add(this.gridList);
 			this.lc.Controls.Add(this.txtHolidayName);
-			this.lc.Location = new System.Drawing.Point(0, 44);
+			this.lc.Location = new System.Drawing.Point(0, 42);
 			this.lc.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(892, 390, 532, 350);
-			this.lc.Size = new System.Drawing.Size(1028, 418);
+			this.lc.Size = new System.Drawing.Size(1028, 414);
 			// 
 			// lcGroupBase
 			// 
@@ -120,11 +122,11 @@
             this.lcGroupFind,
             this.lcGroupEdit,
             this.splitterItem1,
-            this.emptySpaceItem5,
-            this.lcGroupRegInfo});
+            this.lcGroupRegInfo,
+            this.lcGroupEdit1});
 			this.lcGroupBase.Name = "Root";
 			this.lcGroupBase.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcGroupBase.Size = new System.Drawing.Size(1028, 418);
+			this.lcGroupBase.Size = new System.Drawing.Size(1028, 414);
 			// 
 			// lcGroupFind
 			// 
@@ -134,7 +136,7 @@
 			this.lcGroupFind.Location = new System.Drawing.Point(0, 0);
 			this.lcGroupFind.Name = "lcGroupFind";
 			this.lcGroupFind.Padding = new DevExpress.XtraLayout.Utils.Padding(4, 4, 4, 4);
-			this.lcGroupFind.Size = new System.Drawing.Size(562, 414);
+			this.lcGroupFind.Size = new System.Drawing.Size(567, 410);
 			this.lcGroupFind.Text = "검색";
 			this.lcGroupFind.TextVisible = false;
 			// 
@@ -147,7 +149,7 @@
 			this.lcGroupSearch.Location = new System.Drawing.Point(0, 0);
 			this.lcGroupSearch.Name = "lcGroupSearch";
 			this.lcGroupSearch.Padding = new DevExpress.XtraLayout.Utils.Padding(4, 4, 4, 4);
-			this.lcGroupSearch.Size = new System.Drawing.Size(548, 40);
+			this.lcGroupSearch.Size = new System.Drawing.Size(553, 40);
 			this.lcGroupSearch.TextVisible = false;
 			// 
 			// lcItemCalYear
@@ -179,15 +181,36 @@
 			this.emptySpaceItem4.AllowHotTrack = false;
 			this.emptySpaceItem4.Location = new System.Drawing.Point(250, 0);
 			this.emptySpaceItem4.Name = "emptySpaceItem4";
-			this.emptySpaceItem4.Size = new System.Drawing.Size(204, 26);
+			this.emptySpaceItem4.Size = new System.Drawing.Size(209, 26);
 			this.emptySpaceItem4.TextSize = new System.Drawing.Size(0, 0);
+			// 
+			// lcButtonCreate
+			// 
+			this.lcButtonCreate.Control = this.btnCreate;
+			this.lcButtonCreate.Location = new System.Drawing.Point(459, 0);
+			this.lcButtonCreate.MaxSize = new System.Drawing.Size(80, 26);
+			this.lcButtonCreate.MinSize = new System.Drawing.Size(80, 26);
+			this.lcButtonCreate.Name = "lcButtonCreate";
+			this.lcButtonCreate.Size = new System.Drawing.Size(80, 26);
+			this.lcButtonCreate.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.lcButtonCreate.TextSize = new System.Drawing.Size(0, 0);
+			this.lcButtonCreate.TextVisible = false;
+			// 
+			// btnCreate
+			// 
+			this.btnCreate.Location = new System.Drawing.Point(477, 18);
+			this.btnCreate.Name = "btnCreate";
+			this.btnCreate.Size = new System.Drawing.Size(76, 22);
+			this.btnCreate.StyleController = this.lc;
+			this.btnCreate.TabIndex = 21;
+			this.btnCreate.Text = "생성";
 			// 
 			// layoutControlItem3
 			// 
 			this.layoutControlItem3.Control = this.gridList;
 			this.layoutControlItem3.Location = new System.Drawing.Point(0, 40);
 			this.layoutControlItem3.Name = "layoutControlItem3";
-			this.layoutControlItem3.Size = new System.Drawing.Size(548, 360);
+			this.layoutControlItem3.Size = new System.Drawing.Size(553, 356);
 			this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem3.TextVisible = false;
 			// 
@@ -210,7 +233,7 @@
 			this.gridList.PrintHeader = null;
 			this.gridList.ReadOnly = false;
 			this.gridList.ShowGroupPanel = false;
-			this.gridList.Size = new System.Drawing.Size(544, 356);
+			this.gridList.Size = new System.Drawing.Size(549, 352);
 			this.gridList.TabIndex = 7;
 			// 
 			// lcGroupEdit
@@ -329,21 +352,21 @@
 			// splitterItem1
 			// 
 			this.splitterItem1.AllowHotTrack = true;
-			this.splitterItem1.Location = new System.Drawing.Point(562, 0);
+			this.splitterItem1.Location = new System.Drawing.Point(567, 0);
 			this.splitterItem1.Name = "splitterItem1";
-			this.splitterItem1.Size = new System.Drawing.Size(12, 414);
+			this.splitterItem1.Size = new System.Drawing.Size(7, 410);
 			// 
 			// lcGroupRegInfo
 			// 
 			this.lcGroupRegInfo.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.lcItemInsTime,
+            this.lcItemInsUserName,
             this.lcItemUpdTime,
-            this.lcItemUpdUserName,
-            this.lcItemInsUserName});
+            this.lcItemUpdUserName});
 			this.lcGroupRegInfo.Location = new System.Drawing.Point(574, 185);
 			this.lcGroupRegInfo.Name = "lcGroupRegInfo";
 			this.lcGroupRegInfo.Padding = new DevExpress.XtraLayout.Utils.Padding(4, 4, 4, 4);
-			this.lcGroupRegInfo.Size = new System.Drawing.Size(450, 110);
+			this.lcGroupRegInfo.Size = new System.Drawing.Size(450, 62);
 			this.lcGroupRegInfo.TextVisible = false;
 			// 
 			// lcItemInsTime
@@ -351,46 +374,46 @@
 			this.lcItemInsTime.Control = this.txtInsTime;
 			this.lcItemInsTime.Location = new System.Drawing.Point(0, 0);
 			this.lcItemInsTime.Name = "lcItemInsTime";
-			this.lcItemInsTime.Size = new System.Drawing.Size(436, 24);
+			this.lcItemInsTime.Size = new System.Drawing.Size(218, 24);
 			this.lcItemInsTime.TextSize = new System.Drawing.Size(111, 14);
 			// 
 			// txtInsTime
 			// 
 			this.txtInsTime.Location = new System.Drawing.Point(700, 196);
 			this.txtInsTime.Name = "txtInsTime";
-			this.txtInsTime.Size = new System.Drawing.Size(317, 20);
+			this.txtInsTime.Size = new System.Drawing.Size(99, 20);
 			this.txtInsTime.StyleController = this.lc;
 			this.txtInsTime.TabIndex = 10;
 			// 
 			// lcItemUpdTime
 			// 
 			this.lcItemUpdTime.Control = this.txtUpdTime;
-			this.lcItemUpdTime.Location = new System.Drawing.Point(0, 48);
+			this.lcItemUpdTime.Location = new System.Drawing.Point(218, 0);
 			this.lcItemUpdTime.Name = "lcItemUpdTime";
-			this.lcItemUpdTime.Size = new System.Drawing.Size(436, 24);
+			this.lcItemUpdTime.Size = new System.Drawing.Size(218, 24);
 			this.lcItemUpdTime.TextSize = new System.Drawing.Size(111, 14);
 			// 
 			// txtUpdTime
 			// 
-			this.txtUpdTime.Location = new System.Drawing.Point(700, 244);
+			this.txtUpdTime.Location = new System.Drawing.Point(918, 196);
 			this.txtUpdTime.Name = "txtUpdTime";
-			this.txtUpdTime.Size = new System.Drawing.Size(317, 20);
+			this.txtUpdTime.Size = new System.Drawing.Size(99, 20);
 			this.txtUpdTime.StyleController = this.lc;
 			this.txtUpdTime.TabIndex = 12;
 			// 
 			// lcItemUpdUserName
 			// 
 			this.lcItemUpdUserName.Control = this.txtUpdUser;
-			this.lcItemUpdUserName.Location = new System.Drawing.Point(0, 72);
+			this.lcItemUpdUserName.Location = new System.Drawing.Point(218, 24);
 			this.lcItemUpdUserName.Name = "lcItemUpdUserName";
-			this.lcItemUpdUserName.Size = new System.Drawing.Size(436, 24);
+			this.lcItemUpdUserName.Size = new System.Drawing.Size(218, 24);
 			this.lcItemUpdUserName.TextSize = new System.Drawing.Size(111, 14);
 			// 
 			// txtUpdUser
 			// 
-			this.txtUpdUser.Location = new System.Drawing.Point(700, 268);
+			this.txtUpdUser.Location = new System.Drawing.Point(918, 220);
 			this.txtUpdUser.Name = "txtUpdUser";
-			this.txtUpdUser.Size = new System.Drawing.Size(317, 20);
+			this.txtUpdUser.Size = new System.Drawing.Size(99, 20);
 			this.txtUpdUser.StyleController = this.lc;
 			this.txtUpdUser.TabIndex = 13;
 			// 
@@ -399,50 +422,37 @@
 			this.lcItemInsUserName.Control = this.txtInsUser;
 			this.lcItemInsUserName.Location = new System.Drawing.Point(0, 24);
 			this.lcItemInsUserName.Name = "lcItemInsUserName";
-			this.lcItemInsUserName.Size = new System.Drawing.Size(436, 24);
+			this.lcItemInsUserName.Size = new System.Drawing.Size(218, 24);
 			this.lcItemInsUserName.TextSize = new System.Drawing.Size(111, 14);
 			// 
 			// txtInsUser
 			// 
 			this.txtInsUser.Location = new System.Drawing.Point(700, 220);
 			this.txtInsUser.Name = "txtInsUser";
-			this.txtInsUser.Size = new System.Drawing.Size(317, 20);
+			this.txtInsUser.Size = new System.Drawing.Size(99, 20);
 			this.txtInsUser.StyleController = this.lc;
 			this.txtInsUser.TabIndex = 11;
 			// 
 			// emptySpaceItem5
 			// 
 			this.emptySpaceItem5.AllowHotTrack = false;
-			this.emptySpaceItem5.Location = new System.Drawing.Point(574, 295);
+			this.emptySpaceItem5.Location = new System.Drawing.Point(0, 0);
 			this.emptySpaceItem5.Name = "emptySpaceItem5";
-			this.emptySpaceItem5.Size = new System.Drawing.Size(450, 119);
+			this.emptySpaceItem5.Size = new System.Drawing.Size(440, 153);
 			this.emptySpaceItem5.TextSize = new System.Drawing.Size(0, 0);
 			// 
-			// btnCreate
+			// lcGroupEdit1
 			// 
-			this.btnCreate.Location = new System.Drawing.Point(472, 18);
-			this.btnCreate.Name = "btnCreate";
-			this.btnCreate.Size = new System.Drawing.Size(76, 22);
-			this.btnCreate.StyleController = this.lc;
-			this.btnCreate.TabIndex = 21;
-			this.btnCreate.Text = "생성";
-			// 
-			// lcButtonCreate
-			// 
-			this.lcButtonCreate.Control = this.btnCreate;
-			this.lcButtonCreate.Location = new System.Drawing.Point(454, 0);
-			this.lcButtonCreate.MaxSize = new System.Drawing.Size(80, 26);
-			this.lcButtonCreate.MinSize = new System.Drawing.Size(80, 26);
-			this.lcButtonCreate.Name = "lcButtonCreate";
-			this.lcButtonCreate.Size = new System.Drawing.Size(80, 26);
-			this.lcButtonCreate.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-			this.lcButtonCreate.TextSize = new System.Drawing.Size(0, 0);
-			this.lcButtonCreate.TextVisible = false;
+			this.lcGroupEdit1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.emptySpaceItem5});
+			this.lcGroupEdit1.Location = new System.Drawing.Point(574, 247);
+			this.lcGroupEdit1.Name = "lcGroupEdit1";
+			this.lcGroupEdit1.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
+			this.lcGroupEdit1.Size = new System.Drawing.Size(450, 163);
+			this.lcGroupEdit1.TextVisible = false;
 			// 
 			// CalendarForm
 			// 
-			this.Appearance.BackColor = System.Drawing.Color.DimGray;
-			this.Appearance.Options.UseBackColor = true;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1028, 484);
@@ -457,6 +467,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.datCalYear.Properties.CalendarTimeProperties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.datCalYear.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcButtonCreate)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemHolidayName)).EndInit();
@@ -482,7 +493,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.lcItemInsUserName)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtInsUser.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcButtonCreate)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGroupEdit1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -521,5 +532,6 @@
 		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem5;
 		private DevExpress.XtraEditors.SimpleButton btnCreate;
 		private DevExpress.XtraLayout.LayoutControlItem lcButtonCreate;
+		private DevExpress.XtraLayout.LayoutControlGroup lcGroupEdit1;
 	}
 }

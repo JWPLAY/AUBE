@@ -28,12 +28,11 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
 			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
-			DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
-			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.esMonSaleAmt = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.emptySpaceItem6 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.gridItems = new JW.AUBE.Core.Controls.Grid.XGrid();
 			this.lcGridItems = new DevExpress.XtraLayout.LayoutControlItem();
@@ -41,9 +40,9 @@
 			this.lcGridCategories = new DevExpress.XtraLayout.LayoutControlItem();
 			this.gridFindItems = new JW.AUBE.Core.Controls.Grid.XGrid();
 			this.lcGridFindItems = new DevExpress.XtraLayout.LayoutControlItem();
-			this.emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.emptySpaceItem5 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.emptySpaceItem7 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.esSaleDate = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.esSaleTime = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.esDaySaleAmt = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.lcGroupHeader = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.txtInput = new DevExpress.XtraEditors.TextEdit();
 			this.lcItemInput = new DevExpress.XtraLayout.LayoutControlItem();
@@ -56,19 +55,20 @@
 			this.lcGroupAmount = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.lcGroupSearch = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.lcGroupInput = new DevExpress.XtraLayout.LayoutControlGroup();
+			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.lcGroupItems = new DevExpress.XtraLayout.LayoutControlGroup();
 			((System.ComponentModel.ISupportInitialize)(this.lc)).BeginInit();
 			this.lc.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupBase)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.esMonSaleAmt)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem6)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGridItems)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGridCategories)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGridFindItems)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem7)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.esSaleDate)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.esSaleTime)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.esDaySaleAmt)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupHeader)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtInput.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemInput)).BeginInit();
@@ -81,6 +81,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupAmount)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupSearch)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupInput)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGroupItems)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// lc
@@ -92,55 +94,65 @@
 			this.lc.Controls.Add(this.gridFindItems);
 			this.lc.Controls.Add(this.gridCategories);
 			this.lc.Controls.Add(this.gridItems);
-			this.lc.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(922, 318, 450, 400);
-			this.lc.Size = new System.Drawing.Size(998, 596);
+			this.lc.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1090, 184, 450, 400);
+			this.lc.Size = new System.Drawing.Size(998, 590);
 			// 
 			// lcGroupBase
 			// 
 			this.lcGroupBase.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.lcGridItems,
             this.lcGroupHeader,
             this.lcGroupAmount,
             this.lcGroupSearch,
-            this.lcGroupInput});
+            this.lcGroupInput,
+            this.lcGroupItems});
 			this.lcGroupBase.Name = "Root";
 			this.lcGroupBase.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcGroupBase.Size = new System.Drawing.Size(998, 596);
+			this.lcGroupBase.Size = new System.Drawing.Size(998, 590);
 			// 
-			// emptySpaceItem1
+			// esMonSaleAmt
 			// 
-			this.emptySpaceItem1.AllowHotTrack = false;
-			this.emptySpaceItem1.AppearanceItemCaption.BackColor = System.Drawing.Color.Black;
-			this.emptySpaceItem1.AppearanceItemCaption.Options.UseBackColor = true;
-			this.emptySpaceItem1.Location = new System.Drawing.Point(738, 0);
-			this.emptySpaceItem1.Name = "emptySpaceItem1";
-			this.emptySpaceItem1.Size = new System.Drawing.Size(246, 40);
-			this.emptySpaceItem1.TextSize = new System.Drawing.Size(64, 0);
-			this.emptySpaceItem1.TextVisible = true;
+			this.esMonSaleAmt.AllowHotTrack = false;
+			this.esMonSaleAmt.AppearanceItemCaption.BackColor = System.Drawing.Color.Black;
+			this.esMonSaleAmt.AppearanceItemCaption.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
+			this.esMonSaleAmt.AppearanceItemCaption.ForeColor = System.Drawing.Color.DarkGray;
+			this.esMonSaleAmt.AppearanceItemCaption.Options.UseBackColor = true;
+			this.esMonSaleAmt.AppearanceItemCaption.Options.UseFont = true;
+			this.esMonSaleAmt.AppearanceItemCaption.Options.UseForeColor = true;
+			this.esMonSaleAmt.AppearanceItemCaption.Options.UseTextOptions = true;
+			this.esMonSaleAmt.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+			this.esMonSaleAmt.Location = new System.Drawing.Point(738, 0);
+			this.esMonSaleAmt.Name = "esMonSaleAmt";
+			this.esMonSaleAmt.Size = new System.Drawing.Size(246, 40);
+			this.esMonSaleAmt.Text = "10,000,000 ";
+			this.esMonSaleAmt.TextSize = new System.Drawing.Size(0, 0);
+			this.esMonSaleAmt.TextVisible = true;
 			// 
 			// emptySpaceItem2
 			// 
 			this.emptySpaceItem2.AllowHotTrack = false;
-			this.emptySpaceItem2.Location = new System.Drawing.Point(0, 95);
+			this.emptySpaceItem2.Location = new System.Drawing.Point(0, 72);
 			this.emptySpaceItem2.Name = "emptySpaceItem2";
-			this.emptySpaceItem2.Size = new System.Drawing.Size(487, 141);
+			this.emptySpaceItem2.Size = new System.Drawing.Size(366, 210);
 			this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
-			// 
-			// emptySpaceItem3
-			// 
-			this.emptySpaceItem3.AllowHotTrack = false;
-			this.emptySpaceItem3.Location = new System.Drawing.Point(0, 0);
-			this.emptySpaceItem3.Name = "emptySpaceItem3";
-			this.emptySpaceItem3.Size = new System.Drawing.Size(147, 102);
-			this.emptySpaceItem3.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// emptySpaceItem6
 			// 
 			this.emptySpaceItem6.AllowHotTrack = false;
-			this.emptySpaceItem6.Location = new System.Drawing.Point(0, 36);
+			this.emptySpaceItem6.AppearanceItemCaption.BackColor = System.Drawing.Color.Gainsboro;
+			this.emptySpaceItem6.AppearanceItemCaption.Font = new System.Drawing.Font("Tahoma", 14F);
+			this.emptySpaceItem6.AppearanceItemCaption.ForeColor = System.Drawing.Color.Black;
+			this.emptySpaceItem6.AppearanceItemCaption.Options.UseBackColor = true;
+			this.emptySpaceItem6.AppearanceItemCaption.Options.UseFont = true;
+			this.emptySpaceItem6.AppearanceItemCaption.Options.UseForeColor = true;
+			this.emptySpaceItem6.Location = new System.Drawing.Point(200, 36);
+			this.emptySpaceItem6.MaxSize = new System.Drawing.Size(0, 36);
+			this.emptySpaceItem6.MinSize = new System.Drawing.Size(10, 36);
 			this.emptySpaceItem6.Name = "emptySpaceItem6";
-			this.emptySpaceItem6.Size = new System.Drawing.Size(487, 59);
+			this.emptySpaceItem6.Size = new System.Drawing.Size(166, 36);
+			this.emptySpaceItem6.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.emptySpaceItem6.Text = "JW-PLAY";
 			this.emptySpaceItem6.TextSize = new System.Drawing.Size(0, 0);
+			this.emptySpaceItem6.TextVisible = true;
 			// 
 			// gridItems
 			// 
@@ -148,7 +160,7 @@
 			this.gridItems.DataSource = null;
 			this.gridItems.Editable = true;
 			this.gridItems.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
-			this.gridItems.Location = new System.Drawing.Point(4, 54);
+			this.gridItems.Location = new System.Drawing.Point(319, 59);
 			this.gridItems.Name = "gridItems";
 			this.gridItems.PageFooterCenter = null;
 			this.gridItems.PageFooterLeft = null;
@@ -161,15 +173,15 @@
 			this.gridItems.PrintHeader = null;
 			this.gridItems.ReadOnly = false;
 			this.gridItems.ShowGroupPanel = false;
-			this.gridItems.Size = new System.Drawing.Size(493, 426);
+			this.gridItems.Size = new System.Drawing.Size(294, 522);
 			this.gridItems.TabIndex = 4;
 			// 
 			// lcGridItems
 			// 
 			this.lcGridItems.Control = this.gridItems;
-			this.lcGridItems.Location = new System.Drawing.Point(0, 50);
+			this.lcGridItems.Location = new System.Drawing.Point(0, 0);
 			this.lcGridItems.Name = "lcGridItems";
-			this.lcGridItems.Size = new System.Drawing.Size(497, 430);
+			this.lcGridItems.Size = new System.Drawing.Size(298, 526);
 			this.lcGridItems.TextSize = new System.Drawing.Size(0, 0);
 			this.lcGridItems.TextVisible = false;
 			// 
@@ -179,7 +191,7 @@
 			this.gridCategories.DataSource = null;
 			this.gridCategories.Editable = true;
 			this.gridCategories.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
-			this.gridCategories.Location = new System.Drawing.Point(506, 59);
+			this.gridCategories.Location = new System.Drawing.Point(627, 59);
 			this.gridCategories.Name = "gridCategories";
 			this.gridCategories.PageFooterCenter = null;
 			this.gridCategories.PageFooterLeft = null;
@@ -192,7 +204,7 @@
 			this.gridCategories.PrintHeader = null;
 			this.gridCategories.ReadOnly = false;
 			this.gridCategories.ShowGroupPanel = false;
-			this.gridCategories.Size = new System.Drawing.Size(177, 282);
+			this.gridCategories.Size = new System.Drawing.Size(184, 230);
 			this.gridCategories.TabIndex = 5;
 			// 
 			// lcGridCategories
@@ -200,7 +212,7 @@
 			this.lcGridCategories.Control = this.gridCategories;
 			this.lcGridCategories.Location = new System.Drawing.Point(0, 0);
 			this.lcGridCategories.Name = "lcGridCategories";
-			this.lcGridCategories.Size = new System.Drawing.Size(181, 286);
+			this.lcGridCategories.Size = new System.Drawing.Size(188, 234);
 			this.lcGridCategories.TextSize = new System.Drawing.Size(0, 0);
 			this.lcGridCategories.TextVisible = false;
 			// 
@@ -210,7 +222,7 @@
 			this.gridFindItems.DataSource = null;
 			this.gridFindItems.Editable = true;
 			this.gridFindItems.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
-			this.gridFindItems.Location = new System.Drawing.Point(687, 59);
+			this.gridFindItems.Location = new System.Drawing.Point(815, 59);
 			this.gridFindItems.Name = "gridFindItems";
 			this.gridFindItems.PageFooterCenter = null;
 			this.gridFindItems.PageFooterLeft = null;
@@ -223,63 +235,80 @@
 			this.gridFindItems.PrintHeader = null;
 			this.gridFindItems.ReadOnly = false;
 			this.gridFindItems.ShowGroupPanel = false;
-			this.gridFindItems.Size = new System.Drawing.Size(302, 282);
+			this.gridFindItems.Size = new System.Drawing.Size(174, 230);
 			this.gridFindItems.TabIndex = 6;
 			// 
 			// lcGridFindItems
 			// 
 			this.lcGridFindItems.Control = this.gridFindItems;
-			this.lcGridFindItems.Location = new System.Drawing.Point(181, 0);
+			this.lcGridFindItems.Location = new System.Drawing.Point(188, 0);
 			this.lcGridFindItems.Name = "lcGridFindItems";
-			this.lcGridFindItems.Size = new System.Drawing.Size(306, 286);
+			this.lcGridFindItems.Size = new System.Drawing.Size(178, 234);
 			this.lcGridFindItems.TextSize = new System.Drawing.Size(0, 0);
 			this.lcGridFindItems.TextVisible = false;
 			// 
-			// emptySpaceItem4
+			// esSaleDate
 			// 
-			this.emptySpaceItem4.AllowHotTrack = false;
-			this.emptySpaceItem4.AppearanceItemCaption.BackColor = System.Drawing.Color.Black;
-			this.emptySpaceItem4.AppearanceItemCaption.Options.UseBackColor = true;
-			this.emptySpaceItem4.Location = new System.Drawing.Point(0, 0);
-			this.emptySpaceItem4.MaxSize = new System.Drawing.Size(0, 40);
-			this.emptySpaceItem4.MinSize = new System.Drawing.Size(10, 40);
-			this.emptySpaceItem4.Name = "emptySpaceItem4";
-			this.emptySpaceItem4.Size = new System.Drawing.Size(246, 40);
-			this.emptySpaceItem4.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-			this.emptySpaceItem4.TextSize = new System.Drawing.Size(64, 0);
-			this.emptySpaceItem4.TextVisible = true;
+			this.esSaleDate.AllowHotTrack = false;
+			this.esSaleDate.AppearanceItemCaption.BackColor = System.Drawing.Color.Black;
+			this.esSaleDate.AppearanceItemCaption.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
+			this.esSaleDate.AppearanceItemCaption.Options.UseBackColor = true;
+			this.esSaleDate.AppearanceItemCaption.Options.UseFont = true;
+			this.esSaleDate.AppearanceItemCaption.Options.UseTextOptions = true;
+			this.esSaleDate.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+			this.esSaleDate.Location = new System.Drawing.Point(0, 0);
+			this.esSaleDate.MaxSize = new System.Drawing.Size(0, 40);
+			this.esSaleDate.MinSize = new System.Drawing.Size(10, 40);
+			this.esSaleDate.Name = "esSaleDate";
+			this.esSaleDate.Size = new System.Drawing.Size(246, 40);
+			this.esSaleDate.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.esSaleDate.Text = "2017-03-08";
+			this.esSaleDate.TextSize = new System.Drawing.Size(0, 0);
+			this.esSaleDate.TextVisible = true;
 			// 
-			// emptySpaceItem5
+			// esSaleTime
 			// 
-			this.emptySpaceItem5.AllowHotTrack = false;
-			this.emptySpaceItem5.AppearanceItemCaption.BackColor = System.Drawing.Color.Black;
-			this.emptySpaceItem5.AppearanceItemCaption.Options.UseBackColor = true;
-			this.emptySpaceItem5.Location = new System.Drawing.Point(246, 0);
-			this.emptySpaceItem5.Name = "emptySpaceItem5";
-			this.emptySpaceItem5.Size = new System.Drawing.Size(246, 40);
-			this.emptySpaceItem5.TextSize = new System.Drawing.Size(64, 0);
-			this.emptySpaceItem5.TextVisible = true;
+			this.esSaleTime.AllowHotTrack = false;
+			this.esSaleTime.AppearanceItemCaption.BackColor = System.Drawing.Color.Black;
+			this.esSaleTime.AppearanceItemCaption.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
+			this.esSaleTime.AppearanceItemCaption.Options.UseBackColor = true;
+			this.esSaleTime.AppearanceItemCaption.Options.UseFont = true;
+			this.esSaleTime.AppearanceItemCaption.Options.UseTextOptions = true;
+			this.esSaleTime.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+			this.esSaleTime.Location = new System.Drawing.Point(246, 0);
+			this.esSaleTime.Name = "esSaleTime";
+			this.esSaleTime.Size = new System.Drawing.Size(246, 40);
+			this.esSaleTime.Text = "21:39:59";
+			this.esSaleTime.TextSize = new System.Drawing.Size(0, 0);
+			this.esSaleTime.TextVisible = true;
 			// 
-			// emptySpaceItem7
+			// esDaySaleAmt
 			// 
-			this.emptySpaceItem7.AllowHotTrack = false;
-			this.emptySpaceItem7.AppearanceItemCaption.BackColor = System.Drawing.Color.Black;
-			this.emptySpaceItem7.AppearanceItemCaption.Options.UseBackColor = true;
-			this.emptySpaceItem7.Location = new System.Drawing.Point(492, 0);
-			this.emptySpaceItem7.Name = "emptySpaceItem7";
-			this.emptySpaceItem7.Size = new System.Drawing.Size(246, 40);
-			this.emptySpaceItem7.TextSize = new System.Drawing.Size(64, 0);
-			this.emptySpaceItem7.TextVisible = true;
+			this.esDaySaleAmt.AllowHotTrack = false;
+			this.esDaySaleAmt.AppearanceItemCaption.BackColor = System.Drawing.Color.Black;
+			this.esDaySaleAmt.AppearanceItemCaption.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
+			this.esDaySaleAmt.AppearanceItemCaption.ForeColor = System.Drawing.Color.DarkGray;
+			this.esDaySaleAmt.AppearanceItemCaption.Options.UseBackColor = true;
+			this.esDaySaleAmt.AppearanceItemCaption.Options.UseFont = true;
+			this.esDaySaleAmt.AppearanceItemCaption.Options.UseForeColor = true;
+			this.esDaySaleAmt.AppearanceItemCaption.Options.UseTextOptions = true;
+			this.esDaySaleAmt.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+			this.esDaySaleAmt.Location = new System.Drawing.Point(492, 0);
+			this.esDaySaleAmt.Name = "esDaySaleAmt";
+			this.esDaySaleAmt.Size = new System.Drawing.Size(246, 40);
+			this.esDaySaleAmt.Text = "1,000,000 ";
+			this.esDaySaleAmt.TextSize = new System.Drawing.Size(0, 0);
+			this.esDaySaleAmt.TextVisible = true;
 			// 
 			// lcGroupHeader
 			// 
 			this.lcGroupHeader.AppearanceGroup.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
 			this.lcGroupHeader.AppearanceGroup.Options.UseBackColor = true;
 			this.lcGroupHeader.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.emptySpaceItem4,
-            this.emptySpaceItem5,
-            this.emptySpaceItem7,
-            this.emptySpaceItem1});
+            this.esSaleDate,
+            this.esSaleTime,
+            this.esDaySaleAmt,
+            this.esMonSaleAmt});
 			this.lcGroupHeader.Location = new System.Drawing.Point(0, 0);
 			this.lcGroupHeader.Name = "lcGroupHeader";
 			this.lcGroupHeader.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
@@ -288,21 +317,34 @@
 			// 
 			// txtInput
 			// 
-			this.txtInput.Location = new System.Drawing.Point(574, 355);
+			this.txtInput.Location = new System.Drawing.Point(827, 303);
 			this.txtInput.Name = "txtInput";
 			this.txtInput.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
 			this.txtInput.Properties.Appearance.Options.UseFont = true;
-			this.txtInput.Size = new System.Drawing.Size(415, 32);
+			this.txtInput.Size = new System.Drawing.Size(162, 32);
 			this.txtInput.StyleController = this.lc;
 			this.txtInput.TabIndex = 7;
 			// 
 			// lcItemInput
 			// 
+			this.lcItemInput.AppearanceItemCaption.BackColor = System.Drawing.Color.DarkRed;
+			this.lcItemInput.AppearanceItemCaption.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
+			this.lcItemInput.AppearanceItemCaption.Options.UseBackColor = true;
+			this.lcItemInput.AppearanceItemCaption.Options.UseFont = true;
+			this.lcItemInput.AppearanceItemCaption.Options.UseTextOptions = true;
+			this.lcItemInput.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
 			this.lcItemInput.Control = this.txtInput;
+			this.lcItemInput.ControlAlignment = System.Drawing.ContentAlignment.MiddleCenter;
 			this.lcItemInput.Location = new System.Drawing.Point(0, 0);
+			this.lcItemInput.MaxSize = new System.Drawing.Size(0, 36);
+			this.lcItemInput.MinSize = new System.Drawing.Size(126, 36);
 			this.lcItemInput.Name = "lcItemInput";
-			this.lcItemInput.Size = new System.Drawing.Size(487, 36);
-			this.lcItemInput.TextSize = new System.Drawing.Size(64, 14);
+			this.lcItemInput.Size = new System.Drawing.Size(366, 36);
+			this.lcItemInput.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.lcItemInput.Text = "상품등록  ";
+			this.lcItemInput.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.CustomSize;
+			this.lcItemInput.TextSize = new System.Drawing.Size(200, 24);
+			this.lcItemInput.TextToControlDistance = 0;
 			// 
 			// spnTotSupAmt
 			// 
@@ -311,7 +353,7 @@
             0,
             0,
             0});
-			this.spnTotSupAmt.Location = new System.Drawing.Point(224, 489);
+			this.spnTotSupAmt.Location = new System.Drawing.Point(129, 59);
 			this.spnTotSupAmt.Name = "spnTotSupAmt";
 			this.spnTotSupAmt.Properties.Appearance.BackColor = System.Drawing.Color.Black;
 			this.spnTotSupAmt.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
@@ -320,8 +362,8 @@
 			this.spnTotSupAmt.Properties.Appearance.Options.UseFont = true;
 			this.spnTotSupAmt.Properties.Appearance.Options.UseForeColor = true;
 			this.spnTotSupAmt.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, false, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, null, true)});
-			this.spnTotSupAmt.Size = new System.Drawing.Size(268, 30);
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, false, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject3, "", null, null, true)});
+			this.spnTotSupAmt.Size = new System.Drawing.Size(176, 30);
 			this.spnTotSupAmt.StyleController = this.lc;
 			this.spnTotSupAmt.TabIndex = 8;
 			// 
@@ -334,11 +376,16 @@
 			this.layoutControlItem2.AppearanceItemCaption.Options.UseTextOptions = true;
 			this.layoutControlItem2.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
 			this.layoutControlItem2.Control = this.spnTotSupAmt;
-			this.layoutControlItem2.Location = new System.Drawing.Point(147, 0);
+			this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
+			this.layoutControlItem2.MaxSize = new System.Drawing.Size(0, 34);
+			this.layoutControlItem2.MinSize = new System.Drawing.Size(122, 34);
 			this.layoutControlItem2.Name = "layoutControlItem2";
-			this.layoutControlItem2.Size = new System.Drawing.Size(340, 34);
-			this.layoutControlItem2.Text = "공급가액";
-			this.layoutControlItem2.TextSize = new System.Drawing.Size(64, 21);
+			this.layoutControlItem2.Size = new System.Drawing.Size(300, 34);
+			this.layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.layoutControlItem2.Text = "공급가액 ";
+			this.layoutControlItem2.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.CustomSize;
+			this.layoutControlItem2.TextSize = new System.Drawing.Size(120, 22);
+			this.layoutControlItem2.TextToControlDistance = 0;
 			// 
 			// spnTotTaxAmt
 			// 
@@ -347,7 +394,7 @@
             0,
             0,
             0});
-			this.spnTotTaxAmt.Location = new System.Drawing.Point(224, 523);
+			this.spnTotTaxAmt.Location = new System.Drawing.Point(129, 93);
 			this.spnTotTaxAmt.Name = "spnTotTaxAmt";
 			this.spnTotTaxAmt.Properties.Appearance.BackColor = System.Drawing.Color.Black;
 			this.spnTotTaxAmt.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
@@ -356,8 +403,8 @@
 			this.spnTotTaxAmt.Properties.Appearance.Options.UseFont = true;
 			this.spnTotTaxAmt.Properties.Appearance.Options.UseForeColor = true;
 			this.spnTotTaxAmt.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, false, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "", null, null, true)});
-			this.spnTotTaxAmt.Size = new System.Drawing.Size(268, 30);
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, false, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, null, true)});
+			this.spnTotTaxAmt.Size = new System.Drawing.Size(176, 30);
 			this.spnTotTaxAmt.StyleController = this.lc;
 			this.spnTotTaxAmt.TabIndex = 9;
 			// 
@@ -370,11 +417,13 @@
 			this.layoutControlItem3.AppearanceItemCaption.Options.UseTextOptions = true;
 			this.layoutControlItem3.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
 			this.layoutControlItem3.Control = this.spnTotTaxAmt;
-			this.layoutControlItem3.Location = new System.Drawing.Point(147, 34);
+			this.layoutControlItem3.Location = new System.Drawing.Point(0, 34);
 			this.layoutControlItem3.Name = "layoutControlItem3";
-			this.layoutControlItem3.Size = new System.Drawing.Size(340, 34);
-			this.layoutControlItem3.Text = "부가세액";
-			this.layoutControlItem3.TextSize = new System.Drawing.Size(64, 21);
+			this.layoutControlItem3.Size = new System.Drawing.Size(300, 34);
+			this.layoutControlItem3.Text = "부가세액 ";
+			this.layoutControlItem3.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.CustomSize;
+			this.layoutControlItem3.TextSize = new System.Drawing.Size(120, 22);
+			this.layoutControlItem3.TextToControlDistance = 0;
 			// 
 			// spnTotSumAmt
 			// 
@@ -383,7 +432,7 @@
             0,
             0,
             0});
-			this.spnTotSumAmt.Location = new System.Drawing.Point(224, 557);
+			this.spnTotSumAmt.Location = new System.Drawing.Point(129, 127);
 			this.spnTotSumAmt.Name = "spnTotSumAmt";
 			this.spnTotSumAmt.Properties.Appearance.BackColor = System.Drawing.Color.Black;
 			this.spnTotSumAmt.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
@@ -392,8 +441,8 @@
 			this.spnTotSumAmt.Properties.Appearance.Options.UseFont = true;
 			this.spnTotSumAmt.Properties.Appearance.Options.UseForeColor = true;
 			this.spnTotSumAmt.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, false, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject4, "", null, null, true)});
-			this.spnTotSumAmt.Size = new System.Drawing.Size(268, 30);
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, false, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "", null, null, true)});
+			this.spnTotSumAmt.Size = new System.Drawing.Size(176, 30);
 			this.spnTotSumAmt.StyleController = this.lc;
 			this.spnTotSumAmt.TabIndex = 10;
 			// 
@@ -408,25 +457,28 @@
 			this.layoutControlItem4.AppearanceItemCaption.Options.UseTextOptions = true;
 			this.layoutControlItem4.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
 			this.layoutControlItem4.Control = this.spnTotSumAmt;
-			this.layoutControlItem4.Location = new System.Drawing.Point(147, 68);
+			this.layoutControlItem4.Location = new System.Drawing.Point(0, 68);
 			this.layoutControlItem4.Name = "layoutControlItem4";
-			this.layoutControlItem4.Size = new System.Drawing.Size(340, 34);
-			this.layoutControlItem4.Text = "합계금액";
-			this.layoutControlItem4.TextSize = new System.Drawing.Size(64, 21);
+			this.layoutControlItem4.Size = new System.Drawing.Size(300, 458);
+			this.layoutControlItem4.Text = "합계금액 ";
+			this.layoutControlItem4.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.CustomSize;
+			this.layoutControlItem4.TextSize = new System.Drawing.Size(120, 22);
+			this.layoutControlItem4.TextToControlDistance = 0;
 			// 
 			// lcGroupAmount
 			// 
 			this.lcGroupAmount.AppearanceGroup.BackColor = System.Drawing.Color.Black;
 			this.lcGroupAmount.AppearanceGroup.Options.UseBackColor = true;
+			this.lcGroupAmount.AppearanceItemCaption.BackColor = System.Drawing.Color.Black;
+			this.lcGroupAmount.AppearanceItemCaption.Options.UseBackColor = true;
 			this.lcGroupAmount.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.emptySpaceItem3,
             this.layoutControlItem2,
             this.layoutControlItem3,
             this.layoutControlItem4});
-			this.lcGroupAmount.Location = new System.Drawing.Point(0, 480);
+			this.lcGroupAmount.Location = new System.Drawing.Point(0, 50);
 			this.lcGroupAmount.Name = "lcGroupAmount";
 			this.lcGroupAmount.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcGroupAmount.Size = new System.Drawing.Size(497, 112);
+			this.lcGroupAmount.Size = new System.Drawing.Size(310, 536);
 			this.lcGroupAmount.TextVisible = false;
 			// 
 			// lcGroupSearch
@@ -434,10 +486,10 @@
 			this.lcGroupSearch.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.lcGridCategories,
             this.lcGridFindItems});
-			this.lcGroupSearch.Location = new System.Drawing.Point(497, 50);
+			this.lcGroupSearch.Location = new System.Drawing.Point(618, 50);
 			this.lcGroupSearch.Name = "lcGroupSearch";
 			this.lcGroupSearch.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcGroupSearch.Size = new System.Drawing.Size(497, 296);
+			this.lcGroupSearch.Size = new System.Drawing.Size(376, 244);
 			this.lcGroupSearch.TextVisible = false;
 			// 
 			// lcGroupInput
@@ -445,17 +497,45 @@
 			this.lcGroupInput.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.lcItemInput,
             this.emptySpaceItem6,
-            this.emptySpaceItem2});
-			this.lcGroupInput.Location = new System.Drawing.Point(497, 346);
+            this.emptySpaceItem2,
+            this.emptySpaceItem1});
+			this.lcGroupInput.Location = new System.Drawing.Point(618, 294);
 			this.lcGroupInput.Name = "lcGroupInput";
 			this.lcGroupInput.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcGroupInput.Size = new System.Drawing.Size(497, 246);
+			this.lcGroupInput.Size = new System.Drawing.Size(376, 292);
 			this.lcGroupInput.TextVisible = false;
+			// 
+			// emptySpaceItem1
+			// 
+			this.emptySpaceItem1.AllowHotTrack = false;
+			this.emptySpaceItem1.AppearanceItemCaption.BackColor = System.Drawing.Color.Maroon;
+			this.emptySpaceItem1.AppearanceItemCaption.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
+			this.emptySpaceItem1.AppearanceItemCaption.Options.UseBackColor = true;
+			this.emptySpaceItem1.AppearanceItemCaption.Options.UseFont = true;
+			this.emptySpaceItem1.AppearanceItemCaption.Options.UseTextOptions = true;
+			this.emptySpaceItem1.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+			this.emptySpaceItem1.Location = new System.Drawing.Point(0, 36);
+			this.emptySpaceItem1.MaxSize = new System.Drawing.Size(200, 0);
+			this.emptySpaceItem1.MinSize = new System.Drawing.Size(200, 10);
+			this.emptySpaceItem1.Name = "emptySpaceItem1";
+			this.emptySpaceItem1.Size = new System.Drawing.Size(200, 36);
+			this.emptySpaceItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.emptySpaceItem1.Text = "거래처 ";
+			this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
+			this.emptySpaceItem1.TextVisible = true;
+			// 
+			// lcGroupItems
+			// 
+			this.lcGroupItems.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.lcGridItems});
+			this.lcGroupItems.Location = new System.Drawing.Point(310, 50);
+			this.lcGroupItems.Name = "lcGroupItems";
+			this.lcGroupItems.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
+			this.lcGroupItems.Size = new System.Drawing.Size(308, 536);
+			this.lcGroupItems.TextVisible = false;
 			// 
 			// SaleRegForm
 			// 
-			this.Appearance.BackColor = System.Drawing.Color.DimGray;
-			this.Appearance.Options.UseBackColor = true;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(998, 618);
@@ -465,16 +545,15 @@
 			((System.ComponentModel.ISupportInitialize)(this.lc)).EndInit();
 			this.lc.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupBase)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.esMonSaleAmt)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem6)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGridItems)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGridCategories)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGridFindItems)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem7)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.esSaleDate)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.esSaleTime)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.esDaySaleAmt)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupHeader)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtInput.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemInput)).EndInit();
@@ -487,6 +566,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupAmount)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupSearch)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupInput)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGroupItems)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -494,9 +575,8 @@
 
 		#endregion
 
-		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
+		private DevExpress.XtraLayout.EmptySpaceItem esMonSaleAmt;
 		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem2;
-		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem3;
 		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem6;
 		private Controls.Grid.XGrid gridFindItems;
 		private Controls.Grid.XGrid gridCategories;
@@ -504,9 +584,9 @@
 		private DevExpress.XtraLayout.LayoutControlItem lcGridItems;
 		private DevExpress.XtraLayout.LayoutControlItem lcGridCategories;
 		private DevExpress.XtraLayout.LayoutControlItem lcGridFindItems;
-		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem4;
-		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem5;
-		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem7;
+		private DevExpress.XtraLayout.EmptySpaceItem esSaleDate;
+		private DevExpress.XtraLayout.EmptySpaceItem esSaleTime;
+		private DevExpress.XtraLayout.EmptySpaceItem esDaySaleAmt;
 		private DevExpress.XtraLayout.LayoutControlGroup lcGroupHeader;
 		private DevExpress.XtraEditors.TextEdit txtInput;
 		private DevExpress.XtraLayout.LayoutControlItem lcItemInput;
@@ -519,5 +599,7 @@
 		private DevExpress.XtraLayout.LayoutControlGroup lcGroupAmount;
 		private DevExpress.XtraLayout.LayoutControlGroup lcGroupSearch;
 		private DevExpress.XtraLayout.LayoutControlGroup lcGroupInput;
+		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
+		private DevExpress.XtraLayout.LayoutControlGroup lcGroupItems;
 	}
 }

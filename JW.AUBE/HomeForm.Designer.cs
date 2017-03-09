@@ -68,13 +68,13 @@
 			xyDiagram1.AxisY.VisibleInPanesSerializable = "-1";
 			this.chartMonthly.Diagram = xyDiagram1;
 			this.chartMonthly.Legend.Name = "Default Legend";
-			this.chartMonthly.Location = new System.Drawing.Point(24, 43);
+			this.chartMonthly.Location = new System.Drawing.Point(24, 45);
 			this.chartMonthly.Name = "chartMonthly";
 			series1.Name = "Series 1";
 			series1.View = lineSeriesView1;
 			this.chartMonthly.SeriesSerializable = new DevExpress.XtraCharts.Series[] {
         series1};
-			this.chartMonthly.Size = new System.Drawing.Size(950, 127);
+			this.chartMonthly.Size = new System.Drawing.Size(950, 125);
 			this.chartMonthly.TabIndex = 4;
 			// 
 			// lcGroupBase
@@ -114,14 +114,12 @@
 			this.lcChartMonthly.Control = this.chartMonthly;
 			this.lcChartMonthly.Location = new System.Drawing.Point(0, 0);
 			this.lcChartMonthly.Name = "lcChartMonthly";
-			this.lcChartMonthly.Size = new System.Drawing.Size(954, 131);
+			this.lcChartMonthly.Size = new System.Drawing.Size(954, 129);
 			this.lcChartMonthly.TextSize = new System.Drawing.Size(0, 0);
 			this.lcChartMonthly.TextVisible = false;
 			// 
 			// HomeForm
 			// 
-			this.Appearance.BackColor = System.Drawing.Color.DimGray;
-			this.Appearance.Options.UseBackColor = true;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(998, 568);

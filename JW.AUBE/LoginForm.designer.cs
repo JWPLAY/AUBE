@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
 			this.chkRemember = new DevExpress.XtraEditors.CheckEdit();
 			this.lc = new DevExpress.XtraLayout.LayoutControl();
@@ -62,10 +63,10 @@
 			this.barMessage = new DevExpress.XtraBars.BarStaticItem();
 			this.barStatus = new DevExpress.XtraBars.Bar();
 			this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
+			this.barManager = new DevExpress.XtraBars.BarManager(this.components);
 			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-			this.barManager = new DevExpress.XtraBars.BarManager();
 			((System.ComponentModel.ISupportInitialize)(this.chkRemember.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lc)).BeginInit();
 			this.lc.SuspendLayout();
@@ -101,17 +102,15 @@
 			// chkRemember
 			// 
 			this.chkRemember.EditValue = "N";
-			this.chkRemember.Location = new System.Drawing.Point(195, 358);
+			this.chkRemember.Location = new System.Drawing.Point(195, 353);
 			this.chkRemember.Name = "chkRemember";
 			this.chkRemember.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 10F);
-			this.chkRemember.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
 			this.chkRemember.Properties.Appearance.Options.UseFont = true;
-			this.chkRemember.Properties.Appearance.Options.UseForeColor = true;
 			this.chkRemember.Properties.AutoWidth = true;
 			this.chkRemember.Properties.Caption = "ID를 저장합니다.";
 			this.chkRemember.Properties.ValueChecked = "Y";
 			this.chkRemember.Properties.ValueUnchecked = "N";
-			this.chkRemember.Size = new System.Drawing.Size(116, 21);
+			this.chkRemember.Size = new System.Drawing.Size(115, 21);
 			this.chkRemember.StyleController = this.lc;
 			this.chkRemember.TabIndex = 11;
 			// 
@@ -130,7 +129,7 @@
 			this.lc.Name = "lc";
 			this.lc.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1399, 203, 250, 350);
 			this.lc.Root = this.lcGroupBase;
-			this.lc.Size = new System.Drawing.Size(490, 446);
+			this.lc.Size = new System.Drawing.Size(490, 437);
 			this.lc.TabIndex = 22;
 			this.lc.Text = "xLayout1";
 			// 
@@ -138,7 +137,7 @@
 			// 
 			this.btnCancel.Appearance.Font = new System.Drawing.Font("Tahoma", 11F);
 			this.btnCancel.Appearance.Options.UseFont = true;
-			this.btnCancel.Location = new System.Drawing.Point(247, 409);
+			this.btnCancel.Location = new System.Drawing.Point(247, 400);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(114, 25);
 			this.btnCancel.StyleController = this.lc;
@@ -147,7 +146,7 @@
 			// 
 			// txtLoginId
 			// 
-			this.txtLoginId.Location = new System.Drawing.Point(195, 302);
+			this.txtLoginId.Location = new System.Drawing.Point(195, 297);
 			this.txtLoginId.Name = "txtLoginId";
 			this.txtLoginId.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 11F);
 			this.txtLoginId.Properties.Appearance.Options.UseFont = true;
@@ -157,9 +156,11 @@
 			// 
 			// btnOk
 			// 
+			this.btnOk.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
 			this.btnOk.Appearance.Font = new System.Drawing.Font("Tahoma", 11F);
+			this.btnOk.Appearance.Options.UseBackColor = true;
 			this.btnOk.Appearance.Options.UseFont = true;
-			this.btnOk.Location = new System.Drawing.Point(129, 409);
+			this.btnOk.Location = new System.Drawing.Point(129, 400);
 			this.btnOk.Name = "btnOk";
 			this.btnOk.Size = new System.Drawing.Size(114, 25);
 			this.btnOk.StyleController = this.lc;
@@ -168,7 +169,7 @@
 			// 
 			// txtCompanyId
 			// 
-			this.txtCompanyId.Location = new System.Drawing.Point(195, 274);
+			this.txtCompanyId.Location = new System.Drawing.Point(195, 269);
 			this.txtCompanyId.Name = "txtCompanyId";
 			this.txtCompanyId.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 11F);
 			this.txtCompanyId.Properties.Appearance.Options.UseFont = true;
@@ -188,14 +189,14 @@
 			this.picImage.Properties.ShowCameraMenuItem = DevExpress.XtraEditors.Controls.CameraMenuItemVisibility.Auto;
 			this.picImage.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
 			this.picImage.Properties.ZoomAccelerationFactor = 1D;
-			this.picImage.Size = new System.Drawing.Size(466, 246);
+			this.picImage.Size = new System.Drawing.Size(466, 241);
 			this.picImage.StyleController = this.lc;
 			this.picImage.TabIndex = 0;
 			this.picImage.TabStop = true;
 			// 
 			// txtPassword
 			// 
-			this.txtPassword.Location = new System.Drawing.Point(195, 330);
+			this.txtPassword.Location = new System.Drawing.Point(195, 325);
 			this.txtPassword.Name = "txtPassword";
 			this.txtPassword.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 11F);
 			this.txtPassword.Properties.Appearance.Options.UseFont = true;
@@ -233,7 +234,7 @@
             this.simpleSeparator2});
 			this.lcGroupBase.Location = new System.Drawing.Point(0, 0);
 			this.lcGroupBase.Name = "Root";
-			this.lcGroupBase.Size = new System.Drawing.Size(490, 446);
+			this.lcGroupBase.Size = new System.Drawing.Size(490, 437);
 			this.lcGroupBase.TextVisible = false;
 			// 
 			// lcImageLogo
@@ -241,14 +242,14 @@
 			this.lcImageLogo.Control = this.picImage;
 			this.lcImageLogo.Location = new System.Drawing.Point(0, 0);
 			this.lcImageLogo.Name = "lcImageLogo";
-			this.lcImageLogo.Size = new System.Drawing.Size(470, 250);
+			this.lcImageLogo.Size = new System.Drawing.Size(470, 245);
 			this.lcImageLogo.TextSize = new System.Drawing.Size(0, 0);
 			this.lcImageLogo.TextVisible = false;
 			// 
 			// emptySpaceItem1
 			// 
 			this.emptySpaceItem1.AllowHotTrack = false;
-			this.emptySpaceItem1.Location = new System.Drawing.Point(0, 250);
+			this.emptySpaceItem1.Location = new System.Drawing.Point(0, 245);
 			this.emptySpaceItem1.Name = "emptySpaceItem1";
 			this.emptySpaceItem1.Size = new System.Drawing.Size(470, 10);
 			this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
@@ -256,15 +257,15 @@
 			// emptySpaceItem3
 			// 
 			this.emptySpaceItem3.AllowHotTrack = false;
-			this.emptySpaceItem3.Location = new System.Drawing.Point(0, 373);
+			this.emptySpaceItem3.Location = new System.Drawing.Point(0, 368);
 			this.emptySpaceItem3.Name = "emptySpaceItem3";
-			this.emptySpaceItem3.Size = new System.Drawing.Size(470, 24);
+			this.emptySpaceItem3.Size = new System.Drawing.Size(470, 20);
 			this.emptySpaceItem3.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// emptySpaceItem5
 			// 
 			this.emptySpaceItem5.AllowHotTrack = false;
-			this.emptySpaceItem5.Location = new System.Drawing.Point(0, 397);
+			this.emptySpaceItem5.Location = new System.Drawing.Point(0, 388);
 			this.emptySpaceItem5.Name = "emptySpaceItem5";
 			this.emptySpaceItem5.Size = new System.Drawing.Size(117, 29);
 			this.emptySpaceItem5.TextSize = new System.Drawing.Size(0, 0);
@@ -272,7 +273,7 @@
 			// emptySpaceItem6
 			// 
 			this.emptySpaceItem6.AllowHotTrack = false;
-			this.emptySpaceItem6.Location = new System.Drawing.Point(353, 397);
+			this.emptySpaceItem6.Location = new System.Drawing.Point(353, 388);
 			this.emptySpaceItem6.Name = "emptySpaceItem6";
 			this.emptySpaceItem6.Size = new System.Drawing.Size(117, 29);
 			this.emptySpaceItem6.TextSize = new System.Drawing.Size(0, 0);
@@ -280,7 +281,7 @@
 			// layoutControlItem5
 			// 
 			this.layoutControlItem5.Control = this.btnOk;
-			this.layoutControlItem5.Location = new System.Drawing.Point(117, 397);
+			this.layoutControlItem5.Location = new System.Drawing.Point(117, 388);
 			this.layoutControlItem5.Name = "layoutControlItem5";
 			this.layoutControlItem5.Size = new System.Drawing.Size(118, 29);
 			this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
@@ -289,7 +290,7 @@
 			// layoutControlItem6
 			// 
 			this.layoutControlItem6.Control = this.btnCancel;
-			this.layoutControlItem6.Location = new System.Drawing.Point(235, 397);
+			this.layoutControlItem6.Location = new System.Drawing.Point(235, 388);
 			this.layoutControlItem6.Name = "layoutControlItem6";
 			this.layoutControlItem6.Size = new System.Drawing.Size(118, 29);
 			this.layoutControlItem6.TextSize = new System.Drawing.Size(0, 0);
@@ -298,17 +299,15 @@
 			// emptySpaceItem2
 			// 
 			this.emptySpaceItem2.AllowHotTrack = false;
-			this.emptySpaceItem2.Location = new System.Drawing.Point(0, 262);
+			this.emptySpaceItem2.Location = new System.Drawing.Point(0, 257);
 			this.emptySpaceItem2.Name = "emptySpaceItem2";
 			this.emptySpaceItem2.Size = new System.Drawing.Size(85, 28);
 			this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// lcItemCompanyId
 			// 
-			this.lcItemCompanyId.AppearanceItemCaption.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-			this.lcItemCompanyId.AppearanceItemCaption.Options.UseForeColor = true;
 			this.lcItemCompanyId.Control = this.txtCompanyId;
-			this.lcItemCompanyId.Location = new System.Drawing.Point(85, 262);
+			this.lcItemCompanyId.Location = new System.Drawing.Point(85, 257);
 			this.lcItemCompanyId.Name = "lcItemCompanyId";
 			this.lcItemCompanyId.Size = new System.Drawing.Size(301, 28);
 			this.lcItemCompanyId.TextSize = new System.Drawing.Size(95, 14);
@@ -316,7 +315,7 @@
 			// emptySpaceItem9
 			// 
 			this.emptySpaceItem9.AllowHotTrack = false;
-			this.emptySpaceItem9.Location = new System.Drawing.Point(386, 262);
+			this.emptySpaceItem9.Location = new System.Drawing.Point(386, 257);
 			this.emptySpaceItem9.Name = "emptySpaceItem9";
 			this.emptySpaceItem9.Size = new System.Drawing.Size(84, 28);
 			this.emptySpaceItem9.TextSize = new System.Drawing.Size(0, 0);
@@ -324,17 +323,15 @@
 			// emptySpaceItem4
 			// 
 			this.emptySpaceItem4.AllowHotTrack = false;
-			this.emptySpaceItem4.Location = new System.Drawing.Point(0, 290);
+			this.emptySpaceItem4.Location = new System.Drawing.Point(0, 285);
 			this.emptySpaceItem4.Name = "emptySpaceItem4";
 			this.emptySpaceItem4.Size = new System.Drawing.Size(85, 28);
 			this.emptySpaceItem4.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// lcItemLoginId
 			// 
-			this.lcItemLoginId.AppearanceItemCaption.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-			this.lcItemLoginId.AppearanceItemCaption.Options.UseForeColor = true;
 			this.lcItemLoginId.Control = this.txtLoginId;
-			this.lcItemLoginId.Location = new System.Drawing.Point(85, 290);
+			this.lcItemLoginId.Location = new System.Drawing.Point(85, 285);
 			this.lcItemLoginId.Name = "lcItemLoginId";
 			this.lcItemLoginId.Size = new System.Drawing.Size(301, 28);
 			this.lcItemLoginId.TextSize = new System.Drawing.Size(95, 14);
@@ -342,7 +339,7 @@
 			// emptySpaceItem10
 			// 
 			this.emptySpaceItem10.AllowHotTrack = false;
-			this.emptySpaceItem10.Location = new System.Drawing.Point(386, 290);
+			this.emptySpaceItem10.Location = new System.Drawing.Point(386, 285);
 			this.emptySpaceItem10.Name = "emptySpaceItem10";
 			this.emptySpaceItem10.Size = new System.Drawing.Size(84, 28);
 			this.emptySpaceItem10.TextSize = new System.Drawing.Size(0, 0);
@@ -350,17 +347,15 @@
 			// emptySpaceItem7
 			// 
 			this.emptySpaceItem7.AllowHotTrack = false;
-			this.emptySpaceItem7.Location = new System.Drawing.Point(0, 318);
+			this.emptySpaceItem7.Location = new System.Drawing.Point(0, 313);
 			this.emptySpaceItem7.Name = "emptySpaceItem7";
 			this.emptySpaceItem7.Size = new System.Drawing.Size(85, 28);
 			this.emptySpaceItem7.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// lcItemPassword
 			// 
-			this.lcItemPassword.AppearanceItemCaption.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-			this.lcItemPassword.AppearanceItemCaption.Options.UseForeColor = true;
 			this.lcItemPassword.Control = this.txtPassword;
-			this.lcItemPassword.Location = new System.Drawing.Point(85, 318);
+			this.lcItemPassword.Location = new System.Drawing.Point(85, 313);
 			this.lcItemPassword.Name = "lcItemPassword";
 			this.lcItemPassword.Size = new System.Drawing.Size(301, 28);
 			this.lcItemPassword.TextSize = new System.Drawing.Size(95, 14);
@@ -368,7 +363,7 @@
 			// emptySpaceItem11
 			// 
 			this.emptySpaceItem11.AllowHotTrack = false;
-			this.emptySpaceItem11.Location = new System.Drawing.Point(386, 318);
+			this.emptySpaceItem11.Location = new System.Drawing.Point(386, 313);
 			this.emptySpaceItem11.Name = "emptySpaceItem11";
 			this.emptySpaceItem11.Size = new System.Drawing.Size(84, 28);
 			this.emptySpaceItem11.TextSize = new System.Drawing.Size(0, 0);
@@ -376,7 +371,7 @@
 			// emptySpaceItem12
 			// 
 			this.emptySpaceItem12.AllowHotTrack = false;
-			this.emptySpaceItem12.Location = new System.Drawing.Point(386, 346);
+			this.emptySpaceItem12.Location = new System.Drawing.Point(386, 341);
 			this.emptySpaceItem12.Name = "emptySpaceItem12";
 			this.emptySpaceItem12.Size = new System.Drawing.Size(84, 25);
 			this.emptySpaceItem12.TextSize = new System.Drawing.Size(0, 0);
@@ -384,7 +379,7 @@
 			// lcItemIsRemember
 			// 
 			this.lcItemIsRemember.Control = this.chkRemember;
-			this.lcItemIsRemember.Location = new System.Drawing.Point(85, 346);
+			this.lcItemIsRemember.Location = new System.Drawing.Point(85, 341);
 			this.lcItemIsRemember.Name = "lcItemIsRemember";
 			this.lcItemIsRemember.Size = new System.Drawing.Size(301, 25);
 			this.lcItemIsRemember.Text = " ";
@@ -393,7 +388,7 @@
 			// emptySpaceItem8
 			// 
 			this.emptySpaceItem8.AllowHotTrack = false;
-			this.emptySpaceItem8.Location = new System.Drawing.Point(0, 346);
+			this.emptySpaceItem8.Location = new System.Drawing.Point(0, 341);
 			this.emptySpaceItem8.Name = "emptySpaceItem8";
 			this.emptySpaceItem8.Size = new System.Drawing.Size(85, 25);
 			this.emptySpaceItem8.TextSize = new System.Drawing.Size(0, 0);
@@ -401,14 +396,14 @@
 			// simpleSeparator1
 			// 
 			this.simpleSeparator1.AllowHotTrack = false;
-			this.simpleSeparator1.Location = new System.Drawing.Point(0, 260);
+			this.simpleSeparator1.Location = new System.Drawing.Point(0, 255);
 			this.simpleSeparator1.Name = "simpleSeparator1";
 			this.simpleSeparator1.Size = new System.Drawing.Size(470, 2);
 			// 
 			// simpleSeparator2
 			// 
 			this.simpleSeparator2.AllowHotTrack = false;
-			this.simpleSeparator2.Location = new System.Drawing.Point(0, 371);
+			this.simpleSeparator2.Location = new System.Drawing.Point(0, 366);
 			this.simpleSeparator2.Name = "simpleSeparator2";
 			this.simpleSeparator2.Size = new System.Drawing.Size(470, 2);
 			// 
@@ -441,28 +436,8 @@
 			this.barDockControlTop.CausesValidation = false;
 			this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
 			this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
+			this.barDockControlTop.Manager = this.barManager;
 			this.barDockControlTop.Size = new System.Drawing.Size(490, 0);
-			// 
-			// barDockControlBottom
-			// 
-			this.barDockControlBottom.CausesValidation = false;
-			this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.barDockControlBottom.Location = new System.Drawing.Point(0, 446);
-			this.barDockControlBottom.Size = new System.Drawing.Size(490, 22);
-			// 
-			// barDockControlLeft
-			// 
-			this.barDockControlLeft.CausesValidation = false;
-			this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-			this.barDockControlLeft.Location = new System.Drawing.Point(0, 0);
-			this.barDockControlLeft.Size = new System.Drawing.Size(0, 446);
-			// 
-			// barDockControlRight
-			// 
-			this.barDockControlRight.CausesValidation = false;
-			this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-			this.barDockControlRight.Location = new System.Drawing.Point(490, 0);
-			this.barDockControlRight.Size = new System.Drawing.Size(0, 446);
 			// 
 			// barManager
 			// 
@@ -478,19 +453,41 @@
 			this.barManager.MaxItemId = 1;
 			this.barManager.StatusBar = this.barStatus;
 			// 
+			// barDockControlBottom
+			// 
+			this.barDockControlBottom.CausesValidation = false;
+			this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.barDockControlBottom.Location = new System.Drawing.Point(0, 437);
+			this.barDockControlBottom.Manager = this.barManager;
+			this.barDockControlBottom.Size = new System.Drawing.Size(490, 28);
+			// 
+			// barDockControlLeft
+			// 
+			this.barDockControlLeft.CausesValidation = false;
+			this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
+			this.barDockControlLeft.Location = new System.Drawing.Point(0, 0);
+			this.barDockControlLeft.Manager = this.barManager;
+			this.barDockControlLeft.Size = new System.Drawing.Size(0, 437);
+			// 
+			// barDockControlRight
+			// 
+			this.barDockControlRight.CausesValidation = false;
+			this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
+			this.barDockControlRight.Location = new System.Drawing.Point(490, 0);
+			this.barDockControlRight.Manager = this.barManager;
+			this.barDockControlRight.Size = new System.Drawing.Size(0, 437);
+			// 
 			// LoginForm
 			// 
-			this.Appearance.BackColor = System.Drawing.Color.DimGray;
-			this.Appearance.Options.UseBackColor = true;
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-			this.ClientSize = new System.Drawing.Size(490, 468);
+			this.ClientSize = new System.Drawing.Size(490, 465);
 			this.Controls.Add(this.lc);
 			this.Controls.Add(this.barDockControlLeft);
 			this.Controls.Add(this.barDockControlRight);
 			this.Controls.Add(this.barDockControlBottom);
 			this.Controls.Add(this.barDockControlTop);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.LookAndFeel.SkinName = "DevExpress Dark Style";
-			this.LookAndFeel.UseDefaultLookAndFeel = false;
 			this.MaximizeBox = false;
 			this.Name = "LoginForm";
 			this.Text = "LoginForm";

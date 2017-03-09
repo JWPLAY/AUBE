@@ -28,9 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditForm));
-			this.barManager = new DevExpress.XtraBars.BarManager(this.components);
+			this.barManager = new DevExpress.XtraBars.BarManager();
 			this.barTools = new DevExpress.XtraBars.Bar();
 			this.barButtonRefresh = new DevExpress.XtraBars.BarButtonItem();
 			this.barButtonNew = new DevExpress.XtraBars.BarButtonItem();
@@ -49,7 +48,7 @@
 			this.barStaticTotalRecords = new DevExpress.XtraBars.BarStaticItem();
 			this.barStaticEditMode = new DevExpress.XtraBars.BarStaticItem();
 			this.barStaticViewName = new DevExpress.XtraBars.BarStaticItem();
-			this.barAndDockingController = new DevExpress.XtraBars.BarAndDockingController(this.components);
+			this.barAndDockingController = new DevExpress.XtraBars.BarAndDockingController();
 			this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -323,31 +322,31 @@
 			this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
 			this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
 			this.barDockControlTop.Manager = this.barManager;
-			this.barDockControlTop.Size = new System.Drawing.Size(998, 44);
+			this.barDockControlTop.Size = new System.Drawing.Size(998, 42);
 			// 
 			// barDockControlBottom
 			// 
 			this.barDockControlBottom.CausesValidation = false;
 			this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.barDockControlBottom.Location = new System.Drawing.Point(0, 455);
+			this.barDockControlBottom.Location = new System.Drawing.Point(0, 449);
 			this.barDockControlBottom.Manager = this.barManager;
-			this.barDockControlBottom.Size = new System.Drawing.Size(998, 22);
+			this.barDockControlBottom.Size = new System.Drawing.Size(998, 28);
 			// 
 			// barDockControlLeft
 			// 
 			this.barDockControlLeft.CausesValidation = false;
 			this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-			this.barDockControlLeft.Location = new System.Drawing.Point(0, 44);
+			this.barDockControlLeft.Location = new System.Drawing.Point(0, 42);
 			this.barDockControlLeft.Manager = this.barManager;
-			this.barDockControlLeft.Size = new System.Drawing.Size(0, 411);
+			this.barDockControlLeft.Size = new System.Drawing.Size(0, 407);
 			// 
 			// barDockControlRight
 			// 
 			this.barDockControlRight.CausesValidation = false;
 			this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-			this.barDockControlRight.Location = new System.Drawing.Point(998, 44);
+			this.barDockControlRight.Location = new System.Drawing.Point(998, 42);
 			this.barDockControlRight.Manager = this.barManager;
-			this.barDockControlRight.Size = new System.Drawing.Size(0, 411);
+			this.barDockControlRight.Size = new System.Drawing.Size(0, 407);
 			// 
 			// barStaticItemBlank
 			// 
@@ -368,10 +367,10 @@
 			// 
 			this.lc.AllowCustomization = false;
 			this.lc.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lc.Location = new System.Drawing.Point(0, 44);
+			this.lc.Location = new System.Drawing.Point(0, 42);
 			this.lc.Name = "lc";
 			this.lc.Root = this.lcGroupBase;
-			this.lc.Size = new System.Drawing.Size(998, 411);
+			this.lc.Size = new System.Drawing.Size(998, 407);
 			this.lc.TabIndex = 4;
 			this.lc.Text = "lc";
 			// 
@@ -381,13 +380,11 @@
 			this.lcGroupBase.GroupBordersVisible = false;
 			this.lcGroupBase.Location = new System.Drawing.Point(0, 0);
 			this.lcGroupBase.Name = "lcGroupBase";
-			this.lcGroupBase.Size = new System.Drawing.Size(998, 411);
+			this.lcGroupBase.Size = new System.Drawing.Size(998, 407);
 			this.lcGroupBase.TextVisible = false;
 			// 
 			// EditForm
 			// 
-			this.Appearance.BackColor = System.Drawing.Color.DimGray;
-			this.Appearance.Options.UseBackColor = true;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(998, 477);

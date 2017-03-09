@@ -1,5 +1,4 @@
 ﻿using JW.AUBE.Core.Base.Forms;
-using JW.AUBE.Core.Resources;
 
 namespace JW.AUBE
 {
@@ -8,11 +7,6 @@ namespace JW.AUBE
 		public HomeForm()
 		{
 			InitializeComponent();
-		}
-
-		private void Init()
-		{
-			lcGroupBase.BackgroundImage = ImageResource.back_gray;
 		}
 	}
 }

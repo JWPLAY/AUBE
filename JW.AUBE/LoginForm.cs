@@ -80,23 +80,17 @@ namespace JW.AUBE
 			MinimizeBox = false;
 			Icon = IconResource.icon;
 
-			lcItemCompanyId.SetFieldCaption("회사ID");
-			lcItemLoginId.SetFieldCaption("사용자ID");
-			lcItemPassword.SetFieldCaption("비밀번호");
+			lcItemCompanyId.SetFieldName("COMPANY_ID");
+			lcItemLoginId.SetFieldName("LOGIN_ID");
+			lcItemPassword.SetFieldName("LOGIN_PW");
 
 			lcItemCompanyId.AppearanceItemCaption.TextOptions.HAlignment = 
 				lcItemLoginId.AppearanceItemCaption.TextOptions.HAlignment = 
 				lcItemPassword.AppearanceItemCaption.TextOptions.HAlignment = HorzAlignment.Far;
-			lcItemCompanyId.AppearanceItemCaption.Options.UseForeColor =
-				lcItemLoginId.AppearanceItemCaption.Options.UseForeColor =
-				lcItemPassword.AppearanceItemCaption.Options.UseForeColor = true;
-			lcItemCompanyId.AppearanceItemCaption.ForeColor =
-				lcItemLoginId.AppearanceItemCaption.ForeColor =
-				lcItemPassword.AppearanceItemCaption.ForeColor = System.Drawing.Color.FromArgb(50, 50, 50);
 
 			picImage.Image = ImageResource.Logo;
 			//picImage.Properties.SizeMode = PictureSizeMode.Stretch;
-
+			
 			txtCompanyId.EditValue = "1000";
 			txtLoginId.EditValue = "admin";
 			txtPassword.EditValue = "admin";

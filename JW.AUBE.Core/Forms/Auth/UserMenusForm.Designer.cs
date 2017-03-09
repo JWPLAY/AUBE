@@ -56,9 +56,9 @@
 			this.lc.Controls.Add(this.gridMenus);
 			this.lc.Controls.Add(this.gridUsers);
 			this.lc.Controls.Add(this.txtFindText);
-			this.lc.Location = new System.Drawing.Point(0, 47);
+			this.lc.Location = new System.Drawing.Point(0, 42);
 			this.lc.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1326, 256, 250, 350);
-			this.lc.Size = new System.Drawing.Size(1036, 412);
+			this.lc.Size = new System.Drawing.Size(990, 495);
 			// 
 			// lcGroupBase
 			// 
@@ -68,7 +68,7 @@
             this.lcGroupRegInfo});
 			this.lcGroupBase.Name = "Root";
 			this.lcGroupBase.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcGroupBase.Size = new System.Drawing.Size(1036, 412);
+			this.lcGroupBase.Size = new System.Drawing.Size(990, 495);
 			// 
 			// lcGroupFind
 			// 
@@ -78,7 +78,7 @@
 			this.lcGroupFind.Location = new System.Drawing.Point(0, 0);
 			this.lcGroupFind.Name = "lcGroupFind";
 			this.lcGroupFind.Padding = new DevExpress.XtraLayout.Utils.Padding(4, 4, 4, 4);
-			this.lcGroupFind.Size = new System.Drawing.Size(253, 408);
+			this.lcGroupFind.Size = new System.Drawing.Size(250, 491);
 			this.lcGroupFind.Text = "검색";
 			this.lcGroupFind.TextVisible = false;
 			// 
@@ -89,30 +89,30 @@
 			this.lcGroupSearch.Location = new System.Drawing.Point(0, 0);
 			this.lcGroupSearch.Name = "lcGroupSearch";
 			this.lcGroupSearch.Padding = new DevExpress.XtraLayout.Utils.Padding(4, 4, 4, 4);
-			this.lcGroupSearch.Size = new System.Drawing.Size(239, 57);
+			this.lcGroupSearch.Size = new System.Drawing.Size(236, 59);
 			// 
 			// lcItemFindText
 			// 
 			this.lcItemFindText.Control = this.txtFindText;
 			this.lcItemFindText.Location = new System.Drawing.Point(0, 0);
 			this.lcItemFindText.Name = "lcItemFindText";
-			this.lcItemFindText.Size = new System.Drawing.Size(225, 24);
+			this.lcItemFindText.Size = new System.Drawing.Size(222, 24);
 			this.lcItemFindText.TextSize = new System.Drawing.Size(82, 14);
 			// 
 			// txtFindText
 			// 
-			this.txtFindText.Location = new System.Drawing.Point(104, 37);
+			this.txtFindText.Location = new System.Drawing.Point(104, 39);
 			this.txtFindText.Name = "txtFindText";
-			this.txtFindText.Size = new System.Drawing.Size(135, 20);
+			this.txtFindText.Size = new System.Drawing.Size(132, 20);
 			this.txtFindText.StyleController = this.lc;
 			this.txtFindText.TabIndex = 4;
 			// 
 			// layoutControlItem3
 			// 
 			this.layoutControlItem3.Control = this.gridUsers;
-			this.layoutControlItem3.Location = new System.Drawing.Point(0, 57);
+			this.layoutControlItem3.Location = new System.Drawing.Point(0, 59);
 			this.layoutControlItem3.Name = "layoutControlItem3";
-			this.layoutControlItem3.Size = new System.Drawing.Size(239, 337);
+			this.layoutControlItem3.Size = new System.Drawing.Size(236, 418);
 			this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem3.TextVisible = false;
 			// 
@@ -122,7 +122,7 @@
 			this.gridUsers.DataSource = null;
 			this.gridUsers.Editable = true;
 			this.gridUsers.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
-			this.gridUsers.Location = new System.Drawing.Point(11, 68);
+			this.gridUsers.Location = new System.Drawing.Point(11, 70);
 			this.gridUsers.Name = "gridUsers";
 			this.gridUsers.PageFooterCenter = null;
 			this.gridUsers.PageFooterLeft = null;
@@ -135,24 +135,24 @@
 			this.gridUsers.PrintHeader = null;
 			this.gridUsers.ReadOnly = false;
 			this.gridUsers.ShowGroupPanel = false;
-			this.gridUsers.Size = new System.Drawing.Size(235, 333);
+			this.gridUsers.Size = new System.Drawing.Size(232, 414);
 			this.gridUsers.TabIndex = 7;
 			// 
 			// splitterItem1
 			// 
 			this.splitterItem1.AllowHotTrack = true;
-			this.splitterItem1.Location = new System.Drawing.Point(253, 0);
+			this.splitterItem1.Location = new System.Drawing.Point(250, 0);
 			this.splitterItem1.Name = "splitterItem1";
-			this.splitterItem1.Size = new System.Drawing.Size(5, 408);
+			this.splitterItem1.Size = new System.Drawing.Size(7, 491);
 			// 
 			// lcGroupRegInfo
 			// 
 			this.lcGroupRegInfo.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem1});
-			this.lcGroupRegInfo.Location = new System.Drawing.Point(258, 0);
+			this.lcGroupRegInfo.Location = new System.Drawing.Point(257, 0);
 			this.lcGroupRegInfo.Name = "lcGroupRegInfo";
 			this.lcGroupRegInfo.Padding = new DevExpress.XtraLayout.Utils.Padding(4, 4, 4, 4);
-			this.lcGroupRegInfo.Size = new System.Drawing.Size(774, 408);
+			this.lcGroupRegInfo.Size = new System.Drawing.Size(729, 491);
 			this.lcGroupRegInfo.TextVisible = false;
 			// 
 			// layoutControlItem1
@@ -160,7 +160,7 @@
 			this.layoutControlItem1.Control = this.gridMenus;
 			this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
 			this.layoutControlItem1.Name = "layoutControlItem1";
-			this.layoutControlItem1.Size = new System.Drawing.Size(760, 394);
+			this.layoutControlItem1.Size = new System.Drawing.Size(715, 477);
 			this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem1.TextVisible = false;
 			// 
@@ -170,7 +170,7 @@
 			this.gridMenus.DataSource = null;
 			this.gridMenus.Editable = true;
 			this.gridMenus.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
-			this.gridMenus.Location = new System.Drawing.Point(269, 11);
+			this.gridMenus.Location = new System.Drawing.Point(268, 11);
 			this.gridMenus.Name = "gridMenus";
 			this.gridMenus.PageFooterCenter = null;
 			this.gridMenus.PageFooterLeft = null;
@@ -183,17 +183,14 @@
 			this.gridMenus.PrintHeader = null;
 			this.gridMenus.ReadOnly = false;
 			this.gridMenus.ShowGroupPanel = false;
-			this.gridMenus.Size = new System.Drawing.Size(756, 390);
+			this.gridMenus.Size = new System.Drawing.Size(711, 473);
 			this.gridMenus.TabIndex = 8;
 			// 
 			// UserMenusForm
 			// 
-			this.Appearance.BackColor = System.Drawing.Color.DimGray;
-			this.Appearance.Options.UseBackColor = true;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1036, 484);
-			this.LookAndFeel.UseDefaultLookAndFeel = false;
+			this.ClientSize = new System.Drawing.Size(990, 565);
 			this.Name = "UserMenusForm";
 			this.Text = "UserMenusForm";
 			((System.ComponentModel.ISupportInitialize)(this.lc)).EndInit();

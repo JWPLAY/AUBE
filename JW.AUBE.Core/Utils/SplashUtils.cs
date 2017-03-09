@@ -1,5 +1,5 @@
-﻿using JW.AUBE.Core.Splash;
-using DevExpress.XtraSplashScreen;
+﻿using DevExpress.XtraSplashScreen;
+using JW.AUBE.Core.Splash;
 
 namespace JW.AUBE.Core.Utils
 {

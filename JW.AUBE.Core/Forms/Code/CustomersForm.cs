@@ -10,6 +10,7 @@ using JW.AUBE.Core.Enumerations;
 using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Models;
 using JW.AUBE.Core.Utils;
+using JW.AUBE.Core.PostCode;
 
 namespace JW.AUBE.Core.Forms.Code
 {
@@ -18,6 +19,18 @@ namespace JW.AUBE.Core.Forms.Code
 		public CustomersForm()
 		{
 			InitializeComponent();
+
+			btnSearchPostCode.Click += delegate (object sender, EventArgs e)
+			{
+				var postdata = SearchPostCode.Find();
+				if (postdata != null && postdata.GetType() == typeof(DataMap))
+				{
+					txtPostNo.EditValue = postdata.GetValue("POST_NO");
+					txtZoneNo.EditValue = postdata.GetValue("ZONE_NO");
+					txtAddress1.EditValue = postdata.GetValue("ADDRESS1");
+					txtAddress2.EditValue = postdata.GetValue("ADDRESS2");
+				}
+			};
 		}
 
 		protected override void OnShown(EventArgs e)

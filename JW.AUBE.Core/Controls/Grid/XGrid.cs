@@ -4,10 +4,9 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Linq;
-using JW.AUBE.Base.Utils;
-using JW.AUBE.Core.Utils;
 using DevExpress.Utils.Menu;
 using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Localization;
@@ -21,8 +20,9 @@ using DevExpress.XtraGrid.Views.Layout;
 using DevExpress.XtraGrid.Views.Tile;
 using DevExpress.XtraGrid.Views.WinExplorer;
 using DevExpress.XtraPrinting;
+using JW.AUBE.Base.Utils;
+using JW.AUBE.Core.Utils;
 using Microsoft.Win32;
-using DevExpress.XtraEditors.Repository;
 
 namespace JW.AUBE.Core.Controls.Grid
 {

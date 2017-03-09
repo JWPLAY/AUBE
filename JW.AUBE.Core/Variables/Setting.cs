@@ -29,7 +29,8 @@ namespace JW.AUBE.Core.Variables
 				GlobalVar.Settings.SetValue("IS_USESKIN", SkinConsts.IS_USESKIN);
 				GlobalVar.Settings.SetValue("MAIN_SKIN", SkinConsts.MAIN_SKIN);
 				GlobalVar.Settings.SetValue("FORM_SKIN", SkinConsts.FORM_SKIN);
-				GlobalVar.Settings.SetValue("GRID_SKIN", SkinConsts.GRID_SKIN);
+				GlobalVar.Settings.SetValue("GRID_SKIN", SkinConsts.GRID_SKIN); 
+				GlobalVar.Settings.SetValue("GRID_EVEN_AND_ODD", SkinConsts.GRID_EVEN_AND_ODD);
 
 				if (FontFamily.Families.Where(x => x.Name == SkinConsts.FONT_NAME).Any())
 				{

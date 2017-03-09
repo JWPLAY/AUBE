@@ -86,8 +86,11 @@ namespace JW.AUBE.Core.Controls.Grid
 				MainView.GetType() == typeof(BandedGridView) ||
 				MainView.GetType() == typeof(AdvBandedGridView))
 			{
-				((GridView)Grid.MainView).OptionsView.EnableAppearanceEvenRow = true;
-				((GridView)Grid.MainView).OptionsView.EnableAppearanceOddRow = true;
+				if (GlobalVar.Settings.GetValue("GRID_EVEN_AND_ODD").ToStringNullToEmpty() == "Y")
+				{
+					((GridView)Grid.MainView).OptionsView.EnableAppearanceEvenRow = true;
+					((GridView)Grid.MainView).OptionsView.EnableAppearanceOddRow = true;
+				}
 				((GridView)Grid.MainView).OptionsView.ShowGroupPanel = false;
 				((GridView)Grid.MainView).OptionsView.ShowDetailButtons = false;
 				((GridView)Grid.MainView).OptionsSelection.EnableAppearanceFocusedRow = true;
@@ -614,19 +617,19 @@ namespace JW.AUBE.Core.Controls.Grid
 		/// </summary>
 		private void SetEditStyle()
 		{
-			if (MainView.GetType() == typeof(GridView))
-			{
-				var view = MainView as GridView;
-				var bEditable = false;
+			//if (MainView.GetType() == typeof(GridView))
+			//{
+			//	var view = MainView as GridView;
+			//	var bEditable = false;
 
-				bEditable = view.Columns.Cast<GridColumn>().Where(x => x.OptionsColumn.AllowEdit == true).Any();
+			//	bEditable = view.Columns.Cast<GridColumn>().Where(x => x.OptionsColumn.AllowEdit == true).Any();
 
-				view.Appearance.FocusedCell.BorderColor = Color.Red;
-				view.Appearance.FocusedCell.BackColor = SkinUtils.EditBackColor;
-				view.Appearance.FocusedCell.ForeColor = SkinUtils.EditForeColor;
-				view.Appearance.FocusedCell.Options.UseBorderColor = bEditable;
-				view.Appearance.FocusedCell.Options.UseBackColor = bEditable;
-			}
+			//	view.Appearance.FocusedCell.BorderColor = Color.Red;
+			//	view.Appearance.FocusedCell.BackColor = SkinUtils.EditBackColor;
+			//	view.Appearance.FocusedCell.ForeColor = SkinUtils.EditForeColor;
+			//	view.Appearance.FocusedCell.Options.UseBorderColor = bEditable;
+			//	view.Appearance.FocusedCell.Options.UseBackColor = bEditable;
+			//}
 		}
 
 		/// <summary>

@@ -51,6 +51,10 @@
     <Reference Include="DevExpress.XtraScheduler.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraSpreadsheet.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraTreeList.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -209,6 +213,13 @@
     <Compile Include="Models\IMenuData.cs" />
     <Compile Include="Models\IToolbarButtons.cs" />
     <Compile Include="Models\ToolbarButtons.cs" />
+    <Compile Include="PostCode\SearchPostCode.cs" />
+    <Compile Include="PostCode\SearchPostCodeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PostCode\SearchPostCodeForm.designer.cs">
+      <DependentUpon>SearchPostCodeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -341,6 +352,9 @@
     <EmbeddedResource Include="Messages\ErrorMessageBox.resx">
       <DependentUpon>ErrorMessageBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="PostCode\SearchPostCodeForm.resx">
+      <DependentUpon>SearchPostCodeForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -445,6 +459,10 @@
     <Content Include="Images\charts\Stepline_16x16.png" />
     <Content Include="Images\Home_16x16.png" />
     <Content Include="Images\Home_32x32.png" />
+    <EmbeddedResource Include="PostCode\searchpostcode.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JW.AUBE.Base\JW.AUBE.Base.csproj">

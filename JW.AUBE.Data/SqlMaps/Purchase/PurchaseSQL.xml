@@ -37,6 +37,7 @@
 					,	AA.SALE_ID
 					,	AA.PRODUCT_ID
 					,	BB.PRODUCT_NAME
+					,	ISNULL(M1.NAME, BB.PRODUCT_UNIT)	AS PRODUCT_UNIT
 					,	AA.SALE_PRICE
 					,	AA.SALE_QTY
 					,	AA.SALE_AMT
@@ -52,6 +53,10 @@
 						LEFT JOIN
 							UCD.PRODUCTS BB
 								ON AA.PRODUCT_ID = BB.PRODUCT_ID
+						LEFT JOIN
+							UAA.CODES M1
+								ON BB.PRODUCT_UNIT = M1.CODE
+									AND M1.PARENT_CODE = 'UNIT_TYPE'
 						LEFT JOIN 
 							UAA.USERS U1 WITH (NOLOCK)
 								ON AA.INS_USER = U1.USER_ID
@@ -113,7 +118,7 @@
 				]]>
 		</select>
 
-		<insert id="InsertPurcTranItem" parameterClass="PurcTranItem" >
+		<insert id="InsertPurcTranItem" parameterClass="DataMap" >
 			<![CDATA[
 				INSERT INTO UBZ.PURC_TRAN_ITEM
 				( 
@@ -130,7 +135,7 @@
 				]]>
 			</selectKey>
 		</insert>
-		<update id="UpdatePurcTranItem" parameterClass="PurcTranItem">
+		<update id="UpdatePurcTranItem" parameterClass="DataMap">
 			<![CDATA[
 				UPDATE  UBZ.PURC_TRAN
 				SET     PRODUCT_ID		= #PRODUCT_ID#
@@ -142,7 +147,7 @@
 				WHERE	PURC_ITEM_ID	= #PURC_ITEM_ID#
 			]]>
 		</update>
-		<delete id="DeletePurcTranItem" parameterClass="PurcTranItem">
+		<delete id="DeletePurcTranItem" parameterClass="DataMap">
 			<![CDATA[
 				DELETE
 				FROM	UBZ.PURC_TRAN_ITEM
@@ -150,22 +155,23 @@
 			]]>
 		</delete>
 
-		<select id="SelectPurchaseList" parameterClass="DataMap" resultClass="DataMap" >
+		<select id="GetPurcTranList" parameterClass="DataMap" resultClass="PurcTranList" >
 			<![CDATA[
 				SELECT  AA.PURC_ID
-					,	AA.PURC_DATE
-					,	AA.PURC_TYPE
+					,	REPLACE(CONVERT(VARCHAR(10), CONVERT(DATE, AA.PURC_DATE, 112), 111),'/','-')	AS PURC_DATE
+					,	ISNULL(M3.NAME, AA.PURC_TYPE)	AS PURC_TYPE
 					,	AA.CUSTOMER_ID
+					,	CC.CUSTOMER_NAME
 					,	AA.REMARKS
 					,	BB.PURC_ITEM_ID
-					,	AA.PRODUCT_ID
+					,	BB.PRODUCT_ID
 					,	PP.PRODUCT_CODE
 					,	PP.PRODUCT_NAME
 					,	BB.PURC_PRICE
 					,	BB.PURC_QTY
 					,	BB.PURC_AMT
-					,	M1.NAME			AS PRODUCT_TYPE
-					,	M2.NAME			AS CATEGORY
+					,	ISNULL(M1.NAME, PP.PRODUCT_TYPE)	AS PRODUCT_TYPE
+					,	ISNULL(M2.NAME, PP.CATEGORY)		AS CATEGORY
 					,	BB.INS_TIME
 					,	BB.INS_USER
 					,	U1.USER_NAME	AS INS_USER_NAME
@@ -177,6 +183,9 @@
 							UBZ.PURC_TRAN_ITEM BB
 								ON AA.PURC_ID = BB.PURC_ID
 						INNER JOIN
+							UCD.CUSTOMERS CC 
+								ON AA.CUSTOMER_ID = CC.CUSTOMER_ID
+						INNER JOIN
 							UCD.PRODUCTS PP
 								ON BB.PRODUCT_ID = PP.PRODUCT_ID
 						LEFT JOIN 
@@ -187,6 +196,10 @@
 							UAA.CODES M2 WITH (NOLOCK)
 								ON PP.CATEGORY = M2.CODE
 									AND M2.PARENT_CODE = 'CATEGORY'
+						LEFT JOIN
+							UAA.CODES M3 WITH (NOLOCK)
+								ON AA.PURC_TYPE = M3.CODE
+									AND M3.PARENT_CODE = 'PURC_TYPE'
 						LEFT JOIN
 							UAA.USERS U1 
 								ON BB.INS_USER = U1.USER_ID
@@ -212,7 +225,7 @@
 			</isNotEmpty>
 			<isNotEmpty property="PRODUCT_ID">
 				<![CDATA[
-				AND		AA.PRODUCT_ID = #PRODUCT_ID#
+				AND		BB.PRODUCT_ID = #PRODUCT_ID#
 			]]>
 			</isNotEmpty>
 			<isNotEmpty property="PRODUCT_TYPE">

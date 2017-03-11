@@ -29,25 +29,25 @@
 		private void InitializeComponent()
 		{
 			this.lc = new DevExpress.XtraLayout.LayoutControl();
+			this.lupUseYn = new JW.AUBE.Core.Controls.Common.XLookup();
 			this.txtFindText = new DevExpress.XtraEditors.TextEdit();
 			this.gridList = new JW.AUBE.Core.Controls.Grid.XGrid();
 			this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.lcGroupSearch = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.lcItemFindText = new DevExpress.XtraLayout.LayoutControlItem();
-			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-			this.lupUseYn = new JW.AUBE.Core.Controls.Common.XLookup();
 			this.lcItemUseYn = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
 			((System.ComponentModel.ISupportInitialize)(this.lc)).BeginInit();
 			this.lc.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.lupUseYn.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtFindText.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupSearch)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemFindText)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lupUseYn.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemUseYn)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// lc
@@ -64,6 +64,23 @@
 			this.lc.Size = new System.Drawing.Size(492, 452);
 			this.lc.TabIndex = 0;
 			this.lc.Text = "xLayout1";
+			// 
+			// lupUseYn
+			// 
+			this.lupUseYn.DataSource = null;
+			this.lupUseYn.DisplayMember = "";
+			this.lupUseYn.GroupCode = null;
+			this.lupUseYn.ListMember = "LIST_NAME";
+			this.lupUseYn.Location = new System.Drawing.Point(104, 43);
+			this.lupUseYn.Name = "lupUseYn";
+			this.lupUseYn.NullText = "[EditValue is null]";
+			this.lupUseYn.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.lupUseYn.SelectedIndex = -1;
+			this.lupUseYn.Size = new System.Drawing.Size(140, 20);
+			this.lupUseYn.StyleController = this.lc;
+			this.lupUseYn.TabIndex = 6;
+			this.lupUseYn.ValueMember = "";
 			// 
 			// txtFindText
 			// 
@@ -127,32 +144,6 @@
 			this.lcItemFindText.Size = new System.Drawing.Size(458, 24);
 			this.lcItemFindText.TextSize = new System.Drawing.Size(82, 14);
 			// 
-			// layoutControlItem1
-			// 
-			this.layoutControlItem1.Control = this.gridList;
-			this.layoutControlItem1.Location = new System.Drawing.Point(0, 62);
-			this.layoutControlItem1.Name = "layoutControlItem1";
-			this.layoutControlItem1.Size = new System.Drawing.Size(472, 370);
-			this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
-			this.layoutControlItem1.TextVisible = false;
-			// 
-			// lupUseYn
-			// 
-			this.lupUseYn.DataSource = null;
-			this.lupUseYn.DisplayMember = "";
-			this.lupUseYn.GroupCode = null;
-			this.lupUseYn.ListMember = "LIST_NAME";
-			this.lupUseYn.Location = new System.Drawing.Point(104, 43);
-			this.lupUseYn.Name = "lupUseYn";
-			this.lupUseYn.NullText = "[EditValue is null]";
-			this.lupUseYn.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.lupUseYn.SelectedIndex = -1;
-			this.lupUseYn.Size = new System.Drawing.Size(140, 20);
-			this.lupUseYn.StyleController = this.lc;
-			this.lupUseYn.TabIndex = 6;
-			this.lupUseYn.ValueMember = "";
-			// 
 			// lcItemUseYn
 			// 
 			this.lcItemUseYn.Control = this.lupUseYn;
@@ -169,10 +160,17 @@
 			this.emptySpaceItem1.Size = new System.Drawing.Size(229, 24);
 			this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
 			// 
+			// layoutControlItem1
+			// 
+			this.layoutControlItem1.Control = this.gridList;
+			this.layoutControlItem1.Location = new System.Drawing.Point(0, 62);
+			this.layoutControlItem1.Name = "layoutControlItem1";
+			this.layoutControlItem1.Size = new System.Drawing.Size(472, 370);
+			this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
+			this.layoutControlItem1.TextVisible = false;
+			// 
 			// CodeHelperForm
 			// 
-			this.Appearance.BackColor = System.Drawing.Color.DimGray;
-			this.Appearance.Options.UseBackColor = true;
 			this.Appearance.Options.UseFont = true;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -184,14 +182,14 @@
 			this.Text = "CodeHelperForm";
 			((System.ComponentModel.ISupportInitialize)(this.lc)).EndInit();
 			this.lc.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.lupUseYn.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtFindText.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupSearch)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemFindText)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lupUseYn.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemUseYn)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
 			this.ResumeLayout(false);
 
 		}

@@ -30,6 +30,52 @@ namespace JW.AUBE.Data.Utils
 			}
 		}
 
+		public static string GetPurcNo()
+		{
+			try
+			{
+				string return_code = string.Empty;
+				string purc_no = string.Format("P{0}{1}{2}", GetYearCode(), GetMonthCode(), DateTime.Now.ToString("00"));
+				var code = DaoFactory.Instance.QueryForObject<string>("GetPurcNo", new DataMap() { { "PURC_NO", purc_no } });
+				if (!string.IsNullOrEmpty(code))
+				{
+					return_code = code.Substring(0, 5) + (code.Substring(5, 3).ToIntegerNullToZero() + 1).ToString("000");
+				}
+				else
+				{
+					return_code = purc_no + "001";
+				}
+				return return_code;
+			}
+			catch
+			{
+				throw;
+			}
+		}
+
+		public static string GetSaleNo()
+		{
+			try
+			{
+				string return_code = string.Empty;
+				string sale_no = string.Format("S{0}{1}{2}", GetYearCode(), GetMonthCode(), DateTime.Now.ToString("00"));
+				var code = DaoFactory.Instance.QueryForObject<string>("GetSaleNo", new DataMap() { { "SALE_NO", sale_no } });
+				if (!string.IsNullOrEmpty(code))
+				{
+					return_code = code.Substring(0, 5) + (code.Substring(5, 3).ToIntegerNullToZero() + 1).ToString("000");
+				}
+				else
+				{
+					return_code = sale_no + "001";
+				}
+				return return_code;
+			}
+			catch
+			{
+				throw;
+			}
+		}
+
 		public static string GetYearCode()
 		{
 			string[] yearcode = GetAlphaCode();

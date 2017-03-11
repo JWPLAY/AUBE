@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid;
 using JW.AUBE.Base.Map;
+using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Controls.Grid;
 using JW.AUBE.Core.Messages;
@@ -122,6 +123,9 @@ namespace JW.AUBE.Core.Helper
 				{
 					Parameters.SetValue("FIND_TEXT", txtFindText.EditValue);
 				}
+				if (Parameters == null)
+					Parameters = new DataMap();
+
 				Parameters.SetValue("USE_YN", lupUseYn.EditValue);
 
 				data = CodeHelper.Search(CodeGroup, Parameters);
@@ -184,21 +188,25 @@ namespace JW.AUBE.Core.Helper
 					}
 				}
 
-				foreach (GridColumn col in gridList.MainView.Columns)
+				int column_count = 0;
+				foreach (string colName in list)
 				{
-					if (col.Visible && list.Contains(col.FieldName))
+					if (gridList.MainView.Columns.Where(x => x.FieldName == colName).Any() && gridList.MainView.Columns[colName].Visible)
 					{
-						col.BestFit();
-						colWidth += col.Width;
+						if (column_count < (list.Count - 1))
+							gridList.MainView.Columns[colName].BestFit();
+						colWidth += gridList.MainView.Columns[colName].Width;
 					}
+					column_count++;
 				}
 
 				if (colWidth < gridList.Width && gridList.MainView.Columns.Count > 0)
 				{
-					if (list.Contains("NAME") && (gridList.MainView.Columns.Where(x => x.FieldName == "NAME").Any()))
+					string colName = gridList.MainView.Columns.Where(x => x.FieldName.EndsWith("NAME")).LastOrDefault().FieldName;
+					if (colName.IsNullOrEmpty() == false && list.Contains(colName))
 					{
-						gridList.MainView.Columns["NAME"].Width =
-							gridList.MainView.Columns["NAME"].Width + (gridList.Width - colWidth - 40);
+						gridList.MainView.Columns[colName].Width =
+							gridList.MainView.Columns[colName].Width + (gridList.Width - colWidth - 40);
 					}
 					else
 					{
@@ -220,45 +228,36 @@ namespace JW.AUBE.Core.Helper
 				if (dt != null)
 				{
 					List<string> mergeFields = new List<string>();
-					List<string> displayFields = this.DisplayFields.ToList();
-					bool bVisible = false;
 
-					gridList.MainView.Columns.Clear();
 					foreach (DataColumn col in dt.Columns)
 					{
-						int i = (displayFields == null) ? 1 : displayFields.FindIndex(x => x.Equals(col.ColumnName));
-						bVisible = (i > -1) ? true : false;
-
-						//원가는 숨긴다.
-						if (col.ColumnName.Equals("COST_PRICE"))
-							bVisible = false;
-
-						gridList.AddGridColumn(new XGridColumn() { FieldName = col.ColumnName, Visible = bVisible });
-
-						if (col.ColumnName.EndsWith("_ID") ||
-							col.ColumnName.EndsWith("_CODE") ||
-							col.ColumnName.EndsWith("_TYPE") ||
-							col.ColumnName.EndsWith("_NO") ||
-							col.ColumnName.EndsWith("_YN"))
+						if (gridList.MainView.Columns.Where(x => x.FieldName == col.ColumnName).Any())
 						{
-							gridList.SetHorzAlign(col.ColumnName, DevExpress.Utils.HorzAlignment.Center);
-						}
-						else if (col.ColumnName.EndsWith("_QTY") ||
-							col.ColumnName.EndsWith("_AMT") ||
-							col.ColumnName.EndsWith("_PRICE"))
-						{
-							gridList.SetFormat(col.ColumnName, DevExpress.Utils.FormatType.Numeric, "N0");
-							gridList.SetHorzAlign(col.ColumnName, DevExpress.Utils.HorzAlignment.Far);
-						}
+							if (col.ColumnName.EndsWith("_ID") ||
+								col.ColumnName.EndsWith("_CODE") ||
+								col.ColumnName.EndsWith("_TYPE") ||
+								col.ColumnName.EndsWith("_NO") ||
+								col.ColumnName.EndsWith("_YN"))
+							{
+								gridList.SetHorzAlign(col.ColumnName, DevExpress.Utils.HorzAlignment.Center);
+							}
+							else if (col.ColumnName.EndsWith("_QTY") ||
+								col.ColumnName.EndsWith("_AMT") ||
+								col.ColumnName.EndsWith("_PRICE"))
+							{
+								gridList.SetFormat(col.ColumnName, DevExpress.Utils.FormatType.Numeric, "N0");
+								gridList.SetHorzAlign(col.ColumnName, DevExpress.Utils.HorzAlignment.Far);
+							}
 
-						if (col.ColumnName.EndsWith("_YN"))
-						{
-							gridList.SetRepositoryItemCheckEdit(col.ColumnName);
-						}
+							if (col.ColumnName.EndsWith("_YN"))
+							{
+								gridList.SetRepositoryItemCheckEdit(col.ColumnName);
+							}
 
-						if (bVisible && col.ColumnName.EndsWith("_YN") == false)
-						{
-							mergeFields.Add(col.ColumnName);
+							if (col.ColumnName.EndsWith("_YN") == false)
+							{
+								mergeFields.Add(col.ColumnName);
+							}
 						}
 					}
 

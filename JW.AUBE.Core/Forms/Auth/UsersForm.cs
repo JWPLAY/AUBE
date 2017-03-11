@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using DevExpress.Utils;
 using DevExpress.XtraGrid.Views.Grid;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
-using JW.AUBE.Base.Variables;
-using JW.AUBE.Base.Was.Models;
+using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Controls.Grid;
 using JW.AUBE.Core.Enumerations;
-using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Utils;
 
 namespace JW.AUBE.Core.Forms.Auth

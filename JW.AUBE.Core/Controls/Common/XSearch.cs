@@ -49,13 +49,16 @@ namespace JW.AUBE.Core.Controls.Common
 						txtCodeName.EditValue = null;
 						txtCodeId.EditValue = null;
 
-						EditValueChanged.Invoke(null);
+						if (EditValueChanged != null)
+							EditValueChanged.Invoke(null);
 
-						DeleteButtonClicked.Invoke(sender, e);
+						if (DeleteButtonClicked != null)
+							DeleteButtonClicked.Invoke(sender, e);
 					}
 					else
 					{
-						OtherButtonClicked.Invoke(sender, e);
+						if (OtherButtonClicked != null)
+							OtherButtonClicked.Invoke(sender, e);
 					}
 				}
 			};
@@ -75,7 +78,8 @@ namespace JW.AUBE.Core.Controls.Common
 				{
 					txtCodeId.EditValue = null;
 
-					EditValueChanged.Invoke(null);
+					if (EditValueChanged != null)
+						EditValueChanged.Invoke(null);
 				}
 			};
 		}
@@ -107,22 +111,33 @@ namespace JW.AUBE.Core.Controls.Common
 
 		private void Initialize()
 		{
-			CodeGroup = "Codes";
-			CodeField = "CodeId";
-			NameField = "CodeName";
+			CodeGroup = "CODES";
+			CodeField = "CODE";
+			NameField = "NAME";
 			DisplayFields = new string[] { CodeField, NameField };
 			Text = "코드검색";
 			txtCodeId.SetEnable(false);
 			txtCodeId.Width = 100;
 			Width = 500;
 		}
-
-		public void Init()
-		{
-		}
-		public void Init(string codeGroup, DataMap parameters = null)
+		public void Init(string codeGroup, string codeField, string nameField, string[] displayFields, DataMap parameters = null)
 		{
 			CodeGroup = codeGroup;
+
+			if (codeField.IsNullOrEmpty() == false)
+				CodeField = codeField;
+
+			if (nameField.IsNullOrEmpty() == false)
+				NameField = nameField;
+
+			if (displayFields != null)
+				DisplayFields = displayFields;
+			else
+				DisplayFields = new string[] { CodeField, NameField };
+
+			if (parameters == null)
+				parameters = new DataMap();
+
 			Parameters = parameters;
 		}
 
@@ -216,9 +231,13 @@ namespace JW.AUBE.Core.Controls.Common
 					SearchForm();
 					return;
 				}
+
+				if (Parameters == null)
+					Parameters = new DataMap();
+
 				if (txtCodeName.EditValue != null)
 				{
-					Parameters.SetValue("FindText", txtCodeName.EditValue);
+					Parameters.SetValue("FIND_TEXT", txtCodeName.EditValue);
 				}
 
 				var data = CodeHelper.Lookup(CodeGroup, Parameters);
@@ -229,12 +248,15 @@ namespace JW.AUBE.Core.Controls.Common
 						MsgBox.Show("해당 코드를 검색할 수 없습니다.\r\n확인 후 다시 시도하세요!!!");
 						return;
 					}
-					if (data.Rows.Count == 1)
+					if (data.Rows.Count == 1 && txtCodeName.EditValue.ToStringNullToEmpty().IsNullOrEmpty() == false)
 					{
 						CodeId = data.Rows[0][CodeField];
 						CodeName = data.Rows[0][NameField];
 
-						EditValueChanged.Invoke(new DataMap() { { CodeField, CodeId }, { NameField, CodeName } });
+						if (EditValueChanged != null)
+						{
+							EditValueChanged.Invoke(data.ToDataMap());
+						}
 
 						return;
 					}
@@ -252,35 +274,20 @@ namespace JW.AUBE.Core.Controls.Common
 
 		private void SearchForm(DataTable data = null)
 		{
-			using (var form = new CodeHelperForm()
-			{
-				Name = "CodeHelperForm",
-				Text = (this.Text.IsNullOrEmpty()) ? "코드검색" : this.Text,
-				StartPosition = FormStartPosition.CenterScreen,
-				CodeField = this.CodeField,
-				NameField = this.NameField,
-				CodeGroup = this.CodeGroup,
-				Parameters = this.Parameters,
-				DisplayFields = this.DisplayFields
-			})
-			{
-				form.Init();
-				if (data != null)
-				{
-					form.BindData(data);
-				}
-				if (form.ShowDialog() == DialogResult.OK)
-				{
-					if (form.ReturnData != null && form.ReturnData.GetType() == typeof(DataMap))
-					{
-						CodeId = ((DataMap)form.ReturnData).GetValue(CodeField);
-						CodeName = ((DataMap)form.ReturnData).GetValue(NameField);
+			if (this.Parameters == null)
+				this.Parameters = new DataMap();
 
-						EditValueChanged.Invoke(new DataMap() { { CodeField, CodeId }, { NameField, CodeName } });
-					}
-				}
+			this.Parameters.SetValue("FIND_TEXT", this.CodeName);
+
+			var res = CodeHelper.ShowForm(this.CodeGroup, this.Parameters);
+			if (res != null)
+			{
+				CodeId = res.GetValue(CodeField);
+				CodeName = res.GetValue(NameField);
+
+				if (EditValueChanged != null)
+					EditValueChanged.Invoke(res);
 			}
-			;
 		}
 
 		public Font GetFontCodeText()

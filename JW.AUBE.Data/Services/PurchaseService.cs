@@ -5,11 +5,12 @@ using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Base.Was.Models;
 using JW.AUBE.Data.Mappers;
+using JW.AUBE.Data.Models.Sales;
 using JW.AUBE.Data.Utils;
 
 namespace JW.AUBE.Data.Services
 {
-	public static class ProductService
+	public static class PurchaseService
 	{
 		/// <summary>
 		/// GetData
@@ -21,19 +22,19 @@ namespace JW.AUBE.Data.Services
 		{
 			try
 			{
-				var product = DaoFactory.Instance.QueryForList<DataMap>("SelectProduct", req.Parameter);
-				var materials = DaoFactory.Instance.QueryForList<DataMap>("SelectProductMaterials", req.Parameter);
+				var saletran = DaoFactory.Instance.QueryForList<SaleTranDataModel>("GetSaleTran", req.Parameter);
+				var saleitem = DaoFactory.Instance.QueryForList<SaleTranItemDataModel>("GetSaleTranItem", req.Parameter);
 
 				req.DataList = new List<WasRequestData>()
 				{
 					new WasRequestData()
 					{
-						Data = ConvertUtils.DataMapListToDataTable(product, "Product")
+						Data = ConvertUtils.ListToDataTable(saletran)
 					}
 					,
 					new WasRequestData()
 					{
-						Data = ConvertUtils.DataMapListToDataTable(materials, "Materials")
+						Data = ConvertUtils.ListToDataTable(saleitem)
 					}
 				};
 				return req;

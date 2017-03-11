@@ -26,6 +26,17 @@ namespace JW.AUBE.Core.Utils
 		{
 			try
 			{
+				return GetData(serviceId, "GetData", parameter);
+			}
+			catch
+			{
+				throw;
+			}
+		}
+		public static WasRequest GetData(string serviceId, string processId, DataMap parameter)
+		{
+			try
+			{
 				if (string.IsNullOrEmpty(serviceId))
 					serviceId = "Base";
 
@@ -36,11 +47,11 @@ namespace JW.AUBE.Core.Utils
 					parameter.SetValue("INS_USER", GlobalVar.Settings.GetValue("USER_ID"));
 
 				var res = (new WasRequest()
-							{
-								ServiceId = serviceId,
-								ProcessId = "GetData",
-								Parameter = parameter
-							}).Request();
+				{
+					ServiceId = serviceId,
+					ProcessId = processId,
+					Parameter = parameter
+				}).Request();
 
 				if (res == null)
 					throw new Exception("요청결과가 없습니다.");
@@ -118,7 +129,7 @@ namespace JW.AUBE.Core.Utils
 					}
 					else
 					{
-						return req.DataList[0].Data;
+						return (req.DataList[0].Data as DataTable);
 					}
 				}
 				else
@@ -171,7 +182,7 @@ namespace JW.AUBE.Core.Utils
 				{
 					throw new Exception(res.ErrorMessage);
 				}
-				return res.DataList[0].Data;
+				return (res.DataList[0].Data as DataTable);
 			}
 			catch
 			{

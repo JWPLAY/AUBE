@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Base.Was.Models;
@@ -94,10 +95,10 @@ namespace JW.AUBE.Data.Services
 				{
 					foreach (WasRequestData data in req.DataList)
 					{
-						if (data.Data == null || data.Data.Rows.Count == 0)
+						if (data.Data == null || (data.Data as DataTable).Rows.Count == 0)
 							continue;
 
-						IList<DataMap> list = ConvertUtils.DataTableToDataMapList(data.Data);
+						IList<DataMap> list = (data.Data as DataTable).ToDataMapList();
 						foreach (DataMap map in list)
 						{
 							if (isKey && data.IsMaster == false && keyField.ToStringNullToEmpty() != "" && keyValue.ToStringNullToEmpty() != "")

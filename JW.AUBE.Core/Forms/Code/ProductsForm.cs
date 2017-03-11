@@ -386,10 +386,10 @@ namespace JW.AUBE.Core.Forms.Code
 				var res = ServerRequest.GetData("Product", new DataMap() { { "PRODUCT_ID", id } });
 				if (res.DataList.Count > 0)
 				{
-					if (res.DataList[0].Data == null || res.DataList[0].Data.Rows.Count == 0)
+					if (res.DataList[0].Data == null || (res.DataList[0].Data as DataTable).Rows.Count == 0)
 						throw new Exception("조회 데이터가 없습니다.");
 
-					DataRow row = res.DataList[0].Data.Rows[0];
+					DataRow row = (res.DataList[0].Data as DataTable).Rows[0];
 
 					txtProductId.EditValue = row["PRODUCT_ID"];
 					txtProductCode.EditValue = row["PRODUCT_CODE"];

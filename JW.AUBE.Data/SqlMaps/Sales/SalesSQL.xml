@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+	namespace="JW.AUBE.Data.SqlMaps"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<statements>
+		<select id="GetSaleTran" parameterClass="DataMap" resultClass="SaleTran" >
+			<![CDATA[
+				SELECT  AA.SALE_ID
+					,	AA.SALE_NO
+					,	AA.SALE_DATE
+					,	AA.SALE_TYPE
+					,	AA.CUSTOMER_ID
+					,	BB.CUSTOMER_NAME
+					,	AA.REMARKS
+					,	AA.INS_TIME
+					,	AA.INS_USER
+					,	AA.UPD_TIME
+					,	AA.UPD_USER
+				FROM	UBZ.SALE_TRAN AA WITH (NOLOCK)
+						LEFT JOIN
+							UCD.CUSTOMERS BB
+								ON AA.CUSTOMER_ID = BB.CUSTOMER_ID
+						LEFT JOIN 
+							UAA.USERS U1
+								ON AA.INS_USER = U1.USER_ID
+						LEFT JOIN
+							UAA.USERS U2
+								ON AA.UPD_USER = U2.USER_ID
+				WHERE	AA.SALE_ID = #SALE_ID#
+			]]>
+		</select>
+		<select id="GetSaleTranItem" parameterClass="DataMap" resultClass="SaleTranItem" >
+			<![CDATA[
+				SELECT  AA.SALE_ITEM_ID
+					,	AA.SALE_ID
+					,	AA.PRODUCT_ID
+					,	BB.PRODUCT_NAME
+					,	AA.SALE_PRICE
+					,	AA.SALE_QTY
+					,	AA.SALE_AMT
+					
+					,	AA.INS_TIME
+					,	AA.INS_USER
+					,	U1.USER_NAME			AS INS_USER_NAME
+					,	AA.UPD_TIME
+					,	AA.UPD_USER
+					,	U2.USER_NAME			AS UPD_USER_NAME
+					
+				FROM	UBZ.SALE_TRAN_ITEM AA WITH (NOLOCK)
+						LEFT JOIN
+							UCD.PRODUCTS BB
+								ON AA.PRODUCT_ID = BB.PRODUCT_ID
+						LEFT JOIN 
+							UAA.USERS U1 WITH (NOLOCK)
+								ON AA.INS_USER = U1.USER_ID
+						LEFT JOIN
+							UAA.USERS U2 WITH (NOLOCK)
+								ON AA.UPD_USER = U2.USER_ID
+				WHERE	AA.SALE_ID = #SALE_ID#
+				ORDER BY AA.SALE_ITEM_ID
+				]]>
+		</select>
+		
+		<insert id="InsertSaleTran" parameterClass="SaleTran" >
+			<![CDATA[
+				INSERT INTO UBZ.SALE_TRAN
+				( 
+					SALE_NO, SALE_DATE, SALE_TYPE, CUSTOMER_ID,
+					REMARKS, INS_TIME, INS_USER 
+				)
+				VALUES
+				( 
+					#SALE_NO#, #SALE_DATE#, #SALE_TYPE#, #CUSTOMER_ID#,
+					#REMARKS#, GETDATE(), #INS_USER# 
+				)
+			]]>
+			<selectKey type="post" property="SALE_ID" resultClass="Int">
+				<![CDATA[
+					SELECT @@IDENTITY AS SALE_ID
+				]]>
+			</selectKey>
+		</insert>
+		<update id="UpdateSaleTran" parameterClass="SaleTran">
+			<![CDATA[
+				UPDATE  UBZ.SALE_TRAN
+				SET     SALE_DATE		= #SALE_DATE#
+					,	SALE_TYPE		= #SALE_TYPE#
+					,	CUSTOMER_ID		= #CUSTOMER_ID#
+					,	REMARKS			= #REMARKS#
+					,	UPD_TIME		= GETDATE()
+					,	UPD_USER		= #INS_USER#
+				WHERE	SALE_ID			= #SALE_ID#
+			]]>
+		</update>
+		<delete id="DeleteSaleTran" parameterClass="SaleTran">
+			<![CDATA[
+				DELETE
+				FROM	UBZ.SALE_TRAN
+				WHERE	SALE_ID = #SALE_ID#;
+				DELETE
+				FROM	UBZ.SALE_TRAN_ITEM
+				WHERE	SALE_ID	= #SALE_ID#
+			]]>
+		</delete>
+
+		<select id="GetSaleNo" parameterClass="DataMap" resultClass="String" >
+			<![CDATA[
+				SELECT  ISNULL(MAX(SALE_NO), #SALE_NO#+'000')	AS SALE_NO
+				FROM	UBZ.SALE_TRAN AA WITH (NOLOCK)
+				WHERE	AA.SALE_NO LIKE #SALE_NO# + '%'
+				]]>
+		</select>
+
+		<insert id="InsertSaleTranItem" parameterClass="SaleTranItem" >
+			<![CDATA[
+				INSERT INTO UBZ.SALE_TRAN_ITEM
+				( 
+					SALE_ID, PRODUCT_ID, SALE_PRICE, SALE_QTY, SALE_AMT, INS_TIME, INS_USER 
+				)
+				VALUES
+				( 
+					#SALE_ID#, #PRODUCT_ID#, #SALE_PRICE#, #SALE_QTY#, #SALE_AMT#, GETDATE(), #INS_USER# 
+				)
+			]]>
+			<selectKey type="post" property="SALE_ITEM_ID" resultClass="Int">
+				<![CDATA[
+					SELECT @@IDENTITY AS SALE_ITEM_ID
+				]]>
+			</selectKey>
+		</insert>
+		<update id="UpdateSaleTranItem" parameterClass="SaleTranItem">
+			<![CDATA[
+				UPDATE  UBZ.SALE_TRAN
+				SET     PRODUCT_ID		= #PRODUCT_ID#
+					,	SALE_PRICE		= #SALE_PRICE#
+					,	SALE_QTY		= #SALE_QTY#
+					,	SALE_AMT		= #SALE_AMT#
+					,	UPD_TIME		= GETDATE()
+					,	UPD_USER		= #INS_USER#
+				WHERE	SALE_ITEM_ID	= #SALE_ITEM_ID#
+			]]>
+		</update>
+		<delete id="DeleteSaleTranItem" parameterClass="SaleTranItem">
+			<![CDATA[
+				DELETE
+				FROM	UBZ.SALE_TRAN_ITEM
+				WHERE	SALE_ITEM_ID = #SALE_ITEM_ID#
+			]]>
+		</delete>
+	</statements>
+</sqlMap>

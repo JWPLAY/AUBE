@@ -78,13 +78,5 @@ namespace JW.AUBE.Base.Was.Models
 				if (Parameter != null) Parameter = null;
 			}
 		}
-
-		public List<DataTable> GetData()
-		{
-			List<DataTable> list = new List<DataTable>();
-			foreach (WasRequestData data in DataList)
-				list.Add(data.Data);
-			return list;
-		}
 	}
 }

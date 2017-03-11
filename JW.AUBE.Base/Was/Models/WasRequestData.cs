@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Runtime.Serialization;
 using JW.AUBE.Base.Map;
@@ -19,7 +18,7 @@ namespace JW.AUBE.Base.Was.Models
 		public string KeyField { get; set; }
 
 		[DataMember]
-		public DataTable Data { get; set; }
+		public object Data { get; set; }
 
 		[DataMember]
 		public SchemaMap Schema { get; set; }
@@ -73,7 +72,10 @@ namespace JW.AUBE.Base.Was.Models
 				// Free other state (managed objects).
 				if (Data != null)
 				{
-					Data.Dispose();
+					if (Data.GetType() == typeof(DataTable))
+					{
+						(Data as DataTable).Dispose();
+					}
 					Data = null;
 				}
 				if (Schema != null) Schema = null;

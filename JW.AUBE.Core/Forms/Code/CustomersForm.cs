@@ -441,10 +441,10 @@ namespace JW.AUBE.Core.Forms.Code
 
 				if (res.DataList.Count > 0)
 				{
-					if (res.DataList[0].Data == null || res.DataList[0].Data.Rows.Count == 0)
+					if (res.DataList[0].Data == null || (res.DataList[0].Data as DataTable).Rows.Count == 0)
 						throw new Exception("조회할 데이터가 없습니다.");
 
-					DataRow row = res.DataList[0].Data.Rows[0];
+					DataRow row = (res.DataList[0].Data as DataTable).Rows[0];
 
 					txtCustomerId.EditValue = row["CUSTOMER_ID"];
 					txtCustomerName.EditValue = row["CUSTOMER_NAME"];

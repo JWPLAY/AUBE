@@ -82,10 +82,10 @@ namespace JW.AUBE.Data.Services
 					//거래처정보 저장
 					if (req.DataList.Count > 0)
 					{
-						if (req.DataList[0].Data == null || req.DataList[0].Data.Rows.Count == 0)
+						if (req.DataList[0].Data == null || (req.DataList[0].Data as DataTable).Rows.Count == 0)
 							throw new Exception("거래처정보를 저장할 데이터가 존재하지 않습니다.");
 
-						DataMap data = ConvertUtils.DataTableToDataMapList(req.DataList[0].Data)[0];
+						DataMap data = (req.DataList[0].Data as DataTable).ToDataMapList()[0];
 
 						rowState = data.GetValue("ROWSTATE").ToStringNullToEmpty();
 
@@ -223,10 +223,10 @@ namespace JW.AUBE.Data.Services
 
 					if (req.DataList.Count > 0)
 					{
-						if (req.DataList[0].Data == null || req.DataList[0].Data.Rows.Count == 0)
+						if (req.DataList[0].Data == null || (req.DataList[0].Data as DataTable).Rows.Count == 0)
 							throw new Exception("저장할 데이터가 존재하지 않습니다.");
 
-						foreach (DataRow row in req.DataList[0].Data.Rows)
+						foreach (DataRow row in (req.DataList[0].Data as DataTable).Rows)
 						{
 							DataMap map = row.ToDataMap();
 							if (map == null || map.Count == 0)

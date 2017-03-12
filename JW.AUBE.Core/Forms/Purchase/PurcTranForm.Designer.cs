@@ -28,9 +28,9 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.lcGroupEdit = new DevExpress.XtraLayout.LayoutControlGroup();
+			this.lcGroupEdit1 = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.lcItemCustomer = new DevExpress.XtraLayout.LayoutControlItem();
-			this.txtCustomer = new JW.AUBE.Core.Controls.Common.XSearch();
+			this.txtCustomerId = new JW.AUBE.Core.Controls.Common.XSearch();
 			this.lcItemPurcDate = new DevExpress.XtraLayout.LayoutControlItem();
 			this.datPurcDate = new DevExpress.XtraEditors.DateEdit();
 			this.lcItemPurcId = new DevExpress.XtraLayout.LayoutControlItem();
@@ -41,7 +41,7 @@
 			this.lupPurcType = new JW.AUBE.Core.Controls.Common.XLookup();
 			this.lcItemRemarks = new DevExpress.XtraLayout.LayoutControlItem();
 			this.memRemarks = new DevExpress.XtraEditors.MemoEdit();
-			this.gridList = new JW.AUBE.Core.Controls.Grid.XGrid();
+			this.gridItem = new JW.AUBE.Core.Controls.Grid.XGrid();
 			this.lcTab = new DevExpress.XtraLayout.TabbedControlGroup();
 			this.lcTabGroupItem = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.lcGridList = new DevExpress.XtraLayout.LayoutControlItem();
@@ -61,10 +61,11 @@
 			this.lcItemUpdUserName = new DevExpress.XtraLayout.LayoutControlItem();
 			this.txtUpdUserName = new DevExpress.XtraEditors.TextEdit();
 			this.lcGroupEdit2 = new DevExpress.XtraLayout.LayoutControlGroup();
+			this.lcGroupEdit = new DevExpress.XtraLayout.LayoutControlGroup();
 			((System.ComponentModel.ISupportInitialize)(this.lc)).BeginInit();
 			this.lc.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupBase)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcGroupEdit)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGroupEdit1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemCustomer)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemPurcDate)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.datPurcDate.Properties.CalendarTimeProperties)).BeginInit();
@@ -94,6 +95,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.lcItemUpdUserName)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtUpdUserName.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupEdit2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGroupEdit)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// lc
@@ -109,8 +111,8 @@
 			this.lc.Controls.Add(this.datPurcDate);
 			this.lc.Controls.Add(this.btnItemDel);
 			this.lc.Controls.Add(this.btnItemAdd);
-			this.lc.Controls.Add(this.txtCustomer);
-			this.lc.Controls.Add(this.gridList);
+			this.lc.Controls.Add(this.txtCustomerId);
+			this.lc.Controls.Add(this.gridItem);
 			this.lc.Location = new System.Drawing.Point(0, 47);
 			this.lc.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1034, 345, 450, 400);
 			this.lc.Size = new System.Drawing.Size(1012, 412);
@@ -118,31 +120,30 @@
 			// lcGroupBase
 			// 
 			this.lcGroupBase.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.lcGroupEdit,
             this.lcTab,
             this.lcGroupInfoReg,
-            this.lcGroupEdit2});
+            this.lcGroupEdit});
 			this.lcGroupBase.Name = "Root";
 			this.lcGroupBase.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
 			this.lcGroupBase.Size = new System.Drawing.Size(1012, 412);
 			// 
-			// lcGroupEdit
+			// lcGroupEdit1
 			// 
-			this.lcGroupEdit.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+			this.lcGroupEdit1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.lcItemCustomer,
             this.lcItemPurcDate,
             this.lcItemPurcId,
             this.lcItemPurcNo,
             this.lcItemPurcType});
-			this.lcGroupEdit.Location = new System.Drawing.Point(0, 0);
-			this.lcGroupEdit.Name = "lcGroupEdit";
-			this.lcGroupEdit.Padding = new DevExpress.XtraLayout.Utils.Padding(4, 4, 4, 4);
-			this.lcGroupEdit.Size = new System.Drawing.Size(514, 86);
-			this.lcGroupEdit.TextVisible = false;
+			this.lcGroupEdit1.Location = new System.Drawing.Point(0, 0);
+			this.lcGroupEdit1.Name = "lcGroupEdit1";
+			this.lcGroupEdit1.Padding = new DevExpress.XtraLayout.Utils.Padding(4, 4, 4, 4);
+			this.lcGroupEdit1.Size = new System.Drawing.Size(514, 86);
+			this.lcGroupEdit1.TextVisible = false;
 			// 
 			// lcItemCustomer
 			// 
-			this.lcItemCustomer.Control = this.txtCustomer;
+			this.lcItemCustomer.Control = this.txtCustomerId;
 			this.lcItemCustomer.Location = new System.Drawing.Point(0, 48);
 			this.lcItemCustomer.MaxSize = new System.Drawing.Size(500, 24);
 			this.lcItemCustomer.MinSize = new System.Drawing.Size(500, 24);
@@ -151,23 +152,24 @@
 			this.lcItemCustomer.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
 			this.lcItemCustomer.TextSize = new System.Drawing.Size(111, 14);
 			// 
-			// txtCustomer
+			// txtCustomerId
 			// 
-			this.txtCustomer.CodeField = "CODE";
-			this.txtCustomer.CodeGroup = "CUSTOMER";
-			this.txtCustomer.CodeWidth = 100;
-			this.txtCustomer.DisplayFields = new string[] {
+			this.txtCustomerId.CodeField = "CODE";
+			this.txtCustomerId.CodeGroup = "CUSTOMER";
+			this.txtCustomerId.CodeWidth = 100;
+			this.txtCustomerId.DisplayFields = new string[] {
         "CodeId",
         "CodeName"};
-			this.txtCustomer.EditValue = null;
-			this.txtCustomer.Location = new System.Drawing.Point(126, 59);
-			this.txtCustomer.MaximumSize = new System.Drawing.Size(0, 20);
-			this.txtCustomer.MinimumSize = new System.Drawing.Size(0, 20);
-			this.txtCustomer.Name = "txtCustomer";
-			this.txtCustomer.NameField = "NAME";
-			this.txtCustomer.Parameters = null;
-			this.txtCustomer.Size = new System.Drawing.Size(381, 20);
-			this.txtCustomer.TabIndex = 6;
+			this.txtCustomerId.EditText = null;
+			this.txtCustomerId.EditValue = null;
+			this.txtCustomerId.Location = new System.Drawing.Point(126, 59);
+			this.txtCustomerId.MaximumSize = new System.Drawing.Size(0, 20);
+			this.txtCustomerId.MinimumSize = new System.Drawing.Size(0, 20);
+			this.txtCustomerId.Name = "txtCustomerId";
+			this.txtCustomerId.NameField = "NAME";
+			this.txtCustomerId.Parameters = null;
+			this.txtCustomerId.Size = new System.Drawing.Size(381, 20);
+			this.txtCustomerId.TabIndex = 6;
 			// 
 			// lcItemPurcDate
 			// 
@@ -269,27 +271,28 @@
 			this.memRemarks.StyleController = this.lc;
 			this.memRemarks.TabIndex = 14;
 			// 
-			// gridList
+			// gridItem
 			// 
-			this.gridList.Compress = false;
-			this.gridList.DataSource = null;
-			this.gridList.Editable = true;
-			this.gridList.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
-			this.gridList.Location = new System.Drawing.Point(9, 154);
-			this.gridList.Name = "gridList";
-			this.gridList.PageFooterCenter = null;
-			this.gridList.PageFooterLeft = null;
-			this.gridList.PageFooterRight = null;
-			this.gridList.PageHeaderCenter = null;
-			this.gridList.PageHeaderLeft = null;
-			this.gridList.PageHeaderRight = null;
-			this.gridList.Pager = null;
-			this.gridList.PrintFooter = null;
-			this.gridList.PrintHeader = null;
-			this.gridList.ReadOnly = false;
-			this.gridList.ShowGroupPanel = false;
-			this.gridList.Size = new System.Drawing.Size(994, 187);
-			this.gridList.TabIndex = 4;
+			this.gridItem.Compress = false;
+			this.gridItem.DataSource = null;
+			this.gridItem.Editable = true;
+			this.gridItem.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
+			this.gridItem.Location = new System.Drawing.Point(9, 154);
+			this.gridItem.Name = "gridItem";
+			this.gridItem.PageFooterCenter = null;
+			this.gridItem.PageFooterLeft = null;
+			this.gridItem.PageFooterRight = null;
+			this.gridItem.PageHeaderCenter = null;
+			this.gridItem.PageHeaderLeft = null;
+			this.gridItem.PageHeaderRight = null;
+			this.gridItem.Pager = null;
+			this.gridItem.PrintFooter = null;
+			this.gridItem.PrintHeader = null;
+			this.gridItem.ReadOnly = false;
+			this.gridItem.ShowFooter = false;
+			this.gridItem.ShowGroupPanel = false;
+			this.gridItem.Size = new System.Drawing.Size(994, 187);
+			this.gridItem.TabIndex = 4;
 			// 
 			// lcTab
 			// 
@@ -314,7 +317,7 @@
 			// 
 			// lcGridList
 			// 
-			this.lcGridList.Control = this.gridList;
+			this.lcGridList.Control = this.gridItem;
 			this.lcGridList.Location = new System.Drawing.Point(0, 36);
 			this.lcGridList.Name = "lcGridList";
 			this.lcGridList.Size = new System.Drawing.Size(998, 191);
@@ -470,6 +473,17 @@
 			this.lcGroupEdit2.Size = new System.Drawing.Size(494, 86);
 			this.lcGroupEdit2.TextVisible = false;
 			// 
+			// lcGroupEdit
+			// 
+			this.lcGroupEdit.GroupBordersVisible = false;
+			this.lcGroupEdit.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.lcGroupEdit1,
+            this.lcGroupEdit2});
+			this.lcGroupEdit.Location = new System.Drawing.Point(0, 0);
+			this.lcGroupEdit.Name = "lcGroupEdit";
+			this.lcGroupEdit.Size = new System.Drawing.Size(1008, 86);
+			this.lcGroupEdit.TextVisible = false;
+			// 
 			// PurcTranForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -480,7 +494,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.lc)).EndInit();
 			this.lc.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupBase)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcGroupEdit)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGroupEdit1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemCustomer)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemPurcDate)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.datPurcDate.Properties.CalendarTimeProperties)).EndInit();
@@ -510,15 +524,16 @@
 			((System.ComponentModel.ISupportInitialize)(this.lcItemUpdUserName)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtUpdUserName.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupEdit2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGroupEdit)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
 		}
 
 		#endregion
-		private DevExpress.XtraLayout.LayoutControlGroup lcGroupEdit;
-		private Controls.Grid.XGrid gridList;
-		private Controls.Common.XSearch txtCustomer;
+		private DevExpress.XtraLayout.LayoutControlGroup lcGroupEdit1;
+		private Controls.Grid.XGrid gridItem;
+		private Controls.Common.XSearch txtCustomerId;
 		private DevExpress.XtraLayout.LayoutControlItem lcItemCustomer;
 		private DevExpress.XtraLayout.TabbedControlGroup lcTab;
 		private DevExpress.XtraLayout.LayoutControlGroup lcTabGroupItem;
@@ -549,5 +564,6 @@
 		private DevExpress.XtraLayout.LayoutControlItem lcItemInsUserName;
 		private DevExpress.XtraLayout.LayoutControlItem lcItemUpdUserName;
 		private DevExpress.XtraLayout.LayoutControlGroup lcGroupEdit2;
+		private DevExpress.XtraLayout.LayoutControlGroup lcGroupEdit;
 	}
 }

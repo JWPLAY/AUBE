@@ -5,13 +5,13 @@ using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using DevExpress.Utils;
+using DevExpress.XtraEditors;
+using DevExpress.XtraLayout;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Controls;
 using JW.AUBE.Core.Controls.Common;
-using DevExpress.Utils;
-using DevExpress.XtraLayout;
-using DevExpress.XtraEditors;
 
 namespace JW.AUBE.Core.Utils
 {
@@ -66,7 +66,7 @@ namespace JW.AUBE.Core.Utils
 			}
 			if (item.Tag != null && item.Tag.GetType() == typeof(bool) && (bool)item.Tag == true)
 			{
-				item.Text = "*" + caption + ":";
+				item.Text = string.Format("*{0}:", caption);
 				item.AppearanceItemCaption.ForeColor = (SkinUtils.IsDarkSkin()) ? Color.Yellow : Color.Red;
 				item.AppearanceItemCaption.Options.UseForeColor = true;
 			}
@@ -79,8 +79,6 @@ namespace JW.AUBE.Core.Utils
 			item.AppearanceItemCaption.TextOptions.HAlignment = HorzAlignment.Far;
 			item.AppearanceItemCaption.TextOptions.VAlignment = VertAlignment.Center;
 		}
-
-
 
 		public static string GetFieldName(this LayoutControlItem item)
 		{
@@ -139,50 +137,37 @@ namespace JW.AUBE.Core.Utils
 
 			if (item.Control.GetType() == typeof(TextEdit))
 			{
-				value = ((TextEdit)item.Control).EditValue;
+				value = (item.Control as TextEdit).EditValue;
 			}
-			else
+			else if (item.Control.GetType() == typeof(XLookup))
 			{
-				if (item.Control.GetType() == typeof(XLookup))
-				{
-					value = ((XLookup)item.Control).EditValue;
-				}
-				else
-				{
-					if (item.Control.GetType() == typeof(SpinEdit))
-					{
-						value = ((SpinEdit)item.Control).EditValue;
-					}
-					else
-					{
-						if (item.Control.GetType() == typeof(MemoEdit))
-						{
-							value = ((MemoEdit)item.Control).EditValue;
-						}
-						else
-						{
-							if (item.Control.GetType() == typeof(DateEdit))
-							{
-								value = ((DateEdit)item.Control).GetDateChar8();
-							}
-							else
-							{
-								if (item.Control.GetType() == typeof(CheckEdit))
-								{
-									value = ((CheckEdit)item.Control).EditValue;
-								}
-								else
-								{
-									if (item.Control.GetType() == typeof(ButtonEdit))
-									{
-										value = ((ButtonEdit)item.Control).EditValue;
-									}
-								}
-							}
-						}
-					}
-				}
+				value = (item.Control as XLookup).EditValue;
 			}
+			else if (item.Control.GetType() == typeof(SpinEdit))
+			{
+				value = (item.Control as SpinEdit).EditValue;
+			}
+			else if (item.Control.GetType() == typeof(MemoEdit))
+			{
+				value = (item.Control as MemoEdit).EditValue;
+			}
+			else if (item.Control.GetType() == typeof(DateEdit))
+			{
+				value = (item.Control as DateEdit).GetDateChar8();
+			}
+			else if (item.Control.GetType() == typeof(CheckEdit))
+			{
+				value = (item.Control as CheckEdit).EditValue;
+			}
+			else if (item.Control.GetType() == typeof(ButtonEdit))
+			{
+				value = (item.Control as ButtonEdit).EditValue;
+			}
+			else if (item.Control.GetType() == typeof(XSearch))
+			{
+				value = (item.Control as XSearch).EditValue;
+			}
+
 			if (value.ToStringNullToEmpty() == string.Empty)
 			{
 				value = null;
@@ -228,10 +213,14 @@ namespace JW.AUBE.Core.Utils
 			{
 				dic.Add(fieldName, ((ButtonEdit)item.Control).EditValue);
 			}
+			else if (item.Control.GetType() == typeof(XSearch))
+			{
+				dic.Add(fieldName, ((XSearch)item.Control).EditValue);
+			}
 			else if (item.Control.GetType() == typeof(XPeriod))
 			{
-				dic.Add("FR_" + fieldName, ((XPeriod)item.Control).DateFrEdit.GetDateChar8());
-				dic.Add("TO_" + fieldName, ((XPeriod)item.Control).DateToEdit.GetDateChar8());
+				dic.Add("ST_" + fieldName, ((XPeriod)item.Control).DateFrEdit.GetDateChar8());
+				dic.Add("ED_" + fieldName, ((XPeriod)item.Control).DateToEdit.GetDateChar8());
 			}
 			return dic;
 		}
@@ -244,111 +233,88 @@ namespace JW.AUBE.Core.Utils
 				{
 					return;
 				}
+
 				if (item.Control.GetType() == typeof(TextEdit))
 				{
-					((TextEdit)item.Control).EditValue = value;
+					(item.Control as TextEdit).EditValue = value;
 				}
-				else
+				else if (item.Control.GetType() == typeof(XLookup))
 				{
-					if (item.Control.GetType() == typeof(XLookup))
+					(item.Control as XLookup).EditValue = value;
+				}
+				else if (item.Control.GetType() == typeof(SpinEdit))
+				{
+					(item.Control as SpinEdit).EditValue = value;
+				}
+				else if (item.Control.GetType() == typeof(MemoEdit))
+				{
+					(item.Control as MemoEdit).EditValue = value;
+				}
+				else if (item.Control.GetType() == typeof(DateEdit))
+				{
+					if (value == null || value == DBNull.Value)
 					{
-						((XLookup)item.Control).EditValue = value;
+						(item.Control as DateEdit).EditValue = null;
 					}
 					else
 					{
-						if (item.Control.GetType() == typeof(SpinEdit))
+						if (value.GetType() == typeof(DateTime))
 						{
-							((SpinEdit)item.Control).EditValue = value;
+							(item.Control as DateEdit).EditValue = value;
 						}
 						else
 						{
-							if (item.Control.GetType() == typeof(MemoEdit))
-							{
-								((MemoEdit)item.Control).EditValue = value;
-							}
-							else
-							{
-								if (item.Control.GetType() == typeof(DateEdit))
-								{
-									if (value == null || value == DBNull.Value)
-									{
-										((DateEdit)item.Control).EditValue = null;
-									}
-									else
-									{
-										if (value.GetType() == typeof(DateTime))
-										{
-											((DateEdit)item.Control).EditValue = value;
-										}
-										else
-										{
-											((DateEdit)item.Control).SetDateChar8(value.ToString());
-										}
-									}
-								}
-								else
-								{
-									if (item.Control.GetType() == typeof(CheckEdit))
-									{
-										if (value.ToStringNullToEmpty() == "Y")
-										{
-											((CheckEdit)item.Control).Checked = true;
-											((CheckEdit)item.Control).EditValue = "Y";
-										}
-										else
-										{
-											((CheckEdit)item.Control).Checked = false;
-											((CheckEdit)item.Control).EditValue = "Y";
-										}
-									}
-									else
-									{
-										if (item.Control.GetType() == typeof(ButtonEdit))
-										{
-											((ButtonEdit)item.Control).EditValue = value;
-										}
-										else
-										{
-											if (item.Control.GetType() == typeof(XSearch))
-											{
-												if (value == null | value == DBNull.Value)
-												{
-													(item.Control as XSearch).EditValue = null;
-													(item.Control as XSearch).EditText = null;
-												}
-												else
-												{
-													(item.Control as XSearch).EditValue = value;
-													(item.Control as XSearch).EditText = text;
-												}
-											}
-										}
-									}
-								}
-							}
+							(item.Control as DateEdit).SetDateChar8(value.ToString());
 						}
+					}
+				}
+				else if (item.Control.GetType() == typeof(CheckEdit))
+				{
+					if (value.ToStringNullToEmpty() == "Y")
+					{
+						(item.Control as CheckEdit).Checked = true;
+						(item.Control as CheckEdit).EditValue = "Y";
+					}
+					else
+					{
+						(item.Control as CheckEdit).Checked = false;
+						(item.Control as CheckEdit).EditValue = "Y";
+					}
+				}
+				else if (item.Control.GetType() == typeof(ButtonEdit))
+				{
+					(item.Control as ButtonEdit).EditValue = value;
+				}
+				else if (item.Control.GetType() == typeof(XSearch))
+				{
+					if (value == null | value == DBNull.Value)
+					{
+						(item.Control as XSearch).EditValue = null;
+						(item.Control as XSearch).EditText = null;
+					}
+					else
+					{
+						(item.Control as XSearch).EditValue = value;
+						(item.Control as XSearch).EditText = text;
 					}
 				}
 			}
 			catch
 			{
+				throw;
 			}
 		}
-
-
-
-
 
 		/// <summary>
 		/// LayoutControlGroup 배열로 각각의 Control EditValue 값을 DataTable 로 변환하여 줍니다.
 		/// </summary>
 		/// <param name="lcg">LayoutControlGroup</param>
 		/// <returns>DataTable</returns>
-		public static DataTable GroupToDataTable(this LayoutControl lc, params LayoutControlGroup[] lcgs)
+		public static DataTable GroupToDataTable(this LayoutControl lc, params LayoutControlGroup[] groups)
 		{
 			var dt = new DataTable();
 			var newRow = dt.NewRow();
-			foreach (LayoutControlGroup group in lcgs)
+			foreach (LayoutControlGroup group in groups)
 			{
 				foreach (LayoutControlItem item in group.Items.OfType<LayoutControlItem>().Where(x => x.Name.StartsWith("lcItem") && x.Control != null))
 				{
@@ -365,6 +331,26 @@ namespace JW.AUBE.Core.Utils
 			}
 			dt.Rows.Add(newRow);
 			return dt;
+		}
+
+		public static DataMap GroupToDataMap(this LayoutControl lc, params LayoutControlGroup[] groups)
+		{
+			var map = new DataMap();
+			foreach (LayoutControlGroup group in groups)
+			{
+				foreach (LayoutControlItem item in group.Items.OfType<LayoutControlItem>().Where(x => x.Name.StartsWith("lcItem") && x.Control != null))
+				{
+					var values = item.GetControlValueWithFieldName();
+					if (values != null && values.Count > 0)
+					{
+						foreach (var dic in values)
+						{
+							map.SetValue(dic.Key, dic.Value);
+						}
+					}
+				}
+			}
+			return map;
 		}
 
 		/// <summary>

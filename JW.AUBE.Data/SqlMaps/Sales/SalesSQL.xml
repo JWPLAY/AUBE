@@ -5,7 +5,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
 
 	<statements>
-		<select id="GetSaleTran" parameterClass="DataMap" resultClass="SaleTran" >
+		<select id="GetSaleTran" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
 				SELECT  AA.SALE_ID
 					,	AA.SALE_NO
@@ -31,7 +31,7 @@
 				WHERE	AA.SALE_ID = #SALE_ID#
 			]]>
 		</select>
-		<select id="GetSaleTranItem" parameterClass="DataMap" resultClass="SaleTranItem" >
+		<select id="GetSaleTranItem" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
 				SELECT  AA.SALE_ITEM_ID
 					,	AA.SALE_ID
@@ -63,7 +63,7 @@
 				]]>
 		</select>
 		
-		<insert id="InsertSaleTran" parameterClass="SaleTran" >
+		<insert id="InsertSaleTran" parameterClass="DataMap" >
 			<![CDATA[
 				INSERT INTO UBZ.SALE_TRAN
 				( 
@@ -82,7 +82,7 @@
 				]]>
 			</selectKey>
 		</insert>
-		<update id="UpdateSaleTran" parameterClass="SaleTran">
+		<update id="UpdateSaleTran" parameterClass="DataMap">
 			<![CDATA[
 				UPDATE  UBZ.SALE_TRAN
 				SET     SALE_DATE		= #SALE_DATE#
@@ -94,7 +94,7 @@
 				WHERE	SALE_ID			= #SALE_ID#
 			]]>
 		</update>
-		<delete id="DeleteSaleTran" parameterClass="SaleTran">
+		<delete id="DeleteSaleTran" parameterClass="DataMap">
 			<![CDATA[
 				DELETE
 				FROM	UBZ.SALE_TRAN
@@ -113,7 +113,7 @@
 				]]>
 		</select>
 
-		<insert id="InsertSaleTranItem" parameterClass="SaleTranItem" >
+		<insert id="InsertSaleTranItem" parameterClass="DataMap" >
 			<![CDATA[
 				INSERT INTO UBZ.SALE_TRAN_ITEM
 				( 
@@ -130,7 +130,7 @@
 				]]>
 			</selectKey>
 		</insert>
-		<update id="UpdateSaleTranItem" parameterClass="SaleTranItem">
+		<update id="UpdateSaleTranItem" parameterClass="DataMap">
 			<![CDATA[
 				UPDATE  UBZ.SALE_TRAN
 				SET     PRODUCT_ID		= #PRODUCT_ID#
@@ -142,7 +142,7 @@
 				WHERE	SALE_ITEM_ID	= #SALE_ITEM_ID#
 			]]>
 		</update>
-		<delete id="DeleteSaleTranItem" parameterClass="SaleTranItem">
+		<delete id="DeleteSaleTranItem" parameterClass="DataMap">
 			<![CDATA[
 				DELETE
 				FROM	UBZ.SALE_TRAN_ITEM

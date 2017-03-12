@@ -250,6 +250,20 @@ namespace JW.AUBE.Core.Controls.Grid
 			gridColumn.CustomizationCaption = gridColumn.Caption;
 			gridColumn.AppearanceHeader.Options.UseTextOptions = true;
 			gridColumn.AppearanceHeader.TextOptions.HAlignment = HorzAlignment.Center;
+			if (column.IsMandatory)
+			{
+				gridColumn.AppearanceHeader.Options.UseForeColor = true;
+				if (SkinUtils.IsDarkSkin())
+					gridColumn.AppearanceHeader.ForeColor = Color.Yellow;
+				else
+					gridColumn.AppearanceHeader.ForeColor = Color.Red;
+				gridColumn.Tag = true;
+			}
+			else
+			{
+				gridColumn.AppearanceHeader.Options.UseForeColor = false;
+				gridColumn.Tag = null;
+			}
 			gridColumn.AppearanceCell.Options.UseTextOptions = true;
 			gridColumn.AppearanceCell.TextOptions.HAlignment = column.HorzAlignment;
 
@@ -268,7 +282,9 @@ namespace JW.AUBE.Core.Controls.Grid
 			}
 
 			if ((column.IsSummary) &&
-				(MainView.GetType() == typeof(GridView) || MainView.GetType() == typeof(BandedGridView) || MainView.GetType() == typeof(AdvBandedGridView)))
+				(MainView.GetType() == typeof(GridView) || 
+				 MainView.GetType() == typeof(BandedGridView) || 
+				 MainView.GetType() == typeof(AdvBandedGridView)))
 			{
 				gridColumn.SummaryItem.SummaryType = column.SummaryItemType;
 				gridColumn.SummaryItem.FieldName = column.FieldName;

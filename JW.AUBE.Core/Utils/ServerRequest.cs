@@ -111,6 +111,38 @@ namespace JW.AUBE.Core.Utils
 				throw;
 			}
 		}
+		public static WasRequest Execute(string serviceId, string processId, DataMap parameter)
+		{
+			try
+			{
+				if (parameter == null)
+					throw new Exception("처리할 데이터가 없습니다.");
+
+				if (string.IsNullOrEmpty(serviceId))
+					serviceId = "Base";
+
+				parameter.SetValue("INS_USER", GlobalVar.Settings.GetValue("USER_ID"));
+
+				var res = (new WasRequest()
+				{
+					ServiceId = serviceId,
+					ProcessId = processId,
+					Parameter = parameter
+				}).Request();
+
+				if (res == null)
+					throw new Exception("요청결과가 없습니다.");
+
+				if (res.ErrorNumber != 0)
+					throw new Exception(res.ErrorMessage);
+
+				return res;
+			}
+			catch
+			{
+				throw;
+			}
+		}
 
 		public static DataTable SingleRequest(this WasRequest req)
 		{

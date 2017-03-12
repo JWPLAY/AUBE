@@ -13,10 +13,8 @@ namespace JW.AUBE.Core.Splash
 
 		private void Init()
 		{
-			progressPanel1.AutoHeight = true;
+			progressPanel1.AutoHeight = false;
 		}
-
-
 
 		public override void SetCaption(string caption)
 		{

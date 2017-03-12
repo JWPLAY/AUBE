@@ -5,12 +5,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
 
 	<statements>
-		<select id="GetPurcTran" parameterClass="DataMap" resultClass="PurcTran" >
+		<select id="GetPurcTran" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
-				SELECT  AA.SALE_ID
-					,	AA.SALE_NO
-					,	AA.SALE_DATE
-					,	AA.SALE_TYPE
+				SELECT  AA.PURC_ID
+					,	AA.PURC_NO
+					,	AA.PURC_DATE
+					,	AA.PURC_TYPE
 					,	AA.CUSTOMER_ID
 					,	BB.CUSTOMER_NAME
 					,	AA.REMARKS
@@ -28,19 +28,23 @@
 						LEFT JOIN
 							UAA.USERS U2
 								ON AA.UPD_USER = U2.USER_ID
-				WHERE	AA.SALE_ID = #SALE_ID#
+				WHERE	(
+							AA.PURC_ID = #PURC_ID#	OR
+							AA.PURC_NO = #PURC_NO#
+						)
 			]]>
 		</select>
-		<select id="GetPurcTranItem" parameterClass="DataMap" resultClass="PurcTranItem" >
+		<select id="GetPurcTranItem" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
-				SELECT  AA.SALE_ITEM_ID
-					,	AA.SALE_ID
+				SELECT  AA.PURC_ITEM_ID
+					,	AA.PURC_ID
 					,	AA.PRODUCT_ID
 					,	BB.PRODUCT_NAME
+					,	BB.PRODUCT_CODE
 					,	ISNULL(M1.NAME, BB.PRODUCT_UNIT)	AS PRODUCT_UNIT
-					,	AA.SALE_PRICE
-					,	AA.SALE_QTY
-					,	AA.SALE_AMT
+					,	AA.PURC_PRICE
+					,	AA.PURC_QTY
+					,	AA.PURC_AMT
 					
 					,	AA.INS_TIME
 					,	AA.INS_USER
@@ -50,6 +54,9 @@
 					,	U2.USER_NAME			AS UPD_USER_NAME
 					
 				FROM	UBZ.PURC_TRAN_ITEM AA WITH (NOLOCK)
+						INNER JOIN
+							UBZ.PURC_TRAN A1
+								ON AA.PURC_ID = A1.PURC_ID
 						LEFT JOIN
 							UCD.PRODUCTS BB
 								ON AA.PRODUCT_ID = BB.PRODUCT_ID
@@ -63,12 +70,15 @@
 						LEFT JOIN
 							UAA.USERS U2 WITH (NOLOCK)
 								ON AA.UPD_USER = U2.USER_ID
-				WHERE	AA.SALE_ID = #SALE_ID#
-				ORDER BY AA.SALE_ITEM_ID
+				WHERE	(
+							AA.PURC_ID = #PURC_ID#	OR
+							A1.PURC_NO = #PURC_NO#
+						)
+				ORDER BY AA.PURC_ITEM_ID
 				]]>
 		</select>
 		
-		<insert id="InsertPurcTran" parameterClass="PurcTran" >
+		<insert id="InsertPurcTran" parameterClass="DataMap" >
 			<![CDATA[
 				INSERT INTO UBZ.PURC_TRAN
 				( 
@@ -87,7 +97,7 @@
 				]]>
 			</selectKey>
 		</insert>
-		<update id="UpdatePurcTran" parameterClass="PurcTran">
+		<update id="UpdatePurcTran" parameterClass="DataMap">
 			<![CDATA[
 				UPDATE  UBZ.PURC_TRAN
 				SET     PURC_DATE		= #PURC_DATE#
@@ -99,7 +109,7 @@
 				WHERE	PURC_ID			= #PURC_ID#
 			]]>
 		</update>
-		<delete id="DeletePurcTran" parameterClass="PurcTran">
+		<delete id="DeletePurcTran" parameterClass="DataMap">
 			<![CDATA[
 				DELETE
 				FROM	UBZ.PURC_TRAN
@@ -155,9 +165,10 @@
 			]]>
 		</delete>
 
-		<select id="GetPurcTranList" parameterClass="DataMap" resultClass="PurcTranList" >
+		<select id="GetPurcTranList" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
-				SELECT  AA.PURC_ID
+				SELECT  ROW_NUMBER() OVER (ORDER BY AA.PURC_DATE DESC, AA.PURC_ID, BB.PURC_ITEM_ID)		AS ROW_NO
+					,	AA.PURC_ID
 					,	REPLACE(CONVERT(VARCHAR(10), CONVERT(DATE, AA.PURC_DATE, 112), 111),'/','-')	AS PURC_DATE
 					,	ISNULL(M3.NAME, AA.PURC_TYPE)	AS PURC_TYPE
 					,	AA.CUSTOMER_ID
@@ -239,7 +250,7 @@
 			]]>
 			</isNotEmpty>
 			<![CDATA[
-				ORDER BY AA.PURC_DATE DESC, AA.PURC_ID, BB.PURC_ITEM_ID
+				ORDER BY ROW_NO
 			]]>
 		</select>
 	</statements>

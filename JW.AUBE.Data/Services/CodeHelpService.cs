@@ -28,6 +28,8 @@ namespace JW.AUBE.Data.Services
 					case "Customer":
 					case "Product":
 					case "Material":
+					case "Purcitem":
+					case "Saleitem":
 					case "Department":
 					case "Employee":
 					case "Project":

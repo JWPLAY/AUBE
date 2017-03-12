@@ -703,6 +703,39 @@ namespace JW.AUBE.Core.Controls.Grid
 			}
 		}
 
+		[Browsable(true)]
+		public bool ShowFooter
+		{
+			get
+			{
+				bool _ret = false;
+				switch (GridViewType)
+				{
+					case GridViewType.GridView:
+					case GridViewType.BandedGridView:
+					case GridViewType.AdvBandedGridView:
+						_ret = ((GridView)MainView).OptionsView.ShowFooter;
+						break;
+					default:
+						break;
+				}
+				return _ret;
+			}
+			set
+			{
+				switch (GridViewType)
+				{
+					case GridViewType.GridView:
+					case GridViewType.BandedGridView:
+					case GridViewType.AdvBandedGridView:
+						((GridView)MainView).OptionsView.ShowFooter = value;
+						break;
+					default:
+						break;
+				}
+			}
+		}
+
 		[Browsable(false)]
 		public string PrintHeader { get; set; }
 

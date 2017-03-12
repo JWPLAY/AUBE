@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
@@ -7,6 +8,7 @@ using System.Windows.Forms;
 using DevExpress.Utils;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
+using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraLayout;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Base.Variables;
@@ -751,6 +753,70 @@ namespace JW.AUBE.Core.Base.Forms
 						}
 					}
 				};
+
+				if (!string.IsNullOrEmpty(msg))
+				{
+					ShowMsgBox(msg);
+					return false;
+				}
+				else
+				{
+					return true;
+				}
+			}
+			catch (Exception ex)
+			{
+				ShowErrBox(ex);
+				return false;
+			}
+		}
+
+		protected virtual bool DataValidate(XGrid grid)
+		{
+			string msg = string.Empty;
+			try
+			{
+				if (grid == null)
+					return true;
+
+				if (grid.MainView.Columns.Count == 0)
+					return true;
+
+				DataTable dt = grid.GetDataTable();
+
+				if (dt == null || dt.Rows.Count == 0)
+				{
+					msg = "처리할 데이터가 없습니다.";
+				}
+				else
+				{
+					int rowcount = 0;
+					foreach (DataColumn column in dt.Columns)
+					{
+						if (grid.MainView.Columns.Where(x => x.FieldName == column.ColumnName).Any())
+						{
+							if (grid.MainView.Columns.Where(x => x.FieldName == column.ColumnName).FirstOrDefault().Tag.ToBooleanNullToFalse() == true)
+							{
+								GridColumn col = grid.MainView.Columns.Where(x => x.FieldName == column.ColumnName).FirstOrDefault();
+								rowcount = 0;
+								foreach (DataRow row in dt.Rows)
+								{
+									rowcount++;
+									if (col.DisplayFormat.FormatType == FormatType.Numeric)
+									{
+										if (row[col.FieldName].ToDecimalNullToZero() == 0)
+											msg += string.Format("{0}번째 행의 {1}값이 0이거나 공란일 수 없습니다.{2}", rowcount, col.Caption.Replace("**",""), Environment.NewLine);
+									}
+									else
+									{
+										if (row[col.FieldName].ToStringNullToEmpty() == "")
+											msg += string.Format("{0}번째 행의 {1}값이 공란일 수 없습니다.{2}", rowcount, col.Caption.Replace("**", ""), Environment.NewLine);
+									}
+								}
+							}
+						}
+					}
+				}
 
 				if (!string.IsNullOrEmpty(msg))
 				{

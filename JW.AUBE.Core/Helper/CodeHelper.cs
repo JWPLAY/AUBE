@@ -71,6 +71,12 @@ namespace JW.AUBE.Core.Helper
 						nameField = "PRODUCT_NAME";
 						displayFields = new string[] { "PRODUCT_ID", "PRODUCT_NAME", "PRODUCT_CODE" };
 						break;
+					case "PURCITEM":
+						formText = "구매품목검색";
+						codeField = "PRODUCT_ID";
+						nameField = "PRODUCT_NAME";
+						displayFields = new string[] { "PRODUCT_ID", "PRODUCT_NAME", "PRODUCT_CODE" };
+						break;
 					case "CUSTOMER":
 						formText = "거래처검색";
 						codeField = "CUSTOMER_ID";

@@ -168,5 +168,43 @@
 				ORDER BY AA.PRODUCT_NAME ASC
 			]]>
 		</select>
+
+		<select id="GetCodeHelpPurcitemList" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT	AA.PRODUCT_ID
+					,	AA.PRODUCT_NAME
+					,	AA.PRODUCT_CODE
+					,	ISNULL(M1.NAME, AA.UNIT_TYPE)		AS PRODUCT_UNIT
+					,	ISNULL(M2.NAME, AA.PRODUCT_TYPE)	AS PRODUCT_TYPE
+				FROM	UCD.PRODUCTS AA WITH (NOLOCK)
+						LEFT JOIN
+							UAA.CODES M1 
+								ON AA.UNIT_TYPE = M1.CODE
+									AND M1.PARENT_CODE = 'UNIT_TYPE'
+						LEFT JOIN
+							UAA.CODES M2
+								ON AA.PRODUCT_TYPE = M2.CODE
+									AND M2.PARENT_CODE = 'PRODUCT_TYPE'
+				WHERE	1=1
+				AND		AA.PRODUCT_TYPE IN ('M','G')
+			]]>
+			<isNotEmpty property="FIND_TEXT">
+				<![CDATA[
+				AND		(
+							AA.PRODUCT_NAME	LIKE '%' + #FIND_TEXT# + '%'	OR
+							AA.PRODUCT_CODE	LIKE #FIND_TEXT# + '%'			OR
+							AA.BARCODE		= #FIND_TEXT#
+						)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty property="USE_YN">
+				<![CDATA[
+					AND	AA.USE_YN = #USE_YN#
+				]]>
+			</isNotEmpty>
+			<![CDATA[
+				ORDER BY ISNULL(M2.SORT_SEQ, 99999), AA.PRODUCT_TYPE, AA.PRODUCT_NAME ASC
+			]]>
+		</select>
 	</statements>
 </sqlMap>

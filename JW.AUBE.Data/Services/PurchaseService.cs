@@ -5,7 +5,6 @@ using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Base.Was.Models;
 using JW.AUBE.Data.Mappers;
-using JW.AUBE.Data.Models.Purchase;
 using JW.AUBE.Data.Utils;
 
 namespace JW.AUBE.Data.Services
@@ -22,19 +21,19 @@ namespace JW.AUBE.Data.Services
 		{
 			try
 			{
-				var purctran = DaoFactory.Instance.QueryForList<PurcTranDataModel>("GetPurcTran", req.Parameter);
-				var purcitem = DaoFactory.Instance.QueryForList<PurcTranItemDataModel>("GetPurcTranItem", req.Parameter);
+				var purctran = DaoFactory.Instance.QueryForList<DataMap>("GetPurcTran", req.Parameter);
+				var purcitem = DaoFactory.Instance.QueryForList<DataMap>("GetPurcTranItem", req.Parameter);
 
 				req.DataList = new List<WasRequestData>()
 				{
 					new WasRequestData()
 					{
-						Data = ConvertUtils.ListToDataTable(purctran)
+						Data = purctran
 					}
 					,
 					new WasRequestData()
 					{
-						Data = ConvertUtils.ListToDataTable(purcitem)
+						Data = purcitem
 					}
 				};
 				return req;

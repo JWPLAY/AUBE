@@ -270,7 +270,8 @@ namespace JW.AUBE.Core.Helper
 						gridList.SetMerge(mergeFields.ToArray());
 					}
 
-					gridList.SetColumnBackColor(Color.AliceBlue, this.CodeField);
+					gridList.SetColumnBackColor(Color.FromArgb(50, 50, 50), this.CodeField);
+					gridList.SetColumnForeColor(Color.WhiteSmoke, this.CodeField);
 				}
 			}
 			catch (Exception ex)

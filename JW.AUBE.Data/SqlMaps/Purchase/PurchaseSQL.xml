@@ -36,7 +36,7 @@
 		</select>
 		<select id="GetPurcTranItem" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
-				SELECT  AA.PURC_ITEM_ID
+				SELECT  AA.ITEM_ID
 					,	AA.PURC_ID
 					,	AA.PRODUCT_ID
 					,	BB.PRODUCT_NAME
@@ -74,7 +74,7 @@
 							AA.PURC_ID = #PURC_ID#	OR
 							A1.PURC_NO = #PURC_NO#
 						)
-				ORDER BY AA.PURC_ITEM_ID
+				ORDER BY AA.ITEM_ID
 				]]>
 		</select>
 		
@@ -139,9 +139,9 @@
 					#PURC_ID#, #PRODUCT_ID#, #PURC_PRICE#, #PURC_QTY#, #PURC_AMT#, GETDATE(), #INS_USER# 
 				)
 			]]>
-			<selectKey type="post" property="PURC_ITEM_ID" resultClass="Int">
+			<selectKey type="post" property="ITEM_ID" resultClass="Int">
 				<![CDATA[
-					SELECT @@IDENTITY AS PURC_ITEM_ID
+					SELECT @@IDENTITY AS ITEM_ID
 				]]>
 			</selectKey>
 		</insert>
@@ -154,27 +154,27 @@
 					,	PURC_AMT		= #PURC_AMT#
 					,	UPD_TIME		= GETDATE()
 					,	UPD_USER		= #INS_USER#
-				WHERE	PURC_ITEM_ID	= #PURC_ITEM_ID#
+				WHERE	ITEM_ID			= #ITEM_ID#
 			]]>
 		</update>
 		<delete id="DeletePurcTranItem" parameterClass="DataMap">
 			<![CDATA[
 				DELETE
 				FROM	UBZ.PURC_TRAN_ITEM
-				WHERE	PURC_ITEM_ID = #PURC_ITEM_ID#
+				WHERE	ITEM_ID = #ITEM_ID#
 			]]>
 		</delete>
 
-		<select id="GetPurcTranList" parameterClass="DataMap" resultClass="DataMap" >
+		<select id="GetPurcTranList" parameterClass="DataMap" resultClass="System.Collections.Specialized.HybridDictionary" >
 			<![CDATA[
-				SELECT  ROW_NUMBER() OVER (ORDER BY AA.PURC_DATE DESC, AA.PURC_ID, BB.PURC_ITEM_ID)		AS ROW_NO
+				SELECT  ROW_NUMBER() OVER (ORDER BY AA.PURC_DATE DESC, AA.PURC_ID, BB.ITEM_ID)		AS ROW_NO
 					,	AA.PURC_ID
 					,	REPLACE(CONVERT(VARCHAR(10), CONVERT(DATE, AA.PURC_DATE, 112), 111),'/','-')	AS PURC_DATE
 					,	ISNULL(M3.NAME, AA.PURC_TYPE)	AS PURC_TYPE
 					,	AA.CUSTOMER_ID
 					,	CC.CUSTOMER_NAME
 					,	AA.REMARKS
-					,	BB.PURC_ITEM_ID
+					,	BB.ITEM_ID
 					,	BB.PRODUCT_ID
 					,	PP.PRODUCT_CODE
 					,	PP.PRODUCT_NAME

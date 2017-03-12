@@ -13,7 +13,7 @@ namespace JW.AUBE.Base.Map
 		{
 			object val;
 			if (base.TryGetValue(key, out val))
-			{
+			{				
 				return val;
 			}
 			else

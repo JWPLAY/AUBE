@@ -117,7 +117,7 @@ namespace JW.AUBE.Core.Forms.Purchase
 			gridItem.ShowFooter = true;
 			gridItem.AddGridColumns(
 				new XGridColumn() { FieldName = "ROW_NO", HorzAlignment = HorzAlignment.Center, Width = 50 },
-				new XGridColumn() { FieldName = "PURC_ITEM_ID", HorzAlignment = HorzAlignment.Center, Width = 80, Visible = false },
+				new XGridColumn() { FieldName = "ITEM_ID", HorzAlignment = HorzAlignment.Center, Width = 80, Visible = false },
 				new XGridColumn() { FieldName = "PURC_ID", HorzAlignment = HorzAlignment.Center, Width = 60, Visible = false },
 				new XGridColumn() { FieldName = "PRODUCT_ID", HorzAlignment = HorzAlignment.Center, Width = 100, Visible = false, IsMandatory = true },
 				new XGridColumn() { FieldName = "PRODUCT_NAME", Width = 200, IsMandatory = true },
@@ -286,7 +286,7 @@ namespace JW.AUBE.Core.Forms.Purchase
 				DataTable dt = new DataTable();
 				dt.Columns.AddRange(new DataColumn[]
 				{
-					new DataColumn("PURC_ITEM_ID", typeof(int)),
+					new DataColumn("ITEM_ID", typeof(int)),
 					new DataColumn("PURC_ID", typeof(int)),
 					new DataColumn("PRODUCT_ID", typeof(int)),
 					new DataColumn("PURC_PRICE", typeof(decimal)),
@@ -305,7 +305,7 @@ namespace JW.AUBE.Core.Forms.Purchase
 						string rowstate = row["ROWSTATE"].ToString();
 
 						dt.Rows.Add(
-							row["PURC_ITEM_ID"],
+							row["ITEM_ID"],
 							txtPurcId.EditValue,
 							row["PRODUCT_ID"],
 							row["PURC_PRICE"],

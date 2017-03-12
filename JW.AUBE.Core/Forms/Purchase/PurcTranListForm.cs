@@ -52,7 +52,7 @@ namespace JW.AUBE.Core.Forms.Purchase
 				new XGridColumn() { FieldName = "CUSTOMER_ID", HorzAlignment = HorzAlignment.Center, Width = 100, Visible = false },
 				new XGridColumn() { FieldName = "CUSTOMER_NAME", Width = 200 },
 				new XGridColumn() { FieldName = "REMARKS", Width = 200 },
-				new XGridColumn() { FieldName = "PURC_ITEM_ID", HorzAlignment = HorzAlignment.Center, Width = 80, Visible = false },
+				new XGridColumn() { FieldName = "ITEM_ID", HorzAlignment = HorzAlignment.Center, Width = 80, Visible = false },
 				new XGridColumn() { FieldName = "PRODUCT_ID", HorzAlignment = HorzAlignment.Center, Width = 100, Visible = false },
 				new XGridColumn() { FieldName = "PRODUCT_CODE", HorzAlignment = HorzAlignment.Center, Width = 100 },
 				new XGridColumn() { FieldName = "PRODUCT_NAME", Width = 200 },
@@ -94,7 +94,7 @@ namespace JW.AUBE.Core.Forms.Purchase
 
 		protected override void DataLoad(object param = null)
 		{
-			gridList.BindData("Base", "GetList", "GetPurcTranList", new DataMap() {
+			gridList.BindData("Purchase", "GetPurcTranList", null, new DataMap() {
 				{ "ST_PURC_DATE", datPurcDate.DateFrEdit.GetDateChar8() },
 				{ "ED_PURC_DATE", datPurcDate.DateToEdit.GetDateChar8() },
 				{ "CUSTOMER_ID", txtCustomer.EditValue },

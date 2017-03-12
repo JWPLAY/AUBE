@@ -33,7 +33,7 @@
 		</select>
 		<select id="GetSaleTranItem" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
-				SELECT  AA.SALE_ITEM_ID
+				SELECT  AA.ITEM_ID
 					,	AA.SALE_ID
 					,	AA.PRODUCT_ID
 					,	BB.PRODUCT_NAME
@@ -59,7 +59,7 @@
 							UAA.USERS U2 WITH (NOLOCK)
 								ON AA.UPD_USER = U2.USER_ID
 				WHERE	AA.SALE_ID = #SALE_ID#
-				ORDER BY AA.SALE_ITEM_ID
+				ORDER BY AA.ITEM_ID
 				]]>
 		</select>
 		
@@ -124,9 +124,9 @@
 					#SALE_ID#, #PRODUCT_ID#, #SALE_PRICE#, #SALE_QTY#, #SALE_AMT#, GETDATE(), #INS_USER# 
 				)
 			]]>
-			<selectKey type="post" property="SALE_ITEM_ID" resultClass="Int">
+			<selectKey type="post" property="ITEM_ID" resultClass="Int">
 				<![CDATA[
-					SELECT @@IDENTITY AS SALE_ITEM_ID
+					SELECT @@IDENTITY AS ITEM_ID
 				]]>
 			</selectKey>
 		</insert>
@@ -139,14 +139,14 @@
 					,	SALE_AMT		= #SALE_AMT#
 					,	UPD_TIME		= GETDATE()
 					,	UPD_USER		= #INS_USER#
-				WHERE	SALE_ITEM_ID	= #SALE_ITEM_ID#
+				WHERE	ITEM_ID			= #ITEM_ID#
 			]]>
 		</update>
 		<delete id="DeleteSaleTranItem" parameterClass="DataMap">
 			<![CDATA[
 				DELETE
 				FROM	UBZ.SALE_TRAN_ITEM
-				WHERE	SALE_ITEM_ID = #SALE_ITEM_ID#
+				WHERE	ITEM_ID = #ITEM_ID#
 			]]>
 		</delete>
 	</statements>

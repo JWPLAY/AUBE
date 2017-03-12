@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Data;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
@@ -123,12 +124,12 @@ namespace JW.AUBE.Data.Services
 								else if (map.GetValue("ROWSTATE").ToStringNullToEmpty() == "UPDATE")
 								{
 									DaoFactory.Instance.Update("UpdatePurcTranItem", map);
-									item_id = map.GetValue("PURC_ITEM_ID");
+									item_id = map.GetValue("ITEM_ID");
 								}
 								else if (map.GetValue("ROWSTATE").ToStringNullToEmpty() == "DELETE")
 								{
 									DaoFactory.Instance.Update("DeletePurcTranItem", map);
-									item_id = map.GetValue("PURC_ITEM_ID");
+									item_id = map.GetValue("ITEM_ID");
 								}
 							}
 							req.DataList[1].ErrorNumber = 0;
@@ -172,6 +173,28 @@ namespace JW.AUBE.Data.Services
 				{
 					DaoFactory.Instance.Insert("DeletePurcTran", req.Parameter);
 				}
+				return req;
+			}
+			catch (Exception ex)
+			{
+				req.ErrorNumber = ex.HResult;
+				req.ErrorMessage = ex.Message;
+				return req;
+			}
+		}
+
+		public static WasRequest GetPurcTranList(WasRequest req)
+		{
+			try
+			{
+				var list = DaoFactory.Instance.QueryForList<HybridDictionary>("GetPurcTranList", req.Parameter);
+				req.DataList = new List<WasRequestData>()
+				{
+					new WasRequestData()
+					{
+						Data = list	//ConvertUtils.DataMapListToDataTable(list, req.SqlId)
+					}
+				};
 				return req;
 			}
 			catch (Exception ex)

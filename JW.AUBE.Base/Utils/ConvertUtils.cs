@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using JW.AUBE.Base.Map;
@@ -237,6 +239,48 @@ namespace JW.AUBE.Base.Utils
 				}
 				data.Rows.Add(dr);
 			}
+
+			if (!string.IsNullOrEmpty(tableName))
+			{
+				data.TableName = tableName;
+			}
+			if (data != null)
+				data.AcceptChanges();
+			return data;
+		}
+
+		public static DataTable ToDataTable(HybridDictionary hdic, string tableName)
+		{
+			//if (hdic == null || hdic.Count == 0)
+			//{
+			//	return null;
+			//}
+			//var data = new DataTable();
+
+			//lock (hdic.SyncRoot)
+			//{
+			//	foreach(DictionaryEntry entry in hdic)
+			//	{
+
+			//	}
+			//}
+
+
+			//foreach(hdic.item)
+
+			//foreach (var key in list[0].Keys)
+			//{
+			//	data.Columns.Add(key);
+			//}
+			//foreach (DataMap p in list)
+			//{
+			//	var dr = data.NewRow();
+			//	foreach (var col in p)
+			//	{
+			//		dr[col.Key] = col.Value ?? DBNull.Value;
+			//	}
+			//	data.Rows.Add(dr);
+			//}
 
 			if (!string.IsNullOrEmpty(tableName))
 			{

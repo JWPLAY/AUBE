@@ -117,9 +117,7 @@
 			// 
 			this.txtCustomer.CodeField = "CodeId";
 			this.txtCustomer.CodeGroup = "Codes";
-			this.txtCustomer.CodeId = null;
-			this.txtCustomer.CodeName = null;
-			this.txtCustomer.CodeTextWith = 100;
+			this.txtCustomer.CodeWidth = 100;
 			this.txtCustomer.DisplayFields = new string[] {
         "CodeId",
         "CodeName"};
@@ -145,9 +143,7 @@
 			// 
 			this.txtProduct.CodeField = "CodeId";
 			this.txtProduct.CodeGroup = "Codes";
-			this.txtProduct.CodeId = null;
-			this.txtProduct.CodeName = null;
-			this.txtProduct.CodeTextWith = 100;
+			this.txtProduct.CodeWidth = 100;
 			this.txtProduct.DisplayFields = new string[] {
         "CodeId",
         "CodeName"};

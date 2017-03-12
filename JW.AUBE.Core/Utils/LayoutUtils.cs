@@ -313,13 +313,13 @@ namespace JW.AUBE.Core.Utils
 											{
 												if (value == null | value == DBNull.Value)
 												{
-													((XSearch)item.Control).CodeId = null;
-													((XSearch)item.Control).CodeName = null;
+													(item.Control as XSearch).EditValue = null;
+													(item.Control as XSearch).EditText = null;
 												}
 												else
 												{
-													((XSearch)item.Control).CodeId = value;
-													((XSearch)item.Control).CodeName = text;
+													(item.Control as XSearch).EditValue = value;
+													(item.Control as XSearch).EditText = text;
 												}
 											}
 										}

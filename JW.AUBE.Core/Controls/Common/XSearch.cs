@@ -39,7 +39,7 @@ namespace JW.AUBE.Core.Controls.Common
 					}
 					else
 					{
-						Search();
+						Search(true);
 					}
 				}
 				else
@@ -68,7 +68,7 @@ namespace JW.AUBE.Core.Controls.Common
 				{
 					if (txtCodeName.Properties.ReadOnly == false && txtCodeName.Enabled == true)
 					{
-						Search();
+						Search(false);
 					}
 				}
 			};
@@ -145,32 +145,6 @@ namespace JW.AUBE.Core.Controls.Common
 		public new string Text { get; set; }
 
 		[Browsable(false)]
-		public object CodeId
-		{
-			get
-			{
-				return txtCodeId.EditValue;
-			}
-			set
-			{
-				txtCodeId.EditValue = value;
-			}
-		}
-
-		[Browsable(false)]
-		public object CodeName
-		{
-			get
-			{
-				return txtCodeName.EditValue;
-			}
-			set
-			{
-				txtCodeName.EditValue = value;
-			}
-		}
-
-		[Browsable(false)]
 		public DataMap Parameters { get; set; }
 
 		[Browsable(true)]
@@ -196,10 +170,23 @@ namespace JW.AUBE.Core.Controls.Common
 		}
 
 		[Browsable(false)]
+		public object EditText
+		{
+			get
+			{
+				return txtCodeName.EditValue;
+			}
+			set
+			{
+				txtCodeName.EditValue = value;
+			}
+		}
+
+		[Browsable(false)]
 		public string[] DisplayFields { get; set; }
 
 		[Browsable(true)]
-		public int CodeTextWith
+		public int CodeWidth
 		{
 			get
 			{
@@ -222,7 +209,7 @@ namespace JW.AUBE.Core.Controls.Common
 			txtCodeId.EditValue = null;
 		}
 
-		private void Search()
+		private void Search(bool buttonClick = false)
 		{
 			try
 			{
@@ -240,23 +227,22 @@ namespace JW.AUBE.Core.Controls.Common
 					Parameters.SetValue("FIND_TEXT", txtCodeName.EditValue);
 				}
 
-				var data = CodeHelper.Lookup(CodeGroup, Parameters);
+				var data = CodeHelper.Search(CodeGroup, Parameters);
 				if (data != null)
 				{
-					if (data.Rows.Count == 0)
+					if (data.Rows.Count == 0 && buttonClick == false)
 					{
 						MsgBox.Show("해당 코드를 검색할 수 없습니다.\r\n확인 후 다시 시도하세요!!!");
 						return;
 					}
-					if (data.Rows.Count == 1 && txtCodeName.EditValue.ToStringNullToEmpty().IsNullOrEmpty() == false)
+
+					if (data.Rows.Count == 1 && txtCodeName.EditValue.ToStringNullToEmpty().IsNullOrEmpty() == false && buttonClick == false)
 					{
-						CodeId = data.Rows[0][CodeField];
-						CodeName = data.Rows[0][NameField];
+						EditValue = data.Rows[0][CodeField];
+						EditText = data.Rows[0][NameField];
 
 						if (EditValueChanged != null)
-						{
 							EditValueChanged.Invoke(data.ToDataMap());
-						}
 
 						return;
 					}
@@ -277,13 +263,13 @@ namespace JW.AUBE.Core.Controls.Common
 			if (this.Parameters == null)
 				this.Parameters = new DataMap();
 
-			this.Parameters.SetValue("FIND_TEXT", this.CodeName);
+			this.Parameters.SetValue("FIND_TEXT", EditText);
 
-			var res = CodeHelper.ShowForm(this.CodeGroup, this.Parameters);
+			var res = CodeHelper.ShowForm(this.CodeGroup, this.Parameters, data);
 			if (res != null)
 			{
-				CodeId = res.GetValue(CodeField);
-				CodeName = res.GetValue(NameField);
+				EditValue = res.GetValue(CodeField);
+				EditText = res.GetValue(NameField);
 
 				if (EditValueChanged != null)
 					EditValueChanged.Invoke(res);

@@ -77,7 +77,7 @@ namespace JW.AUBE.Core.Forms.Purchase
 				new XGridColumn() { FieldName = "PRODUCT_CODE", HorzAlignment = HorzAlignment.Center, Width = 100 },
 				new XGridColumn() { FieldName = "PRODUCT_UNIT", HorzAlignment = HorzAlignment.Center, Width = 80 },
 				new XGridColumn() { FieldName = "PURC_PRICE", HorzAlignment = HorzAlignment.Far, Width = 80, FormatType = FormatType.Numeric, FormatString = "N0" },
-				new XGridColumn() { FieldName = "PURC_QTY", HorzAlignment = HorzAlignment.Far, Width = 60, FormatType = FormatType.Numeric, FormatString = "N0" },
+				new XGridColumn() { FieldName = "PURC_QTY", HorzAlignment = HorzAlignment.Far, Width = 80, FormatType = FormatType.Numeric, FormatString = "N0" },
 				new XGridColumn() { FieldName = "PURC_AMT", HorzAlignment = HorzAlignment.Far, Width = 100, FormatType = FormatType.Numeric, FormatString = "N0" },
 				new XGridColumn() { FieldName = "INS_TIME", HorzAlignment = HorzAlignment.Center, Width = 120 },
 				new XGridColumn() { FieldName = "INS_USER", Visible = false },

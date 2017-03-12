@@ -259,6 +259,10 @@ namespace JW.AUBE.Core.Helper
 								mergeFields.Add(col.ColumnName);
 							}
 						}
+						else
+						{
+							gridList.AddGridColumn(new XGridColumn() { FieldName = col.ColumnName, Visible = false });
+						}
 					}
 
 					if (mergeFields.Count > 0)

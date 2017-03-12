@@ -40,7 +40,7 @@ namespace JW.AUBE.Core.Helper
 				throw;
 			}
 		}
-		public static DataMap ShowForm(string parentCodeId, DataMap parameters = null)
+		public static DataMap ShowForm(string parentCodeId, DataMap parameters = null, DataTable data = null)
 		{
 			DataMap resultMap = new DataMap();
 			try
@@ -50,71 +50,64 @@ namespace JW.AUBE.Core.Helper
 					parameters = new DataMap();
 				}
 				parameters.SetValue("PARENT_CODE", parentCodeId);
-				DataTable data = Search(parentCodeId, parameters);
-				if (data != null && data.Rows.Count == 1)
-				{
-					resultMap = data.ToDataMap();
-				}
-				else
-				{
-					string formName = "CodeHelperForm_" + parentCodeId;
-					string formText = "코드검색";
-					string codeField = "CODE";
-					string nameField = "NAME";
-					string[] displayFields = new string[] { "CODE", "NAME" };
 
-					switch (parentCodeId)
+				string formName = "CodeHelperForm_" + parentCodeId;
+				string formText = "코드검색";
+				string codeField = "CODE";
+				string nameField = "NAME";
+				string[] displayFields = new string[] { "CODE", "NAME" };
+
+				switch (parentCodeId)
+				{
+					case "MATERIAL":
+						formText = "원부자재검색";
+						codeField = "MATERIAL_ID";
+						nameField = "MATERIAL_NAME";
+						displayFields = new string[] { "MATERIAL_ID", "MATERIAL_NAME", "UNIT_TYPE" };
+						break;
+					case "PRODUCT":
+						formText = "제품검색";
+						codeField = "PRODUCT_ID";
+						nameField = "PRODUCT_NAME";
+						displayFields = new string[] { "PRODUCT_ID", "PRODUCT_NAME", "PRODUCT_CODE" };
+						break;
+					case "CUSTOMER":
+						formText = "거래처검색";
+						codeField = "CUSTOMER_ID";
+						nameField = "CUSTOMER_NAME";
+						displayFields = new string[] { "CUSTOMER_ID", "CUSTOMER_NAME", "BIZ_REG_NO", "REP_NAME" };
+						break;
+					case "USER":
+						formText = "사용자검색";
+						codeField = "USER_ID";
+						nameField = "USER_NAME";
+						displayFields = new string[] { "USER_ID", "USER_NAME" };
+						break;
+				}
+
+				using (var form = new CodeHelperForm()
+				{
+					Name = formName,
+					Text = formText,
+					StartPosition = FormStartPosition.CenterScreen,
+					CodeField = codeField,
+					NameField = nameField,
+					CodeGroup = parentCodeId,
+					Parameters = parameters,
+					DisplayFields = displayFields
+				})
+				{
+					form.Init();
+					if (data != null)
 					{
-						case "MATERIAL":
-							formText = "원부자재검색";
-							codeField = "MATERIAL_ID";
-							nameField = "MATERIAL_NAME";
-							displayFields = new string[] { "MATERIAL_ID", "MATERIAL_NAME", "UNIT_TYPE" };
-							break;
-						case "PRODUCT":
-							formText = "제품검색";
-							codeField = "PRODUCT_ID";
-							nameField = "PRODUCT_NAME";
-							displayFields = new string[] { "PRODUCT_ID", "PRODUCT_NAME" };
-							break;
-						case "CUSTOMER":
-							formText = "거래처검색";
-							codeField = "CUSTOMER_ID";
-							nameField = "CUSTOMER_NAME";
-							displayFields = new string[] { "CUSTOMER_ID", "CUSTOMER_NAME", "BIZ_REG_NO", "REP_NAME" };
-							break;
-						case "USER":
-							formText = "사용자검색";
-							codeField = "USER_ID";
-							nameField = "USER_NAME";
-							displayFields = new string[] { "USER_ID", "USER_NAME" };
-							break;
+						form.BindData(data);
 					}
 
-					using (var form = new CodeHelperForm()
+					if (form.ShowDialog() == DialogResult.OK)
 					{
-						Name = formName,
-						Text = formText,
-						StartPosition = FormStartPosition.CenterScreen,
-						CodeField = codeField,
-						NameField = nameField,
-						CodeGroup = parentCodeId,
-						Parameters = parameters,
-						DisplayFields = displayFields
-					})
-					{
-						form.Init();
-						if (data != null)
+						if (form.ReturnData != null && form.ReturnData.GetType() == typeof(DataMap))
 						{
-							form.BindData(data);
-						}
-
-						if (form.ShowDialog() == DialogResult.OK)
-						{
-							if (form.ReturnData != null && form.ReturnData.GetType() == typeof(DataMap))
-							{
-								resultMap = (form.ReturnData as DataMap);
-							}
+							resultMap = (form.ReturnData as DataMap);
 						}
 					}
 				}

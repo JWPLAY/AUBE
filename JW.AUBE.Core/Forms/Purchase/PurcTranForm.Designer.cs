@@ -155,9 +155,7 @@
 			// 
 			this.txtCustomer.CodeField = "CODE";
 			this.txtCustomer.CodeGroup = "CUSTOMER";
-			this.txtCustomer.CodeId = null;
-			this.txtCustomer.CodeName = null;
-			this.txtCustomer.CodeTextWith = 100;
+			this.txtCustomer.CodeWidth = 100;
 			this.txtCustomer.DisplayFields = new string[] {
         "CodeId",
         "CodeName"};

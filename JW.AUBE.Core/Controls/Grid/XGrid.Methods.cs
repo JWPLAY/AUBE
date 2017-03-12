@@ -316,6 +316,10 @@ namespace JW.AUBE.Core.Controls.Grid
 				gridColumn.Width = column.Width;
 				gridColumn.MinWidth = column.Width;
 			}
+			else
+			{
+				gridColumn.BestFit();
+			}
 			gridColumn.Visible = column.Visible;
 
 			if (column.Visible)

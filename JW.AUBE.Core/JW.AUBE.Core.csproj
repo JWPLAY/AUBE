@@ -200,17 +200,17 @@
     <Compile Include="Forms\Purchase\PurcTranListForm.Designer.cs">
       <DependentUpon>PurcTranListForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Sales\SaleRegForm.cs">
+    <Compile Include="Forms\Sales\SaleTranForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Sales\SaleRegForm.Designer.cs">
-      <DependentUpon>SaleRegForm.cs</DependentUpon>
+    <Compile Include="Forms\Sales\SaleTranForm.Designer.cs">
+      <DependentUpon>SaleTranForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Sales\SaleRegListForm.cs">
+    <Compile Include="Forms\Sales\SaleTranListForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Sales\SaleRegListForm.Designer.cs">
-      <DependentUpon>SaleRegListForm.cs</DependentUpon>
+    <Compile Include="Forms\Sales\SaleTranListForm.Designer.cs">
+      <DependentUpon>SaleTranListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IMainForm.cs" />
     <Compile Include="Messages\ErrorMessageBox.cs">
@@ -360,11 +360,11 @@
     <EmbeddedResource Include="Forms\Purchase\PurcTranListForm.resx">
       <DependentUpon>PurcTranListForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Sales\SaleRegForm.resx">
-      <DependentUpon>SaleRegForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Sales\SaleTranForm.resx">
+      <DependentUpon>SaleTranForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Sales\SaleRegListForm.resx">
-      <DependentUpon>SaleRegListForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Sales\SaleTranListForm.resx">
+      <DependentUpon>SaleTranListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Messages\ErrorMessageBox.resx">
       <DependentUpon>ErrorMessageBox.cs</DependentUpon>

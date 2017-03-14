@@ -492,19 +492,19 @@ namespace JW.AUBE.Core.Utils
 		{
 			try
 			{
-				group.Items.OfType<LayoutControlItem>().Where(x => x.Name.StartsWith("lcItem") && x.Control != null && controls.Contains(x.Control) == false).ToList().ForEach(x =>
+				List<LayoutControlItem> list = null;
+				if (controls == null || controls.Length == 0)
+					list = group.Items.OfType<LayoutControlItem>().Where(x => x.Name.StartsWith("lcItem") && x.Control != null).ToList();
+				else
+					list = group.Items.OfType<LayoutControlItem>().Where(x => x.Name.StartsWith("lcItem") && x.Control != null && controls.Contains(x.Control)).ToList();
+
+				if (list != null && list.Count > 0)
+				{
+					list.ForEach(x =>
 					{
-						if (x.Control.GetType() != typeof(XLookup) && x.Control.GetType() != typeof(CheckEdit))
-						{
-							try
-							{
-								((IControlExtension)x.Control).Clear();
-							}
-							catch
-							{
-							}
-						}
+						ItemClear(x.Control);
 					});
+				}
 			}
 			catch
 			{
@@ -514,22 +514,61 @@ namespace JW.AUBE.Core.Utils
 		{
 			try
 			{
-				lc.Items.OfType<LayoutControlItem>().Where(x => x.Name.StartsWith("lcItem") && x.Control != null && controls.Contains(x.Control) == false).ToList().ForEach(x =>
+				List<LayoutControlItem> list = null;
+				if (controls == null || controls.Length == 0)
+					list = lc.Items.OfType<LayoutControlItem>().Where(x => x.Name.StartsWith("lcItem") && x.Control != null).ToList();
+				else
+					list = lc.Items.OfType<LayoutControlItem>().Where(x => x.Name.StartsWith("lcItem") && x.Control != null && controls.Contains(x.Control)).ToList();
+
+				if (list != null && list.Count > 0)
+				{
+					list.ForEach(item =>
 					{
-						if (x.Control.GetType() != typeof(XLookup) && x.Control.GetType() != typeof(CheckEdit))
-						{
-							try
-							{
-								((IControlExtension)x.Control).Clear();
-							}
-							catch
-							{
-							}
-						}
+						ItemClear(item.Control);
 					});
+				}
 			}
 			catch
 			{
+			}
+		}
+		private static void ItemClear(Control control)
+		{
+			if (control.GetType() == typeof(TextEdit))
+			{
+				(control as TextEdit).Clear();
+			}
+			else if (control.GetType() == typeof(XLookup))
+			{
+				(control as XLookup).Clear();
+			}
+			else if (control.GetType() == typeof(SpinEdit))
+			{
+				(control as SpinEdit).Clear();
+			}
+			else if (control.GetType() == typeof(MemoEdit))
+			{
+				(control as MemoEdit).Clear();
+			}
+			else if (control.GetType() == typeof(DateEdit))
+			{
+				(control as DateEdit).Clear();
+			}
+			else if (control.GetType() == typeof(CheckEdit))
+			{
+				(control as CheckEdit).Clear();
+			}
+			else if (control.GetType() == typeof(ButtonEdit))
+			{
+				(control as ButtonEdit).Clear();
+			}
+			else if (control.GetType() == typeof(XSearch))
+			{
+				(control as XSearch).Clear();
+			}
+			else if (control.GetType() == typeof(XPeriod))
+			{
+				(control as XPeriod).Clear();
 			}
 		}
 	}

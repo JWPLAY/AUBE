@@ -5,12 +5,32 @@ using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Base.Was.Models;
 using JW.AUBE.Data.Mappers;
+using JW.AUBE.Data.Models.Sales;
 using JW.AUBE.Data.Utils;
 
 namespace JW.AUBE.Data.Services
 {
 	public static class SalesService
 	{
+		public static WasRequest GetList(WasRequest req)
+		{
+			try
+			{
+				var list = DaoFactory.Instance.QueryForList<SaleTranListDataModel>("GetSaleTranList", req.Parameter);
+				req.DataList = new List<WasRequestData>()
+				{
+					new WasRequestData() { Data = list }
+				};
+				return req;
+			}
+			catch (Exception ex)
+			{
+				req.ErrorNumber = ex.HResult;
+				req.ErrorMessage = ex.Message;
+				return req;
+			}
+		}
+
 		/// <summary>
 		/// GetData
 		/// 제품 데이터와 해당 제품의 원부자재 목록 가져오기
@@ -21,20 +41,13 @@ namespace JW.AUBE.Data.Services
 		{
 			try
 			{
-				var saletran = DaoFactory.Instance.QueryForList<DataMap>("GetSaleTran", req.Parameter);
-				var saleitem = DaoFactory.Instance.QueryForList<DataMap>("GetSaleTranItem", req.Parameter);
+				var saletran = DaoFactory.Instance.QueryForObject<SaleTranDataModel>("GetSaleTran", req.Parameter);
+				var saleitem = DaoFactory.Instance.QueryForList<SaleTranItemDataModel>("GetSaleTranItem", req.Parameter);
 
 				req.DataList = new List<WasRequestData>()
 				{
-					new WasRequestData()
-					{
-						Data = saletran
-					}
-					,
-					new WasRequestData()
-					{
-						Data = saleitem
-					}
+					new WasRequestData() { Data = saletran },
+					new WasRequestData() { Data = saleitem }
 				};
 				return req;
 			}

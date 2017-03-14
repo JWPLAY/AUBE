@@ -15,9 +15,9 @@ using DevExpress.Utils;
 
 namespace JW.AUBE.Core.Forms.Sales
 {
-	public partial class SaleRegForm : EditForm
+	public partial class SaleTranForm : EditForm
 	{
-		public SaleRegForm()
+		public SaleTranForm()
 		{
 			InitializeComponent();
 		}

@@ -5,19 +5,22 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
 
 	<statements>
-		<select id="GetSaleTran" parameterClass="DataMap" resultClass="DataMap" >
+		<select id="GetSaleTran" parameterClass="DataMap" resultClass="SaleTran" >
 			<![CDATA[
 				SELECT  AA.SALE_ID
 					,	AA.SALE_NO
 					,	AA.SALE_DATE
 					,	AA.SALE_TYPE
+					,	AA.PAY_TYPE
 					,	AA.CUSTOMER_ID
 					,	BB.CUSTOMER_NAME
 					,	AA.REMARKS
-					,	AA.INS_TIME
+					,	dbo.DateTimeToChar20(AA.INS_TIME)	AS INS_TIME
 					,	AA.INS_USER
-					,	AA.UPD_TIME
+					,	U1.USER_NAME						AS INS_USER_NAME
+					,	dbo.DateTimeToChar20(AA.UPD_TIME)	AS UPD_TIME
 					,	AA.UPD_USER
+					,	U2.USER_NAME						AS UPD_USER_NAME
 				FROM	UBZ.SALE_TRAN AA WITH (NOLOCK)
 						LEFT JOIN
 							UCD.CUSTOMERS BB
@@ -28,12 +31,23 @@
 						LEFT JOIN
 							UAA.USERS U2
 								ON AA.UPD_USER = U2.USER_ID
-				WHERE	AA.SALE_ID = #SALE_ID#
+				WHERE	1=1
 			]]>
+			<isNotEmpty property="SALE_ID">
+				<![CDATA[
+				AND		AA.SALE_ID	= #SALE_ID#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty property="SALE_NO">
+				<![CDATA[
+				AND		AA.SALE_NO	= #SALE_NO#
+			]]>
+			</isNotEmpty>
 		</select>
-		<select id="GetSaleTranItem" parameterClass="DataMap" resultClass="DataMap" >
+		<select id="GetSaleTranItem" parameterClass="DataMap" resultClass="SaleTranItem" >
 			<![CDATA[
-				SELECT  AA.ITEM_ID
+				SELECT  ROW_NUMBER() OVER (ORDER BY AA.ITEM_ID)	AS ROW_NO
+					,	AA.ITEM_ID
 					,	AA.SALE_ID
 					,	AA.PRODUCT_ID
 					,	BB.PRODUCT_NAME
@@ -41,14 +55,17 @@
 					,	AA.SALE_QTY
 					,	AA.SALE_AMT
 					
-					,	AA.INS_TIME
+					,	dbo.DateTimeToChar20(AA.INS_TIME)	AS INS_TIME
 					,	AA.INS_USER
-					,	U1.USER_NAME			AS INS_USER_NAME
-					,	AA.UPD_TIME
+					,	U1.USER_NAME						AS INS_USER_NAME
+					,	dbo.DateTimeToChar20(AA.UPD_TIME)	AS UPD_TIME
 					,	AA.UPD_USER
-					,	U2.USER_NAME			AS UPD_USER_NAME
+					,	U2.USER_NAME						AS UPD_USER_NAME
 					
-				FROM	UBZ.SALE_TRAN_ITEM AA WITH (NOLOCK)
+				FROM	UBZ.SALE_TRAN_ITEM AA
+						INNER JOIN
+							UBZ.SALE_TRAN BB
+								ON AA.SALE_ID = BB.SALE_ID
 						LEFT JOIN
 							UCD.PRODUCTS BB
 								ON AA.PRODUCT_ID = BB.PRODUCT_ID
@@ -58,9 +75,22 @@
 						LEFT JOIN
 							UAA.USERS U2 WITH (NOLOCK)
 								ON AA.UPD_USER = U2.USER_ID
-				WHERE	AA.SALE_ID = #SALE_ID#
+				WHERE	1=1
+				
+			]]>
+			<isNotEmpty property="SALE_ID">
+				<![CDATA[
+				AND		AA.SALE_ID	= #SALE_ID#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty property="SALE_NO">
+			<![CDATA[
+				AND		BB.SALE_NO	= #SALE_NO#
+			]]>
+			</isNotEmpty>
+			<![CDATA[
 				ORDER BY AA.ITEM_ID
-				]]>
+			]]>
 		</select>
 		
 		<insert id="InsertSaleTran" parameterClass="DataMap" >
@@ -149,5 +179,100 @@
 				WHERE	ITEM_ID = #ITEM_ID#
 			]]>
 		</delete>
+
+		<select id="GetSaleTranList" parameterClass="DataMap" resultClass="SaleTranList" >
+			<![CDATA[
+				SELECT  ROW_NUMBER() OVER (ORDER BY AA.SALE_ID, BB.ITEM_ID)	AS ROW_NO
+					,	AA.SALE_ID
+					,	AA.SALE_NO
+					,	dbo.DateCharToChar10(AA.SALE_DATE)	AS SALE_DATE
+					,	ISNULL(M3.NAME, AA.SALE_TYPE)		AS SALE_TYPE
+					,	ISNULL(M4.NAME, AA.PAY_TYPE)		AS PAY_TYPE
+					,	AA.CUSTOMER_ID
+					,	CC.CUSTOMER_NAME
+					,	AA.REMARKS
+					,	ROW_NUMBER() OVER (PARTITION BY AA.SALE_ID ORDER BY BB.ITEM_ID)	AS ITEM_NO
+					,	BB.ITEM_ID
+					,	BB.PRODUCT_ID
+					,	PP.PRODUCT_NAME
+					,	BB.SALE_PRICE
+					,	BB.SALE_QTY
+					,	BB.SALE_AMT
+					,	ISNULL(M1.NAME, PP.PRODUCT_TYPE)	AS PRODUCT_TYPE
+					,	ISNULL(M2.NAME, PP.CATEGORY)		AS CATEGORY
+					,	dbo.DateTimeToChar20(AA.INS_TIME)	AS INS_TIME
+					,	AA.INS_USER
+					,	U1.USER_NAME						AS INS_USER_NAME
+					,	dbo.DateTimeToChar20(AA.UPD_TIME)	AS UPD_TIME
+					,	AA.UPD_USER
+					,	U2.USER_NAME						AS UPD_USER_NAME
+				FROM	UBZ.SALE_TRAN AA
+						INNER JOIN
+							UBZ.SALE_TRAN_ITEM BB 
+								ON AA.SALE_ID = BB.SALE_ID
+						LEFT JOIN
+							UCD.CUSTOMERS CC
+								ON AA.CUSTOMER_ID = CC.CUSTOMER_ID
+						LEFT JOIN
+							UCD.PRODUCTS PP
+								ON BB.PRODUCT_ID = PP.PRODUCT_ID
+						LEFT JOIN 
+							UAA.CODES M1 WITH (NOLOCK)
+								ON PP.PRODUCT_TYPE = M1.CODE 
+									AND M1.PARENT_CODE = 'PRODUCT_TYPE'
+						LEFT JOIN
+							UAA.CODES M2 WITH (NOLOCK)
+								ON PP.CATEGORY = M2.CODE
+									AND M2.PARENT_CODE = 'CATEGORY'
+						LEFT JOIN
+							UAA.CODES M3
+								ON AA.SALE_TYPE = M3.CODE 
+									AND M3.PARENT_CODE = 'SALE_TYPE'
+						LEFT JOIN
+							UAA.CODES M4
+								ON AA.PAY_TYPE = M4.CODE 
+									AND M4.PARENT_CODE = 'PAY_TYPE'
+						LEFT JOIN 
+							UAA.USERS U1
+								ON AA.INS_USER = U1.USER_ID
+						LEFT JOIN
+							UAA.USERS U2
+								ON AA.UPD_USER = U2.USER_ID
+				WHERE	1=1
+			]]>
+			<isNotEmpty property="ST_SALE_DATE">
+				<![CDATA[
+				AND		AA.SALE_DATE >= #ST_SALE_DATE#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty property="ED_SALE_DATE">
+				<![CDATA[
+				AND		AA.SALE_DATE <= #ED_SALE_DATE#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty property="CUSTOMER_ID">
+				<![CDATA[
+				AND		AA.CUSTOMER_ID = #CUSTOMER_ID#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty property="PRODUCT_ID">
+				<![CDATA[
+				AND		BB.PRODUCT_ID = #PRODUCT_ID#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty property="PRODUCT_TYPE">
+				<![CDATA[
+				AND		PP.PRODUCT_TYPE = #PRODUCT_TYPE#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty property="CATEGORY">
+				<![CDATA[
+				AND		PP.CATEGORY = #CATEGORY#
+			]]>
+			</isNotEmpty>
+			<![CDATA[
+				ORDER BY ROW_NO
+			]]>
+		</select>
 	</statements>
 </sqlMap>

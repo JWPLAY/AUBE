@@ -187,6 +187,14 @@ namespace JW.AUBE.Core.Forms.Purchase
 			}
 		}
 
+		protected override void DataInit()
+		{
+			lc.ItemClear();
+			gridItem.Clear();
+			EditMode = EditModeEnum.New;
+			datPurcDate.Focus();
+		}
+
 		protected override void DataLoad(object param = null)
 		{
 			DataLoad(new DataMap() { { "PURC_ID", param } });

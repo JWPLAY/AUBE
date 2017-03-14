@@ -70,7 +70,7 @@ namespace JW.AUBE.Core.Utils
 				string rtfValue;
 				string helpName;
 
-				DataTable data = ServerRequest.SingleRequest("Auth", "GetHelpContent", null, new DataMap() { { "HELP_ID", helpId }, { "MENU_ID", menuId } });
+				DataTable data = (DataTable)ServerRequest.SingleRequest("Auth", "GetHelpContent", null, new DataMap() { { "HELP_ID", helpId }, { "MENU_ID", menuId } });
 				if (data != null && data.Rows.Count > 0)
 				{
 					DataRow row = data.Rows[0];

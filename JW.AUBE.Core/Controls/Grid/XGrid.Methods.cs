@@ -3,6 +3,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using DevExpress.Utils;
 using DevExpress.XtraEditors.Repository;
@@ -265,7 +266,21 @@ namespace JW.AUBE.Core.Controls.Grid
 				gridColumn.Tag = null;
 			}
 			gridColumn.AppearanceCell.Options.UseTextOptions = true;
-			gridColumn.AppearanceCell.TextOptions.HAlignment = column.HorzAlignment;
+			switch (column.FieldName)
+			{
+				case "ROW_NO":
+				case "INS_TIME":
+				case "INS_USER":
+				case "INS_USER_NAME":
+				case "UPD_TIME":
+				case "UPD_USER":
+				case "UPD_USER_NAME":
+					gridColumn.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+					break;
+				default:
+					gridColumn.AppearanceCell.TextOptions.HAlignment = column.HorzAlignment;
+					break;
+			}
 
 			gridColumn.DisplayFormat.FormatType =
 				gridColumn.GroupFormat.FormatType = column.FormatType;
@@ -334,7 +349,31 @@ namespace JW.AUBE.Core.Controls.Grid
 			}
 			else
 			{
-				gridColumn.BestFit();
+				switch (column.FieldName)
+				{
+					case "ROW_NO":
+						gridColumn.Width = 50;
+						gridColumn.MinWidth = 50;
+						break;
+					case "INS_TIME":
+					case "UPD_TIME":
+						gridColumn.Width = 150;
+						gridColumn.MinWidth = 150;
+						break;
+					case "INS_USER":
+					case "UPD_USER":
+						gridColumn.Width = 100;
+						gridColumn.MinWidth = 100;
+						break;
+					case "INS_USER_NAME":
+					case "UPD_USER_NAME":
+						gridColumn.Width = 100;
+						gridColumn.MinWidth = 100;
+						break;
+					default:
+						gridColumn.BestFit();
+						break;
+				}
 			}
 			gridColumn.Visible = column.Visible;
 

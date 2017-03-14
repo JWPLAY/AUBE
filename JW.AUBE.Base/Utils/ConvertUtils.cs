@@ -18,7 +18,7 @@ namespace JW.AUBE.Base.Utils
 		/// <param name="list"></param>
 		/// <returns></returns>
 		/// </summary>
-		public static DataTable ListToDataTable<T>(IList<T> list, string tableName = null)
+		public static DataTable ListToDataTable<T>(this IList<T> list, string tableName = null)
 		{
 			var table = CreateTable<T>(tableName);
 			var entityType = typeof(T);
@@ -187,7 +187,7 @@ namespace JW.AUBE.Base.Utils
 		/// <param name="data">변환대상 DataTable</param>
 		/// <returns>반환할 List<DataMap> 객체</DataMap>
 		/// </returns></summary>
-		public static IList<DataMap> DataTableToDataMapList(DataTable data)
+		public static IList<DataMap> DataTableToDataMapList(this DataTable data)
 		{
 			if (data == null)
 			{
@@ -218,7 +218,7 @@ namespace JW.AUBE.Base.Utils
 		/// <param name="tableName">데이터테이블명</param>
 		/// <returns>변환한 데이터테이블</returns>
 		/// </param></summary>
-		public static DataTable DataMapListToDataTable(IList<DataMap> list, string tableName)
+		public static DataTable DataMapListToDataTable(this IList<DataMap> list, string tableName)
 		{
 			if (list == null || list.Count == 0)
 			{
@@ -239,48 +239,6 @@ namespace JW.AUBE.Base.Utils
 				}
 				data.Rows.Add(dr);
 			}
-
-			if (!string.IsNullOrEmpty(tableName))
-			{
-				data.TableName = tableName;
-			}
-			if (data != null)
-				data.AcceptChanges();
-			return data;
-		}
-
-		public static DataTable ToDataTable(HybridDictionary hdic, string tableName)
-		{
-			//if (hdic == null || hdic.Count == 0)
-			//{
-			//	return null;
-			//}
-			//var data = new DataTable();
-
-			//lock (hdic.SyncRoot)
-			//{
-			//	foreach(DictionaryEntry entry in hdic)
-			//	{
-
-			//	}
-			//}
-
-
-			//foreach(hdic.item)
-
-			//foreach (var key in list[0].Keys)
-			//{
-			//	data.Columns.Add(key);
-			//}
-			//foreach (DataMap p in list)
-			//{
-			//	var dr = data.NewRow();
-			//	foreach (var col in p)
-			//	{
-			//		dr[col.Key] = col.Value ?? DBNull.Value;
-			//	}
-			//	data.Rows.Add(dr);
-			//}
 
 			if (!string.IsNullOrEmpty(tableName))
 			{

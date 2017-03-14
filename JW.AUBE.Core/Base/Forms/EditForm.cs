@@ -24,6 +24,7 @@ namespace JW.AUBE.Core.Base.Forms
 {
 	public partial class EditForm : BaseForm, IEditForm
 	{
+		private EditModeEnum _EditMode;
 		private ToolbarButtons _ToolbarButtons;
 
 		public delegate void SaveCallback(object arg, object data);
@@ -143,7 +144,15 @@ namespace JW.AUBE.Core.Base.Forms
 
 		[Browsable(false)]
 		[Category("Customize")]
-		public EditModeEnum EditMode { get; set; }
+		public EditModeEnum EditMode
+		{
+			get { return _EditMode; }
+			set
+			{
+				_EditMode = value;
+				barStaticEditMode.Caption = value.ToString().ToUpper();
+			}
+		}
 
 		[Browsable(true)]
 		[Category("Customize")]

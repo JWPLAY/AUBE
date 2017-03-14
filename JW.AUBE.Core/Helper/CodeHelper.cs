@@ -1,7 +1,6 @@
 ﻿using System.Data;
 using System.Windows.Forms;
 using JW.AUBE.Base.Map;
-using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Utils;
 
 namespace JW.AUBE.Core.Helper
@@ -17,7 +16,7 @@ namespace JW.AUBE.Core.Helper
 					parameters = new DataMap();
 				}
 				parameters.SetValue("PARENT_CODE", parentCodeId);
-				return ServerRequest.SingleRequest("CodeHelp", "GetCodeHelpLookup", string.Empty, parameters);
+				return (DataTable)ServerRequest.SingleRequest("CodeHelp", "GetCodeHelpLookup", string.Empty, parameters);
 			}
 			catch
 			{
@@ -33,7 +32,7 @@ namespace JW.AUBE.Core.Helper
 					parameters = new DataMap();
 				}
 				parameters.SetValue("PARENT_CODE", parentCodeId);
-				return ServerRequest.SingleRequest("CodeHelp", "GetCodeHelpLookup", string.Empty, parameters);
+				return (DataTable)ServerRequest.SingleRequest("CodeHelp", "GetCodeHelpLookup", string.Empty, parameters);
 			}
 			catch
 			{

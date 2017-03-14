@@ -144,7 +144,7 @@ namespace JW.AUBE.Core.Utils
 			}
 		}
 
-		public static DataTable SingleRequest(this WasRequest req)
+		public static object SingleRequest(this WasRequest req)
 		{
 			try
 			{
@@ -161,7 +161,7 @@ namespace JW.AUBE.Core.Utils
 					}
 					else
 					{
-						return (req.DataList[0].Data as DataTable);
+						return req.DataList[0].Data;
 					}
 				}
 				else
@@ -174,7 +174,7 @@ namespace JW.AUBE.Core.Utils
 				throw;
 			}
 		}
-		public static DataTable SingleRequest(string serviceId, string processId, string sqlId, DataMap parameter)
+		public static object SingleRequest(string serviceId, string processId, string sqlId, DataMap parameter)
 		{
 			try
 			{
@@ -214,7 +214,7 @@ namespace JW.AUBE.Core.Utils
 				{
 					throw new Exception(res.ErrorMessage);
 				}
-				return (res.DataList[0].Data as DataTable);
+				return res.DataList[0].Data;
 			}
 			catch
 			{

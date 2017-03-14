@@ -5,7 +5,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
 
 	<statements>
-		<select id="GetPurcTran" parameterClass="DataMap" resultClass="DataMap" >
+		<select id="GetPurcTran" parameterClass="DataMap" resultClass="PurcTran" >
 			<![CDATA[
 				SELECT  AA.PURC_ID
 					,	AA.PURC_NO
@@ -14,10 +14,12 @@
 					,	AA.CUSTOMER_ID
 					,	BB.CUSTOMER_NAME
 					,	AA.REMARKS
-					,	AA.INS_TIME
+					,	dbo.DateTimeToChar20(AA.INS_TIME)	AS INS_TIME
 					,	AA.INS_USER
-					,	AA.UPD_TIME
+					,	U1.USER_NAME						AS INS_USER_NAME
+					,	dbo.DateTimeToChar20(AA.UPD_TIME)	AS UPD_TIME
 					,	AA.UPD_USER
+					,	U2.USER_NAME						AS UPD_USER_NAME
 				FROM	UBZ.PURC_TRAN AA WITH (NOLOCK)
 						LEFT JOIN
 							UCD.CUSTOMERS BB
@@ -28,32 +30,41 @@
 						LEFT JOIN
 							UAA.USERS U2
 								ON AA.UPD_USER = U2.USER_ID
-				WHERE	(
-							AA.PURC_ID = #PURC_ID#	OR
-							AA.PURC_NO = #PURC_NO#
-						)
+				WHERE	1=1
 			]]>
+			<isNotEmpty property="PURC_ID">
+				<![CDATA[
+				AND		AA.PURC_ID	= #PURC_ID#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty property="PURC_NO">
+				<![CDATA[
+				AND		AA.PURC_NO	= #PURC_NO#
+			]]>
+			</isNotEmpty>
 		</select>
-		<select id="GetPurcTranItem" parameterClass="DataMap" resultClass="DataMap" >
+		<select id="GetPurcTranItem" parameterClass="DataMap" resultClass="PurcTranItem" >
 			<![CDATA[
-				SELECT  AA.ITEM_ID
+				SELECT  ROW_NUMBER() OVER (ORDER BY AA.ITEM_ID)	AS ROW_NO
+					,	AA.ITEM_ID
 					,	AA.PURC_ID
 					,	AA.PRODUCT_ID
 					,	BB.PRODUCT_NAME
 					,	BB.PRODUCT_CODE
-					,	ISNULL(M1.NAME, BB.PRODUCT_UNIT)	AS PRODUCT_UNIT
+					,	ISNULL(M1.NAME, BB.UNIT_TYPE)	AS PRODUCT_UNIT
+					
 					,	AA.PURC_PRICE
 					,	AA.PURC_QTY
 					,	AA.PURC_AMT
 					
-					,	AA.INS_TIME
+					,	dbo.DateTimeToChar20(AA.INS_TIME)	AS INS_TIME
 					,	AA.INS_USER
-					,	U1.USER_NAME			AS INS_USER_NAME
-					,	AA.UPD_TIME
+					,	U1.USER_NAME						AS INS_USER_NAME
+					,	dbo.DateTimeToChar20(AA.UPD_TIME)	AS UPD_TIME
 					,	AA.UPD_USER
-					,	U2.USER_NAME			AS UPD_USER_NAME
+					,	U2.USER_NAME						AS UPD_USER_NAME
 					
-				FROM	UBZ.PURC_TRAN_ITEM AA WITH (NOLOCK)
+				FROM	UBZ.PURC_TRAN_ITEM AA
 						INNER JOIN
 							UBZ.PURC_TRAN A1
 								ON AA.PURC_ID = A1.PURC_ID
@@ -62,7 +73,7 @@
 								ON AA.PRODUCT_ID = BB.PRODUCT_ID
 						LEFT JOIN
 							UAA.CODES M1
-								ON BB.PRODUCT_UNIT = M1.CODE
+								ON BB.UNIT_TYPE = M1.CODE
 									AND M1.PARENT_CODE = 'UNIT_TYPE'
 						LEFT JOIN 
 							UAA.USERS U1 WITH (NOLOCK)
@@ -70,12 +81,21 @@
 						LEFT JOIN
 							UAA.USERS U2 WITH (NOLOCK)
 								ON AA.UPD_USER = U2.USER_ID
-				WHERE	(
-							AA.PURC_ID = #PURC_ID#	OR
-							A1.PURC_NO = #PURC_NO#
-						)
-				ORDER BY AA.ITEM_ID
-				]]>
+				WHERE	1=1
+			]]>
+			<isNotEmpty property="PURC_ID">
+				<![CDATA[
+				AND		AA.PURC_ID	= #PURC_ID#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty property="PURC_NO">
+			<![CDATA[
+				AND		A1.PURC_NO	= #PURC_NO#
+			]]>
+			</isNotEmpty>
+			<![CDATA[
+				ORDER BY ROW_NO
+			]]>
 		</select>
 		
 		<insert id="InsertPurcTran" parameterClass="DataMap" >
@@ -165,15 +185,17 @@
 			]]>
 		</delete>
 
-		<select id="GetPurcTranList" parameterClass="DataMap" resultClass="System.Collections.Specialized.HybridDictionary" >
+		<select id="GetPurcTranList" parameterClass="DataMap" resultClass="PurcTranList" >
 			<![CDATA[
 				SELECT  ROW_NUMBER() OVER (ORDER BY AA.PURC_DATE DESC, AA.PURC_ID, BB.ITEM_ID)		AS ROW_NO
 					,	AA.PURC_ID
-					,	REPLACE(CONVERT(VARCHAR(10), CONVERT(DATE, AA.PURC_DATE, 112), 111),'/','-')	AS PURC_DATE
-					,	ISNULL(M3.NAME, AA.PURC_TYPE)	AS PURC_TYPE
+					,	AA.PURC_NO
+					,	dbo.DateCharToChar10(AA.PURC_DATE)	AS PURC_DATE
+					,	ISNULL(M3.NAME, AA.PURC_TYPE)		AS PURC_TYPE
 					,	AA.CUSTOMER_ID
 					,	CC.CUSTOMER_NAME
 					,	AA.REMARKS
+					,	ROW_NUMBER() OVER (PARTITION BY BB.PURC_ID ORDER BY BB.ITEM_ID)	AS ITEM_NO
 					,	BB.ITEM_ID
 					,	BB.PRODUCT_ID
 					,	PP.PRODUCT_CODE
@@ -183,12 +205,12 @@
 					,	BB.PURC_AMT
 					,	ISNULL(M1.NAME, PP.PRODUCT_TYPE)	AS PRODUCT_TYPE
 					,	ISNULL(M2.NAME, PP.CATEGORY)		AS CATEGORY
-					,	BB.INS_TIME
+					,	dbo.DateTimeToChar20(BB.INS_TIME)	AS INS_TIME
 					,	BB.INS_USER
-					,	U1.USER_NAME	AS INS_USER_NAME
-					,	BB.UPD_TIME
+					,	U1.USER_NAME						AS INS_USER_NAME
+					,	dbo.DateTimeToChar20(BB.UPD_TIME)	AS UPD_TIME
 					,	BB.UPD_USER
-					,	U2.USER_NAME	AS UPD_USER_NAME
+					,	U2.USER_NAME						AS UPD_USER_NAME
 				FROM	UBZ.PURC_TRAN AA WITH (NOLOCK)
 						INNER JOIN
 							UBZ.PURC_TRAN_ITEM BB

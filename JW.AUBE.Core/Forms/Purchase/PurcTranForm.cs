@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Text.RegularExpressions;
@@ -16,6 +17,7 @@ using JW.AUBE.Core.Controls.Grid;
 using JW.AUBE.Core.Enumerations;
 using JW.AUBE.Core.Helper;
 using JW.AUBE.Core.Utils;
+using JW.AUBE.Data.Models.Purchase;
 
 namespace JW.AUBE.Core.Forms.Purchase
 {
@@ -42,10 +44,10 @@ namespace JW.AUBE.Core.Forms.Purchase
 
 			txtPurcNo.KeyDown += delegate (object sender, KeyEventArgs e)
 			{
-				if(e.KeyCode== Keys.Enter)
+				if (e.KeyCode == Keys.Enter)
 				{
 					if (txtPurcNo.EditValue.ToStringNullToEmpty().IsNullOrEmpty() == false)
-						DataLoad(txtPurcNo.EditValue);
+						DataLoad(new DataMap() { { "PURC_NO", txtPurcNo.EditValue } });
 				}
 			};
 
@@ -116,7 +118,7 @@ namespace JW.AUBE.Core.Forms.Purchase
 			gridItem.Init();
 			gridItem.ShowFooter = true;
 			gridItem.AddGridColumns(
-				new XGridColumn() { FieldName = "ROW_NO", HorzAlignment = HorzAlignment.Center, Width = 50 },
+				new XGridColumn() { FieldName = "ROW_NO" },
 				new XGridColumn() { FieldName = "ITEM_ID", HorzAlignment = HorzAlignment.Center, Width = 80, Visible = false },
 				new XGridColumn() { FieldName = "PURC_ID", HorzAlignment = HorzAlignment.Center, Width = 60, Visible = false },
 				new XGridColumn() { FieldName = "PRODUCT_ID", HorzAlignment = HorzAlignment.Center, Width = 100, Visible = false, IsMandatory = true },
@@ -124,14 +126,14 @@ namespace JW.AUBE.Core.Forms.Purchase
 				new XGridColumn() { FieldName = "PRODUCT_CODE", HorzAlignment = HorzAlignment.Center, Width = 100 },
 				new XGridColumn() { FieldName = "PRODUCT_UNIT", HorzAlignment = HorzAlignment.Center, Width = 80 },
 				new XGridColumn() { FieldName = "PURC_PRICE", HorzAlignment = HorzAlignment.Far, Width = 80, FormatType = FormatType.Numeric, FormatString = "N0" },
-				new XGridColumn() { FieldName = "PURC_QTY", HorzAlignment = HorzAlignment.Far, Width = 80, FormatType = FormatType.Numeric, FormatString = "N2", IsMandatory = true },
-				new XGridColumn() { FieldName = "PURC_AMT", HorzAlignment = HorzAlignment.Far, Width = 100, FormatType = FormatType.Numeric, FormatString = "N2", SummaryItemType = SummaryItemType.Sum, IsSummary = true },
-				new XGridColumn() { FieldName = "INS_TIME", HorzAlignment = HorzAlignment.Center, Width = 120 },
+				new XGridColumn() { FieldName = "PURC_QTY", HorzAlignment = HorzAlignment.Far, Width = 80, FormatType = FormatType.Numeric, FormatString = "N0", IsMandatory = true },
+				new XGridColumn() { FieldName = "PURC_AMT", HorzAlignment = HorzAlignment.Far, Width = 100, FormatType = FormatType.Numeric, FormatString = "N0", SummaryItemType = SummaryItemType.Sum, IsSummary = true },
+				new XGridColumn() { FieldName = "INS_TIME" },
 				new XGridColumn() { FieldName = "INS_USER", Visible = false },
-				new XGridColumn() { FieldName = "INS_USER_NAME", HorzAlignment = HorzAlignment.Center, Width = 100 },
-				new XGridColumn() { FieldName = "UPD_TIME", HorzAlignment = HorzAlignment.Center, Width = 120 },
+				new XGridColumn() { FieldName = "INS_USER_NAME" },
+				new XGridColumn() { FieldName = "UPD_TIME" },
 				new XGridColumn() { FieldName = "UPD_USER", Visible = false },
-				new XGridColumn() { FieldName = "UPD_USER_NAME", HorzAlignment = HorzAlignment.Center, Width = 100 }
+				new XGridColumn() { FieldName = "UPD_USER_NAME" }
 				);
 
 			gridItem.SetRepositoryItemButtonEdit("PRODUCT_NAME");
@@ -187,33 +189,40 @@ namespace JW.AUBE.Core.Forms.Purchase
 
 		protected override void DataLoad(object param = null)
 		{
+			DataLoad(new DataMap() { { "PURC_ID", param } });
+		}
+
+		void DataLoad(DataMap parameters)
+		{
 			try
 			{
-				var res = ServerRequest.GetData("Purchase", new DataMap() { { "PURC_ID", param }, { "PURC_NO", param } });
+				var res = ServerRequest.GetData("Purchase", parameters);
 				if (res.DataList.Count > 0)
 				{
-					if (res.DataList[0].Data == null || (res.DataList[0].Data as List<DataMap>).Count == 0)
+					if (res.DataList[0].Data == null)
 						throw new Exception("조회 데이터가 없습니다.");
 
-					DataMap model = (res.DataList[0].Data as List<DataMap>)[0];
+					PurcTranDataModel model = (PurcTranDataModel)res.DataList[0].Data;
 
-					txtPurcId.EditValue = model.GetValue("PURC_ID");
-					txtPurcNo.EditValue = model.GetValue("PURC_NO");
-					datPurcDate.EditValue = model.GetValue("PURC_DATE");
-					lupPurcType.EditValue = model.GetValue("PURC_TYPE");
-					memRemarks.EditValue = model.GetValue("REMARKS");
+					txtPurcId.EditValue = model.PURC_ID;
+					txtPurcNo.EditValue = model.PURC_NO;
+					datPurcDate.SetDateChar8(model.PURC_DATE);
+					lupPurcType.EditValue = model.PURC_TYPE;
+					txtCustomerId.EditValue = model.CUSTOMER_ID;
+					txtCustomerId.EditText = model.CUSTOMER_NAME;
+					memRemarks.EditValue = model.REMARKS;
 
-					txtInsTime.EditValue = model.GetValue("INS_TIME");
-					txtInsUserName.EditValue = model.GetValue("INS_USER_NAME");
-					txtUpdTime.EditValue = model.GetValue("UPD_TIME");
-					txtUpdUserName.EditValue = model.GetValue("UPD_USER_NAME");
+					txtInsTime.EditValue = model.INS_TIME;
+					txtInsUserName.EditValue = model.INS_USER_NAME;
+					txtUpdTime.EditValue = model.UPD_TIME;
+					txtUpdUserName.EditValue = model.UPD_USER_NAME;
 
-					this.ParamsData = txtPurcId.EditValue;
+					this.ParamsData = model.PURC_ID;
 				}
 
 				if (res.DataList.Count > 1)
 				{
-					gridItem.DataSource = res.DataList[1].Data;
+					gridItem.DataSource = (res.DataList[1].Data as IList<PurcTranItemDataModel>).ListToDataTable();
 				}
 
 				//onProductTypeChanged();

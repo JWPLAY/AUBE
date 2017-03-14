@@ -71,7 +71,9 @@
     <Compile Include="Models\Base\CodeData.cs" />
     <Compile Include="Models\Base\LoginUserData.cs" />
     <Compile Include="Models\Base\MenuData.cs" />
-    <Compile Include="Models\Purchase\PurcTranList.cs" />
+    <Compile Include="Models\Purchase\PurcTranDataModel.cs" />
+    <Compile Include="Models\Purchase\PurcTranItemDataModel.cs" />
+    <Compile Include="Models\Purchase\PurcTranListDataModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CommonService.cs" />
     <Compile Include="Services\CustomerService.cs" />

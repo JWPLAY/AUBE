@@ -140,7 +140,7 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			try
 			{
-				DataTable dt = ServerRequest.SingleRequest("Base", "GetData", "SelectDictionaries", new DataMap() { { "DICTIONARY_ID", id } });
+				DataTable dt = (DataTable)ServerRequest.SingleRequest("Base", "GetData", "SelectDictionaries", new DataMap() { { "DICTIONARY_ID", id } });
 				if (dt == null || dt.Rows.Count == 0)
 					throw new Exception("조회할 데이터가 없습니다.");
 

@@ -244,7 +244,7 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			try
 			{
-				DataTable dt = ServerRequest.SingleRequest("Base", "GetData", "SelectCalendar", new DataMap() { { "CAL_DATE", id } });
+				DataTable dt = (DataTable)ServerRequest.SingleRequest("Base", "GetData", "SelectCalendar", new DataMap() { { "CAL_DATE", id } });
 				if (dt == null || dt.Rows.Count == 0)
 					throw new Exception("조회할 데이터가 없습니다.");
 

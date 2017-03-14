@@ -595,7 +595,7 @@ namespace JW.AUBE
 			{
 				if (mainMenu != null)
 				{
-					DataTable dt = ServerRequest.SingleRequest("Auth", "GetMainMenus", "MainMenus", new DataMap()
+					DataTable dt = (DataTable)ServerRequest.SingleRequest("Auth", "GetMainMenus", "MainMenus", new DataMap()
 					{
 						{ "USER_ID", GlobalVar.Settings.GetValue("USER_ID") },
 						{ "MENU_GROUP", "BIZ" }
@@ -625,7 +625,7 @@ namespace JW.AUBE
 					var navGroup = navBarNavigate.Groups.Where(x => x.Name == "navBarGroupSystem").FirstOrDefault();
 					navGroup.ItemLinks.Clear();
 
-					DataTable data = ServerRequest.SingleRequest("Auth", "GetMainMenus", "MainMenus", new DataMap()
+					DataTable data = (DataTable)ServerRequest.SingleRequest("Auth", "GetMainMenus", "MainMenus", new DataMap()
 					{
 						{ "USER_ID", GlobalVar.Settings.GetValue("USER_ID") },
 						{ "MENU_GROUP", "SYS" }

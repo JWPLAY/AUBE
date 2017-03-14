@@ -179,9 +179,9 @@ namespace JW.AUBE.Core.Utils
 		{
 			return (edit.EditValue == null) ? null : string.Format("{0:yyyyMMdd}", Convert.ToDateTime(edit.EditValue));
 		}
-		public static void SetDateChar8(this DateEdit edit, string value)
+		public static void SetDateChar8(this DateEdit edit, object value)
 		{
-			if (value != null && !string.IsNullOrEmpty(value))
+			if (value != null && !string.IsNullOrEmpty(value.ToStringNullToEmpty()))
 			{
 				edit.EditValue = Convert.ToDateTime(value.ToDateTime("yyyy-MM-dd")).ToShortDateString();
 			}
@@ -194,9 +194,9 @@ namespace JW.AUBE.Core.Utils
 		{
 			return (edit.EditValue == null) ? null : string.Format("{0:yyyyMM}", Convert.ToDateTime(edit.EditValue));
 		}
-		public static void SetDateChar6(this DateEdit edit, string value)
+		public static void SetDateChar6(this DateEdit edit, object value)
 		{
-			if (value != null && !string.IsNullOrEmpty(value))
+			if (value != null && !string.IsNullOrEmpty(value.ToStringNullToEmpty()))
 			{
 				edit.EditValue = Convert.ToDateTime((value + "01").ToDateTime("yyyy-MM-dd")).ToShortDateString();
 			}

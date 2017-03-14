@@ -55,7 +55,7 @@ namespace JW.AUBE.Core.Variables
 
 				try
 				{
-					DataTable data = ServerRequest.SingleRequest("Auth", "GetSettings", "Setting", new DataMap());
+					DataTable data = (DataTable)ServerRequest.SingleRequest("Auth", "GetSettings", "Setting", new DataMap());
 					if (data != null && data.Rows.Count > 0)
 					{
 						foreach (DataRow row in data.Rows)

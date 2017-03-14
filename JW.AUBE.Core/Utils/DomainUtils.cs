@@ -13,18 +13,18 @@ namespace JW.AUBE.Core.Utils
 			try
 			{
 				var dtDictionaries = ServerRequest.SingleRequest("Auth", "GetDictionaries", "Dictionaries", new DataMap() { });
-				if (dtDictionaries != null && dtDictionaries.Rows.Count > 0)
+				if (dtDictionaries != null && (dtDictionaries as DataTable).Rows.Count > 0)
 				{
-					foreach (DataRow dr in dtDictionaries.Rows)
+					foreach (DataRow dr in (dtDictionaries as DataTable).Rows)
 					{
 						DomainResource.Fields.SetValue(dr["NAME"].ToString(), dr["VALUE"].ToString());
 					}
 				}
 
 				var dtMessages = ServerRequest.SingleRequest("Auth", "GetMessages", "Messages", new DataMap() { });
-				if (dtMessages != null && dtMessages.Rows.Count > 0)
+				if (dtMessages != null && (dtMessages as DataTable).Rows.Count > 0)
 				{
-					foreach (DataRow dr in dtMessages.Rows)
+					foreach (DataRow dr in (dtMessages as DataTable).Rows)
 					{
 						DomainResource.Messages.SetValue(dr["NAME"].ToString(), dr["VALUE"].ToString());
 					}
@@ -66,10 +66,6 @@ namespace JW.AUBE.Core.Utils
 			DomainResource.Fields.SetValue(key, value);
 		}
 
-
-
-
-
 		public static string GetMessageValue(string key)
 		{
 			var ret = DomainResource.Messages.GetValue(key);
@@ -84,9 +80,6 @@ namespace JW.AUBE.Core.Utils
 		{
 			DomainResource.Messages.SetValue(key, value);
 		}
-
-
-
 
 		public static string GetPopMenuValue(string key)
 		{

@@ -171,6 +171,51 @@
 			]]>
 		</select>
 
+		<select id="GetCodeHelpAllProductList" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT	ISNULL(M2.NAME, AA.PRODUCT_TYPE)	AS PRODUCT_TYPE
+					,	ISNULL(M3.NAME, AA.CATEGORY)		AS CATEGORY
+					,	AA.PRODUCT_ID
+					,	AA.PRODUCT_NAME
+					,	AA.PRODUCT_CODE
+					,	ISNULL(M1.NAME, AA.UNIT_TYPE)	AS PRODUCT_UNIT
+				FROM	UCD.PRODUCTS AA WITH (NOLOCK)
+						LEFT JOIN
+							UAA.CODES M1 
+								ON AA.UNIT_TYPE = M1.CODE
+									AND M1.PARENT_CODE = 'UNIT_TYPE'
+						LEFT JOIN
+							UAA.CODES M2
+								ON AA.PRODUCT_TYPE = M2.CODE
+									AND M2.PARENT_CODE = 'PRODUCT_TYPE'
+						LEFT JOIN
+							UAA.CODES M3
+								ON AA.CATEGORY = M3.CODE
+									AND M3.PARENT_CODE = 'CATEGORY'
+				WHERE	1=1
+			]]>
+			<isNotEmpty property="FIND_TEXT">
+				<![CDATA[
+				AND		(
+							AA.PRODUCT_NAME	LIKE '%' + #FIND_TEXT# + '%'	OR
+							AA.PRODUCT_CODE	LIKE #FIND_TEXT# + '%'			OR
+							AA.BARCODE		= #FIND_TEXT#
+						)
+				]]>
+			</isNotEmpty>
+			<isNotEmpty property="USE_YN">
+				<![CDATA[
+					AND	AA.USE_YN = #USE_YN#
+				]]>
+			</isNotEmpty>
+			<![CDATA[
+				ORDER BY 
+					ISNULL(M2.SORT_SEQ, 99999), AA.PRODUCT_TYPE,
+					ISNULL(M3.SORT_SEQ, 99999), AA.CATEGORY,
+					AA.PRODUCT_NAME ASC
+			]]>
+		</select>
+
 		<select id="GetCodeHelpMaterialList" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
 				SELECT	AA.PRODUCT_ID			AS MATERIAL_ID

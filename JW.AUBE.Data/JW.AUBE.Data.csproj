@@ -72,6 +72,8 @@
     <Compile Include="Models\Base\LoginUserData.cs" />
     <Compile Include="Models\Base\MenuData.cs" />
     <Compile Include="Models\Inventory\InventoryListModel.cs" />
+    <Compile Include="Models\Inventory\InvAdjsDataModel.cs" />
+    <Compile Include="Models\Inventory\InvAdjsListModel.cs" />
     <Compile Include="Models\Production\ProdTranDataModel.cs" />
     <Compile Include="Models\Production\ProdTranListModel.cs" />
     <Compile Include="Models\Purchase\PurcTranDataModel.cs" />
@@ -84,6 +86,7 @@
     <Compile Include="Services\CommonService.cs" />
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\InventoryService.cs" />
+    <Compile Include="Services\InvAdjsService.cs" />
     <Compile Include="Services\ProductionService.cs" />
     <Compile Include="Services\PurchaseService.cs" />
     <Compile Include="Services\SalesService.cs" />
@@ -170,6 +173,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SqlMaps\Inventory\InventorySQL.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SqlMaps\Inventory\InventoryAdjsSQL.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

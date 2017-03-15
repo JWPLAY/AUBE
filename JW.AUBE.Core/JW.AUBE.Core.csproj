@@ -194,6 +194,12 @@
     <Compile Include="Forms\Inventory\InventoryListForm.Designer.cs">
       <DependentUpon>InventoryListForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Inventory\InvAdjsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Inventory\InvAdjsForm.Designer.cs">
+      <DependentUpon>InvAdjsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Production\ProdTranForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -366,6 +372,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Inventory\InventoryListForm.resx">
       <DependentUpon>InventoryListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Inventory\InvAdjsForm.resx">
+      <DependentUpon>InvAdjsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Production\ProdTranForm.resx">
       <DependentUpon>ProdTranForm.cs</DependentUpon>

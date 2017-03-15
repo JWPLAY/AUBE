@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+	namespace="JW.AUBE.Data.SqlMaps"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<statements>
+		<select id="GetInvAdjsList" parameterClass="DataMap" resultClass="InvAdjsList" >
+			<![CDATA[
+				SELECT  ROW_NUMBER() OVER (ORDER BY AA.ADJS_ID)	AS ROW_NO
+					,	AA.ADJS_ID
+					,	dbo.DateCharToChar10(AA.ADJS_DATE)		AS ADJS_DATE
+					,	AA.PRODUCT_ID
+					,	PP.PRODUCT_CODE
+					,	PP.PRODUCT_NAME
+					,	AA.ADJS_QTY
+					,	AA.REMARKS
+					,	dbo.DateTimeToChar20(AA.INS_TIME)		AS INS_TIME
+					,	AA.INS_USER
+					,	U1.USER_NAME							AS INS_USER_NAME
+					,	dbo.DateTimeToChar20(AA.UPD_TIME)		AS UPD_TIME
+					,	AA.UPD_USER
+					,	U2.USER_NAME							AS UPD_USER_NAME
+				FROM	UBZ.INVENTORY_ADJS AA
+						LEFT JOIN
+							UCD.PRODUCTS PP
+								ON AA.PRODUCT_ID = PP.PRODUCT_ID
+						LEFT JOIN
+							UAA.USERS U1
+								ON AA.INS_USER = U1.USER_ID
+						LEFT JOIN
+							UAA.USERS U2 
+								ON AA.UPD_USER = U2.USER_ID
+				WHERE	1=1				
+			]]>
+			<isNotEmpty property="ST_ADJS_DATE">
+			<![CDATA[
+				AND		AA.ADJS_DATE >= #ST_ADJS_DATE#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty property="ED_ADJS_DATE">
+				<![CDATA[
+				AND		AA.ADJS_DATE <= #ED_ADJS_DATE#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty property="PRODUCT_ID">
+				<![CDATA[
+				AND		AA.PRODUCT_ID = #PRODUCT_ID#
+			]]>
+			</isNotEmpty>
+			<![CDATA[
+				ORDER BY ROW_NO
+			]]>
+		</select>
+		<select id="GetInvAdjsData" parameterClass="DataMap" resultClass="InvAdjsData" >
+			<![CDATA[
+				SELECT  AA.ADJS_ID
+					,	AA.ADJS_DATE
+					,	AA.PRODUCT_ID
+					,	PP.PRODUCT_CODE
+					,	PP.PRODUCT_NAME
+					,	AA.ADJS_QTY
+					,	AA.REMARKS
+					,	dbo.DateTimeToChar20(AA.INS_TIME)		AS INS_TIME
+					,	AA.INS_USER
+					,	U1.USER_NAME							AS INS_USER_NAME
+					,	dbo.DateTimeToChar20(AA.UPD_TIME)		AS UPD_TIME
+					,	AA.UPD_USER
+					,	U2.USER_NAME							AS UPD_USER_NAME
+				FROM	UBZ.INVENTORY_ADJS AA
+						LEFT JOIN
+							UCD.PRODUCTS PP
+								ON AA.PRODUCT_ID = PP.PRODUCT_ID
+						LEFT JOIN
+							UAA.USERS U1
+								ON AA.INS_USER = U1.USER_ID
+						LEFT JOIN
+							UAA.USERS U2 
+								ON AA.UPD_USER = U2.USER_ID
+				WHERE	AA.ADJS_ID = #ADJS_ID#
+			]]>
+		</select>
+		<insert id="InsertInvAdjs" parameterClass="DataMap" >
+			<![CDATA[
+				INSERT INTO UBZ.INVENTORY_ADJS
+				( 
+					ADJS_DATE, PRODUCT_ID, ADJS_QTY, REMARKS, INS_TIME, INS_USER 
+				)
+				VALUES
+				( 
+					#ADJS_DATE#, #PRODUCT_ID#, #ADJS_QTY#, #REMARKS#, GETDATE(), #INS_USER# 
+				)
+			]]>
+			<selectKey type="post" property="ADJS_ID" resultClass="Int">
+				<![CDATA[
+					SELECT @@IDENTITY AS ADJS_ID
+				]]>
+			</selectKey>
+		</insert>
+		<update id="UpdateInvAdjs" parameterClass="DataMap">
+			<![CDATA[
+				UPDATE  UBZ.INVENTORY_ADJS
+				SET     ADJS_DATE		= #ADJS_DATE#
+					,	PRODUCT_ID		= #PRODUCT_ID#
+					,	ADJS_QTY		= #ADJS_QTY#
+					,	REMARKS			= #REMARKS#
+					,	UPD_TIME		= GETDATE()
+					,	UPD_USER		= #INS_USER#
+				WHERE	ADJS_ID			= #ADJS_ID#
+			]]>
+		</update>
+		<delete id="DeleteInvAdjs" parameterClass="DataMap">
+			<![CDATA[
+				DELETE
+				FROM	UBZ.INVENTORY_ADJS
+				WHERE	ADJS_ID = #ADJS_ID#
+			]]>
+		</delete>
+	</statements>
+</sqlMap>

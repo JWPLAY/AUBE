@@ -58,6 +58,12 @@ namespace JW.AUBE.Core.Helper
 
 				switch (parentCodeId)
 				{
+					case "ALL_PRODUCT":
+						formText = "제품검색";
+						codeField = "PRODUCT_ID";
+						nameField = "PRODUCT_NAME";
+						displayFields = new string[] { "PRODUCT_TYPE", "CATEGORY", "PRODUCT_ID", "PRODUCT_NAME", "PRODUCT_CODE" };
+						break;
 					case "MATERIAL":
 						formText = "원부자재검색";
 						codeField = "MATERIAL_ID";

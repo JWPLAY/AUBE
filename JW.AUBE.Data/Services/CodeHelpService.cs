@@ -27,6 +27,7 @@ namespace JW.AUBE.Data.Services
 					case "CodeGroup":
 					case "Customer":
 					case "Product":
+					case "AllProduct":
 					case "ProdProduct":
 					case "Material":
 					case "Purcitem":

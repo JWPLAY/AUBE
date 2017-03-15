@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+	namespace="JW.AUBE.Data.SqlMaps"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<statements>
+		<select id="GetInventoryList" parameterClass="DataMap" resultClass="InventoryList" >
+			<![CDATA[
+				SELECT	ROW_NUMBER() OVER (ORDER BY ISNULL(M1.SORT_SEQ, 99999), PP.PRODUCT_TYPE,
+													ISNULL(M2.SORT_SEQ, 99999), PP.CATEGORY,
+													PP.PRODUCT_NAME)	AS ROW_NO
+					,	ISNULL(M1.NAME, PP.PRODUCT_TYPE)	AS PRODUCT_TYPE
+					,	ISNULL(M2.NAME, PP.CATEGORY)		AS CATEGORY
+					,	AA.PRODUCT_ID
+					,	PP.PRODUCT_CODE
+					,	PP.PRODUCT_NAME
+					,	ISNULL(M3.NAME, PP.UNIT_TYPE)		AS PRODUCT_UNIT
+					,	SUM(AA.BASE_QTY)					AS BASE_QTY
+					,	SUM(AA.PURC_QTY)					AS PURC_QTY
+					,	SUM(AA.PROD_QTY)					AS PROD_QTY
+					,	SUM(AA.PUSE_QTY)					AS PUSE_QTY
+					,	SUM(AA.SALE_QTY)					AS SALE_QTY
+					,	SUM(AA.ADJS_QTY)					AS ADJS_QTY
+					,	SUM(AA.BLNC_QTY)					AS BLNC_QTY
+				FROM	(
+							SELECT	PRODUCT_ID
+								,	SUM(DSUM_QTY)	AS BASE_QTY
+								,	SUM(0)			AS PURC_QTY
+								,	SUM(0)			AS PROD_QTY
+								,	SUM(0)			AS PUSE_QTY
+								,	SUM(0)			AS SALE_QTY
+								,	SUM(0)			AS ADJS_QTY
+								,	SUM(DSUM_QTY)	AS BLNC_QTY
+							FROM	UBZ.INVENTORY_DAY 
+							WHERE	INV_DATE	< #ST_INV_DATE#
+			]]>
+			<isNotEmpty property="PRODUCT_ID">
+			<![CDATA[
+							AND		PRODUCT_ID = #PRODUCT_ID#
+			]]>
+			</isNotEmpty>
+			<![CDATA[
+							GROUP BY PRODUCT_ID
+							UNION ALL
+							SELECT	PRODUCT_ID
+								,	SUM(0)			AS BASE_QTY
+								,	SUM(PURC_QTY)	AS PURC_QTY
+								,	SUM(PROD_QTY)	AS PROD_QTY
+								,	SUM(PUSE_QTY)	AS PUSE_QTY
+								,	SUM(SALE_QTY)	AS SALE_QTY
+								,	SUM(ADJS_QTY)	AS ADJS_QTY
+								,	SUM(DSUM_QTY)	AS BLNC_QTY
+							FROM	UBZ.INVENTORY_DAY
+							WHERE	INV_DATE >= #ST_INV_DATE#
+							AND		INV_DATE <= #ED_INV_DATE#
+			]]>
+			<isNotEmpty property="PRODUCT_ID">
+			<![CDATA[
+							AND		PRODUCT_ID = #PRODUCT_ID#
+			]]>
+			</isNotEmpty>
+			<![CDATA[
+							GROUP BY PRODUCT_ID
+						) AA
+						LEFT JOIN
+							UCD.PRODUCTS PP
+								ON AA.PRODUCT_ID = PP.PRODUCT_ID
+						LEFT JOIN
+							UAA.CODES M1
+								ON PP.PRODUCT_TYPE = M1.CODE
+									AND M1.PARENT_CODE = 'PRODUCT_TYPE'
+						LEFT JOIN
+							UAA.CODES M2 
+								ON PP.CATEGORY = M2.CODE
+									AND M2.PARENT_CODE = 'CATEGORY'
+						LEFT JOIN
+							UAA.CODES M3
+								ON PP.UNIT_TYPE = M3.CODE
+									AND M3.PARENT_CODE = 'UNIT_TYPE'
+				WHERE	1=1
+			]]>
+			<isNotEmpty property="PRODUCT_TYPE">
+			<![CDATA[
+				AND		PP.PRODUCT_TYPE = #PRODUCT_TYPE#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty property="CATEGORY">
+				<![CDATA[
+				AND		PP.CATEGORY = #CATEGORY#
+			]]>
+			</isNotEmpty>
+			<![CDATA[
+				GROUP BY
+					ISNULL(M1.SORT_SEQ, 99999), PP.PRODUCT_TYPE,
+					ISNULL(M2.SORT_SEQ, 99999), PP.CATEGORY,
+					ISNULL(M1.NAME, PP.PRODUCT_TYPE),
+					ISNULL(M2.NAME, PP.CATEGORY),
+					AA.PRODUCT_ID,
+					PP.PRODUCT_CODE,
+					PP.PRODUCT_NAME,
+					ISNULL(M3.NAME, PP.UNIT_TYPE)
+				HAVING
+					SUM(AA.BASE_QTY) != 0	OR
+					SUM(AA.PURC_QTY) != 0	OR
+					SUM(AA.PROD_QTY) != 0	OR
+					SUM(AA.PUSE_QTY) != 0	OR
+					SUM(AA.SALE_QTY) != 0	OR
+					SUM(AA.ADJS_QTY) != 0	OR
+					SUM(AA.BLNC_QTY) != 0
+				ORDER BY ROW_NO
+			]]>
+		</select>
+		<procedure id="BatchInventory" parameterMap="paramBatchInventory" resultClass="Int">
+			spBatchInventory
+		</procedure>
+		<procedure id="InsertInventory" parameterMap="paramInsertInventory" resultClass="Int">
+			spInsertInventory
+		</procedure>
+	</statements>
+	<parameterMaps>
+		<parameterMap id="paramBatchInventory" class="DataMap">
+			<parameter property="TRAN_ID" column="TRAN_ID" />
+			<parameter property="TRAN_TP" column="TRAN_TP" />
+			<parameter property="REG_TP" column="REG_TP" />
+			<parameter property="ITEM_ID" column="ITEM_ID" />
+			<parameter property="INS_USER" column="INS_USER" />
+		</parameterMap>
+		<parameterMap id="paramInsertInventory" class="DataMap">
+			<parameter property="REG_TP" column="REG_TP" />
+			<parameter property="TRAN_ID" column="TRAN_ID" />
+			<parameter property="TRAN_TP" column="TRAN_TP" />
+			<parameter property="TRAN_DATE" column="TRAN_DATE" />
+			<parameter property="PRODUCT_ID" column="PRODUCT_ID" />
+			<parameter property="INV_QTY" column="INV_QTY" />
+			<parameter property="INS_USER" column="INS_USER" />
+		</parameterMap>
+	</parameterMaps>
+</sqlMap>

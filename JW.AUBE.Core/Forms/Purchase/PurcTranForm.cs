@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Text.RegularExpressions;
@@ -82,14 +81,7 @@ namespace JW.AUBE.Core.Forms.Purchase
 
 		protected override void InitButtons()
 		{
-			SetToolbarButtons(new Models.ToolbarButtons()
-			{
-				Refresh = true,
-				New = true,
-				Save = true,
-				SaveAndNew = true
-			});
-
+			SetToolbarButtons(new Models.ToolbarButtons() { Refresh = true, New = true, Save = true, SaveAndNew = true });
 			btnItemAdd.Enabled = btnItemDel.Enabled = this.IsDataEdit;
 		}
 		protected override void InitControls()
@@ -109,6 +101,7 @@ namespace JW.AUBE.Core.Forms.Purchase
 			InitCombo();
 			InitGrid();
 		}
+
 		void InitCombo()
 		{
 			lupPurcType.BindData("PURC_TYPE", null, null, true);
@@ -189,8 +182,14 @@ namespace JW.AUBE.Core.Forms.Purchase
 
 		protected override void DataInit()
 		{
-			lc.ItemClear();
+			txtPurcId.Clear();
+			txtPurcNo.Clear();
+			txtCustomerId.Clear();
+			memRemarks.Clear();
+
 			gridItem.Clear();
+
+			SetToolbarButtons(new Models.ToolbarButtons() { Refresh = true, New = true, Save = true, SaveAndNew = true });
 			EditMode = EditModeEnum.New;
 			datPurcDate.Focus();
 		}
@@ -233,8 +232,7 @@ namespace JW.AUBE.Core.Forms.Purchase
 					gridItem.DataSource = (res.DataList[1].Data as IList<PurcTranItemDataModel>).ListToDataTable();
 				}
 
-				//onProductTypeChanged();
-
+				SetToolbarButtons(new Models.ToolbarButtons() { Refresh = true, New = true, Save = true, SaveAndNew = true, Delete = true });
 				this.EditMode = EditModeEnum.Modify;
 				memRemarks.Focus();
 

@@ -90,17 +90,12 @@ namespace JW.AUBE.Data.Services
 							DaoFactory.Instance.Update("UpdatePurcTran", data);
 							purc_id = data.GetValue("PURC_ID");
 						}
-						else if (data.GetValue("ROWSTATE").ToStringNullToEmpty() == "DELETE")
-						{
-							DaoFactory.Instance.Update("DeletePurcTran", data);
-							purc_id = data.GetValue("PURC_ID");
-						}
 						req.DataList[0].ErrorNumber = 0;
 						req.DataList[0].ErrorMessage = "SUCCESS";
 						req.DataList[0].ReturnValue = purc_id;
 					}
 
-					//원부자재정보 저장
+					//구매상품내역 저장
 					if (req.DataList.Count > 1)
 					{
 						if (req.DataList[1].Data != null && (req.DataList[1].Data as DataTable).Rows.Count > 0)
@@ -113,16 +108,59 @@ namespace JW.AUBE.Data.Services
 								if (map.GetValue("ROWSTATE").ToStringNullToEmpty() == "INSERT")
 								{
 									item_id = DaoFactory.Instance.Insert("InsertPurcTranItem", map);
+
+									//재고반영
+									DaoFactory.Instance.QueryForObject<int>("BatchInventory", new DataMap()
+									{
+										{ "TRAN_ID", purc_id },
+										{ "TRAN_TP", "PC" },
+										{ "REG_TP", "II" },
+										{ "ITEM_ID", item_id },
+										{ "INS_USER", map.GetValue("INS_USER") }
+									});
 								}
 								else if (map.GetValue("ROWSTATE").ToStringNullToEmpty() == "UPDATE")
 								{
-									DaoFactory.Instance.Update("UpdatePurcTranItem", map);
 									item_id = map.GetValue("ITEM_ID");
+
+									//재고반영(-)
+									DaoFactory.Instance.QueryForObject<int>("BatchInventory", new DataMap()
+									{
+										{ "TRAN_ID", purc_id },
+										{ "TRAN_TP", "PC" },
+										{ "REG_TP", "UD" },
+										{ "ITEM_ID", item_id },
+										{ "INS_USER", map.GetValue("INS_USER") }
+									});
+
+									//구매내역 수정
+									DaoFactory.Instance.Update("UpdatePurcTranItem", map);
+
+									//재고반영(+)
+									DaoFactory.Instance.QueryForObject<int>("BatchInventory", new DataMap()
+									{
+										{ "TRAN_ID", purc_id },
+										{ "TRAN_TP", "PC" },
+										{ "REG_TP", "UI" },
+										{ "ITEM_ID", item_id },
+										{ "INS_USER", map.GetValue("INS_USER") }
+									});
 								}
 								else if (map.GetValue("ROWSTATE").ToStringNullToEmpty() == "DELETE")
 								{
-									DaoFactory.Instance.Update("DeletePurcTranItem", map);
 									item_id = map.GetValue("ITEM_ID");
+
+									//재고반영
+									DaoFactory.Instance.QueryForObject<int>("BatchInventory", new DataMap()
+									{
+										{ "TRAN_ID", purc_id },
+										{ "TRAN_TP", "PC" },
+										{ "REG_TP", "DD" },
+										{ "ITEM_ID", item_id },
+										{ "INS_USER", map.GetValue("INS_USER") }
+									});
+
+									DaoFactory.Instance.Update("DeletePurcTranItem", map);
 								}
 							}
 							req.DataList[1].ErrorNumber = 0;
@@ -161,10 +199,21 @@ namespace JW.AUBE.Data.Services
 		{
 			try
 			{
-				var map = DaoFactory.Instance.QueryForObject<DataMap>("GetPurcTran", req.Parameter);
+				var map = DaoFactory.Instance.QueryForObject<PurcTranDataModel>("GetPurcTran", req.Parameter);
 				if (map != null)
 				{
-					DaoFactory.Instance.Insert("DeletePurcTran", req.Parameter);
+					//삭제 전에 재고 반영한다.
+					DaoFactory.Instance.QueryForObject<int>("BatchInventory", new DataMap()
+					{
+						{ "TRAN_ID", req.Parameter.GetValue("PURC_ID") },
+						{ "TRAN_TP", "PC" },
+						{ "REG_TP", "DD" },
+						{ "ITEM_ID", 0 },
+						{ "INS_USER", req.Parameter.GetValue("INS_USER") }
+					});
+
+					//구매내역을 삭제한다.
+					DaoFactory.Instance.Delete("DeletePurcTran", req.Parameter);
 				}
 				return req;
 			}

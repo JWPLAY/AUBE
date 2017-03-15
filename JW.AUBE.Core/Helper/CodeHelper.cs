@@ -65,6 +65,7 @@ namespace JW.AUBE.Core.Helper
 						displayFields = new string[] { "MATERIAL_ID", "MATERIAL_NAME", "UNIT_TYPE" };
 						break;
 					case "PRODUCT":
+					case "PROD_PRODUCT":
 						formText = "제품검색";
 						codeField = "PRODUCT_ID";
 						nameField = "PRODUCT_NAME";
@@ -103,10 +104,7 @@ namespace JW.AUBE.Core.Helper
 				})
 				{
 					form.Init();
-					if (data != null)
-					{
-						form.BindData(data);
-					}
+					form.BindData(data);
 
 					if (form.ShowDialog() == DialogResult.OK)
 					{

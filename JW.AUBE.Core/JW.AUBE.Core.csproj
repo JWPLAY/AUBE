@@ -188,6 +188,18 @@
     <Compile Include="Forms\Code\CustomersForm.Designer.cs">
       <DependentUpon>CustomersForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Inventory\InventoryListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Inventory\InventoryListForm.Designer.cs">
+      <DependentUpon>InventoryListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Production\ProdTranForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Production\ProdTranForm.Designer.cs">
+      <DependentUpon>ProdTranForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Purchase\PurcTranForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -307,8 +319,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Configurations\" />
-    <Folder Include="Forms\Inventory\" />
-    <Folder Include="Forms\Production\" />
     <Folder Include="Forms\Profit\" />
   </ItemGroup>
   <ItemGroup>
@@ -353,6 +363,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Code\CustomersForm.resx">
       <DependentUpon>CustomersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Inventory\InventoryListForm.resx">
+      <DependentUpon>InventoryListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Production\ProdTranForm.resx">
+      <DependentUpon>ProdTranForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Purchase\PurcTranForm.resx">
       <DependentUpon>PurcTranForm.cs</DependentUpon>

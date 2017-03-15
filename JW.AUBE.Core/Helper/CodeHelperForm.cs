@@ -26,12 +26,6 @@ namespace JW.AUBE.Core.Helper
 			{
 				if (e.KeyCode == Keys.Enter)
 				{
-					//if (txtFindText.EditValue == null)
-					//{
-					//	MsgBox.Show("검색어를 입력하세요!!!");
-					//	txtFindText.Focus();
-					//	return;
-					//}
 					BindData();
 				}
 				else

@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+	namespace="JW.AUBE.Data.SqlMaps"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<statements>
+		<select id="GetProdTranList" parameterClass="DataMap" resultClass="ProdTranList" >
+			<![CDATA[
+				SELECT  ROW_NUMBER() OVER (ORDER BY AA.PROD_ID)	AS ROW_NO
+					,	AA.PROD_ID
+					,	dbo.DateCharToChar10(AA.PROD_DATE)		AS PROD_DATE
+					,	AA.PRODUCT_ID
+					,	PP.PRODUCT_CODE
+					,	PP.PRODUCT_NAME
+					,	AA.PROD_QTY
+					,	AA.REMARKS
+					,	dbo.DateTimeToChar20(AA.INS_TIME)		AS INS_TIME
+					,	AA.INS_USER
+					,	U1.USER_NAME							AS INS_USER_NAME
+					,	dbo.DateTimeToChar20(AA.UPD_TIME)		AS UPD_TIME
+					,	AA.UPD_USER
+					,	U2.USER_NAME							AS UPD_USER_NAME
+				FROM	UBZ.PROD_TRAN AA
+						LEFT JOIN
+							UCD.PRODUCTS PP
+								ON AA.PRODUCT_ID = PP.PRODUCT_ID
+						LEFT JOIN
+							UAA.USERS U1
+								ON AA.INS_USER = U1.USER_ID
+						LEFT JOIN
+							UAA.USERS U2 
+								ON AA.UPD_USER = U2.USER_ID
+				WHERE	1=1				
+			]]>
+			<isNotEmpty property="ST_PROD_DATE">
+			<![CDATA[
+				AND		AA.PROD_DATE >= #ST_PROD_DATE#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty property="ED_PROD_DATE">
+				<![CDATA[
+				AND		AA.PROD_DATE <= #ED_PROD_DATE#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty property="PRODUCT_ID">
+				<![CDATA[
+				AND		AA.PRODUCT_ID = #PRODUCT_ID#
+			]]>
+			</isNotEmpty>
+			<![CDATA[
+				ORDER BY ROW_NO
+			]]>
+		</select>
+		<select id="GetProdTranData" parameterClass="DataMap" resultClass="ProdTranData" >
+			<![CDATA[
+				SELECT  AA.PROD_ID
+					,	AA.PROD_DATE
+					,	AA.PRODUCT_ID
+					,	PP.PRODUCT_CODE
+					,	PP.PRODUCT_NAME
+					,	AA.PROD_QTY
+					,	AA.REMARKS
+					,	dbo.DateTimeToChar20(AA.INS_TIME)		AS INS_TIME
+					,	AA.INS_USER
+					,	U1.USER_NAME							AS INS_USER_NAME
+					,	dbo.DateTimeToChar20(AA.UPD_TIME)		AS UPD_TIME
+					,	AA.UPD_USER
+					,	U2.USER_NAME							AS UPD_USER_NAME
+				FROM	UBZ.PROD_TRAN AA
+						LEFT JOIN
+							UCD.PRODUCTS PP
+								ON AA.PRODUCT_ID = PP.PRODUCT_ID
+						LEFT JOIN
+							UAA.USERS U1
+								ON AA.INS_USER = U1.USER_ID
+						LEFT JOIN
+							UAA.USERS U2 
+								ON AA.UPD_USER = U2.USER_ID
+				WHERE	AA.PROD_ID = #PROD_ID#
+			]]>
+		</select>
+		<insert id="InsertProdTran" parameterClass="DataMap" >
+			<![CDATA[
+				INSERT INTO UBZ.PROD_TRAN
+				( 
+					PROD_DATE, PRODUCT_ID, PROD_QTY, REMARKS, INS_TIME, INS_USER 
+				)
+				VALUES
+				( 
+					#PROD_DATE#, #PRODUCT_ID#, #PROD_QTY#, #REMARKS#, GETDATE(), #INS_USER# 
+				)
+			]]>
+			<selectKey type="post" property="PROD_ID" resultClass="Int">
+				<![CDATA[
+					SELECT @@IDENTITY AS PROD_ID
+				]]>
+			</selectKey>
+		</insert>
+		<update id="UpdateProdTran" parameterClass="DataMap">
+			<![CDATA[
+				UPDATE  UBZ.PROD_TRAN
+				SET     PROD_DATE		= #PROD_DATE#
+					,	PRODUCT_ID		= #PRODUCT_ID#
+					,	PROD_QTY		= #PROD_QTY#
+					,	REMARKS			= #REMARKS#
+					,	UPD_TIME		= GETDATE()
+					,	UPD_USER		= #INS_USER#
+				WHERE	PROD_ID			= #PROD_ID#
+			]]>
+		</update>
+		<delete id="DeleteProdTran" parameterClass="DataMap">
+			<![CDATA[
+				DELETE
+				FROM	UBZ.PROD_TRAN
+				WHERE	PROD_ID = #PROD_ID#
+			]]>
+		</delete>
+	</statements>
+</sqlMap>

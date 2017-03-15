@@ -65,23 +65,22 @@ namespace JW.AUBE.Core.Forms.Inventory
 		{
 			#region 조회리스트
 			gridList.Init();
-			gridList.AddGridColumns(new XGridColumn[]
-			{
-				new XGridColumn() { FieldName="ROW_NO" },
-				new XGridColumn() { FieldName="ADJS_ID", Visible = false },
-				new XGridColumn() { FieldName="ADJS_DATE", HorzAlignment = HorzAlignment.Center, Width=100 },
-				new XGridColumn() { FieldName="PRODUCT_ID",   HorzAlignment = HorzAlignment.Center, Width = 60, Visible = false },
-				new XGridColumn() { FieldName="PRODUCT_CODE", HorzAlignment = HorzAlignment.Center, Width = 80  },
-				new XGridColumn() { FieldName="PRODUCT_NAME", HorzAlignment = HorzAlignment.Near,   Width = 200 },
-				new XGridColumn() { FieldName="ADJS_QTY", HorzAlignment = HorzAlignment.Far, Width = 80, FormatType = FormatType.Numeric, FormatString = "N0" },
-				new XGridColumn() { FieldName="REMARKS", Width = 200 },
-				new XGridColumn() { FieldName="INS_TIME" },
-				new XGridColumn() { FieldName="INS_USER", Visible = false },
-				new XGridColumn() { FieldName="INS_USER_NAME" },
-				new XGridColumn() { FieldName="UPD_TIME" },
-				new XGridColumn() { FieldName="UPD_USER", Visible = false },
-				new XGridColumn() { FieldName="UPD_USER_NAME" }
-			});
+			gridList.AddGridColumns(
+				new XGridColumn() { FieldName = "ROW_NO" },
+				new XGridColumn() { FieldName = "ADJS_ID", Visible = false },
+				new XGridColumn() { FieldName = "ADJS_DATE", HorzAlignment = HorzAlignment.Center, Width = 100 },
+				new XGridColumn() { FieldName = "PRODUCT_ID", HorzAlignment = HorzAlignment.Center, Width = 60, Visible = false },
+				new XGridColumn() { FieldName = "PRODUCT_CODE", HorzAlignment = HorzAlignment.Center, Width = 80 },
+				new XGridColumn() { FieldName = "PRODUCT_NAME", HorzAlignment = HorzAlignment.Near, Width = 200 },
+				new XGridColumn() { FieldName = "ADJS_QTY", HorzAlignment = HorzAlignment.Far, Width = 80, FormatType = FormatType.Numeric, FormatString = "N0" },
+				new XGridColumn() { FieldName = "REMARKS", Width = 200 },
+				new XGridColumn() { FieldName = "INS_TIME" },
+				new XGridColumn() { FieldName = "INS_USER", Visible = false },
+				new XGridColumn() { FieldName = "INS_USER_NAME" },
+				new XGridColumn() { FieldName = "UPD_TIME" },
+				new XGridColumn() { FieldName = "UPD_USER", Visible = false },
+				new XGridColumn() { FieldName = "UPD_USER_NAME" }
+			);
 			gridList.SetColumnBackColor(Color.Black, "ROW_NO");
 			gridList.SetColumnForeColor(Color.White, "ROW_NO");
 			gridList.ColumnFix("ROW_NO");

@@ -41,17 +41,20 @@ namespace JW.AUBE.Core.Forms.Code
 			base.InitControls();
 
 			lcItemProductName.Tag = true;
+			lcItemBegDate.Tag = true;
 
 			SetFieldNames();
 
 			txtRegId.SetEnable(false);
 			txtProductId.SetEnable(false);
+			datEndDate.SetEnable(false);
 			txtInsTime.SetEnable(false);
 			txtInsUserName.SetEnable(false);
 			txtUpdTime.SetEnable(false);
 			txtUpdUserName.SetEnable(false);
 
-			datSaleDate.Init();
+			datBegDate.Init();
+			datEndDate.Init();
 			spnSalePrice.SetFormat("N0", false);
 			
 			InitGrid();
@@ -69,6 +72,8 @@ namespace JW.AUBE.Core.Forms.Code
 				new XGridColumn() { FieldName = "PRODUCT_ID", HorzAlignment = HorzAlignment.Center, Width = 60, Visible = false },
 				new XGridColumn() { FieldName = "PRODUCT_CODE", HorzAlignment = HorzAlignment.Center, Width = 80 },
 				new XGridColumn() { FieldName = "PRODUCT_NAME", HorzAlignment = HorzAlignment.Near, Width = 200 },
+				new XGridColumn() { FieldName = "SALE_PRICE", HorzAlignment = HorzAlignment.Far, Width = 100 },
+				new XGridColumn() { FieldName = "COST_PRICE", HorzAlignment = HorzAlignment.Far, Width = 100 },
 				new XGridColumn() { FieldName = "PRODUCT_TYPE", HorzAlignment = HorzAlignment.Center, Width = 100 },
 				new XGridColumn() { FieldName = "CATEGORY", HorzAlignment = HorzAlignment.Center, Width = 100 },
 				new XGridColumn() { FieldName = "USE_YN", HorzAlignment = HorzAlignment.Center, RepositoryItem = gridList.GetRepositoryItemCheckEdit(), Width = 80 }
@@ -103,80 +108,19 @@ namespace JW.AUBE.Core.Forms.Code
 
 			#region Grid Add Columns
 			gridHistList.AddGridColumns(
-				new XGridColumn()
-				{
-					FieldName = "ROW_NO",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 40
-				},
-				new XGridColumn()
-				{
-					FieldName = "REG_ID",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 40,
-					Visible = false
-				},
-				new XGridColumn()
-				{
-					FieldName = "PRODUCT_ID",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 50,
-					Visible = false					
-				},
-				new XGridColumn()
-				{
-					FieldName = "MATERIAL_NAME",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 200
-				},
-				new XGridColumn()
-				{
-					FieldName = "MATERIAL_ID",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 100
-				},
-				new XGridColumn()
-				{
-					FieldName = "INPUT_QTY",
-					HorzAlignment = HorzAlignment.Far,
-					FormatType = FormatType.Numeric,
-					FormatString = "N2",
-					Width = 80
-				},
-				new XGridColumn()
-				{
-					FieldName = "UNIT_TYPE",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 80
-				},
-				new XGridColumn()
-				{
-					FieldName = "INS_TIME",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 150
-				},
-				new XGridColumn()
-				{
-					FieldName = "INS_USER_NAME",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 100
-				},
-				new XGridColumn()
-				{
-					FieldName = "UPD_TIME",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 150
-				},
-				new XGridColumn()
-				{
-					FieldName = "UPD_USER_NAME",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 100
-				});
+				new XGridColumn() { FieldName = "ROW_NO" },
+				new XGridColumn() { FieldName = "REG_ID", HorzAlignment = HorzAlignment.Center, Width = 60, Visible = false },
+				new XGridColumn() { FieldName = "PRODUCT_ID", HorzAlignment = HorzAlignment.Center, Width = 80, Visible = false },
+				new XGridColumn() { FieldName = "BEG_DATE" },
+				new XGridColumn() { FieldName = "END_DATE" },
+				new XGridColumn() { FieldName = "SALE_PRICE", HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0", Width = 100 },
+				new XGridColumn() { FieldName = "REMARKS", Width = 200 },
+				new XGridColumn() { FieldName = "INS_TIME" },
+				new XGridColumn() { FieldName = "INS_USER_NAME" },
+				new XGridColumn() { FieldName = "UPD_TIME" },
+				new XGridColumn() { FieldName = "UPD_USER_NAME" }
+				);
 			#endregion
-
-			gridHistList.SetRepositoryItemButtonEdit("MATERIAL_NAME");
-			gridHistList.SetEditable("MATERIAL_NAME", "INPUT_QTY");
 
 			gridHistList.SetColumnBackColor(Color.Black, "ROW_NO");
 			gridHistList.SetColumnForeColor(Color.Yellow, "ROW_NO");
@@ -198,6 +142,7 @@ namespace JW.AUBE.Core.Forms.Code
 				txtRegId.Clear();
 				txtProductId.Clear();
 				txtProductName.Clear();
+				datEndDate.Clear();
 				spnSalePrice.Clear();
 				memRemarks.Clear();
 

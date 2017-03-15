@@ -278,7 +278,10 @@ namespace JW.AUBE.Core.Controls.Grid
 					gridColumn.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 					break;
 				default:
-					gridColumn.AppearanceCell.TextOptions.HAlignment = column.HorzAlignment;
+					if (column.FieldName.EndsWith("_DATE"))
+						gridColumn.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+					else
+						gridColumn.AppearanceCell.TextOptions.HAlignment = column.HorzAlignment;
 					break;
 			}
 
@@ -371,7 +374,15 @@ namespace JW.AUBE.Core.Controls.Grid
 						gridColumn.MinWidth = 100;
 						break;
 					default:
-						gridColumn.BestFit();
+						if (column.FieldName.EndsWith("_DATE"))
+						{
+							gridColumn.Width = 100;
+							gridColumn.MinWidth = 100;
+						}
+						else
+						{
+							gridColumn.BestFit();
+						}
 						break;
 				}
 			}

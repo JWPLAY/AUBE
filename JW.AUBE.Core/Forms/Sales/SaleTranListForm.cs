@@ -7,6 +7,7 @@ using DevExpress.XtraGrid.Views.Grid;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Controls.Grid;
+using JW.AUBE.Core.Interfaces;
 using JW.AUBE.Core.Utils;
 
 namespace JW.AUBE.Core.Forms.Sales
@@ -84,7 +85,8 @@ namespace JW.AUBE.Core.Forms.Sales
 				{
 					if (e.Button == MouseButtons.Left && e.Clicks == 2)
 					{
-
+						GridView view = sender as GridView;
+						OpenSaleTran(view.GetRowCellValue(e.RowHandle, "SALE_ID"));
 					}
 				}
 				catch(Exception ex)
@@ -102,6 +104,16 @@ namespace JW.AUBE.Core.Forms.Sales
 				{ "CUSTOMER_ID", txtCustomer.EditValue },
 				{ "PRODUCT_ID", txtProduct.EditValue }
 			});
+		}
+
+		protected override void ActNew()
+		{
+			OpenSaleTran(null);
+		}
+
+		private void OpenSaleTran(object param)
+		{
+			((IMainForm)this.MdiParent).OpenSaleTran(param);
 		}
 	}
 }

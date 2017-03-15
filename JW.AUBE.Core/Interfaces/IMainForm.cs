@@ -4,5 +4,6 @@
 	{
 		void RefreshMainMenu();
 		void RefreshBookmark();
+		void OpenSaleTran(object param = null);
 	}
 }

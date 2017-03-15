@@ -25,10 +25,12 @@ using JW.AUBE.Core.Models;
 using JW.AUBE.Core.Resources;
 using JW.AUBE.Core.Utils;
 using JW.AUBE.Core.Base.Interface;
+using JW.AUBE.Core.Interfaces;
+using JW.AUBE.Core.Forms.Sales;
 
 namespace JW.AUBE
 {
-	public partial class MainForm : XtraForm
+	public partial class MainForm : XtraForm, IMainForm
 	{
 		private string currentFormName = string.Empty;
 
@@ -692,30 +694,7 @@ namespace JW.AUBE
 				MsgBox.Show(ex);
 			}
 		}
-
-		private void ShowSettingPage()
-		{
-			try
-			{
-				CreateChildForm(new MenuData()
-				{
-					MENU_ID = 0,
-					MENU_NAME = "CodesForm",
-					CAPTION = "공통코드",
-					IMAGE = null,
-					ASSEMBLY = "JW.AUBE.Core.dll",
-					NAMESPACE = "JW.AUBE.Core.Forms.Sys",
-					INSTANCE = "CodesForm",
-					FORM_TYPE = "0",
-					VIEW_YN = "Y",
-					EDIT_YN = "Y"
-				});
-			}
-			catch
-			{
-			}
-		}
-
+		
 		private void ToggleDockPanel(DockPanel dock)
 		{
 			if (dock.Visibility == DockVisibility.Visible)
@@ -795,7 +774,7 @@ namespace JW.AUBE
 						ShowChangePwd();
 						break;
 					case "SETTING":
-						ShowSettingPage();
+						OpenSaleTran();
 						break;
 				}
 			}
@@ -912,40 +891,6 @@ namespace JW.AUBE
 				MsgBox.Show(ex);
 			}
 		}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		private void ShowChangePwd()
 		{
 			using (var form = new PasswordForm())
@@ -959,6 +904,37 @@ namespace JW.AUBE
 				{
 					Close();
 				}
+			}
+		}
+
+		public void RefreshMainMenu()
+		{
+		}
+
+		public void RefreshBookmark()
+		{
+		}
+
+		public void OpenSaleTran(object param = null)
+		{
+			if (FormUtils.IsExistsForm("SaleTranForm") == false)
+			{
+				SaleTranForm form = new SaleTranForm();
+				form.Name = "SaleTranForm";
+				form.Text = "판매등록";
+				form.MdiParent = null;
+				form.Padding = new Padding(2);
+				form.MenuId = 10;
+				form.TabImage = null;
+				form.ParamsData = param;
+				((IEditForm)form).FormType = Core.Enumerations.FormTypeEnum.Edit;
+				((IEditForm)form).IsDataList = true;
+				((IEditForm)form).IsDataEdit = true;
+				form.Show();
+			} 
+			else
+			{
+				FormUtils.GetForm("SaleTranForm").Focus();
 			}
 		}
 	}

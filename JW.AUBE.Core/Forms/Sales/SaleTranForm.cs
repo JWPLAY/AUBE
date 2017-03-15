@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using DevExpress.XtraEditors;
-using JW.AUBE.Core.Base.Forms;
-using JW.AUBE.Core.Utils;
-using JW.AUBE.Core.Controls.Grid;
 using DevExpress.Utils;
+using JW.AUBE.Core.Base.Forms;
+using JW.AUBE.Core.Controls.Grid;
+using JW.AUBE.Core.Utils;
 
 namespace JW.AUBE.Core.Forms.Sales
 {
@@ -31,6 +22,11 @@ namespace JW.AUBE.Core.Forms.Sales
 			base.InitControls();
 
 			SetFieldNames();
+			lcItemInput.Text = "상품등록 ";
+			lcItemCustomer.Text = "거래처 ";
+
+			lcItemInput.AppearanceItemCaption.BackColor = System.Drawing.Color.SteelBlue;
+			lcItemCustomer.AppearanceItemCaption.BackColor = System.Drawing.Color.SteelBlue;
 
 			txtCustomer.SetEnable(false);
 			spnTotSupAmt.SetEnable(false);
@@ -41,9 +37,14 @@ namespace JW.AUBE.Core.Forms.Sales
 			spnTotTaxAmt.SetFormat("N0", false, HorzAlignment.Far);
 			spnTotSumAmt.SetFormat("N0", false, HorzAlignment.Far);
 
+			InitCombo();
 			InitGridItems();
 			InitGridCategory();
 			InitGridProducts();
+		}
+		void InitCombo()
+		{
+			lupPayType.BindData("PAY_TYPE", null, null, true);
 		}
 		void InitGridItems()
 		{

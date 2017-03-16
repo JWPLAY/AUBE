@@ -14,6 +14,7 @@ using JW.AUBE.Core.Enumerations;
 using JW.AUBE.Core.Helper;
 using JW.AUBE.Core.Models;
 using JW.AUBE.Core.Utils;
+using JW.AUBE.Data.Models.Codes;
 
 namespace JW.AUBE.Core.Forms.Code
 {
@@ -47,6 +48,8 @@ namespace JW.AUBE.Core.Forms.Code
 
 			txtRegId.SetEnable(false);
 			txtProductId.SetEnable(false);
+			txtProductCode.SetEnable(false);
+			txtProductName.SetEnable(false);
 			datEndDate.SetEnable(false);
 			txtInsTime.SetEnable(false);
 			txtInsUserName.SetEnable(false);
@@ -58,8 +61,7 @@ namespace JW.AUBE.Core.Forms.Code
 			spnSalePrice.SetFormat("N0", false);
 			
 			InitGrid();
-
-			lcTabGroup.SelectedTabPage = lcTabGroupHistory;
+			
 		}
 
 		void InitGrid()
@@ -93,7 +95,13 @@ namespace JW.AUBE.Core.Forms.Code
 					if (e.Button == MouseButtons.Left && e.Clicks == 1)
 					{
 						GridView view = sender as GridView;
-						DetailDataLoad(view.GetRowCellValue(e.RowHandle, "PRODUCT_ID"));
+
+						DataInit();
+						DetailListLoad(view.GetRowCellValue(e.RowHandle, "PRODUCT_ID"));
+						txtProductId.EditValue = view.GetRowCellValue(e.RowHandle, "PRODUCT_ID");
+						txtProductCode.EditValue = view.GetRowCellValue(e.RowHandle, "PRODUCT_CODE");
+						txtProductName.EditValue = view.GetRowCellValue(e.RowHandle, "PRODUCT_NAME");
+						datBegDate.Focus();
 					}
 				}
 				catch(Exception ex)
@@ -125,6 +133,25 @@ namespace JW.AUBE.Core.Forms.Code
 			gridHistList.SetColumnBackColor(Color.Black, "ROW_NO");
 			gridHistList.SetColumnForeColor(Color.Yellow, "ROW_NO");
 			gridHistList.ColumnFix("ROW_NO");
+
+			gridHistList.RowCellClick += delegate (object sender, RowCellClickEventArgs e)
+			{
+				if (e.RowHandle < 0)
+					return;
+
+				try
+				{
+					if (e.Button == MouseButtons.Left && e.Clicks == 1)
+					{
+						GridView view = sender as GridView;
+						DetailDataLoad(view.GetRowCellValue(e.RowHandle, "REG_ID"));
+					}
+				}
+				catch (Exception ex)
+				{
+					ShowErrBox(ex);
+				}
+			};
 
 			#endregion
 		}
@@ -168,12 +195,25 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				gridList.BindData("Base", "GetList", "SelectProducts", new DataMap() { { "FIND_TEXT", txtFindText.EditValue } });
+				gridList.BindData("Base", "GetList", "SelectProducts", new DataMap()
+				{
+					{ "FIND_TEXT", txtFindText.EditValue },
+					{ "VIEW_TYPE", "1" }
+				});
 
-				if (param != null)
-					DetailDataLoad(param);
-				else
+				if (txtProductId.EditValue == null)
+				{
+					gridHistList.Clear();
 					DataInit();
+				}
+				else
+				{
+					DetailListLoad(txtProductId.EditValue);
+					if (param != null)
+						DetailDataLoad(param);
+					else
+						DataInit();
+				}
 			}
 			catch(Exception ex)
 			{
@@ -181,39 +221,55 @@ namespace JW.AUBE.Core.Forms.Code
 			}
 		}
 
-		void DetailDataLoad(object id)
+		void DetailListLoad(object product_id)
 		{
 			try
 			{
-				var res = ServerRequest.GetData("Product", new DataMap() { { "PRODUCT_ID", id } });
-				if (res.DataList.Count > 0)
+				gridHistList.BindData("Product", "GetSalesPriceList", null, new DataMap()
 				{
-					if (res.DataList[0].Data == null || (res.DataList[0].Data as DataTable).Rows.Count == 0)
-						throw new Exception("조회 데이터가 없습니다.");
+					{ "PRODUCT_ID", product_id }
+				});
+			}
+			catch(Exception ex)
+			{
+				ShowErrBox(ex);
+			}
+		}
 
-					DataRow row = (res.DataList[0].Data as DataTable).Rows[0];
-
-					txtProductId.EditValue = row["PRODUCT_ID"];
-					txtProductName.EditValue = row["PRODUCT_NAME"];
-					memRemarks.EditValue = row["REMARKS"];
-
-					txtInsTime.EditValue = row["INS_TIME"];
-					txtInsUserName.EditValue = row["INS_USER_NAME"];
-					txtUpdTime.EditValue = row["UPD_TIME"];
-					txtUpdUserName.EditValue = row["UPD_USER_NAME"];					
-				}
-
-				if (res.DataList.Count > 1)
+		void DetailDataLoad(object reg_id)
+		{
+			try
+			{
+				var res = ServerRequest.GetData("Product", "GetSalesPriceData", new DataMap()
 				{
-					gridHistList.DataSource = res.DataList[1].Data;
-				}
+					{ "REG_ID", reg_id }
+				});
+
+				if (res.DataList.Count == 0 || res.DataList[0].Data == null)
+					throw new Exception("조회 데이터가 없습니다.");
+
+				SalesPriceDataModel model = (SalesPriceDataModel)res.DataList[0].Data;
+
+				txtRegId.EditValue = model.REG_ID;
+				txtProductId.EditValue = model.PRODUCT_ID;
+				txtProductCode.EditValue = model.PRODUCT_CODE;
+				txtProductName.EditValue = model.PRODUCT_NAME;
+				datBegDate.SetDateChar8(model.BEG_DATE);
+				datEndDate.SetDateChar8(model.END_DATE);
+				spnSalePrice.EditValue = model.SALE_PRICE;
+				memRemarks.EditValue = model.REMARKS;
+
+				txtInsTime.EditValue = model.INS_TIME;
+				txtInsUserName.EditValue = model.INS_USER_NAME;
+				txtUpdTime.EditValue = model.UPD_TIME;
+				txtUpdUserName.EditValue = model.UPD_USER_NAME;
 
 				SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true, Delete = true });
 				this.EditMode = EditModeEnum.Modify;
-				txtProductName.Focus();
+				spnSalePrice.Focus();
 
 			}
-			catch(Exception ex)
+			catch (Exception ex)
 			{
 				ShowErrBox(ex);
 			}
@@ -223,10 +279,10 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				DataMap map = lcGroupEdit.ItemToDataMap();
+				DataMap map = lcGroupEdit1.ItemToDataMap();
 				map.SetValue("ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE");
 
-				var res = ServerRequest.Execute("Product", "Save", new DataTable[] { map.ToDataTable(), GetMaterialData() });
+				var res = ServerRequest.Execute("Product", "SaveSalesPrice", new DataTable[] { map.ToDataTable() });
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -245,11 +301,11 @@ namespace JW.AUBE.Core.Forms.Code
 			{
 				DataTable dt = (new DataMap()
 				{
-					{ "PRODUCT_ID", txtProductId.EditValue },
+					{ "REG_ID", txtRegId.EditValue },
 					{ "ROWSTATE", "DELETE" }
 				}).ToDataTable();
 
-				var res = ServerRequest.SingleRequest("Base", "Save", "Product", dt, "PRODUCT_ID");
+				var res = ServerRequest.Execute("Product", "SaveSalesPrice", new DataTable[] { dt });
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -262,79 +318,6 @@ namespace JW.AUBE.Core.Forms.Code
 				ShowErrBox(ex);
 			}
 		}
-
-		void DataLoadMaterials()
-		{
-			try
-			{
-				gridHistList.BindData("Base", "GetList", "SelectProductMaterials", new DataMap() { { "PRODUCT_ID", txtProductId.EditValue } });
-			}
-			catch (Exception ex)
-			{
-				ShowErrBox(ex);
-			}
-		}
-		void DataSaveMaterials()
-		{
-			try
-			{
-				DataTable dt = GetMaterialData();
-
-				if (dt == null || dt.Rows.Count == 0)
-					throw new Exception("저장할 건이 없습니다.");
-
-				var res = ServerRequest.SingleRequest("Base", "Save", "ProductMaterial", dt);
-				if (res.ErrorNumber != 0)
-					throw new Exception(res.ErrorMessage);
-
-				ShowMsgBox("저장하였습니다.");
-				DataLoadMaterials();
-			}
-			catch (Exception ex)
-			{
-				ShowErrBox(ex);
-			}
-		}
-
-		private DataTable GetMaterialData()
-		{
-			try
-			{
-				DataTable dt = new DataTable();
-				dt.Columns.AddRange(new DataColumn[]
-				{
-					new DataColumn("REG_ID", typeof(int)),
-					new DataColumn("PRODUCT_ID", typeof(int)),
-					new DataColumn("MATERIAL_ID", typeof(int)),
-					new DataColumn("INPUT_QTY", typeof(int)),
-					new DataColumn("ROWSTATE", typeof(string))
-				});
-
-				if (gridHistList.MainView.RowCount > 0)
-				{
-					gridHistList.PostEditor();
-					gridHistList.UpdateCurrentRow();
-
-					foreach (DataRow row in gridHistList.GetDataTable().GetChangedData().Rows)
-					{
-						string rowstate = row["ROWSTATE"].ToString();
-
-						dt.Rows.Add(
-							row["REG_ID"],
-							txtProductId.EditValue,
-							row["MATERIAL_ID"],
-							row["INPUT_QTY"],
-							rowstate
-							);
-					}
-				}
-
-				return dt;
-			}
-			catch
-			{
-				throw;
-			}
-		}
+		
 	}
 }

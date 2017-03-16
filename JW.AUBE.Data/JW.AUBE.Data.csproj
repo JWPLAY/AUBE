@@ -66,11 +66,14 @@
     <Compile Include="Mappers\DaoFactory.cs" />
     <Compile Include="Mappers\SqlFactory.cs" />
     <Compile Include="Models\Base\BaseData.cs" />
+    <Compile Include="Models\Base\BaseDataModel.cs" />
     <Compile Include="Models\Base\NavBarItemData.cs" />
     <Compile Include="Models\Base\UserMenuData.cs" />
     <Compile Include="Models\Base\CodeData.cs" />
     <Compile Include="Models\Base\LoginUserData.cs" />
     <Compile Include="Models\Base\MenuData.cs" />
+    <Compile Include="Models\Codes\SalesPriceDataModel.cs" />
+    <Compile Include="Models\Codes\SalesPriceListModel.cs" />
     <Compile Include="Models\Inventory\InventoryListModel.cs" />
     <Compile Include="Models\Inventory\InvAdjsDataModel.cs" />
     <Compile Include="Models\Inventory\InvAdjsListModel.cs" />

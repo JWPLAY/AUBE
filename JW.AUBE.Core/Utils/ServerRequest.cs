@@ -22,6 +22,7 @@ namespace JW.AUBE.Core.Utils
 				throw;
 			}
 		}
+
 		public static WasRequest GetData(string serviceId, DataMap parameter)
 		{
 			try
@@ -69,6 +70,7 @@ namespace JW.AUBE.Core.Utils
 				throw;
 			}
 		}
+
 		public static WasRequest Execute(string serviceId, string processId, DataTable[] datalist)
 		{
 			try
@@ -265,6 +267,7 @@ namespace JW.AUBE.Core.Utils
 				throw;
 			}
 		}
+
 		public static WasRequest ProcedureCall(string sqlId, DataMap parameter)
 		{
 			try

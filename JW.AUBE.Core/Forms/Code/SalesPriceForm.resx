@@ -117,14 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="lcTabGroupHistory.CaptionImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAACN0RVh0VGl0
-        bGUAT3JkZXJEZXRhaWw7UHJpbnRPcmRlckRldGFpbDtoyoUuAAAAfUlEQVQ4T2P4//8/Cm5paUHG/6EY
-        LoauHkMASRNWjK6eaI3oGKsBIICuEB3D1AABdgOIAXgN8G3aAaeRMUwMBIaBC6AAuwHItsHYZcuno2Ao
-        wG4ANoDNABibbBdA2eSHAUkGQBVjw6gGYMN4AMONZBeEAYQwyEZ09o1kFwYAyVgV7FR5oDkAAAAASUVO
-        RK5CYII=
-</value>
-  </data>
 </root>

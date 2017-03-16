@@ -11,9 +11,11 @@
 					,	AA.PRODUCT_ID
 					,	AA.PRODUCT_CODE
 					,	AA.PRODUCT_NAME
-					,	M1.NAME			AS PRODUCT_TYPE
-					,	M2.NAME			AS CATEGORY
+					,	M1.NAME						AS PRODUCT_TYPE
+					,	M2.NAME						AS CATEGORY
 					,	AA.USE_YN
+					,	ISNULL(SP.SALE_PRICE, 0)	AS SALE_PRICE
+					,	ISNULL(CP.COST_PRICE, 0)	AS COST_PRICE
 				FROM	UCD.PRODUCTS AA WITH (NOLOCK)
 						LEFT JOIN 
 							UAA.CODES M1 WITH (NOLOCK)
@@ -23,17 +25,35 @@
 							UAA.CODES M2 WITH (NOLOCK)
 								ON AA.CATEGORY = M2.CODE
 									AND M2.PARENT_CODE = 'CATEGORY'
+						LEFT JOIN
+							UCD.SALES_PRICE SP WITH (NOLOCK)
+								ON AA.PRODUCT_ID = SP.PRODUCT_ID
+									AND SP.BEG_DATE <= CONVERT(VARCHAR(8), GETDATE(), 112)
+									AND SP.END_DATE >= CONVERT(VARCHAR(8), GETDATE(), 112)
+						LEFT JOIN
+							UCD.COST_PRICE CP WITH (NOLOCK)
+								ON AA.PRODUCT_ID = CP.PRODUCT_ID
+									AND CP.CLOSING_YM = CONVERT(VARCHAR(6), GETDATE(), 112)
 				WHERE	1=1				
 			]]>
-			<isNotEmpty property="FIND_TEXT">
-			<![CDATA[
-				AND		(
-							AA.PRODUCT_NAME LIKE '%' + #FIND_TEXT# + '%'	OR
-							AA.PRODUCT_CODE LIKE '%' + #FIND_TEXT# + '%'	OR
-							AA.BARCODE		LIKE '%' + #FIND_TEXT# + '%'
-						)
-			]]>
-			</isNotEmpty>
+			<isPropertyAvailable property="VIEW_TYPE" >
+				<isEqual property="VIEW_TYPE" compareValue="1">
+					<![CDATA[
+						AND		AA.PRODUCT_TYPE IN ('G', 'P')
+					]]>
+				</isEqual>
+			</isPropertyAvailable>
+			<isPropertyAvailable property="FIND_TEXT" >
+				<isNotEmpty property="FIND_TEXT">
+					<![CDATA[
+						AND		(
+									AA.PRODUCT_NAME LIKE '%' + #FIND_TEXT# + '%'	OR
+									AA.PRODUCT_CODE LIKE '%' + #FIND_TEXT# + '%'	OR
+									AA.BARCODE		LIKE '%' + #FIND_TEXT# + '%'
+								)
+					]]>
+				</isNotEmpty>
+			</isPropertyAvailable>
 			<![CDATA[
 				ORDER BY ROW_NO
 			]]>
@@ -115,5 +135,135 @@
 				WHERE	AA.PRODUCT_CODE LIKE #PRODUCT_CODE# + '%'
 				]]>
 		</select>
+
+		<select id="GetSalesPriceList" parameterClass="DataMap" resultClass="SalesPriceListModel" >
+			<![CDATA[
+				SELECT  ROW_NUMBER() OVER (ORDER BY AA.BEG_DATE)	AS ROW_NO
+					,	AA.REG_ID
+					,	AA.PRODUCT_ID
+					,	dbo.DateCharToChar10(AA.BEG_DATE)			AS BEG_DATE
+					,	dbo.DateCharToChar10(AA.END_DATE)			AS END_DATE
+					,	AA.SALE_PRICE
+					,	AA.REMARKS
+					,	dbo.DateTimeToChar20(AA.INS_TIME)			AS INS_TIME
+					,	AA.INS_USER
+					,	U1.USER_NAME								AS INS_USER_NAME
+					,	dbo.DateTimeToChar20(AA.UPD_TIME)			AS UPD_TIME
+					,	AA.UPD_USER
+					,	U2.USER_NAME								AS UPD_USER_NAME
+				FROM	UCD.SALES_PRICE AA WITH (NOLOCK)
+						LEFT JOIN 
+							UAA.USERS U1 WITH (NOLOCK)
+								ON AA.INS_USER = U1.USER_ID
+						LEFT JOIN
+							UAA.USERS U2 WITH (NOLOCK)
+								ON AA.UPD_USER = U2.USER_ID
+				WHERE	1=1
+			]]>
+			<isPropertyAvailable property="PRODUCT_ID" >
+				<isNotNull property="PRODUCT_ID">
+					<![CDATA[
+						AND	AA.PRODUCT_ID = #PRODUCT_ID#
+					]]>
+				</isNotNull>
+			</isPropertyAvailable>
+			<isNotPropertyAvailable property="PRODUCT_ID">
+				<isPropertyAvailable property="REG_ID" >
+					<isNotNull property="REG_ID">
+						<![CDATA[
+							AND	AA.PRODUCT_ID = 
+											(	
+												SELECT	PRODUCT_ID
+												FROM	UCD.SALES_PRICE
+												WHERE	REG_ID = #REG_ID#
+											)
+						]]>
+					</isNotNull>
+				</isPropertyAvailable>
+			</isNotPropertyAvailable>
+			<![CDATA[				
+				ORDER BY ROW_NO
+			]]>
+		</select>
+		<select id="GetSalesPriceData" parameterClass="DataMap" resultClass="SalesPriceDataModel" >
+			<![CDATA[
+				SELECT  AA.REG_ID
+					,	AA.PRODUCT_ID
+					,	PP.PRODUCT_CODE
+					,	PP.PRODUCT_NAME
+					,	AA.BEG_DATE
+					,	AA.END_DATE
+					,	AA.SALE_PRICE
+					,	AA.REMARKS
+					
+					,	dbo.DateTimeToChar20(AA.INS_TIME)	AS INS_TIME
+					,	AA.INS_USER
+					,	U1.USER_NAME						AS INS_USER_NAME
+					,	dbo.DateTimeToChar20(AA.UPD_TIME)	AS UPD_TIME
+					,	AA.UPD_USER
+					,	U2.USER_NAME						AS UPD_USER_NAME
+					
+				FROM	UCD.SALES_PRICE AA WITH (NOLOCK)
+						INNER JOIN
+							UCD.PRODUCTS PP
+								ON AA.PRODUCT_ID = PP.PRODUCT_ID
+						LEFT JOIN 
+							UAA.USERS U1 WITH (NOLOCK)
+								ON AA.INS_USER = U1.USER_ID
+						LEFT JOIN
+							UAA.USERS U2 WITH (NOLOCK)
+								ON AA.UPD_USER = U2.USER_ID
+				WHERE	AA.REG_ID = #REG_ID#
+				]]>
+		</select>
+		<insert id="InsertSalesPrice" parameterClass="DataMap" >
+			<![CDATA[
+				IF EXISTS ( SELECT 1 FROM UCD.SALES_PRICE WHERE PRODUCT_ID = #PRODUCT_ID# AND BEG_DATE < #BEG_DATE# )
+				BEGIN
+					UPDATE	UCD.SALES_PRICE
+					SET		END_DATE	= CONVERT(VARCHAR(8), DATEADD(DAY, -1, CONVERT(DATETIME, #BEG_DATE#, 112)), 112)
+						,	UPD_TIME	= GETDATE()
+						,	UPD_USER	= #INS_USER#
+					WHERE	PRODUCT_ID	= #PRODUCT_ID#
+					AND		BEG_DATE	= (	SELECT	MAX(BEG_DATE)
+											FROM	UCD.SALES_PRICE
+											WHERE	PRODUCT_ID	= #PRODUCT_ID#
+											AND		BEG_DATE	< #BEG_DATE# )
+				END;
+				
+				INSERT INTO UCD.SALES_PRICE
+				( 
+					PRODUCT_ID, BEG_DATE, END_DATE, SALE_PRICE, REMARKS, INS_TIME, INS_USER 
+				)
+				VALUES
+				( 
+					#PRODUCT_ID#, #BEG_DATE#, '29991231', #SALE_PRICE#, #REMARKS#, GETDATE(), #INS_USER# 
+				)
+			]]>
+			<selectKey type="post" property="REG_ID" resultClass="Int">
+				<![CDATA[
+					SELECT @@IDENTITY AS REG_ID
+				]]>
+			</selectKey>
+		</insert>
+		<update id="UpdateSalesPrice" parameterClass="DataMap">
+			<![CDATA[				
+				UPDATE  UCD.SALES_PRICE
+				SET     BEG_DATE		= #BEG_DATE#
+					,	END_DATE		= #END_DATE#
+					,	SALE_PRICE		= #SALE_PRICE#
+					,	REMARKS			= #REMARKS#
+					,	UPD_TIME		= GETDATE()
+					,	UPD_USER		= #INS_USER#
+				WHERE	REG_ID			= #REG_ID#
+			]]>
+		</update>
+		<delete id="DeleteSalesPrice" parameterClass="DataMap">
+			<![CDATA[
+				DELETE
+				FROM	UCD.SALES_PRICE
+				WHERE	REG_ID = #REG_ID#
+			]]>
+		</delete>
 	</statements>
 </sqlMap>

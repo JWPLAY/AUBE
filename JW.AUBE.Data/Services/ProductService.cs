@@ -5,18 +5,13 @@ using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Base.Was.Models;
 using JW.AUBE.Data.Mappers;
+using JW.AUBE.Data.Models.Codes;
 using JW.AUBE.Data.Utils;
 
 namespace JW.AUBE.Data.Services
 {
 	public static class ProductService
 	{
-		/// <summary>
-		/// GetData
-		/// 제품 데이터와 해당 제품의 원부자재 목록 가져오기
-		/// </summary>
-		/// <param name="req">WasRequest</param>
-		/// <returns>WasRequest</returns>
 		public static WasRequest GetData(WasRequest req)
 		{
 			try
@@ -46,12 +41,6 @@ namespace JW.AUBE.Data.Services
 			}
 		}
 
-		/// <summary>
-		/// Save
-		/// 데이터 저장(Insert, Update)
-		/// </summary>
-		/// <param name="req">WasRequest</param>
-		/// <returns>WasRequest</returns>
 		public static WasRequest Save(WasRequest req)
 		{
 			bool isTran = false;
@@ -157,12 +146,6 @@ namespace JW.AUBE.Data.Services
 			}
 		}
 
-		/// <summary>
-		/// Delete
-		/// 데이터 삭제(Delete)
-		/// </summary>
-		/// <param name="req">WasRequest</param>
-		/// <returns>WasRequest</returns>
 		public static WasRequest Delete(WasRequest req)
 		{
 			try
@@ -171,6 +154,114 @@ namespace JW.AUBE.Data.Services
 				if (map != null)
 				{
 					DaoFactory.Instance.Insert("DeleteProduct", req.Parameter);
+				}
+				return req;
+			}
+			catch (Exception ex)
+			{
+				req.ErrorNumber = ex.HResult;
+				req.ErrorMessage = ex.Message;
+				return req;
+			}
+		}
+
+		public static WasRequest GetSalesPriceList(WasRequest req)
+		{
+			try
+			{
+				var list = DaoFactory.Instance.QueryForList<SalesPriceListModel>("GetSalesPriceList", req.Parameter);
+				req.DataList = new List<WasRequestData>()
+				{
+					new WasRequestData() { Data = list }
+				};
+				return req;
+			}
+			catch (Exception ex)
+			{
+				req.ErrorNumber = ex.HResult;
+				req.ErrorMessage = ex.Message;
+				return req;
+			}
+		}
+
+		public static WasRequest GetSalesPriceData(WasRequest req)
+		{
+			try
+			{
+				var data = DaoFactory.Instance.QueryForObject<SalesPriceDataModel>("GetSalesPriceData", req.Parameter);
+				req.DataList = new List<WasRequestData>()
+				{
+					new WasRequestData() { Data = data }
+				};
+				return req;
+			}
+			catch (Exception ex)
+			{
+				req.ErrorNumber = ex.HResult;
+				req.ErrorMessage = ex.Message;
+				return req;
+			}
+		}
+
+		public static WasRequest SaveSalesPrice(WasRequest req)
+		{
+			bool isTran = false;
+
+			try
+			{
+				if (req == null)
+					throw new Exception("처리할 요청이 정확하지 않습니다.");
+
+				if (req.DataList == null || req.DataList.Count == 0)
+					throw new Exception("처리할 데이터가 없습니다.");
+
+				DaoFactory.Instance.BeginTransaction();
+				isTran = true;
+
+				try
+				{
+					object product_id = null;
+					object reg_id = null;
+					
+					if (req.DataList.Count > 0)
+					{
+						if (req.DataList[0].Data == null || (req.DataList[0].Data as DataTable).Rows.Count == 0)
+							throw new Exception("상품정보를 저장할 데이터가 존재하지 않습니다.");
+
+						DataMap data = (req.DataList[0].Data as DataTable).ToDataMapList()[0];
+
+						product_id = data.GetValue("PRODUCT_ID");
+
+						if (data.GetValue("ROWSTATE").ToStringNullToEmpty() == "INSERT")
+						{
+							reg_id = DaoFactory.Instance.Insert("InsertSalesPrice", data);
+						}
+						else if (data.GetValue("ROWSTATE").ToStringNullToEmpty() == "UPDATE")
+						{
+							reg_id = data.GetValue("REG_ID");
+							DaoFactory.Instance.Update("UpdateSalesPrice", data);
+							
+						}
+						else if (data.GetValue("ROWSTATE").ToStringNullToEmpty() == "DELETE")
+						{
+							reg_id = data.GetValue("REG_ID");
+							DaoFactory.Instance.Update("DeleteSalesPrice", data);
+							
+						}
+						req.DataList[0].ErrorNumber = 0;
+						req.DataList[0].ErrorMessage = "SUCCESS";
+						req.DataList[0].ReturnValue = reg_id;
+					}
+
+					if (isTran)
+						DaoFactory.Instance.CommitTransaction();
+				}
+				catch (Exception ex)
+				{
+					if (isTran)
+						DaoFactory.Instance.RollBackTransaction();
+
+					throw new Exception(ex.Message);
 				}
 				return req;
 			}

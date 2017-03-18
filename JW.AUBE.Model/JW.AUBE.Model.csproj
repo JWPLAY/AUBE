@@ -40,7 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\CustomModelAttribute.cs" />
+    <Compile Include="Attributes\CustomPropertyAttribute.cs" />
+    <Compile Include="Auth\LoginUserDataModel.cs" />
+    <Compile Include="Auth\MainMenuDataModel.cs" />
     <Compile Include="Base\BaseDataModel.cs" />
     <Compile Include="Base\NavBarItemData.cs" />
     <Compile Include="Base\UserMenuDataModel.cs" />
@@ -50,6 +52,10 @@
     <Compile Include="Codes\ProductMaterialLIstModel.cs" />
     <Compile Include="Codes\SalesPriceDataModel.cs" />
     <Compile Include="Codes\SalesPriceListModel.cs" />
+    <Compile Include="Enums\ColumnTypeEnum.cs" />
+    <Compile Include="Enums\FormatTypeEnum.cs" />
+    <Compile Include="Enums\HorzAlignmentEnum.cs" />
+    <Compile Include="Enums\SummaryItemTypeEnum.cs" />
     <Compile Include="Inventory\InvAdjsDataModel.cs" />
     <Compile Include="Inventory\InvAdjsListModel.cs" />
     <Compile Include="Inventory\InventoryListModel.cs" />

@@ -27,6 +27,8 @@ using JW.AUBE.Core.Utils;
 using JW.AUBE.Core.Base.Interface;
 using JW.AUBE.Core.Interfaces;
 using JW.AUBE.Core.Forms.Sales;
+using JW.AUBE.Model.Auth;
+using System.Collections.Generic;
 
 namespace JW.AUBE
 {
@@ -56,19 +58,19 @@ namespace JW.AUBE
 					{
 						if (e.Link.Item.Tag is DataRow)
 						{
-							DataRow row = e.Link.Item.Tag as DataRow;
+							MainMenuDataModel model = e.Link.Item.Tag as MainMenuDataModel;
 							OpenForm(new MenuData()
 							{
-								MENU_ID = row["MENU_ID"].ToIntegerNullToZero(),
-								MENU_NAME = row["MENU_NAME"].ToStringNullToEmpty(),
-								CAPTION = row["MENU_NAME"].ToStringNullToEmpty(),
+								MENU_ID = model.MENU_ID.ToIntegerNullToZero(),
+								MENU_NAME = model.MENU_NAME.ToStringNullToEmpty(),
+								CAPTION = model.MENU_NAME.ToStringNullToEmpty(),
 								IMAGE = e.Link.Item.SmallImage,
-								ASSEMBLY = row["ASSEMBLY"].ToStringNullToEmpty(),
-								NAMESPACE = row["NAMESPACE"].ToStringNullToEmpty(),
-								INSTANCE = row["INSTANCE"].ToStringNullToEmpty(),
-								FORM_TYPE = row["FORM_TYPE"].ToStringNullToEmpty(),
-								VIEW_YN = row["VIEW_YN"].ToStringNullToEmpty(),
-								EDIT_YN = row["EDIT_YN"].ToStringNullToEmpty()
+								ASSEMBLY = model.ASSEMBLY.ToStringNullToEmpty(),
+								NAMESPACE = model.NAMESPACE.ToStringNullToEmpty(),
+								INSTANCE = model.INSTANCE.ToStringNullToEmpty(),
+								FORM_TYPE = model.FORM_TYPE.ToStringNullToEmpty(),
+								VIEW_YN = model.VIEW_YN.ToStringNullToEmpty(),
+								EDIT_YN = model.EDIT_YN.ToStringNullToEmpty()
 							});
 						}
 					}
@@ -597,15 +599,15 @@ namespace JW.AUBE
 			{
 				if (mainMenu != null)
 				{
-					DataTable dt = (DataTable)ServerRequest.SingleRequest("Auth", "GetMainMenus", "MainMenus", new DataMap()
+					var list = ServerRequest.SingleRequest("Auth", "GetMainMenus", "MainMenus", new DataMap()
 					{
 						{ "USER_ID", GlobalVar.Settings.GetValue("USER_ID") },
 						{ "MENU_GROUP", "BIZ" }
 					});
 
-					if (dt != null && dt.Rows.Count > 0)
+					if (list != null)
 					{
-						mainMenu.DataSource = dt;
+						mainMenu.DataSource = list;
 						mainMenu.ExpandAll();
 						mainMenu.BestFitColumns();
 						mainMenu.Sort(new string[] { "HIER_ID" }, new SortOrder[] { SortOrder.Ascending });
@@ -627,20 +629,20 @@ namespace JW.AUBE
 					var navGroup = navBarNavigate.Groups.Where(x => x.Name == "navBarGroupSystem").FirstOrDefault();
 					navGroup.ItemLinks.Clear();
 
-					DataTable data = (DataTable)ServerRequest.SingleRequest("Auth", "GetMainMenus", "MainMenus", new DataMap()
+					var list = ServerRequest.SingleRequest("Auth", "GetMainMenus", "MainMenus", new DataMap()
 					{
 						{ "USER_ID", GlobalVar.Settings.GetValue("USER_ID") },
 						{ "MENU_GROUP", "SYS" }
 					});
 
-					if (data != null && data.Rows.Count > 0)
+					if (list != null)
 					{
-						foreach (DataRow row in data.Rows)
+						foreach (MainMenuDataModel model in (List<MainMenuDataModel>)list)
 						{
 							navGroup.ItemLinks.Add(navBarNavigate.Items.Add(new NavBarItem()
 							{
-								Caption = row["MENU_NAME"].ToStringNullToEmpty(),
-								Tag = row,
+								Caption = model.MENU_NAME.ToStringNullToEmpty(),
+								Tag = model,
 								SmallImage = ImageResource.menu_system_16x16,
 								SmallImageSize = new Size(16, 16)
 							}));

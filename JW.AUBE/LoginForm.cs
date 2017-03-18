@@ -2,12 +2,14 @@
 using System.Windows.Forms;
 using DevExpress.Utils;
 using DevExpress.XtraEditors;
+using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Base.Variables;
 using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Messages;
 using JW.AUBE.Core.Resources;
 using JW.AUBE.Core.Utils;
+using JW.AUBE.Model.Auth;
 
 namespace JW.AUBE
 {
@@ -134,7 +136,17 @@ namespace JW.AUBE
 					return;
 				}
 
-				GlobalVar.Settings.SetValue("USER_ID", 1000);
+				var data = ServerRequest.SingleRequest("Auth", "CheckLoginUser", null, new DataMap()
+				{
+					{ "LOGIN_ID", txtLoginId.EditValue },
+					{ "LOGIN_PW", txtPassword.EditValue }
+				});
+
+				if (data == null)
+					throw new Exception("로그인 사용자의 정보가 정확하지 않습니다.");
+
+				GlobalVar.Settings.SetValue("USER_ID", (data as LoginUserDataModel).USER_ID);
+				GlobalVar.Settings.SetValue("USER_NAME", (data as LoginUserDataModel).USER_NAME);
 
 				SetModifiedCount();
 				Close();

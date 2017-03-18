@@ -4,8 +4,8 @@ using System.Data;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Base.Was.Models;
+using JW.AUBE.Model.Auth;
 using JW.AUBE.Service.Mappers;
-using JW.AUBE.Model.Base;
 
 namespace JW.AUBE.Service.Services
 {
@@ -22,30 +22,30 @@ namespace JW.AUBE.Service.Services
 			try
 			{
 				req.Parameter.SetValue("USER_ID", null);
-				var loginUser = DaoFactory.Instance.QueryForObject<LoginUserData>("GetLoginUser", req.Parameter);
+				var data = DaoFactory.Instance.QueryForObject<LoginUserDataModel>("GetLoginUser", req.Parameter);
 
-				if (loginUser == null)
+				if (data == null)
 				{
 					req.ErrorNumber = -1;
 					req.ErrorMessage = "해당 아이디로 사용자를 찾을 수 없습니다.";
 					return req;
 				}
 
-				if (loginUser.UseYn != "Y")
+				if (data.USE_YN != "Y")
 				{
 					req.ErrorNumber = -2;
 					req.ErrorMessage = "사용 가능한 아이디가 아닙니다. 확인 후 다시 시도하세요!!!";
 					return req;
 				}
 
-				if (loginUser.Password != req.Parameter.GetValue("Password").ToStringNullToEmpty())
+				if (data.IS_PW_CHECK != 1)
 				{
 					req.ErrorNumber = -3;
 					req.ErrorMessage = "비밀번호가 정확하지 않습니다. 확인 후 다시 시도하세요!!!";
 					return req;
 				}
 
-				req.Parameter.SetValue("USER_ID", loginUser.UserId);
+				req.Parameter.SetValue("USER_ID", data.USER_ID);
 
 				try
 				{
@@ -56,28 +56,10 @@ namespace JW.AUBE.Service.Services
 					throw new Exception("로그인로그 저장 중 오류가 발생하였습니다.\r\n" + ErrorUtils.GetMessage(ex));
 				}
 
-				DataTable dt = new DataTable();
-				dt.Columns.AddRange(new DataColumn[]
-				{
-					new DataColumn("USER_ID", typeof(string)),
-					new DataColumn("USER_NAME", typeof(string))
-				});
-				dt.Rows.Add(loginUser.UserId, loginUser.UserName);
-
 				req.DataList = new List<WasRequestData>()
 				{
-					new WasRequestData()
-					{
-						 Schema = new SchemaMap()
-						 {
-							 { "USER_ID", typeof(string) },
-							 { "USER_NAME", typeof(string) }
-						 }
-						 ,
-						 Data = dt
-					}
+					new WasRequestData() { Data = data }
 				};
-
 				return req;
 			}
 			catch (Exception ex)
@@ -126,13 +108,10 @@ namespace JW.AUBE.Service.Services
 		{
 			try
 			{
-				var list = DaoFactory.Instance.QueryForList<DataMap>("GetMainMenus", req.Parameter);
+				var list = DaoFactory.Instance.QueryForList<MainMenuDataModel>("GetMainMenus", req.Parameter);
 				req.DataList = new List<WasRequestData>()
 				{
-					new WasRequestData()
-					{
-						Data = ConvertUtils.DataMapListToDataTable(list, req.SqlId)
-					}
+					new WasRequestData() { Data = list }
 				};
 				return req;
 			}

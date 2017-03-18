@@ -5,20 +5,20 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
 
 	<statements>
-		<select id="GetLoginUser" parameterClass="DataMap" resultClass="DataMap" >
+		<select id="GetLoginUser" parameterClass="DataMap" resultClass="LoginUserDataModel" >
 			<![CDATA[
 				SELECT	USER_ID
-					,	USRE_NAME
+					,	USER_NAME
 					,	LOGIN_ID
-					,	LOGIN_PW
 					,	USE_YN
+					,	PWDCOMPARE(#LOGIN_PW#, LOGIN_PW)	AS IS_PW_CHECK
 				FROM	UAA.USERS
 				WHERE	LOGIN_ID = #LOGIN_ID#
 			]]>			
 		</select>
 		<insert id="InsertLoginLog" parameterClass="DataMap" >
 			<![CDATA[
-				INSERT INTO jwa.LoginLog
+				INSERT INTO UAA.LOGIN_LOG
 				( 
 					USER_ID, LOGIN_ID, LOGIN_TIME
 				)
@@ -37,7 +37,7 @@
 				AND		LOGOUT_TIME IS NULL
 			]]>			
 		</update>
-		<select id="GetMainMenus" parameterClass="DataMap" resultClass="DataMap">
+		<select id="GetMainMenus" parameterClass="DataMap" resultClass="MainMenuDataModel">
 			<![CDATA[
 				WITH MENULIST (MENU_ID, MENU_LEVEL, HIER_ID)
 				AS 

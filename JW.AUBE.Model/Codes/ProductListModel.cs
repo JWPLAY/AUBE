@@ -1,7 +1,11 @@
-﻿namespace JW.AUBE.Model.Codes
+﻿using JW.AUBE.Model.Attributes;
+using JW.AUBE.Model.Enums;
+
+namespace JW.AUBE.Model.Codes
 {
 	public class ProductListModel
 	{
+		[CustomProperty(ColumnType = ColumnTypeEnum.Integer, HorzAlignment = HorzAlignmentEnum.Center, Width = 50)]
 		public int ROW_NO { get; set; }
 		public int PRODUCT_ID { get; set; }
 		public string PRODUCT_CODE { get; set; }

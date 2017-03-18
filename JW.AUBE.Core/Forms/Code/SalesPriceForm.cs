@@ -11,7 +11,7 @@ using JW.AUBE.Core.Controls.Grid;
 using JW.AUBE.Core.Enumerations;
 using JW.AUBE.Core.Models;
 using JW.AUBE.Core.Utils;
-using JW.AUBE.Data.Models.Codes;
+using JW.AUBE.Model.Codes;
 
 namespace JW.AUBE.Core.Forms.Code
 {

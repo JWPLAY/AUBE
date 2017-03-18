@@ -7,11 +7,11 @@ namespace JW.AUBE.Core.Was.Controllers
 {
 	public class WasController
 	{
-		private const string assemblyName = @"JW.AUBE.Data";
+		private const string assemblyName = @"JW.AUBE.Service";
 
 		public WasRequest Execute(WasRequest req)
 		{
-			var namespaceName = string.Format("JW.AUBE.Data.Services.{0}Service", req.ServiceId);
+			var namespaceName = string.Format("JW.AUBE.Service.Services.{0}Service", req.ServiceId);
 			var methodName = req.ProcessId;
 
 			try

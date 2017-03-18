@@ -1,9 +1,9 @@
 ﻿using System;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
-using JW.AUBE.Data.Mappers;
+using JW.AUBE.Service.Mappers;
 
-namespace JW.AUBE.Data.Utils
+namespace JW.AUBE.Service.Utils
 {
 	public static class CommonDataUtils
 	{

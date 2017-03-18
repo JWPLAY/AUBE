@@ -1,8 +1,8 @@
 ﻿using System.Data.SqlClient;
-using JW.AUBE.Data.Config;
+using JW.AUBE.Service.Config;
 using Microsoft.ApplicationBlocks.Data;
 
-namespace JW.AUBE.Data.Mappers
+namespace JW.AUBE.Service.Mappers
 {
 	public class SqlFactory
 	{

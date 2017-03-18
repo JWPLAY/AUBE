@@ -4,10 +4,10 @@ using System.Data;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Base.Was.Models;
-using JW.AUBE.Data.Mappers;
-using JW.AUBE.Data.Models.Production;
+using JW.AUBE.Service.Mappers;
+using JW.AUBE.Model.Production;
 
-namespace JW.AUBE.Data.Services
+namespace JW.AUBE.Service.Services
 {
 	public static class ProductionService
 	{

@@ -3,7 +3,7 @@ using IBatisNet.Common.Utilities;
 using IBatisNet.DataMapper;
 using IBatisNet.DataMapper.Configuration;
 
-namespace JW.AUBE.Data.Mappers
+namespace JW.AUBE.Service.Mappers
 {
 	public class DaoFactory
 	{
@@ -23,7 +23,7 @@ namespace JW.AUBE.Data.Mappers
 							if (mapper == null)
 							{
 								var dom = new DomSqlMapBuilder();
-								var sqlMapConfig = Resources.GetEmbeddedResourceAsXmlDocument("Config.SqlMap.config, JW.AUBE.Data");
+								var sqlMapConfig = Resources.GetEmbeddedResourceAsXmlDocument("Config.SqlMap.config, JW.AUBE.Service");
 								mapper = dom.Configure(sqlMapConfig);
 							}
 						}

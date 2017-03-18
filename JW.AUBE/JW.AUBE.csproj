@@ -172,9 +172,13 @@
       <Project>{49399E51-B194-43F5-BD11-6E406152779B}</Project>
       <Name>JW.AUBE.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\JW.AUBE.Data\JW.AUBE.Data.csproj">
+    <ProjectReference Include="..\JW.AUBE.Data\JW.AUBE.Service.csproj">
       <Project>{ad8c33bf-9946-4a01-992c-72ab2d123487}</Project>
-      <Name>JW.AUBE.Data</Name>
+      <Name>JW.AUBE.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JW.AUBE.Model\JW.AUBE.Model.csproj">
+      <Project>{30f5ec55-1d6c-4ea3-89b0-f9cd6b60a17c}</Project>
+      <Name>JW.AUBE.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

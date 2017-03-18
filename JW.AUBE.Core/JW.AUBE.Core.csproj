@@ -520,9 +520,13 @@
       <Project>{C18DA53B-5D3C-4AB0-A5F2-5EE399AF54CC}</Project>
       <Name>JW.AUBE.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\JW.AUBE.Data\JW.AUBE.Data.csproj">
+    <ProjectReference Include="..\JW.AUBE.Data\JW.AUBE.Service.csproj">
       <Project>{ad8c33bf-9946-4a01-992c-72ab2d123487}</Project>
-      <Name>JW.AUBE.Data</Name>
+      <Name>JW.AUBE.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\JW.AUBE.Model\JW.AUBE.Model.csproj">
+      <Project>{30f5ec55-1d6c-4ea3-89b0-f9cd6b60a17c}</Project>
+      <Name>JW.AUBE.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

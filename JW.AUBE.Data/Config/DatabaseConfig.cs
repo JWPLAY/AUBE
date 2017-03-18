@@ -1,7 +1,7 @@
 ﻿using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 
-namespace JW.AUBE.Data.Config
+namespace JW.AUBE.Service.Config
 {
 	public static class DatabaseConfig
 	{

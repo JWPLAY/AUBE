@@ -4,10 +4,10 @@ using System.Data;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Base.Was.Models;
-using JW.AUBE.Data.Mappers;
-using JW.AUBE.Data.Models.Base;
+using JW.AUBE.Service.Mappers;
+using JW.AUBE.Model.Base;
 
-namespace JW.AUBE.Data.Services
+namespace JW.AUBE.Service.Services
 {
 	public static class AuthService
 	{

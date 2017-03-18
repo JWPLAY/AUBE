@@ -16,7 +16,7 @@ using JW.AUBE.Core.Controls.Grid;
 using JW.AUBE.Core.Enumerations;
 using JW.AUBE.Core.Helper;
 using JW.AUBE.Core.Utils;
-using JW.AUBE.Data.Models.Purchase;
+using JW.AUBE.Model.Purchase;
 
 namespace JW.AUBE.Core.Forms.Purchase
 {

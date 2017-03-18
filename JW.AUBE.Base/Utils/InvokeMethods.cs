@@ -6,7 +6,7 @@
 		{
 			try
 			{
-				const string assemblyName = "JW.AUBE.Data.Service";
+				const string assemblyName = "JW.AUBE.Service.Service";
 				var query = string.Empty;
 
 				var className = (sqlId.IndexOf('.') > 0) ? sqlId.Split('.')[0] : "CommonSQL";

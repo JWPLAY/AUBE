@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 
 
 
-[assembly: AssemblyTitle("JW.AUBE.Data")]
-[assembly: AssemblyDescription("JW.AUBE.Data")]
+[assembly: AssemblyTitle("JW.AUBE.Service")]
+[assembly: AssemblyDescription("JW.AUBE.Service")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("JW.AUBE.Data")]
-[assembly: AssemblyProduct("JW.AUBE.Data")]
+[assembly: AssemblyCompany("JW.AUBE.Service")]
+[assembly: AssemblyProduct("JW.AUBE.Service")]
 [assembly: AssemblyCopyright("Copyright ©  2017 JW.Play")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

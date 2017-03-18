@@ -5,7 +5,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
 
 	<statements>
-		<select id="SelectProducts" parameterClass="DataMap" resultClass="DataMap" >
+		<select id="SelectProducts" parameterClass="DataMap" resultClass="ProductListModel" >
 			<![CDATA[
 				SELECT  ROW_NUMBER() OVER (ORDER BY AA.USE_YN DESC, AA.PRODUCT_TYPE, AA.PRODUCT_NAME)	AS ROW_NO
 					,	AA.PRODUCT_ID
@@ -58,7 +58,7 @@
 				ORDER BY ROW_NO
 			]]>
 		</select>
-		<select id="SelectProduct" parameterClass="DataMap" resultClass="DataMap" >
+		<select id="SelectProduct" parameterClass="DataMap" resultClass="ProductDataModel" >
 			<![CDATA[
 				SELECT  AA.PRODUCT_ID
 					,	AA.PRODUCT_CODE
@@ -70,12 +70,12 @@
 					,	AA.USE_YN
 					,	AA.REMARKS
 					
-					,	AA.INS_TIME
+					,	dbo.DateTimeToChar20(AA.INS_TIME)	AS INS_TIME
 					,	AA.INS_USER
-					,	U1.USER_NAME			AS INS_USER_NAME
-					,	AA.UPD_TIME
+					,	U1.USER_NAME						AS INS_USER_NAME
+					,	dbo.DateTimeToChar20(AA.UPD_TIME)	AS UPD_TIME
 					,	AA.UPD_USER
-					,	U2.USER_NAME			AS UPD_USER_NAME
+					,	U2.USER_NAME						AS UPD_USER_NAME
 					
 				FROM	UCD.PRODUCTS AA WITH (NOLOCK)
 						LEFT JOIN 
@@ -266,4 +266,18 @@
 			]]>
 		</delete>
 	</statements>
+
+	<resultMaps>
+		<resultMap id="SelectProductsResult" class="DataMap">
+			<result property="ROW_NO" column="ROW_NO" dbType="Int" />
+			<result property="PRODUCT_ID" column="PRODUCT_ID" dbType="Int" />
+			<result property="PRODUCT_CODE" column="PRODUCT_CODE" dbType="Varchar" />
+			<result property="PRODUCT_NAME" column="PRODUCT_NAME" dbType="Varchar" />
+			<result property="PRODUCT_TYPE" column="PRODUCT_TYPE" dbType="Varchar" />
+			<result property="CATEGORY" column="CATEGORY" dbType="Varchar" />
+			<result property="USE_YN" column="USE_YN" dbType="Varchar" />
+			<result property="SALE_PRICE" column="SALE_PRICE" dbType="Decimal" />
+			<result property="COST_PRICE" column="COST_PRICE" dbType="Decimal" />
+		</resultMap>
+	</resultMaps>
 </sqlMap>

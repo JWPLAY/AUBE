@@ -254,7 +254,7 @@ namespace JW.AUBE.Core.Controls.Grid
 			if (column.IsMandatory)
 			{
 				gridColumn.AppearanceHeader.Options.UseForeColor = true;
-				if (SkinUtils.IsDarkSkin())
+				if (SkinUtils.IsDarkSkin)
 					gridColumn.AppearanceHeader.ForeColor = Color.Yellow;
 				else
 					gridColumn.AppearanceHeader.ForeColor = Color.Red;

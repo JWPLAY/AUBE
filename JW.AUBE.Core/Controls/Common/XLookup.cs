@@ -433,8 +433,8 @@ namespace JW.AUBE.Core.Controls.Common
 
 			if (bEnable == false)
 			{
-				Properties.Appearance.BackColor = SkinUtils.DisableBackColor();
-				Properties.Appearance.ForeColor = SkinUtils.DisableForeColor();
+				Properties.Appearance.BackColor = SkinUtils.DisableBackColor;
+				Properties.Appearance.ForeColor = SkinUtils.DisableForeColor;
 			}
 			else
 			{

@@ -508,8 +508,8 @@ namespace JW.AUBE.Core.Controls.Grid
 
 				if (e.RowHandle == view.FocusedRowHandle)
 				{
-					e.Appearance.BackColor = SkinUtils.HighlightBackColor();
-					e.Appearance.ForeColor = SkinUtils.HighlightForeColor();
+					e.Appearance.BackColor = SkinUtils.HighlightBackColor;
+					e.Appearance.ForeColor = SkinUtils.HighlightForeColor;
 				}
 				else
 				{
@@ -526,8 +526,8 @@ namespace JW.AUBE.Core.Controls.Grid
 					{
 						if (ci.RowHandle == view.FocusedRowHandle)
 						{
-							e.Appearance.BackColor = SkinUtils.HighlightBackColor();
-							e.Appearance.ForeColor = SkinUtils.HighlightForeColor();
+							e.Appearance.BackColor = SkinUtils.HighlightBackColor;
+							e.Appearance.ForeColor = SkinUtils.HighlightForeColor;
 							break;
 						}
 					}

@@ -5,21 +5,21 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
 
 	<statements>
-		<select id="SelectProductMaterials" parameterClass="DataMap" resultClass="DataMap" >
+		<select id="SelectProductMaterials" parameterClass="DataMap" resultClass="ProductMaterialListModel" >
 			<![CDATA[
 				SELECT  ROW_NUMBER() OVER (ORDER BY AA.REG_ID DESC)	AS ROW_NO
 					,	AA.REG_ID
 					,	AA.PRODUCT_ID
 					,	AA.MATERIAL_ID
-					,	BB.PRODUCT_NAME			AS MATERIAL_NAME
+					,	BB.PRODUCT_NAME						AS MATERIAL_NAME
 					,	AA.INPUT_QTY
-					,	M1.NAME					AS UNIT_TYPE
-					,	AA.INS_TIME
+					,	M1.NAME								AS UNIT_TYPE
+					,	dbo.DateTimeToChar20(AA.INS_TIME)	AS INS_TIME
 					,	AA.INS_USER
-					,	U1.USER_NAME			AS INS_USER_NAME
-					,	AA.UPD_TIME
+					,	U1.USER_NAME						AS INS_USER_NAME
+					,	dbo.DateTimeToChar20(AA.UPD_TIME)	AS UPD_TIME
 					,	AA.UPD_USER
-					,	U2.USER_NAME			AS UPD_USER_NAME
+					,	U2.USER_NAME						AS UPD_USER_NAME
 					
 				FROM	UCD.PRODUCT_MATERIALS AA WITH (NOLOCK)
 						LEFT JOIN
@@ -38,21 +38,21 @@
 				WHERE	AA.PRODUCT_ID = #PRODUCT_ID#
 				]]>
 		</select>
-		<select id="SelectProductMaterial" parameterClass="DataMap" resultClass="DataMap" >
+		<select id="SelectProductMaterial" parameterClass="DataMap" resultClass="ProductMaterialDataModel" >
 			<![CDATA[
 				SELECT	AA.REG_ID
 					,	AA.PRODUCT_ID
 					,	AA.MATERIAL_ID
-					,	BB.PRODUCT_NAME			AS MATERIAL_NAME
+					,	BB.PRODUCT_NAME						AS MATERIAL_NAME
 					,	AA.INPUT_QTY
 					,	BB.UNIT_TYPE
 					
-					,	AA.INS_TIME
+					,	dbo.DateTimeToChar20(AA.INS_TIME)	AS INS_TIME
 					,	AA.INS_USER
-					,	U1.USER_NAME			AS INS_USER_NAME
-					,	AA.UPD_TIME
+					,	U1.USER_NAME						AS INS_USER_NAME
+					,	dbo.DateTimeToChar20(AA.UPD_TIME)	AS UPD_TIME
 					,	AA.UPD_USER
-					,	U2.USER_NAME			AS UPD_USER_NAME
+					,	U2.USER_NAME						AS UPD_USER_NAME
 					
 				FROM	UCD.PRODUCT_MATERIALS AA WITH (NOLOCK)
 						LEFT JOIN

@@ -12,24 +12,36 @@ namespace JW.AUBE.Data.Services
 {
 	public static class ProductService
 	{
+		public static WasRequest GetList(WasRequest req)
+		{
+			try
+			{
+				var list = DaoFactory.Instance.QueryForList<ProductListModel>("SelectProducts", req.Parameter);
+				req.DataList = new List<WasRequestData>()
+				{
+					new WasRequestData() { Data = list }
+				};
+				return req;
+			}
+			catch (Exception ex)
+			{
+				req.ErrorNumber = ex.HResult;
+				req.ErrorMessage = ex.Message;
+				return req;
+			}
+		}
+
 		public static WasRequest GetData(WasRequest req)
 		{
 			try
 			{
-				var product = DaoFactory.Instance.QueryForList<DataMap>("SelectProduct", req.Parameter);
-				var materials = DaoFactory.Instance.QueryForList<DataMap>("SelectProductMaterials", req.Parameter);
+				var product = DaoFactory.Instance.QueryForObject<ProductDataModel>("SelectProduct", req.Parameter);
+				var materials = DaoFactory.Instance.QueryForList<ProductMaterialListModel>("SelectProductMaterials", req.Parameter);
 
 				req.DataList = new List<WasRequestData>()
 				{
-					new WasRequestData()
-					{
-						Data = ConvertUtils.DataMapListToDataTable(product, "Product")
-					}
-					,
-					new WasRequestData()
-					{
-						Data = ConvertUtils.DataMapListToDataTable(materials, "Materials")
-					}
+					new WasRequestData() {Data = product },
+					new WasRequestData() {Data = materials }
 				};
 				return req;
 			}

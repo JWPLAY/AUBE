@@ -9,88 +9,117 @@ namespace JW.AUBE.Core.Utils
 {
 	public static class SkinUtils
 	{
-		public static bool IsDarkSkin()
+		public static bool IsDarkSkin
 		{
-			if (Regex.IsMatch(UserLookAndFeel.Default.SkinName, "DevExpress Dark Style|Visual Studio 2013 Dark|High Contrast|Sharp Plus|Darkroom|Blueprint|Metropolis Dark|Office 2016 Dark|Office 2016 Black"))
+			get
 			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-		public static Color BackColor()
-		{
-			var currentSkin = CommonSkins.GetSkin(UserLookAndFeel.Default);
-			return currentSkin.Colors.GetColor(CommonColors.Window);
-		}
-		public static Color ForeColor()
-		{
-			var currentSkin = CommonSkins.GetSkin(UserLookAndFeel.Default);
-			return currentSkin.Colors.GetColor(CommonColors.WindowText);
-		}
-		public static Color Control()
-		{
-			var currentSkin = CommonSkins.GetSkin(UserLookAndFeel.Default);
-			return currentSkin.Colors.GetColor(CommonColors.Control);
-		}
-		public static Color ControlText()
-		{
-			var currentSkin = CommonSkins.GetSkin(UserLookAndFeel.Default);
-			return currentSkin.Colors.GetColor(CommonColors.ControlText);
-		}
-		public static Color DisableBackColor()
-		{
-			var currentSkin = CommonSkins.GetSkin(UserLookAndFeel.Default);
-			if (IsDarkSkin())
-			{
-				return currentSkin.Colors.GetColor(CommonColors.DisabledControl);
-			}
-			else
-			{
-				return Color.WhiteSmoke;
+				if (Regex.IsMatch(UserLookAndFeel.Default.SkinName, "DevExpress Dark Style|Visual Studio 2013 Dark|High Contrast|Sharp Plus|Darkroom|Blueprint|Metropolis Dark|Office 2016 Dark|Office 2016 Black"))
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
 			}
 		}
-		public static Color DisableForeColor()
+		public static Color BackColor
 		{
-			var currentSkin = CommonSkins.GetSkin(UserLookAndFeel.Default);
-			if (IsDarkSkin())
+			get
 			{
-				return currentSkin.Colors.GetColor(CommonColors.DisabledText);
-			}
-			else
-			{
-				return ControlText();
+				return CommonSkins.GetSkin(UserLookAndFeel.Default).Colors.GetColor(CommonColors.Window);
 			}
 		}
-		public static Color HighlightBackColor()
+		public static Color ForeColor
 		{
-			var currentSkin = CommonSkins.GetSkin(UserLookAndFeel.Default);
-			return currentSkin.Colors.GetColor(CommonColors.Highlight);
+			get
+			{
+				return CommonSkins.GetSkin(UserLookAndFeel.Default).Colors.GetColor(CommonColors.WindowText);
+			}
 		}
-		public static Color HighlightForeColor()
+		public static Color ControlColor
 		{
-			var currentSkin = CommonSkins.GetSkin(UserLookAndFeel.Default);
-			return currentSkin.Colors.GetColor(CommonColors.HighlightText);
+			get
+			{
+				return CommonSkins.GetSkin(UserLookAndFeel.Default).Colors.GetColor(CommonColors.Control);
+			}
 		}
-		public static Color Window()
+		public static Color ControlTextColor
 		{
-			var currentSkin = CommonSkins.GetSkin(UserLookAndFeel.Default);
-			return currentSkin.Colors.GetColor(CommonColors.Window);
+			get
+			{
+				return CommonSkins.GetSkin(UserLookAndFeel.Default).Colors.GetColor(CommonColors.ControlText);
+			}
 		}
-		public static Color WindowText()
+		public static Color EditSkinBackColor
 		{
-			var currentSkin = CommonSkins.GetSkin(UserLookAndFeel.Default);
-			return currentSkin.Colors.GetColor(CommonColors.WindowText);
+			get
+			{
+				return CommonSkins.GetSkin(UserLookAndFeel.Default)[CommonSkins.SkinTextControl].Color.BackColor;
+			}
 		}
-		public static Color GetFocusedRowBackColor(this GridView view)
+		public static Color EditSkinForeColor
 		{
-			return view.Appearance.FocusedRow.BackColor;
+			get
+			{
+				return CommonSkins.GetSkin(UserLookAndFeel.Default)[CommonSkins.SkinTextControl].Color.ForeColor;
+			}
 		}
-		public static Color GetFocusedRowForeColor(this GridView view)
+		public static Color DisableBackColor
 		{
-			return view.Appearance.FocusedRow.ForeColor;
+			get
+			{
+				if (IsDarkSkin)
+				{
+					return CommonSkins.GetSkin(UserLookAndFeel.Default).Colors.GetColor(CommonColors.DisabledControl);
+				}
+				else
+				{
+					return Color.WhiteSmoke;
+				}
+			}
+		}
+		public static Color DisableForeColor
+		{
+			get
+			{
+				if (IsDarkSkin)
+				{
+					return CommonSkins.GetSkin(UserLookAndFeel.Default).Colors.GetColor(CommonColors.DisabledText);
+				}
+				else
+				{
+					return ControlTextColor;
+				}
+			}
+		}
+		public static Color HighlightBackColor
+		{
+			get
+			{
+				return CommonSkins.GetSkin(UserLookAndFeel.Default).Colors.GetColor(CommonColors.Highlight);
+			}
+		}
+		public static Color HighlightForeColor
+		{
+			get
+			{
+				return CommonSkins.GetSkin(UserLookAndFeel.Default).Colors.GetColor(CommonColors.HighlightText);
+			}
+		}
+		public static Color Window
+		{
+			get
+			{
+				return CommonSkins.GetSkin(UserLookAndFeel.Default).Colors.GetColor(CommonColors.Window);
+			}
+		}
+		public static Color WindowText
+		{
+			get
+			{
+				return CommonSkins.GetSkin(UserLookAndFeel.Default).Colors.GetColor(CommonColors.WindowText);
+			}
 		}
 		public static Color EditBackColor
 		{
@@ -106,22 +135,35 @@ namespace JW.AUBE.Core.Utils
 				return CommonSkins.GetSkin(UserLookAndFeel.Default).TranslateColor(Color.FromArgb(39, 39, 39));
 			}
 		}
-
-		public static Color GetGridSubTotalBackColor()
+		public static Color GridSubTotalBackColor
 		{
-			return Color.FromArgb(253, 233, 217);
+			get
+			{
+				return Color.FromArgb(253, 233, 217);
+			}
 		}
-		public static Color GetGridSubTotalForeColor()
+		public static Color GridSubTotalForeColor
 		{
-			var currentSkin = CommonSkins.GetSkin(UserLookAndFeel.Default);
-			if (IsDarkSkin())
+			get
 			{
-				return currentSkin.Colors.GetColor(CommonColors.ControlText);
+				if (IsDarkSkin)
+				{
+					return CommonSkins.GetSkin(UserLookAndFeel.Default).Colors.GetColor(CommonColors.ControlText);
+				}
+				else
+				{
+					return ControlTextColor;
+				}
 			}
-			else
-			{
-				return ControlText();
-			}
+		}
+
+		public static Color FocusedRowBackColor(this GridView view)
+		{
+			return view.Appearance.FocusedRow.BackColor;
+		}
+		public static Color FocusedRowForeColor(this GridView view)
+		{
+			return view.Appearance.FocusedRow.ForeColor;
 		}
 
 		public static Font GetFont(string fontFamilyName, FontStyle fontStyle)

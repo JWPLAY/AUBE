@@ -67,7 +67,7 @@ namespace JW.AUBE.Core.Utils
 			if (item.Tag != null && item.Tag.GetType() == typeof(bool) && (bool)item.Tag == true)
 			{
 				item.Text = string.Format("*{0}:", caption);
-				item.AppearanceItemCaption.ForeColor = (SkinUtils.IsDarkSkin()) ? Color.Yellow : Color.Red;
+				item.AppearanceItemCaption.ForeColor = (SkinUtils.IsDarkSkin) ? Color.Yellow : Color.Red;
 				item.AppearanceItemCaption.Options.UseForeColor = true;
 			}
 			else

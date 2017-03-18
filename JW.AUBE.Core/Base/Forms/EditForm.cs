@@ -960,7 +960,7 @@ namespace JW.AUBE.Core.Base.Forms
 							if (((LayoutControlItem)item).Tag != null && ((LayoutControlItem)item).Tag.GetType() == typeof(bool) && (bool)((LayoutControlItem)item).Tag == true)
 							{
 								((LayoutControlItem)item).Text = string.Format("*{0}:", itemText);
-								((LayoutControlItem)item).AppearanceItemCaption.ForeColor = (SkinUtils.IsDarkSkin()) ? Color.Yellow : Color.Red;
+								((LayoutControlItem)item).AppearanceItemCaption.ForeColor = (SkinUtils.IsDarkSkin) ? Color.Yellow : Color.Red;
 								((LayoutControlItem)item).AppearanceItemCaption.Options.UseForeColor = true;
 							}
 							else

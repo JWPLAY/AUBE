@@ -14,6 +14,7 @@ using JW.AUBE.Core.Enumerations;
 using JW.AUBE.Core.Helper;
 using JW.AUBE.Core.Models;
 using JW.AUBE.Core.Utils;
+using JW.AUBE.Data.Models.Codes;
 
 namespace JW.AUBE.Core.Forms.Code
 {
@@ -122,55 +123,17 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			#region 조회리스트
 			gridList.Init();
-			gridList.AddGridColumns(new XGridColumn[]
-			{
-				new XGridColumn()
-				{
-					FieldName="ROW_NO",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 50
-				},
-				new XGridColumn()
-				{
-					FieldName="PRODUCT_ID",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 60,
-					Visible = false
-				},
-				new XGridColumn()
-				{
-					FieldName="PRODUCT_CODE",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 80
-				},
-				new XGridColumn()
-				{
-					FieldName="PRODUCT_NAME",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 200
-				},
-				new XGridColumn()
-				{
-					FieldName="PRODUCT_TYPE",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 100
-				},
-				new XGridColumn()
-				{
-					FieldName="CATEGORY",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 100
-				},
-				new XGridColumn()
-				{
-					FieldName="USE_YN",
-					HorzAlignment = HorzAlignment.Center,
-					RepositoryItem = gridList.GetRepositoryItemCheckEdit(),
-					Width = 80
-				}
-			});
-			gridList.SetColumnBackColor(Color.Black, "ROW_NO");
-			gridList.SetColumnForeColor(Color.White, "ROW_NO");
+			gridList.AddGridColumns(
+				new XGridColumn() { FieldName = "ROW_NO" },
+				new XGridColumn() { FieldName = "PRODUCT_ID", HorzAlignment = HorzAlignment.Center, Width = 60, Visible = false },
+				new XGridColumn() { FieldName = "PRODUCT_CODE", HorzAlignment = HorzAlignment.Center, Width = 80 },
+				new XGridColumn() { FieldName = "PRODUCT_NAME", HorzAlignment = HorzAlignment.Near, Width = 200 },
+				new XGridColumn() { FieldName = "PRODUCT_TYPE", HorzAlignment = HorzAlignment.Center, Width = 100 },
+				new XGridColumn() { FieldName = "CATEGORY", HorzAlignment = HorzAlignment.Center, Width = 100 },
+				new XGridColumn() { FieldName = "USE_YN", HorzAlignment = HorzAlignment.Center, RepositoryItem = gridList.GetRepositoryItemCheckEdit(), Width = 80 }
+			);
+			gridList.SetColumnBackColor(SkinUtils.BackColor, "ROW_NO");
+			gridList.SetColumnForeColor(Color.FromArgb(230, 232, 242), "ROW_NO");
 			gridList.ColumnFix("ROW_NO");
 
 			gridList.RowCellClick += delegate (object sender, RowCellClickEventArgs e)
@@ -180,7 +143,7 @@ namespace JW.AUBE.Core.Forms.Code
 
 				try
 				{
-					if (e.Button == System.Windows.Forms.MouseButtons.Left && e.Clicks == 1)
+					if (e.Button == MouseButtons.Left && e.Clicks == 1)
 					{
 						GridView view = sender as GridView;
 						DetailDataLoad(view.GetRowCellValue(e.RowHandle, "PRODUCT_ID"));
@@ -198,83 +161,25 @@ namespace JW.AUBE.Core.Forms.Code
 
 			#region Grid Add Columns
 			gridMaterials.AddGridColumns(
-				new XGridColumn()
-				{
-					FieldName = "ROW_NO",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 40
-				},
-				new XGridColumn()
-				{
-					FieldName = "REG_ID",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 40,
-					Visible = false
-				},
-				new XGridColumn()
-				{
-					FieldName = "PRODUCT_ID",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 50,
-					Visible = false					
-				},
-				new XGridColumn()
-				{
-					FieldName = "MATERIAL_NAME",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 200
-				},
-				new XGridColumn()
-				{
-					FieldName = "MATERIAL_ID",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 100
-				},
-				new XGridColumn()
-				{
-					FieldName = "INPUT_QTY",
-					HorzAlignment = HorzAlignment.Far,
-					FormatType = FormatType.Numeric,
-					FormatString = "N2",
-					Width = 80
-				},
-				new XGridColumn()
-				{
-					FieldName = "UNIT_TYPE",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 80
-				},
-				new XGridColumn()
-				{
-					FieldName = "INS_TIME",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 150
-				},
-				new XGridColumn()
-				{
-					FieldName = "INS_USER_NAME",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 100
-				},
-				new XGridColumn()
-				{
-					FieldName = "UPD_TIME",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 150
-				},
-				new XGridColumn()
-				{
-					FieldName = "UPD_USER_NAME",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 100
-				});
+				new XGridColumn() { FieldName = "ROW_NO" },
+				new XGridColumn() { FieldName = "REG_ID", HorzAlignment = HorzAlignment.Center, Width = 40, Visible = false },
+				new XGridColumn() { FieldName = "PRODUCT_ID", HorzAlignment = HorzAlignment.Center, Width = 50, Visible = false },
+				new XGridColumn() { FieldName = "MATERIAL_NAME", HorzAlignment = HorzAlignment.Near, Width = 200 },
+				new XGridColumn() { FieldName = "MATERIAL_ID", HorzAlignment = HorzAlignment.Center, Width = 100 },
+				new XGridColumn() { FieldName = "INPUT_QTY", HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N2", Width = 80 },
+				new XGridColumn() { FieldName = "UNIT_TYPE", HorzAlignment = HorzAlignment.Center, Width = 80 },
+				new XGridColumn() { FieldName = "INS_TIME" },
+				new XGridColumn() { FieldName = "INS_USER_NAME" },
+				new XGridColumn() { FieldName = "UPD_TIME" },
+				new XGridColumn() { FieldName = "UPD_USER_NAME" }
+				);
 			#endregion
 
 			gridMaterials.SetRepositoryItemButtonEdit("MATERIAL_NAME");
 			gridMaterials.SetEditable("MATERIAL_NAME", "INPUT_QTY");
 
-			gridMaterials.SetColumnBackColor(Color.Black, "ROW_NO");
-			gridMaterials.SetColumnForeColor(Color.Yellow, "ROW_NO");
+			gridMaterials.SetColumnBackColor(Color.FromArgb(66, 69, 84), "ROW_NO");
+			gridMaterials.SetColumnForeColor(Color.FromArgb(230, 232, 242), "ROW_NO");
 			gridMaterials.ColumnFix("ROW_NO");
 
 			#region Grid Events
@@ -366,7 +271,7 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				gridList.BindData("Base", "GetList", "SelectProducts", new DataMap() { { "FIND_TEXT", txtFindText.EditValue } });
+				gridList.BindData("Product", "GetList", null, new DataMap() { { "FIND_TEXT", txtFindText.EditValue } });
 
 				if (param != null)
 					DetailDataLoad(param);
@@ -386,26 +291,25 @@ namespace JW.AUBE.Core.Forms.Code
 				var res = ServerRequest.GetData("Product", new DataMap() { { "PRODUCT_ID", id } });
 				if (res.DataList.Count > 0)
 				{
-					if (res.DataList[0].Data == null || (res.DataList[0].Data as DataTable).Rows.Count == 0)
+					if (res.DataList[0].Data == null)
 						throw new Exception("조회 데이터가 없습니다.");
 
-					DataRow row = (res.DataList[0].Data as DataTable).Rows[0];
+					ProductDataModel model = (ProductDataModel)res.DataList[0].Data;
 
-					txtProductId.EditValue = row["PRODUCT_ID"];
-					txtProductCode.EditValue = row["PRODUCT_CODE"];
-					txtProductName.EditValue = row["PRODUCT_NAME"];
-					txtBarcode.EditValue = row["BARCODE"];
-					lupProductType.EditValue = row["PRODUCT_TYPE"];
-					lupCategory.EditValue = row["CATEGORY"];
-					lupUnitType.EditValue = row["UNIT_TYPE"];
-					txtBarcode.EditValue = row["BARCODE"];
-					chkUseYn.EditValue = row["USE_YN"];
-					memRemarks.EditValue = row["REMARKS"];
+					txtProductId.EditValue = model.PRODUCT_ID;
+					txtProductCode.EditValue = model.PRODUCT_CODE;
+					txtProductName.EditValue = model.PRODUCT_NAME;
+					txtBarcode.EditValue = model.BARCODE;
+					lupProductType.EditValue = model.PRODUCT_TYPE;
+					lupCategory.EditValue = model.CATEGORY;
+					lupUnitType.EditValue = model.UNIT_TYPE;
+					chkUseYn.EditValue = model.USE_YN;
+					memRemarks.EditValue = model.REMARKS;
 
-					txtInsTime.EditValue = row["INS_TIME"];
-					txtInsUserName.EditValue = row["INS_USER_NAME"];
-					txtUpdTime.EditValue = row["UPD_TIME"];
-					txtUpdUserName.EditValue = row["UPD_USER_NAME"];					
+					txtInsTime.EditValue = model.INS_TIME;
+					txtInsUserName.EditValue = model.INS_USER_NAME;
+					txtUpdTime.EditValue = model.UPD_TIME;
+					txtUpdUserName.EditValue = model.UPD_USER_NAME;				
 				}
 
 				if (res.DataList.Count > 1)
@@ -418,6 +322,11 @@ namespace JW.AUBE.Core.Forms.Code
 				this.EditMode = EditModeEnum.Modify;
 				txtProductName.Focus();
 
+				ShowMsgBox(string.Format("BackColor : {0},{1},{2}", txtFindText.BackColor.R, txtFindText.BackColor.G, txtFindText.BackColor.B) + Environment.NewLine + 
+					string.Format("ForeColor : {0},{1},{2}", txtFindText.ForeColor.R, txtFindText.ForeColor.G, txtFindText.ForeColor.B) + Environment.NewLine +
+					string.Format("Grid Header BackColor : {0},{1},{2}", gridList.MainView.Columns["ROW_NO"].AppearanceHeader.BackColor.R, gridList.MainView.Columns["ROW_NO"].AppearanceHeader.BackColor.G, gridList.MainView.Columns["ROW_NO"].AppearanceHeader.BackColor.B) + Environment.NewLine +
+					string.Format("Grid Header ForeColor : {0},{1},{2}", gridList.MainView.Columns["ROW_NO"].AppearanceHeader.ForeColor.R, gridList.MainView.Columns["ROW_NO"].AppearanceHeader.ForeColor.G, gridList.MainView.Columns["ROW_NO"].AppearanceHeader.ForeColor.B)
+					);
 			}
 			catch(Exception ex)
 			{

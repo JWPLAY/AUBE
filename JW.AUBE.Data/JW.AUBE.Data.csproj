@@ -72,6 +72,10 @@
     <Compile Include="Models\Base\CodeData.cs" />
     <Compile Include="Models\Base\LoginUserData.cs" />
     <Compile Include="Models\Base\MenuData.cs" />
+    <Compile Include="Models\Codes\ProductDataModel.cs" />
+    <Compile Include="Models\Codes\ProductListModel.cs" />
+    <Compile Include="Models\Codes\ProductMaterialDataModel.cs" />
+    <Compile Include="Models\Codes\ProductMaterialListModel.cs" />
     <Compile Include="Models\Codes\SalesPriceDataModel.cs" />
     <Compile Include="Models\Codes\SalesPriceListModel.cs" />
     <Compile Include="Models\Inventory\InventoryListModel.cs" />

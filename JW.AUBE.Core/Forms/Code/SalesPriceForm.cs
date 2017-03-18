@@ -3,15 +3,12 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using DevExpress.Utils;
-using DevExpress.XtraEditors.Controls;
-using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid.Views.Grid;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Controls.Grid;
 using JW.AUBE.Core.Enumerations;
-using JW.AUBE.Core.Helper;
 using JW.AUBE.Core.Models;
 using JW.AUBE.Core.Utils;
 using JW.AUBE.Data.Models.Codes;
@@ -74,8 +71,8 @@ namespace JW.AUBE.Core.Forms.Code
 				new XGridColumn() { FieldName = "PRODUCT_ID", HorzAlignment = HorzAlignment.Center, Width = 60, Visible = false },
 				new XGridColumn() { FieldName = "PRODUCT_CODE", HorzAlignment = HorzAlignment.Center, Width = 80 },
 				new XGridColumn() { FieldName = "PRODUCT_NAME", HorzAlignment = HorzAlignment.Near, Width = 200 },
-				new XGridColumn() { FieldName = "SALE_PRICE", HorzAlignment = HorzAlignment.Far, Width = 100 },
-				new XGridColumn() { FieldName = "COST_PRICE", HorzAlignment = HorzAlignment.Far, Width = 100 },
+				new XGridColumn() { FieldName = "SALE_PRICE", HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0", Width = 100 },
+				new XGridColumn() { FieldName = "COST_PRICE", HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0", Width = 100 },
 				new XGridColumn() { FieldName = "PRODUCT_TYPE", HorzAlignment = HorzAlignment.Center, Width = 100 },
 				new XGridColumn() { FieldName = "CATEGORY", HorzAlignment = HorzAlignment.Center, Width = 100 },
 				new XGridColumn() { FieldName = "USE_YN", HorzAlignment = HorzAlignment.Center, RepositoryItem = gridList.GetRepositoryItemCheckEdit(), Width = 80 }
@@ -195,7 +192,7 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				gridList.BindData("Base", "GetList", "SelectProducts", new DataMap()
+				gridList.BindData("Product", "GetList", null, new DataMap()
 				{
 					{ "FIND_TEXT", txtFindText.EditValue },
 					{ "VIEW_TYPE", "1" }

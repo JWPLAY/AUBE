@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using JW.AUBE.Core.Resources;
 
@@ -16,22 +15,6 @@ namespace JW.AUBE.Core.Messages
 			{
 				Close();
 			};
-			//btnExport.Click += delegate (object sender, System.EventArgs e)
-			//{
-			//	using (var dlg = new SaveFileDialog())
-			//	{
-			//		dlg.Filter = "Text files (*.txt)|*.txt";
-			//		dlg.Title = "Export in Text format";
-			//		dlg.CheckPathExists = true;
-
-			//		if (dlg.ShowDialog() == DialogResult.OK)
-			//		{
-			//			var fileName = dlg.FileName;
-			//			File.WriteAllText(fileName, memMessage.Text);
-			//		}
-			//	}
-			//};
-
 			Shown += delegate (object sender, System.EventArgs e)
 			{
 				btnOk.Focus();
@@ -45,18 +28,21 @@ namespace JW.AUBE.Core.Messages
 			Icon = IconResource.comment;
 
 			memMessage.ReadOnly = true;
+			memStackTrace.ReadOnly = true;
+
+			lcTabGroup.SelectedTabPage = lcTabGroupMessage;
 		}
 
-		public string Message
+		public object Message
 		{
-			get
-			{
-				return memMessage.Text;
-			}
-			set
-			{
-				memMessage.Text = value;
-			}
+			get { return memMessage.EditValue; }
+			set { memMessage.EditValue = value; }
+		}
+
+		public object StackTrace
+		{
+			get { return memStackTrace.EditValue; }
+			set { memStackTrace.EditValue = value; }
 		}
 	}
 }

@@ -34,14 +34,15 @@ namespace JW.AUBE.Core.Messages
 		{
 			try
 			{
-				var message = ErrorUtils.GetMessage(ex);
+				var error = ErrorUtils.GetMessageAndTrace(ex);
 
-				Logger.Error(message);
+				Logger.Error(error.Message);
 
 				using (var msgbox = new ErrorMessageBox())
 				{
-					msgbox.Text = "SYSTEM ERROR!!";
-					msgbox.Message = message;
+					msgbox.Text = "ERROR!!";
+					msgbox.Message = error.Message;
+					msgbox.StackTrace = error.StackTrace;
 					msgbox.ShowDialog();
 				}
 			}

@@ -22,13 +22,19 @@ namespace JW.AUBE.Service.Services
 		{
 			try
 			{
-				var purctran = DaoFactory.Instance.QueryForObject<PurcTranDataModel>("GetPurcTran", req.Parameter);
-				var purcitem = DaoFactory.Instance.QueryForList<PurcTranItemDataModel>("GetPurcTranItem", req.Parameter);
+				if (req.Parameter.GetValue("PURC_ID").ToStringNullToEmpty().IsNullOrEmpty() && req.Parameter.GetValue("PURC_NO").IsNullOrEmpty() == false)
+				{
+					var id = DaoFactory.Instance.QueryForObject<string>("GetPurcIdByPurcNo", req.Parameter);
+					req.Parameter.SetValue("PURC_ID", id);
+				}
+
+				var data = DaoFactory.Instance.QueryForObject<PurcTranDataModel>("GetPurcTran", req.Parameter);
+				var list = DaoFactory.Instance.QueryForList<PurcTranItemDataModel>("GetPurcTranItem", req.Parameter);
 
 				req.DataList = new List<WasRequestData>()
 				{
-					new WasRequestData(){ Data = purctran },
-					new WasRequestData(){ Data = purcitem }
+					new WasRequestData(){ Data = data },
+					new WasRequestData(){ Data = list }
 				};
 				return req;
 			}

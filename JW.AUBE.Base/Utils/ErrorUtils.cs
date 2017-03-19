@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using JW.AUBE.Base.Logging;
+using JW.AUBE.Base.Models;
 
 namespace JW.AUBE.Base.Utils
 {
@@ -56,6 +57,36 @@ namespace JW.AUBE.Base.Utils
 			while (ex != null);
 			exceptionMessage.Append("\r\n========================================");
 			return exceptionMessage.ToString();
+		}
+
+		public static ErrorMessage GetMessageAndTrace(Exception ex)
+		{
+			var exceptionMessage = new StringBuilder();
+			var exceptionStackTrace = new StringBuilder();
+
+			do
+			{
+				if (!string.IsNullOrEmpty(ex.Message))
+				{
+					exceptionMessage.Append(string.Format("{0}{1}", ex.Message, Environment.NewLine));
+				}
+				if (!string.IsNullOrEmpty(ex.Source))
+				{
+					exceptionStackTrace.Append(string.Format("Source : {0}{1}", ex.Source, Environment.NewLine));
+				}
+				if (!string.IsNullOrEmpty(ex.StackTrace))
+				{
+					exceptionStackTrace.Append(string.Format("Stack Trace {0}{1}", ex.StackTrace, Environment.NewLine));
+				}
+				ex = ex.InnerException;
+			}
+			while (ex != null);
+
+			return new ErrorMessage()
+			{
+				Message = exceptionMessage.ToString(),
+				StackTrace = exceptionStackTrace.ToString()
+			};
 		}
 	}
 }

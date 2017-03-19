@@ -34,30 +34,41 @@
 			this.memMessage = new DevExpress.XtraEditors.MemoEdit();
 			this.lcGroupBase = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.lcItemMessage = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.emptySpaceItem5 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+			this.lcTabGroup = new DevExpress.XtraLayout.TabbedControlGroup();
+			this.lcTabGroupMessage = new DevExpress.XtraLayout.LayoutControlGroup();
+			this.lcItemMessage = new DevExpress.XtraLayout.LayoutControlItem();
+			this.lcTabGroupStackTrace = new DevExpress.XtraLayout.LayoutControlGroup();
+			this.memStackTrace = new DevExpress.XtraEditors.MemoEdit();
+			this.lcItemStackTrace = new DevExpress.XtraLayout.LayoutControlItem();
 			((System.ComponentModel.ISupportInitialize)(this.lc)).BeginInit();
 			this.lc.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.memMessage.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupBase)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcItemMessage)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcTabGroup)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcTabGroupMessage)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcItemMessage)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcTabGroupStackTrace)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.memStackTrace.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcItemStackTrace)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// lc
 			// 
 			this.lc.AllowCustomization = false;
+			this.lc.Controls.Add(this.memStackTrace);
 			this.lc.Controls.Add(this.btnOk);
 			this.lc.Controls.Add(this.memMessage);
 			this.lc.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lc.Location = new System.Drawing.Point(0, 0);
 			this.lc.Name = "lc";
-			this.lc.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1111, 231, 250, 350);
+			this.lc.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(792, 231, 569, 350);
 			this.lc.Root = this.lcGroupBase;
 			this.lc.Size = new System.Drawing.Size(598, 368);
 			this.lc.TabIndex = 5;
@@ -83,9 +94,9 @@
 			this.memMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.memMessage.Location = new System.Drawing.Point(12, 12);
+			this.memMessage.Location = new System.Drawing.Point(17, 17);
 			this.memMessage.Name = "memMessage";
-			this.memMessage.Size = new System.Drawing.Size(574, 294);
+			this.memMessage.Size = new System.Drawing.Size(564, 260);
 			this.memMessage.StyleController = this.lc;
 			this.memMessage.TabIndex = 4;
 			// 
@@ -95,10 +106,10 @@
 			this.lcGroupBase.GroupBordersVisible = false;
 			this.lcGroupBase.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.emptySpaceItem2,
-            this.lcItemMessage,
             this.emptySpaceItem4,
             this.emptySpaceItem5,
-            this.layoutControlItem2});
+            this.layoutControlItem2,
+            this.lcTabGroup});
 			this.lcGroupBase.Location = new System.Drawing.Point(0, 0);
 			this.lcGroupBase.Name = "Root";
 			this.lcGroupBase.Size = new System.Drawing.Size(598, 368);
@@ -114,15 +125,6 @@
 			this.emptySpaceItem2.Size = new System.Drawing.Size(578, 24);
 			this.emptySpaceItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
 			this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
-			// 
-			// lcItemMessage
-			// 
-			this.lcItemMessage.Control = this.memMessage;
-			this.lcItemMessage.Location = new System.Drawing.Point(0, 0);
-			this.lcItemMessage.Name = "lcItemMessage";
-			this.lcItemMessage.Size = new System.Drawing.Size(578, 298);
-			this.lcItemMessage.TextSize = new System.Drawing.Size(0, 0);
-			this.lcItemMessage.TextVisible = false;
 			// 
 			// emptySpaceItem4
 			// 
@@ -152,6 +154,63 @@
 			this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem2.TextVisible = false;
 			// 
+			// lcTabGroup
+			// 
+			this.lcTabGroup.Location = new System.Drawing.Point(0, 0);
+			this.lcTabGroup.Name = "lcTabGroup";
+			this.lcTabGroup.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
+			this.lcTabGroup.SelectedTabPage = this.lcTabGroupMessage;
+			this.lcTabGroup.SelectedTabPageIndex = 0;
+			this.lcTabGroup.Size = new System.Drawing.Size(578, 298);
+			this.lcTabGroup.TabPages.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.lcTabGroupMessage,
+            this.lcTabGroupStackTrace});
+			this.lcTabGroup.TextLocation = DevExpress.Utils.Locations.Bottom;
+			// 
+			// lcTabGroupMessage
+			// 
+			this.lcTabGroupMessage.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.lcItemMessage});
+			this.lcTabGroupMessage.Location = new System.Drawing.Point(0, 0);
+			this.lcTabGroupMessage.Name = "lcTabGroupMessage";
+			this.lcTabGroupMessage.Size = new System.Drawing.Size(568, 264);
+			this.lcTabGroupMessage.Text = "메시지";
+			// 
+			// lcItemMessage
+			// 
+			this.lcItemMessage.Control = this.memMessage;
+			this.lcItemMessage.Location = new System.Drawing.Point(0, 0);
+			this.lcItemMessage.Name = "lcItemMessage";
+			this.lcItemMessage.Size = new System.Drawing.Size(568, 264);
+			this.lcItemMessage.TextSize = new System.Drawing.Size(0, 0);
+			this.lcItemMessage.TextVisible = false;
+			// 
+			// lcTabGroupStackTrace
+			// 
+			this.lcTabGroupStackTrace.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.lcItemStackTrace});
+			this.lcTabGroupStackTrace.Location = new System.Drawing.Point(0, 0);
+			this.lcTabGroupStackTrace.Name = "lcTabGroupStackTrace";
+			this.lcTabGroupStackTrace.Size = new System.Drawing.Size(568, 264);
+			this.lcTabGroupStackTrace.Text = "오류위치";
+			// 
+			// memStackTrace
+			// 
+			this.memStackTrace.Location = new System.Drawing.Point(17, 17);
+			this.memStackTrace.Name = "memStackTrace";
+			this.memStackTrace.Size = new System.Drawing.Size(564, 260);
+			this.memStackTrace.StyleController = this.lc;
+			this.memStackTrace.TabIndex = 5;
+			// 
+			// lcItemStackTrace
+			// 
+			this.lcItemStackTrace.Control = this.memStackTrace;
+			this.lcItemStackTrace.Location = new System.Drawing.Point(0, 0);
+			this.lcItemStackTrace.Name = "lcItemStackTrace";
+			this.lcItemStackTrace.Size = new System.Drawing.Size(568, 264);
+			this.lcItemStackTrace.TextSize = new System.Drawing.Size(0, 0);
+			this.lcItemStackTrace.TextVisible = false;
+			// 
 			// ErrorMessageBox
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -166,10 +225,15 @@
 			((System.ComponentModel.ISupportInitialize)(this.memMessage.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupBase)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcItemMessage)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem5)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcTabGroup)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcTabGroupMessage)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcItemMessage)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcTabGroupStackTrace)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.memStackTrace.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcItemStackTrace)).EndInit();
 			this.ResumeLayout(false);
 
         }
@@ -180,9 +244,14 @@
 		private DevExpress.XtraLayout.LayoutControl lc;
 		private DevExpress.XtraLayout.LayoutControlGroup lcGroupBase;
 		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem2;
-		private DevExpress.XtraLayout.LayoutControlItem lcItemMessage;
 		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem4;
 		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem5;
 		private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
+		private DevExpress.XtraLayout.TabbedControlGroup lcTabGroup;
+		private DevExpress.XtraLayout.LayoutControlGroup lcTabGroupMessage;
+		private DevExpress.XtraLayout.LayoutControlItem lcItemMessage;
+		private DevExpress.XtraLayout.LayoutControlGroup lcTabGroupStackTrace;
+		private DevExpress.XtraEditors.MemoEdit memStackTrace;
+		private DevExpress.XtraLayout.LayoutControlItem lcItemStackTrace;
 	}
 }

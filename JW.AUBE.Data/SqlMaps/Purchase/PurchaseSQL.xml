@@ -30,18 +30,8 @@
 						LEFT JOIN
 							UAA.USERS U2
 								ON AA.UPD_USER = U2.USER_ID
-				WHERE	1=1
+				WHERE	AA.PURC_ID	= #PURC_ID#
 			]]>
-			<isNotEmpty property="PURC_ID">
-				<![CDATA[
-				AND		AA.PURC_ID	= #PURC_ID#
-			]]>
-			</isNotEmpty>
-			<isNotEmpty property="PURC_NO">
-				<![CDATA[
-				AND		AA.PURC_NO	= #PURC_NO#
-			]]>
-			</isNotEmpty>
 		</select>
 		<select id="GetPurcTranItem" parameterClass="DataMap" resultClass="PurcTranItem" >
 			<![CDATA[
@@ -65,9 +55,6 @@
 					,	U2.USER_NAME						AS UPD_USER_NAME
 					
 				FROM	UBZ.PURC_TRAN_ITEM AA
-						INNER JOIN
-							UBZ.PURC_TRAN A1
-								ON AA.PURC_ID = A1.PURC_ID
 						LEFT JOIN
 							UCD.PRODUCTS BB
 								ON AA.PRODUCT_ID = BB.PRODUCT_ID
@@ -81,19 +68,7 @@
 						LEFT JOIN
 							UAA.USERS U2 WITH (NOLOCK)
 								ON AA.UPD_USER = U2.USER_ID
-				WHERE	1=1
-			]]>
-			<isNotEmpty property="PURC_ID">
-				<![CDATA[
-				AND		AA.PURC_ID	= #PURC_ID#
-			]]>
-			</isNotEmpty>
-			<isNotEmpty property="PURC_NO">
-			<![CDATA[
-				AND		A1.PURC_NO	= #PURC_NO#
-			]]>
-			</isNotEmpty>
-			<![CDATA[
+				WHERE	AA.PURC_ID	= #PURC_ID#
 				ORDER BY ROW_NO
 			]]>
 		</select>
@@ -145,6 +120,14 @@
 				SELECT  ISNULL(MAX(PURC_NO), #PURC_NO#+'000')	AS PURC_NO
 				FROM	UBZ.PURC_TRAN AA WITH (NOLOCK)
 				WHERE	AA.PURC_NO LIKE #PURC_NO# + '%'
+				]]>
+		</select>
+
+		<select id="GetPurcIdByPurcNo" parameterClass="DataMap" resultClass="Int" >
+			<![CDATA[
+				SELECT  AA.PURC_ID
+				FROM	UBZ.PURC_TRAN AA
+				WHERE	AA.PURC_NO = #PURC_NO#
 				]]>
 		</select>
 

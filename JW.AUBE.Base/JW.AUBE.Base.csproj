@@ -70,6 +70,7 @@
     <Compile Include="Map\SchemaMap.cs" />
     <Compile Include="Map\StringMap.cs" />
     <Compile Include="Map\StyleMap.cs" />
+    <Compile Include="Models\ErrorMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\AppConfigUtils.cs" />
     <Compile Include="Utils\CheckDigitUtils.cs" />

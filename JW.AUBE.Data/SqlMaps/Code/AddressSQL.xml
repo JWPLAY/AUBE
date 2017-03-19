@@ -5,7 +5,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
 
 	<statements>
-		<select id="SelectAddress" parameterClass="DataMap" resultClass="DataMap" >
+		<select id="SelectAddress" parameterClass="DataMap" resultClass="AddressData" >
 			<![CDATA[
 				SELECT  AA.ADDRESS_ID
 					,	AA.POST_NO
@@ -17,7 +17,7 @@
 					,	U1.USER_NAME			AS INS_USER_NAME
 					,	AA.UPD_TIME
 					,	AA.UPD_USER
-					,	U2.USER_NAME			AS UPD_USER_NAME					
+					,	U2.USER_NAME			AS UPD_USER_NAME
 				FROM	UCD.ADDRESS AA WITH (NOLOCK)
 						LEFT JOIN
 							UAA.USERS U1 
@@ -27,21 +27,25 @@
 								ON AA.UPD_USER = U2.USER_ID
 				WHERE	1=1				
 			]]>
-			<isNotEmpty property="FIND_TEXT">
-				<![CDATA[
-					AND	(	
-							AA.POST_NO	LIKE #FIND_TEXT# + '%'	OR
-							AA.ZONE_NO	LIKE #FIND_TEXT# + '%'	OR
-							AA.ADDRESS1	LIKE '%' + #FIND_TEXT# + '%'	OR
-							AA.ADDRESS2	LIKE '%' + #FIND_TEXT# + '%'
-						)
-				]]>
-			</isNotEmpty>
-			<isNotEmpty property="ADDRESS_ID">
-				<![CDATA[
-					AND	AA.ADDRESS_ID = #ADDRESS_ID#
-				]]>
-			</isNotEmpty>
+			<isPropertyAvailable property="FIND_TEXT" >
+				<isNotEmpty property="FIND_TEXT">
+					<![CDATA[
+						AND	(	
+								AA.POST_NO	LIKE #FIND_TEXT# + '%'	OR
+								AA.ZONE_NO	LIKE #FIND_TEXT# + '%'	OR
+								AA.ADDRESS1	LIKE '%' + #FIND_TEXT# + '%'	OR
+								AA.ADDRESS2	LIKE '%' + #FIND_TEXT# + '%'
+							)
+					]]>
+				</isNotEmpty>
+			</isPropertyAvailable>
+			<isPropertyAvailable property="ADDRESS_ID" >
+				<isNotEmpty property="ADDRESS_ID">
+					<![CDATA[
+						AND	AA.ADDRESS_ID = #ADDRESS_ID#
+					]]>
+				</isNotEmpty>
+			</isPropertyAvailable>
 			<![CDATA[
 				ORDER BY AA.ADDRESS_ID
 			]]>

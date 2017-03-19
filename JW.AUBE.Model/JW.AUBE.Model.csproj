@@ -46,6 +46,7 @@
     <Compile Include="Base\BaseDataModel.cs" />
     <Compile Include="Base\NavBarItemData.cs" />
     <Compile Include="Base\UserMenuDataModel.cs" />
+    <Compile Include="Codes\AddressDataModel.cs" />
     <Compile Include="Codes\ProductDataModel.cs" />
     <Compile Include="Codes\ProductListModel.cs" />
     <Compile Include="Codes\ProductMaterialDataModel.cs" />

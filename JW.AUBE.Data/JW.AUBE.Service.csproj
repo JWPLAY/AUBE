@@ -70,6 +70,7 @@
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\InventoryService.cs" />
     <Compile Include="Services\InvAdjsService.cs" />
+    <Compile Include="Services\CostPriceService.cs" />
     <Compile Include="Services\ProductionService.cs" />
     <Compile Include="Services\PurchaseService.cs" />
     <Compile Include="Services\SalesService.cs" />
@@ -166,7 +167,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="SqlMaps\Profit\CostPriceSQL.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -56,7 +56,7 @@ namespace JW.AUBE
 					}
 					if (e.Link.Item.Tag != null)
 					{
-						if (e.Link.Item.Tag is DataRow)
+						if (e.Link.Item.Tag is MainMenuDataModel)
 						{
 							MainMenuDataModel model = e.Link.Item.Tag as MainMenuDataModel;
 							OpenForm(new MenuData()

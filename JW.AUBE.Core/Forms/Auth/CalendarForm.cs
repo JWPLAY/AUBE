@@ -317,11 +317,6 @@ namespace JW.AUBE.Core.Forms.Auth
 
 			try
 			{
-				DataMap map = new DataMap()
-								{
-									{ "CAL_YEAR", datCalYear.GetDateChar4().ToIntegerNullToZero() }
-								};
-
 				var res = ServerRequest.ProcedureCall("CreateCalendar", new DataMap() { { "CAL_YEAR", datCalYear.GetDateChar4().ToIntegerNullToZero() } });
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);

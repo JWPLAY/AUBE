@@ -290,7 +290,7 @@ namespace JW.AUBE
 		{
 			Icon = IconResource.icon;
 			barManager.Items.OfType<BarButtonItem>().ToList().ForEach(x => x.Tag = x.Name.Replace("barButton", string.Empty));
-			dockPanelLog.Padding = new Padding(2);
+			dockPanelLog.Padding = new Padding(2);			
 		}
 
 		private void InitSkin()
@@ -402,7 +402,9 @@ namespace JW.AUBE
 		{
 			try
 			{
-				dpFavorite.Visibility = DockVisibility.AutoHide;
+				//dpFavorite.Visibility = DockVisibility.AutoHide;
+				dpFavorite.Visibility = DockVisibility.Hidden;
+				barButtonFav.Visibility = BarItemVisibility.Never;
 			}
 			catch (Exception ex)
 			{

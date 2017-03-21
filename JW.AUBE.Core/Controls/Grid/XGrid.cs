@@ -75,10 +75,7 @@ namespace JW.AUBE.Core.Controls.Grid
 
 			GridLocalizer.Active = new KoreanGridLocalizer();
 
-			Grid.DataSourceChanged += delegate (object sender, EventArgs e)
-			{
-				DataSourceChanged?.Invoke(sender, e);
-			};
+			Grid.DataSourceChanged += delegate (object sender, EventArgs e) { DataSourceChanged?.Invoke(sender, e); };
 		}
 
 		private void GridViewPopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
@@ -636,10 +633,7 @@ namespace JW.AUBE.Core.Controls.Grid
 		}
 
 		[Browsable(true)]
-		public bool Compress
-		{
-			get; set;
-		}
+		public bool Compress { get; set; }
 
 		[Browsable(true)]
 		public bool ShowGroupPanel

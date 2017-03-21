@@ -3,7 +3,6 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using DevExpress.Utils;
 using DevExpress.XtraEditors.Repository;
@@ -83,27 +82,62 @@ namespace JW.AUBE.Core.Controls.Grid
 		/// </summary>
 		public void Init()
 		{
-			if (MainView.GetType() == typeof(GridView) ||
-				MainView.GetType() == typeof(BandedGridView) ||
-				MainView.GetType() == typeof(AdvBandedGridView))
+			if (MainView is AdvBandedGridView)
 			{
 				if (GlobalVar.Settings.GetValue("GRID_EVEN_AND_ODD").ToStringNullToEmpty() == "Y")
 				{
-					((GridView)Grid.MainView).OptionsView.EnableAppearanceEvenRow = true;
-					((GridView)Grid.MainView).OptionsView.EnableAppearanceOddRow = true;
+					(Grid.MainView as AdvBandedGridView).OptionsView.EnableAppearanceEvenRow = true;
+					(Grid.MainView as AdvBandedGridView).OptionsView.EnableAppearanceOddRow = true;
 				}
-				((GridView)Grid.MainView).OptionsView.ShowGroupPanel = false;
-				((GridView)Grid.MainView).OptionsView.ShowDetailButtons = false;
-				((GridView)Grid.MainView).OptionsSelection.EnableAppearanceFocusedRow = true;
-				((GridView)Grid.MainView).OptionsSelection.EnableAppearanceFocusedCell = true;
-				((GridView)Grid.MainView).FocusRectStyle = DrawFocusRectStyle.CellFocus;
-				((GridView)Grid.MainView).OptionsSelection.MultiSelect = true;
-				((GridView)Grid.MainView).OptionsSelection.MultiSelectMode = GridMultiSelectMode.RowSelect;
-				((GridView)Grid.MainView).OptionsView.ColumnAutoWidth = false;
-				((GridView)Grid.MainView).OptionsView.ShowFooter = false;
-				((GridView)Grid.MainView).OptionsBehavior.ReadOnly = true;
-				((GridView)Grid.MainView).OptionsBehavior.Editable = false;
+				(Grid.MainView as AdvBandedGridView).OptionsView.ShowGroupPanel = false;
+				(Grid.MainView as AdvBandedGridView).OptionsView.ShowDetailButtons = false;
+				(Grid.MainView as AdvBandedGridView).OptionsSelection.EnableAppearanceFocusedRow = true;
+				(Grid.MainView as AdvBandedGridView).OptionsSelection.EnableAppearanceFocusedCell = true;
+				(Grid.MainView as AdvBandedGridView).FocusRectStyle = DrawFocusRectStyle.CellFocus;
+				(Grid.MainView as AdvBandedGridView).OptionsSelection.MultiSelect = true;
+				(Grid.MainView as AdvBandedGridView).OptionsSelection.MultiSelectMode = GridMultiSelectMode.RowSelect;
+				(Grid.MainView as AdvBandedGridView).OptionsView.ColumnAutoWidth = false;
+				(Grid.MainView as AdvBandedGridView).OptionsView.ShowFooter = false;
+				(Grid.MainView as AdvBandedGridView).OptionsBehavior.ReadOnly = true;
+				(Grid.MainView as AdvBandedGridView).OptionsBehavior.Editable = false;
+			}
+			else if (MainView is BandedGridView)
+			{
+				if (GlobalVar.Settings.GetValue("GRID_EVEN_AND_ODD").ToStringNullToEmpty() == "Y")
+				{
+					(Grid.MainView as BandedGridView).OptionsView.EnableAppearanceEvenRow = true;
+					(Grid.MainView as BandedGridView).OptionsView.EnableAppearanceOddRow = true;
+				}
+				(Grid.MainView as BandedGridView).OptionsView.ShowGroupPanel = false;
+				(Grid.MainView as BandedGridView).OptionsView.ShowDetailButtons = false;
+				(Grid.MainView as BandedGridView).OptionsSelection.EnableAppearanceFocusedRow = true;
+				(Grid.MainView as BandedGridView).OptionsSelection.EnableAppearanceFocusedCell = true;
+				(Grid.MainView as BandedGridView).FocusRectStyle = DrawFocusRectStyle.CellFocus;
+				(Grid.MainView as BandedGridView).OptionsSelection.MultiSelect = true;
+				(Grid.MainView as BandedGridView).OptionsSelection.MultiSelectMode = GridMultiSelectMode.RowSelect;
+				(Grid.MainView as BandedGridView).OptionsView.ColumnAutoWidth = false;
+				(Grid.MainView as BandedGridView).OptionsView.ShowFooter = false;
+				(Grid.MainView as BandedGridView).OptionsBehavior.ReadOnly = true;
+				(Grid.MainView as BandedGridView).OptionsBehavior.Editable = false;
+			}
+			else if (MainView is GridView)
+			{
+				if (GlobalVar.Settings.GetValue("GRID_EVEN_AND_ODD").ToStringNullToEmpty() == "Y")
+				{
+					(Grid.MainView as GridView).OptionsView.EnableAppearanceEvenRow = true;
+					(Grid.MainView as GridView).OptionsView.EnableAppearanceOddRow = true;
+				}
 				(Grid.MainView as GridView).OptionsView.ShowGroupPanel = false;
+				(Grid.MainView as GridView).OptionsView.ShowDetailButtons = false;
+				(Grid.MainView as GridView).OptionsSelection.EnableAppearanceFocusedRow = true;
+				(Grid.MainView as GridView).OptionsSelection.EnableAppearanceFocusedCell = true;
+				(Grid.MainView as GridView).FocusRectStyle = DrawFocusRectStyle.CellFocus;
+				(Grid.MainView as GridView).OptionsSelection.MultiSelect = true;
+				(Grid.MainView as GridView).OptionsSelection.MultiSelectMode = GridMultiSelectMode.RowSelect;
+				(Grid.MainView as GridView).OptionsView.ColumnAutoWidth = false;
+				(Grid.MainView as GridView).OptionsView.ShowFooter = false;
+				(Grid.MainView as GridView).OptionsBehavior.ReadOnly = true;
+				(Grid.MainView as GridView).OptionsBehavior.Editable = false;
 			}
 
 			if (GlobalVar.Settings.GetValue("GRID_SKIN").IsNullOrEmpty() == false)
@@ -392,6 +426,7 @@ namespace JW.AUBE.Core.Controls.Grid
 			{
 				gridColumn.VisibleIndex = MainView.Columns.Count;
 			}
+
 			MainView.Columns.Add(gridColumn);
 		}
 
@@ -427,7 +462,25 @@ namespace JW.AUBE.Core.Controls.Grid
 			bandedColumn.AppearanceHeader.Options.UseTextOptions = true;
 			bandedColumn.AppearanceHeader.TextOptions.HAlignment = HorzAlignment.Center;
 			bandedColumn.AppearanceCell.Options.UseTextOptions = true;
-			bandedColumn.AppearanceCell.TextOptions.HAlignment = column.HorzAlignment;
+			switch (column.FieldName)
+			{
+				case "ROW_NO":
+				case "INS_TIME":
+				case "INS_USER":
+				case "INS_USER_NAME":
+				case "UPD_TIME":
+				case "UPD_USER":
+				case "UPD_USER_NAME":
+					bandedColumn.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+					break;
+				default:
+					if (column.FieldName.EndsWith("_DATE"))
+						bandedColumn.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+					else
+						bandedColumn.AppearanceCell.TextOptions.HAlignment = column.HorzAlignment;
+					break;
+			}
+
 
 			bandedColumn.DisplayFormat.FormatType =
 				bandedColumn.GroupFormat.FormatType = column.FormatType;
@@ -492,6 +545,42 @@ namespace JW.AUBE.Core.Controls.Grid
 				bandedColumn.Width = column.Width;
 				bandedColumn.MinWidth = column.Width;
 			}
+			else
+			{
+				switch (column.FieldName)
+				{
+					case "ROW_NO":
+						bandedColumn.Width = 50;
+						bandedColumn.MinWidth = 50;
+						break;
+					case "INS_TIME":
+					case "UPD_TIME":
+						bandedColumn.Width = 150;
+						bandedColumn.MinWidth = 150;
+						break;
+					case "INS_USER":
+					case "UPD_USER":
+						bandedColumn.Width = 100;
+						bandedColumn.MinWidth = 100;
+						break;
+					case "INS_USER_NAME":
+					case "UPD_USER_NAME":
+						bandedColumn.Width = 100;
+						bandedColumn.MinWidth = 100;
+						break;
+					default:
+						if (column.FieldName.EndsWith("_DATE"))
+						{
+							bandedColumn.Width = 100;
+							bandedColumn.MinWidth = 100;
+						}
+						else
+						{
+							bandedColumn.BestFit();
+						}
+						break;
+				}
+			}
 
 			bandedColumn.Visible = column.Visible;
 
@@ -522,7 +611,7 @@ namespace JW.AUBE.Core.Controls.Grid
 		/// </summary>
 		/// <param name="band">GridBand</param>
 		/// <param name="columns">컬럼명 배열</param>
-		public void SetBandAndColumns(GridBand band, params string[] columns)
+		public void AddBandAndColumns(GridBand band, params string[] columns)
 		{
 			if (MainView.GetType() != typeof(BandedGridView) && MainView.GetType() != typeof(AdvBandedGridView))
 			{
@@ -531,10 +620,10 @@ namespace JW.AUBE.Core.Controls.Grid
 			var view = MainView as BandedGridView;
 			view.BeginUpdate();
 
-			if (band.Caption.IsNullOrEmpty())
-			{
-				band.Caption = DomainUtils.GetFieldName(band.Name);
-			}
+			//if (band.Caption.IsNullOrEmpty())
+			//{
+			//	band.Caption = DomainUtils.GetFieldName(band.Name);
+			//}
 			band.AppearanceHeader.Options.UseTextOptions = true;
 			band.AppearanceHeader.TextOptions.HAlignment = HorzAlignment.Center;
 			band.AppearanceHeader.TextOptions.VAlignment = VertAlignment.Center;

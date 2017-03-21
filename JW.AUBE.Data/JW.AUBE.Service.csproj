@@ -67,6 +67,7 @@
     <Compile Include="Mappers\SqlFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CommonService.cs" />
+    <Compile Include="Services\ProfitService.cs" />
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\InventoryService.cs" />
     <Compile Include="Services\InvAdjsService.cs" />
@@ -169,6 +170,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SqlMaps\Profit\CostPriceSQL.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SqlMaps\Profit\ProfitSQL.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

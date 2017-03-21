@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
 using DevExpress.Utils;
 using DevExpress.XtraGrid.Views.Grid;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Controls.Grid;
-using JW.AUBE.Core.Messages;
 using JW.AUBE.Core.Utils;
 
 namespace JW.AUBE.Core.Forms.Profit
 {
-	public partial class CostListForm : EditForm
+	public partial class ProfitListForm : EditForm
 	{
-		public CostListForm()
+		public ProfitListForm()
 		{
 			InitializeComponent();
 
@@ -36,18 +34,11 @@ namespace JW.AUBE.Core.Forms.Profit
 					ShowErrBox(ex);
 				}
 			};
-
-			btnClosing.Click += delegate (object sender, EventArgs e) { doCreate(); };
 		}
 
 		protected override void InitButtons()
 		{
-			SetToolbarButtons(new Models.ToolbarButtons()
-			{
-				Refresh = true,
-				Export = true
-			});
-			btnClosing.Enabled = this.IsDataEdit;
+			SetToolbarButtons(new Models.ToolbarButtons() { Refresh = true, Export = true });
 		}
 		protected override void InitControls()
 		{
@@ -77,16 +68,15 @@ namespace JW.AUBE.Core.Forms.Profit
 				new XGridColumn() { FieldName = "PRODUCT_ID", HorzAlignment = HorzAlignment.Center, Width = 100, Visible = false },
 				new XGridColumn() { FieldName = "PRODUCT_CODE", HorzAlignment = HorzAlignment.Center, Width = 100 },
 				new XGridColumn() { FieldName = "PRODUCT_NAME", Width = 200 },
-				new XGridColumn() { FieldName = "BASE_QTY", Caption = "기초재고수량", HorzAlignment = HorzAlignment.Far, Width = 90, FormatType = FormatType.Numeric, FormatString = "N0" },
-				new XGridColumn() { FieldName = "BASE_AMT", Caption = "기초재고금액", HorzAlignment = HorzAlignment.Far, Width = 110, FormatType = FormatType.Numeric, FormatString = "N0" },
-				new XGridColumn() { FieldName = "PURC_QTY", Caption = "당월구매수량", HorzAlignment = HorzAlignment.Far, Width = 90, FormatType = FormatType.Numeric, FormatString = "N0" },
-				new XGridColumn() { FieldName = "PURC_AMT", Caption = "당월구매금액", HorzAlignment = HorzAlignment.Far, Width = 110, FormatType = FormatType.Numeric, FormatString = "N0" },
-				new XGridColumn() { FieldName = "PROD_QTY", Caption = "당월생산수량", HorzAlignment = HorzAlignment.Far, Width = 90, FormatType = FormatType.Numeric, FormatString = "N0" },
-				new XGridColumn() { FieldName = "PROD_AMT", Caption = "당월생산금액", HorzAlignment = HorzAlignment.Far, Width = 110, FormatType = FormatType.Numeric, FormatString = "N0" },
-				new XGridColumn() { FieldName = "TSUM_QTY", Caption = "원가계산수량", HorzAlignment = HorzAlignment.Far, Width = 90, FormatType = FormatType.Numeric, FormatString = "N0" },
-				new XGridColumn() { FieldName = "TSUM_AMT", Caption = "원가계산금액", HorzAlignment = HorzAlignment.Far, Width = 110, FormatType = FormatType.Numeric, FormatString = "N0" },
-				new XGridColumn() { FieldName = "COST_PRICE", HorzAlignment = HorzAlignment.Far, Width = 100, FormatType = FormatType.Numeric, FormatString = "N0" },
-				new XGridColumn() { FieldName = "REMARKS", Width = 200 },
+				new XGridColumn() { FieldName = "SALE_AMT", Caption = "당월매출", HorzAlignment = HorzAlignment.Far, Width = 110, FormatType = FormatType.Numeric, FormatString = "N0" },
+				new XGridColumn() { FieldName = "BASE_AMT", Caption = "기초재고", HorzAlignment = HorzAlignment.Far, Width = 110, FormatType = FormatType.Numeric, FormatString = "N0" },
+				new XGridColumn() { FieldName = "PURC_AMT", Caption = "당월매입", HorzAlignment = HorzAlignment.Far, Width = 110, FormatType = FormatType.Numeric, FormatString = "N0" },
+				new XGridColumn() { FieldName = "PROD_AMT", Caption = "당월생산", HorzAlignment = HorzAlignment.Far, Width = 110, FormatType = FormatType.Numeric, FormatString = "N0" },
+				new XGridColumn() { FieldName = "ADJS_AMT", Caption = "당월조정", HorzAlignment = HorzAlignment.Far, Width = 110, FormatType = FormatType.Numeric, FormatString = "N0" },
+				new XGridColumn() { FieldName = "BLNC_AMT", Caption = "기말재고", HorzAlignment = HorzAlignment.Far, Width = 110, FormatType = FormatType.Numeric, FormatString = "N0" },
+				new XGridColumn() { FieldName = "COST_AMT", Caption = "매출원가", HorzAlignment = HorzAlignment.Far, Width = 110, FormatType = FormatType.Numeric, FormatString = "N0" },
+				new XGridColumn() { FieldName = "PRFT_AMT", Caption = "매출이익", HorzAlignment = HorzAlignment.Far, Width = 110, FormatType = FormatType.Numeric, FormatString = "N0" },
+				new XGridColumn() { FieldName = "PRFT_RAT", Caption = "이익율(%)", HorzAlignment = HorzAlignment.Far, Width = 80, FormatType = FormatType.Numeric, FormatString = "P2" },
 				new XGridColumn() { FieldName = "INS_TIME" },
 				new XGridColumn() { FieldName = "INS_USER", Visible = false },
 				new XGridColumn() { FieldName = "INS_USER_NAME" },
@@ -103,32 +93,12 @@ namespace JW.AUBE.Core.Forms.Profit
 
 		protected override void DataLoad(object param = null)
 		{
-			gridList.BindData("CostPrice", "GetList", null, new DataMap() {
+			gridList.BindData("Profit", "GetList", null, new DataMap() {
 				{ "CLOSING_YM", datClosingYm.GetDateChar6() },
 				{ "PRODUCT_ID", txtProduct.EditValue },
 				{ "PRODUCT_TYPE", lupProductType.EditValue },
 				{ "CATEGORY", lupCategory.EditValue }
 			});
-		}
-
-		void doCreate()
-		{
-			if (MsgBox.Show("원가마감하겠습니까?", "확인!!", MessageBoxButtons.YesNo) != DialogResult.Yes)
-				return;
-
-			try
-			{
-				var res = ServerRequest.ProcedureCall("CreateCostPrice", new DataMap() { { "CLOSING_YM", datClosingYm.GetDateChar6() } });
-				if (res.ErrorNumber != 0)
-					throw new Exception(res.ErrorMessage);
-
-				ShowMsgBox("생성하였습니다.");
-				DataLoad(null);
-			}
-			catch (Exception ex)
-			{
-				ShowErrBox(ex);
-			}
 		}
 	}
 }

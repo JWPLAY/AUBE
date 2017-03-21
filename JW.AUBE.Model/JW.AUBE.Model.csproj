@@ -63,6 +63,7 @@
     <Compile Include="Production\ProdTranDataModel.cs" />
     <Compile Include="Production\ProdTranListModel.cs" />
     <Compile Include="Profit\CostPriceDataModel.cs" />
+    <Compile Include="Profit\ProfitListModel.cs" />
     <Compile Include="Profit\CostPriceListModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Purchase\PurcTranDataModel.cs" />

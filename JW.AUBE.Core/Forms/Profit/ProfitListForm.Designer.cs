@@ -1,6 +1,6 @@
 ﻿namespace JW.AUBE.Core.Forms.Profit
 {
-	partial class CostListForm
+	partial class ProfitListForm
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -42,10 +42,6 @@
 			this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.gridList = new JW.AUBE.Core.Controls.Grid.XGrid();
 			this.lcGridList = new DevExpress.XtraLayout.LayoutControlItem();
-			this.emptySpaceItem4 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.lcGroupButtons = new DevExpress.XtraLayout.LayoutControlGroup();
-			this.lcButtonClosing = new DevExpress.XtraLayout.LayoutControlItem();
-			this.btnClosing = new DevExpress.XtraEditors.SimpleButton();
 			((System.ComponentModel.ISupportInitialize)(this.lc)).BeginInit();
 			this.lc.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupBase)).BeginInit();
@@ -62,14 +58,10 @@
 			((System.ComponentModel.ISupportInitialize)(this.datClosingYm.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGridList)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcGroupButtons)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcButtonClosing)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// lc
 			// 
-			this.lc.Controls.Add(this.btnClosing);
 			this.lc.Controls.Add(this.datClosingYm);
 			this.lc.Controls.Add(this.lupCategory);
 			this.lc.Controls.Add(this.lupProductType);
@@ -83,8 +75,7 @@
 			// 
 			this.lcGroupBase.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.lcGroupSearch,
-            this.lcGridList,
-            this.lcGroupButtons});
+            this.lcGridList});
 			this.lcGroupBase.Name = "Root";
 			this.lcGroupBase.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
 			this.lcGroupBase.Size = new System.Drawing.Size(1012, 418);
@@ -244,7 +235,7 @@
 			this.gridList.DataSource = null;
 			this.gridList.Editable = true;
 			this.gridList.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
-			this.gridList.Location = new System.Drawing.Point(4, 121);
+			this.gridList.Location = new System.Drawing.Point(4, 85);
 			this.gridList.Name = "gridList";
 			this.gridList.PageFooterCenter = null;
 			this.gridList.PageFooterLeft = null;
@@ -258,69 +249,25 @@
 			this.gridList.ReadOnly = false;
 			this.gridList.ShowFooter = true;
 			this.gridList.ShowGroupPanel = false;
-			this.gridList.Size = new System.Drawing.Size(1004, 293);
+			this.gridList.Size = new System.Drawing.Size(1004, 329);
 			this.gridList.TabIndex = 4;
 			// 
 			// lcGridList
 			// 
 			this.lcGridList.Control = this.gridList;
-			this.lcGridList.Location = new System.Drawing.Point(0, 117);
+			this.lcGridList.Location = new System.Drawing.Point(0, 81);
 			this.lcGridList.Name = "lcGridList";
-			this.lcGridList.Size = new System.Drawing.Size(1008, 297);
+			this.lcGridList.Size = new System.Drawing.Size(1008, 333);
 			this.lcGridList.TextSize = new System.Drawing.Size(0, 0);
 			this.lcGridList.TextVisible = false;
 			// 
-			// emptySpaceItem4
-			// 
-			this.emptySpaceItem4.AllowHotTrack = false;
-			this.emptySpaceItem4.AppearanceItemCaption.ForeColor = System.Drawing.Color.Yellow;
-			this.emptySpaceItem4.AppearanceItemCaption.Options.UseForeColor = true;
-			this.emptySpaceItem4.Location = new System.Drawing.Point(0, 0);
-			this.emptySpaceItem4.Name = "emptySpaceItem4";
-			this.emptySpaceItem4.Size = new System.Drawing.Size(898, 26);
-			this.emptySpaceItem4.Text = " ※ 월별로 원가마감을 처리합니다.";
-			this.emptySpaceItem4.TextSize = new System.Drawing.Size(105, 0);
-			this.emptySpaceItem4.TextVisible = true;
-			// 
-			// lcGroupButtons
-			// 
-			this.lcGroupButtons.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.emptySpaceItem4,
-            this.lcButtonClosing});
-			this.lcGroupButtons.Location = new System.Drawing.Point(0, 81);
-			this.lcGroupButtons.Name = "lcGroupButtons";
-			this.lcGroupButtons.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcGroupButtons.Size = new System.Drawing.Size(1008, 36);
-			this.lcGroupButtons.TextVisible = false;
-			// 
-			// lcButtonClosing
-			// 
-			this.lcButtonClosing.Control = this.btnClosing;
-			this.lcButtonClosing.Location = new System.Drawing.Point(898, 0);
-			this.lcButtonClosing.MaxSize = new System.Drawing.Size(100, 26);
-			this.lcButtonClosing.MinSize = new System.Drawing.Size(100, 26);
-			this.lcButtonClosing.Name = "lcButtonClosing";
-			this.lcButtonClosing.Size = new System.Drawing.Size(100, 26);
-			this.lcButtonClosing.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-			this.lcButtonClosing.TextSize = new System.Drawing.Size(0, 0);
-			this.lcButtonClosing.TextVisible = false;
-			// 
-			// btnClosing
-			// 
-			this.btnClosing.Location = new System.Drawing.Point(907, 90);
-			this.btnClosing.Name = "btnClosing";
-			this.btnClosing.Size = new System.Drawing.Size(96, 22);
-			this.btnClosing.StyleController = this.lc;
-			this.btnClosing.TabIndex = 11;
-			this.btnClosing.Text = "원가마감";
-			// 
-			// CostListForm
+			// ProfitListForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1012, 484);
-			this.Name = "CostListForm";
-			this.Text = "CostListForm";
+			this.Name = "ProfitListForm";
+			this.Text = "ProfitListForm";
 			((System.ComponentModel.ISupportInitialize)(this.lc)).EndInit();
 			this.lc.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupBase)).EndInit();
@@ -337,9 +284,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.datClosingYm.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGridList)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem4)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcGroupButtons)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcButtonClosing)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -360,9 +304,5 @@
 		private DevExpress.XtraEditors.DateEdit datClosingYm;
 		private DevExpress.XtraLayout.LayoutControlItem lcItemClosingYm;
 		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem2;
-		private DevExpress.XtraLayout.LayoutControlGroup lcGroupButtons;
-		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem4;
-		private DevExpress.XtraEditors.SimpleButton btnClosing;
-		private DevExpress.XtraLayout.LayoutControlItem lcButtonClosing;
 	}
 }

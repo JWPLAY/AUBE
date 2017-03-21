@@ -5,7 +5,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
 
 	<statements>
-		<select id="GetCostPriceList" parameterClass="DataMap" resultClass="CostPriceList" >
+		<select id="GetProfitList" parameterClass="DataMap" resultClass="ProfitList" >
 			<![CDATA[
 				SELECT	ROW_NUMBER() OVER (ORDER BY		
 												ISNULL(M1.SORT_SEQ, 99999), PP.PRODUCT_TYPE,
@@ -17,23 +17,26 @@
 					,	PP.PRODUCT_CODE						AS PRODUCT_CODE
 					,	PP.PRODUCT_NAME						AS PRODUCT_NAME
 					,	M3.NAME								AS PRODUCT_UNIT
-					,	AA.BASE_QTY
+					,	AA.SALE_AMT
 					,	AA.BASE_AMT
-					,	AA.PURC_QTY
 					,	AA.PURC_AMT
-					,	AA.PROD_QTY
 					,	AA.PROD_AMT
-					,	AA.TSUM_QTY
-					,	AA.TSUM_AMT
+					,	AA.ADJS_AMT
+					,	AA.BLNC_AMT
+					,	AA.COST_AMT
+					,	AA.SALE_AMT - AA.COST_AMT	AS PRFT_AMT
+					,	CASE
+							WHEN AA.SALE_AMT = 0 THEN 0
+							ELSE (AA.SALE_AMT - AA.COST_AMT)/AA.SALE_AMT
+						END							AS PRFT_RAT
 					,	AA.COST_PRICE
-					,	AA.REMARKS
 					,	dbo.DateTimeToChar20(AA.INS_TIME)	AS INS_TIME
 					,	AA.INS_USER
 					,	U1.USER_NAME						AS INS_USER_NAME
 					,	dbo.DateTimeToChar20(AA.UPD_TIME)	AS UPD_TIME
 					,	AA.UPD_USER
 					,	U2.USER_NAME						AS UPD_USER_NAME
-				FROM	UCD.COST_PRICE AA WITH (NOLOCK)
+				FROM	UBZ.INVENTORY_MON AA WITH (NOLOCK)
 						INNER JOIN
 							UCD.PRODUCTS PP WITH (NOLOCK)
 								ON AA.PRODUCT_ID = PP.PRODUCT_ID
@@ -56,6 +59,7 @@
 							UAA.USERS U2 WITH (NOLOCK) 
 								ON AA.UPD_USER = U2.USER_ID
 				WHERE	AA.CLOSING_YM = #CLOSING_YM#
+				AND		PP.PRODUCT_TYPE NOT IN ('M')
 			]]>
 			<isNotEmpty property="PRODUCT_TYPE">
 				<![CDATA[
@@ -76,57 +80,5 @@
 				ORDER BY ROW_NO
 			]]>
 		</select>
-		<insert id="InsertCostPrice" parameterClass="DataMap">
-			<![CDATA[
-				INSERT INTO UCD.COST_PRICE
-				(
-					CLOSING_YM, PRODUCT_ID, 
-					BASE_QTY, BASE_AMT, PURC_QTY, PURC_AMT, TSUM_QTY, TSUM_AMT, COST_PRICE, 
-					REMARKS,
-					INS_TIME, INS_USER
-				)
-				VALUES
-				(
-					#CLOSING_YM#, #PRODUCT_ID#, 
-					#BASE_QTY#, #BASE_AMT#, #PURC_QTY#, #PURC_AMT#, #TSUM_QTY#, #TSUM_AMT#, #COST_PRICE#, 
-					#REMARKS#,
-					GETDATE(), #INS_USER#
-				)
-			]]>
-		</insert>
-		<update id="UpdateCostPrice" parameterClass="DataMap">
-			<![CDATA[
-				UPDATE	UCD.COST_PRICE
-				SET     BASE_QTY	= #BASE_QTY#
-					,	BASE_AMT	= #BASE_AMT#
-					,	PURC_QTY	= #PURC_QTY#
-					,	PURC_AMT	= #PURC_AMT#
-					,	TSUM_QTY	= #TSUM_QTY#
-					,	TSUM_AMT	= #TSUM_AMT#
-					,	COST_PRICE	= #COST_PRICE#
-					,	REMARKS		= #REMARKS#
-					,	UPD_TIME	= GETDATE()
-					,	UPD_USER	= #INS_USER#
-				WHERE	CLOSING_YM	= #CLOSING_YM#
-				AND		PRODUCT_ID	= #PRODUCT_ID#
-			]]>
-		</update>
-		<delete id="DeleteCostPrice" parameterClass="DataMap">
-			<![CDATA[
-				DELETE
-				FROM	UCD.COST_PRICE
-				WHERE	CLOSING_YM	= #CLOSING_YM#
-				AND		PRODUCT_ID	= #PRODUCT_ID#
-			]]>
-		</delete>
-		<procedure id="CreateCostPrice" parameterMap="paramCreateCostPrice" resultClass="Int">
-			spCreateCostPrice
-		</procedure>		
 	</statements>
-	<parameterMaps>
-		<parameterMap id="paramCreateCostPrice" class="DataMap">
-			<parameter property="CLOSING_YM" column="CLOSING_YM" />
-			<parameter property="INS_USER" column="INS_USER" />
-		</parameterMap>
-	</parameterMaps>
 </sqlMap>

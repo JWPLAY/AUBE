@@ -31,12 +31,6 @@ namespace JW.AUBE.Service.Services
 			}
 		}
 
-		/// <summary>
-		/// GetData
-		/// 제품 데이터와 해당 제품의 원부자재 목록 가져오기
-		/// </summary>
-		/// <param name="req">WasRequest</param>
-		/// <returns>WasRequest</returns>
 		public static WasRequest GetData(WasRequest req)
 		{
 			try
@@ -59,12 +53,6 @@ namespace JW.AUBE.Service.Services
 			}
 		}
 
-		/// <summary>
-		/// Save
-		/// 데이터 저장(Insert, Update)
-		/// </summary>
-		/// <param name="req">WasRequest</param>
-		/// <returns>WasRequest</returns>
 		public static WasRequest Save(WasRequest req)
 		{
 			bool isTran = false;
@@ -170,12 +158,6 @@ namespace JW.AUBE.Service.Services
 			}
 		}
 
-		/// <summary>
-		/// Delete
-		/// 데이터 삭제(Delete)
-		/// </summary>
-		/// <param name="req">WasRequest</param>
-		/// <returns>WasRequest</returns>
 		public static WasRequest Delete(WasRequest req)
 		{
 			try
@@ -185,6 +167,43 @@ namespace JW.AUBE.Service.Services
 				{
 					DaoFactory.Instance.Insert("DeleteProduct", req.Parameter);
 				}
+				return req;
+			}
+			catch (Exception ex)
+			{
+				req.ErrorNumber = ex.HResult;
+				req.ErrorMessage = ex.Message;
+				return req;
+			}
+		}
+
+		public static WasRequest GetCategory(WasRequest req)
+		{
+			try
+			{
+				var list = DaoFactory.Instance.QueryForList<SaleCategoryListModel>("GetSaleCategory", req.Parameter);
+				req.DataList = new List<WasRequestData>()
+				{
+					new WasRequestData() { Data = list }
+				};
+				return req;
+			}
+			catch (Exception ex)
+			{
+				req.ErrorNumber = ex.HResult;
+				req.ErrorMessage = ex.Message;
+				return req;
+			}
+		}
+		public static WasRequest GetProducts(WasRequest req)
+		{
+			try
+			{
+				var list = DaoFactory.Instance.QueryForList<SaleProductsListModel>("GetSaleProducts", req.Parameter);
+				req.DataList = new List<WasRequestData>()
+				{
+					new WasRequestData() { Data = list }
+				};
 				return req;
 			}
 			catch (Exception ex)

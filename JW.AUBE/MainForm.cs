@@ -923,14 +923,17 @@ namespace JW.AUBE
 		{
 			if (FormUtils.IsExistsForm("SaleTranForm") == false)
 			{
-				SaleTranForm form = new SaleTranForm();
-				form.Name = "SaleTranForm";
-				form.Text = "판매등록";
-				form.MdiParent = null;
-				form.Padding = new Padding(2);
-				form.MenuId = 10;
-				form.TabImage = null;
-				form.ParamsData = param;
+				SaleTranForm form = new SaleTranForm()
+				{
+					Name = "SaleTranForm",
+					Text = "판매등록",
+					MdiParent = null,
+					Padding = new Padding(2),
+					MenuId = 10,
+					TabImage = null,
+					ParamsData = param,
+					StartPosition = FormStartPosition.CenterScreen
+				};
 				((IEditForm)form).FormType = Core.Enumerations.FormTypeEnum.Edit;
 				((IEditForm)form).IsDataList = true;
 				((IEditForm)form).IsDataEdit = true;

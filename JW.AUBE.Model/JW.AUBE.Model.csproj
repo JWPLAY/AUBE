@@ -69,6 +69,8 @@
     <Compile Include="Purchase\PurcTranDataModel.cs" />
     <Compile Include="Purchase\PurcTranItemDataModel.cs" />
     <Compile Include="Purchase\PurcTranListDataModel.cs" />
+    <Compile Include="Sales\SaleCategoryListModel.cs" />
+    <Compile Include="Sales\SaleProductsListModel.cs" />
     <Compile Include="Sales\SaleTranDataModel.cs" />
     <Compile Include="Sales\SaleTranItemDataModel.cs" />
     <Compile Include="Sales\SaleTranListDataModel.cs" />

@@ -35,9 +35,9 @@
 			this.esMonSaleAmt = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.gridItems = new JW.AUBE.Core.Controls.Grid.XGrid();
 			this.lcGridItems = new DevExpress.XtraLayout.LayoutControlItem();
-			this.gridCategories = new JW.AUBE.Core.Controls.Grid.XGrid();
+			this.gridCategory = new JW.AUBE.Core.Controls.Grid.XGrid();
 			this.lcGridCategories = new DevExpress.XtraLayout.LayoutControlItem();
-			this.gridFindItems = new JW.AUBE.Core.Controls.Grid.XGrid();
+			this.gridProducts = new JW.AUBE.Core.Controls.Grid.XGrid();
 			this.lcGridFindItems = new DevExpress.XtraLayout.LayoutControlItem();
 			this.esSaleDate = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.esSaleTime = new DevExpress.XtraLayout.EmptySpaceItem();
@@ -52,31 +52,26 @@
 			this.spnTotSumAmt = new DevExpress.XtraEditors.SpinEdit();
 			this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
 			this.lcGroupAmount = new DevExpress.XtraLayout.LayoutControlGroup();
-			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.lcGroupSearch = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.lcGroupInput = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.lcItemCustomer = new DevExpress.XtraLayout.LayoutControlItem();
 			this.txtCustomer = new DevExpress.XtraEditors.TextEdit();
 			this.lcGroupItems = new DevExpress.XtraLayout.LayoutControlGroup();
+			this.lcGroupEditBase = new DevExpress.XtraLayout.LayoutControlGroup();
+			this.lcGroupPayInfo = new DevExpress.XtraLayout.LayoutControlGroup();
+			this.lcItemPayType = new DevExpress.XtraLayout.LayoutControlItem();
+			this.lupPayType = new JW.AUBE.Core.Controls.Common.XLookup();
 			this.lcGroupItemButtons = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.lcButtonItemPanel = new DevExpress.XtraLayout.LayoutControlItem();
 			this.pnlItemButtons = new DevExpress.XtraEditors.PanelControl();
+			this.btnConfirm = new DevExpress.XtraEditors.SimpleButton();
+			this.btnDiscountRat = new DevExpress.XtraEditors.SimpleButton();
+			this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
 			this.btnItemDelete = new DevExpress.XtraEditors.SimpleButton();
 			this.btnItemMinus = new DevExpress.XtraEditors.SimpleButton();
 			this.btnItemPlus = new DevExpress.XtraEditors.SimpleButton();
-			this.lcGroupEditBase = new DevExpress.XtraLayout.LayoutControlGroup();
-			this.lcButtonPanel = new DevExpress.XtraLayout.LayoutControlItem();
-			this.pnlPanel = new DevExpress.XtraEditors.PanelControl();
-			this.btnDiscountRat = new DevExpress.XtraEditors.SimpleButton();
-			this.btnConfirm = new DevExpress.XtraEditors.SimpleButton();
-			this.btnCancel = new DevExpress.XtraEditors.SimpleButton();
 			this.btnDiscountAmt = new DevExpress.XtraEditors.SimpleButton();
 			this.btnSearchCustomer = new DevExpress.XtraEditors.SimpleButton();
-			this.lcGroupPayInfo = new DevExpress.XtraLayout.LayoutControlGroup();
-			this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.lcItemPayType = new DevExpress.XtraLayout.LayoutControlItem();
-			this.lupPayType = new JW.AUBE.Core.Controls.Common.XLookup();
-			this.splitterItem1 = new DevExpress.XtraLayout.SplitterItem();
 			((System.ComponentModel.ISupportInitialize)(this.lc)).BeginInit();
 			this.lc.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupBase)).BeginInit();
@@ -97,41 +92,34 @@
 			((System.ComponentModel.ISupportInitialize)(this.spnTotSumAmt.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupAmount)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupSearch)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupInput)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemCustomer)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtCustomer.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupItems)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGroupEditBase)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGroupPayInfo)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcItemPayType)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lupPayType.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupItemButtons)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcButtonItemPanel)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pnlItemButtons)).BeginInit();
 			this.pnlItemButtons.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.lcGroupEditBase)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcButtonPanel)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.pnlPanel)).BeginInit();
-			this.pnlPanel.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.lcGroupPayInfo)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcItemPayType)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lupPayType.Properties)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.splitterItem1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// lc
 			// 
 			this.lc.Controls.Add(this.lupPayType);
 			this.lc.Controls.Add(this.pnlItemButtons);
-			this.lc.Controls.Add(this.pnlPanel);
 			this.lc.Controls.Add(this.txtCustomer);
 			this.lc.Controls.Add(this.spnTotSumAmt);
 			this.lc.Controls.Add(this.spnTotTaxAmt);
 			this.lc.Controls.Add(this.spnTotSupAmt);
 			this.lc.Controls.Add(this.txtInput);
-			this.lc.Controls.Add(this.gridFindItems);
-			this.lc.Controls.Add(this.gridCategories);
+			this.lc.Controls.Add(this.gridProducts);
+			this.lc.Controls.Add(this.gridCategory);
 			this.lc.Controls.Add(this.gridItems);
-			this.lc.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(347, 52, 662, 400);
+			this.lc.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1183, 186, 662, 400);
 			this.lc.Size = new System.Drawing.Size(998, 646);
 			// 
 			// lcGroupBase
@@ -139,8 +127,7 @@
 			this.lcGroupBase.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.lcGroupHeader,
             this.lcGroupItems,
-            this.lcGroupEditBase,
-            this.splitterItem1});
+            this.lcGroupItemButtons});
 			this.lcGroupBase.Name = "Root";
 			this.lcGroupBase.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
 			this.lcGroupBase.Size = new System.Drawing.Size(998, 646);
@@ -183,82 +170,79 @@
 			this.gridItems.ReadOnly = false;
 			this.gridItems.ShowFooter = false;
 			this.gridItems.ShowGroupPanel = false;
-			this.gridItems.Size = new System.Drawing.Size(900, 201);
+			this.gridItems.Size = new System.Drawing.Size(900, 322);
 			this.gridItems.TabIndex = 4;
 			// 
 			// lcGridItems
 			// 
 			this.lcGridItems.Control = this.gridItems;
 			this.lcGridItems.Location = new System.Drawing.Point(0, 0);
-			this.lcGridItems.MaxSize = new System.Drawing.Size(0, 205);
-			this.lcGridItems.MinSize = new System.Drawing.Size(5, 205);
 			this.lcGridItems.Name = "lcGridItems";
-			this.lcGridItems.Size = new System.Drawing.Size(904, 205);
-			this.lcGridItems.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.lcGridItems.Size = new System.Drawing.Size(904, 326);
 			this.lcGridItems.TextSize = new System.Drawing.Size(0, 0);
 			this.lcGridItems.TextVisible = false;
 			// 
-			// gridCategories
+			// gridCategory
 			// 
-			this.gridCategories.Compress = false;
-			this.gridCategories.DataSource = null;
-			this.gridCategories.Editable = true;
-			this.gridCategories.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
-			this.gridCategories.Location = new System.Drawing.Point(14, 291);
-			this.gridCategories.Name = "gridCategories";
-			this.gridCategories.PageFooterCenter = null;
-			this.gridCategories.PageFooterLeft = null;
-			this.gridCategories.PageFooterRight = null;
-			this.gridCategories.PageHeaderCenter = null;
-			this.gridCategories.PageHeaderLeft = null;
-			this.gridCategories.PageHeaderRight = null;
-			this.gridCategories.Pager = null;
-			this.gridCategories.PrintFooter = null;
-			this.gridCategories.PrintHeader = null;
-			this.gridCategories.ReadOnly = false;
-			this.gridCategories.ShowFooter = false;
-			this.gridCategories.ShowGroupPanel = false;
-			this.gridCategories.Size = new System.Drawing.Size(195, 341);
-			this.gridCategories.TabIndex = 5;
+			this.gridCategory.Compress = false;
+			this.gridCategory.DataSource = null;
+			this.gridCategory.Editable = true;
+			this.gridCategory.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
+			this.gridCategory.Location = new System.Drawing.Point(14, 390);
+			this.gridCategory.Name = "gridCategory";
+			this.gridCategory.PageFooterCenter = null;
+			this.gridCategory.PageFooterLeft = null;
+			this.gridCategory.PageFooterRight = null;
+			this.gridCategory.PageHeaderCenter = null;
+			this.gridCategory.PageHeaderLeft = null;
+			this.gridCategory.PageHeaderRight = null;
+			this.gridCategory.Pager = null;
+			this.gridCategory.PrintFooter = null;
+			this.gridCategory.PrintHeader = null;
+			this.gridCategory.ReadOnly = false;
+			this.gridCategory.ShowFooter = false;
+			this.gridCategory.ShowGroupPanel = false;
+			this.gridCategory.Size = new System.Drawing.Size(204, 242);
+			this.gridCategory.TabIndex = 5;
 			// 
 			// lcGridCategories
 			// 
-			this.lcGridCategories.Control = this.gridCategories;
+			this.lcGridCategories.Control = this.gridCategory;
 			this.lcGridCategories.Location = new System.Drawing.Point(0, 0);
 			this.lcGridCategories.Name = "lcGridCategories";
-			this.lcGridCategories.Size = new System.Drawing.Size(199, 345);
+			this.lcGridCategories.Size = new System.Drawing.Size(208, 246);
 			this.lcGridCategories.TextSize = new System.Drawing.Size(0, 0);
 			this.lcGridCategories.TextVisible = false;
 			// 
-			// gridFindItems
+			// gridProducts
 			// 
-			this.gridFindItems.Compress = false;
-			this.gridFindItems.DataSource = null;
-			this.gridFindItems.Editable = true;
-			this.gridFindItems.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
-			this.gridFindItems.Location = new System.Drawing.Point(213, 291);
-			this.gridFindItems.Name = "gridFindItems";
-			this.gridFindItems.PageFooterCenter = null;
-			this.gridFindItems.PageFooterLeft = null;
-			this.gridFindItems.PageFooterRight = null;
-			this.gridFindItems.PageHeaderCenter = null;
-			this.gridFindItems.PageHeaderLeft = null;
-			this.gridFindItems.PageHeaderRight = null;
-			this.gridFindItems.Pager = null;
-			this.gridFindItems.PrintFooter = null;
-			this.gridFindItems.PrintHeader = null;
-			this.gridFindItems.ReadOnly = false;
-			this.gridFindItems.ShowFooter = false;
-			this.gridFindItems.ShowGroupPanel = false;
-			this.gridFindItems.Size = new System.Drawing.Size(279, 341);
-			this.gridFindItems.TabIndex = 6;
+			this.gridProducts.Compress = false;
+			this.gridProducts.DataSource = null;
+			this.gridProducts.Editable = true;
+			this.gridProducts.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
+			this.gridProducts.Location = new System.Drawing.Point(222, 390);
+			this.gridProducts.Name = "gridProducts";
+			this.gridProducts.PageFooterCenter = null;
+			this.gridProducts.PageFooterLeft = null;
+			this.gridProducts.PageFooterRight = null;
+			this.gridProducts.PageHeaderCenter = null;
+			this.gridProducts.PageHeaderLeft = null;
+			this.gridProducts.PageHeaderRight = null;
+			this.gridProducts.Pager = null;
+			this.gridProducts.PrintFooter = null;
+			this.gridProducts.PrintHeader = null;
+			this.gridProducts.ReadOnly = false;
+			this.gridProducts.ShowFooter = false;
+			this.gridProducts.ShowGroupPanel = false;
+			this.gridProducts.Size = new System.Drawing.Size(278, 242);
+			this.gridProducts.TabIndex = 6;
 			// 
 			// lcGridFindItems
 			// 
-			this.lcGridFindItems.Control = this.gridFindItems;
-			this.lcGridFindItems.Location = new System.Drawing.Point(199, 0);
+			this.lcGridFindItems.Control = this.gridProducts;
+			this.lcGridFindItems.Location = new System.Drawing.Point(208, 0);
 			this.lcGridFindItems.Name = "lcGridFindItems";
-			this.lcGridFindItems.Size = new System.Drawing.Size(283, 345);
+			this.lcGridFindItems.Size = new System.Drawing.Size(282, 246);
 			this.lcGridFindItems.TextSize = new System.Drawing.Size(0, 0);
 			this.lcGridFindItems.TextVisible = false;
 			// 
@@ -332,11 +316,11 @@
 			// 
 			// txtInput
 			// 
-			this.txtInput.Location = new System.Drawing.Point(626, 291);
+			this.txtInput.Location = new System.Drawing.Point(644, 395);
 			this.txtInput.Name = "txtInput";
 			this.txtInput.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
 			this.txtInput.Properties.Appearance.Options.UseFont = true;
-			this.txtInput.Size = new System.Drawing.Size(358, 32);
+			this.txtInput.Size = new System.Drawing.Size(255, 32);
 			this.txtInput.StyleController = this.lc;
 			this.txtInput.TabIndex = 7;
 			// 
@@ -350,11 +334,11 @@
 			this.lcItemInput.ControlAlignment = System.Drawing.ContentAlignment.MiddleCenter;
 			this.lcItemInput.Location = new System.Drawing.Point(0, 0);
 			this.lcItemInput.Name = "lcItemInput";
-			this.lcItemInput.Size = new System.Drawing.Size(482, 36);
-			this.lcItemInput.Text = "상품등록  ";
+			this.lcItemInput.Size = new System.Drawing.Size(384, 36);
+			this.lcItemInput.Text = "상품등록";
 			this.lcItemInput.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.CustomSize;
 			this.lcItemInput.TextSize = new System.Drawing.Size(120, 24);
-			this.lcItemInput.TextToControlDistance = 0;
+			this.lcItemInput.TextToControlDistance = 5;
 			// 
 			// spnTotSupAmt
 			// 
@@ -363,17 +347,17 @@
             0,
             0,
             0});
-			this.spnTotSupAmt.Location = new System.Drawing.Point(786, 373);
+			this.spnTotSupAmt.Location = new System.Drawing.Point(639, 523);
 			this.spnTotSupAmt.Name = "spnTotSupAmt";
 			this.spnTotSupAmt.Properties.Appearance.BackColor = System.Drawing.Color.Black;
-			this.spnTotSupAmt.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
+			this.spnTotSupAmt.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
 			this.spnTotSupAmt.Properties.Appearance.ForeColor = System.Drawing.Color.White;
 			this.spnTotSupAmt.Properties.Appearance.Options.UseBackColor = true;
 			this.spnTotSupAmt.Properties.Appearance.Options.UseFont = true;
 			this.spnTotSupAmt.Properties.Appearance.Options.UseForeColor = true;
 			this.spnTotSupAmt.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, false, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, null, true)});
-			this.spnTotSupAmt.Size = new System.Drawing.Size(198, 30);
+			this.spnTotSupAmt.Size = new System.Drawing.Size(260, 32);
 			this.spnTotSupAmt.StyleController = this.lc;
 			this.spnTotSupAmt.TabIndex = 8;
 			// 
@@ -386,13 +370,10 @@
 			this.layoutControlItem2.AppearanceItemCaption.Options.UseTextOptions = true;
 			this.layoutControlItem2.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
 			this.layoutControlItem2.Control = this.spnTotSupAmt;
-			this.layoutControlItem2.Location = new System.Drawing.Point(160, 0);
-			this.layoutControlItem2.MaxSize = new System.Drawing.Size(0, 34);
-			this.layoutControlItem2.MinSize = new System.Drawing.Size(122, 34);
+			this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
 			this.layoutControlItem2.Name = "layoutControlItem2";
-			this.layoutControlItem2.Size = new System.Drawing.Size(322, 34);
-			this.layoutControlItem2.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-			this.layoutControlItem2.Text = "공급가액 ";
+			this.layoutControlItem2.Size = new System.Drawing.Size(384, 36);
+			this.layoutControlItem2.Text = "총금액 ";
 			this.layoutControlItem2.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.CustomSize;
 			this.layoutControlItem2.TextSize = new System.Drawing.Size(120, 22);
 			this.layoutControlItem2.TextToControlDistance = 0;
@@ -404,17 +385,17 @@
             0,
             0,
             0});
-			this.spnTotTaxAmt.Location = new System.Drawing.Point(786, 407);
+			this.spnTotTaxAmt.Location = new System.Drawing.Point(639, 559);
 			this.spnTotTaxAmt.Name = "spnTotTaxAmt";
 			this.spnTotTaxAmt.Properties.Appearance.BackColor = System.Drawing.Color.Black;
-			this.spnTotTaxAmt.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
+			this.spnTotTaxAmt.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
 			this.spnTotTaxAmt.Properties.Appearance.ForeColor = System.Drawing.Color.White;
 			this.spnTotTaxAmt.Properties.Appearance.Options.UseBackColor = true;
 			this.spnTotTaxAmt.Properties.Appearance.Options.UseFont = true;
 			this.spnTotTaxAmt.Properties.Appearance.Options.UseForeColor = true;
 			this.spnTotTaxAmt.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, false, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "", null, null, true)});
-			this.spnTotTaxAmt.Size = new System.Drawing.Size(198, 30);
+			this.spnTotTaxAmt.Size = new System.Drawing.Size(260, 32);
 			this.spnTotTaxAmt.StyleController = this.lc;
 			this.spnTotTaxAmt.TabIndex = 9;
 			// 
@@ -427,10 +408,10 @@
 			this.layoutControlItem3.AppearanceItemCaption.Options.UseTextOptions = true;
 			this.layoutControlItem3.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
 			this.layoutControlItem3.Control = this.spnTotTaxAmt;
-			this.layoutControlItem3.Location = new System.Drawing.Point(160, 34);
+			this.layoutControlItem3.Location = new System.Drawing.Point(0, 36);
 			this.layoutControlItem3.Name = "layoutControlItem3";
-			this.layoutControlItem3.Size = new System.Drawing.Size(322, 34);
-			this.layoutControlItem3.Text = "부가세액 ";
+			this.layoutControlItem3.Size = new System.Drawing.Size(384, 36);
+			this.layoutControlItem3.Text = "할인액 ";
 			this.layoutControlItem3.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.CustomSize;
 			this.layoutControlItem3.TextSize = new System.Drawing.Size(120, 22);
 			this.layoutControlItem3.TextToControlDistance = 0;
@@ -442,17 +423,17 @@
             0,
             0,
             0});
-			this.spnTotSumAmt.Location = new System.Drawing.Point(786, 441);
+			this.spnTotSumAmt.Location = new System.Drawing.Point(639, 595);
 			this.spnTotSumAmt.Name = "spnTotSumAmt";
 			this.spnTotSumAmt.Properties.Appearance.BackColor = System.Drawing.Color.Black;
-			this.spnTotSumAmt.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Bold);
+			this.spnTotSumAmt.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold);
 			this.spnTotSumAmt.Properties.Appearance.ForeColor = System.Drawing.Color.Yellow;
 			this.spnTotSumAmt.Properties.Appearance.Options.UseBackColor = true;
 			this.spnTotSumAmt.Properties.Appearance.Options.UseFont = true;
 			this.spnTotSumAmt.Properties.Appearance.Options.UseForeColor = true;
 			this.spnTotSumAmt.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, false, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject4, "", null, null, true)});
-			this.spnTotSumAmt.Size = new System.Drawing.Size(198, 30);
+			this.spnTotSumAmt.Size = new System.Drawing.Size(260, 32);
 			this.spnTotSumAmt.StyleController = this.lc;
 			this.spnTotSumAmt.TabIndex = 10;
 			// 
@@ -467,10 +448,10 @@
 			this.layoutControlItem4.AppearanceItemCaption.Options.UseTextOptions = true;
 			this.layoutControlItem4.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
 			this.layoutControlItem4.Control = this.spnTotSumAmt;
-			this.layoutControlItem4.Location = new System.Drawing.Point(160, 68);
+			this.layoutControlItem4.Location = new System.Drawing.Point(0, 72);
 			this.layoutControlItem4.Name = "layoutControlItem4";
-			this.layoutControlItem4.Size = new System.Drawing.Size(322, 34);
-			this.layoutControlItem4.Text = "합계금액 ";
+			this.layoutControlItem4.Size = new System.Drawing.Size(384, 36);
+			this.layoutControlItem4.Text = "결제액 ";
 			this.layoutControlItem4.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.CustomSize;
 			this.layoutControlItem4.TextSize = new System.Drawing.Size(120, 22);
 			this.layoutControlItem4.TextToControlDistance = 0;
@@ -484,45 +465,32 @@
 			this.lcGroupAmount.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem2,
             this.layoutControlItem3,
-            this.layoutControlItem4,
-            this.emptySpaceItem1});
-			this.lcGroupAmount.Location = new System.Drawing.Point(492, 82);
+            this.layoutControlItem4});
+			this.lcGroupAmount.Location = new System.Drawing.Point(0, 128);
 			this.lcGroupAmount.Name = "lcGroupAmount";
 			this.lcGroupAmount.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcGroupAmount.Size = new System.Drawing.Size(492, 112);
+			this.lcGroupAmount.Size = new System.Drawing.Size(394, 118);
 			this.lcGroupAmount.TextVisible = false;
-			// 
-			// emptySpaceItem1
-			// 
-			this.emptySpaceItem1.AllowHotTrack = false;
-			this.emptySpaceItem1.Location = new System.Drawing.Point(0, 0);
-			this.emptySpaceItem1.MaxSize = new System.Drawing.Size(160, 0);
-			this.emptySpaceItem1.MinSize = new System.Drawing.Size(160, 10);
-			this.emptySpaceItem1.Name = "emptySpaceItem1";
-			this.emptySpaceItem1.Size = new System.Drawing.Size(160, 102);
-			this.emptySpaceItem1.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-			this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// lcGroupSearch
 			// 
 			this.lcGroupSearch.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.lcGridCategories,
             this.lcGridFindItems});
-			this.lcGroupSearch.Location = new System.Drawing.Point(0, 0);
+			this.lcGroupSearch.Location = new System.Drawing.Point(0, 326);
 			this.lcGroupSearch.Name = "lcGroupSearch";
 			this.lcGroupSearch.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcGroupSearch.Size = new System.Drawing.Size(492, 355);
+			this.lcGroupSearch.Size = new System.Drawing.Size(500, 256);
 			this.lcGroupSearch.TextVisible = false;
 			// 
 			// lcGroupInput
 			// 
 			this.lcGroupInput.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.lcItemInput,
-            this.lcItemCustomer});
-			this.lcGroupInput.Location = new System.Drawing.Point(492, 0);
+            this.lcItemInput});
+			this.lcGroupInput.Location = new System.Drawing.Point(0, 0);
 			this.lcGroupInput.Name = "lcGroupInput";
 			this.lcGroupInput.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcGroupInput.Size = new System.Drawing.Size(492, 82);
+			this.lcGroupInput.Size = new System.Drawing.Size(394, 46);
 			this.lcGroupInput.TextVisible = false;
 			// 
 			// lcItemCustomer
@@ -532,21 +500,21 @@
 			this.lcItemCustomer.AppearanceItemCaption.Options.UseTextOptions = true;
 			this.lcItemCustomer.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
 			this.lcItemCustomer.Control = this.txtCustomer;
-			this.lcItemCustomer.Location = new System.Drawing.Point(0, 36);
+			this.lcItemCustomer.Location = new System.Drawing.Point(0, 0);
 			this.lcItemCustomer.Name = "lcItemCustomer";
-			this.lcItemCustomer.Size = new System.Drawing.Size(482, 36);
-			this.lcItemCustomer.Text = "거래처  ";
+			this.lcItemCustomer.Size = new System.Drawing.Size(384, 36);
+			this.lcItemCustomer.Text = "거래처";
 			this.lcItemCustomer.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.CustomSize;
 			this.lcItemCustomer.TextSize = new System.Drawing.Size(120, 20);
-			this.lcItemCustomer.TextToControlDistance = 0;
+			this.lcItemCustomer.TextToControlDistance = 5;
 			// 
 			// txtCustomer
 			// 
-			this.txtCustomer.Location = new System.Drawing.Point(626, 327);
+			this.txtCustomer.Location = new System.Drawing.Point(644, 441);
 			this.txtCustomer.Name = "txtCustomer";
 			this.txtCustomer.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 16F);
 			this.txtCustomer.Properties.Appearance.Options.UseFont = true;
-			this.txtCustomer.Size = new System.Drawing.Size(358, 32);
+			this.txtCustomer.Size = new System.Drawing.Size(255, 32);
 			this.txtCustomer.StyleController = this.lc;
 			this.txtCustomer.TabIndex = 11;
 			// 
@@ -554,59 +522,163 @@
 			// 
 			this.lcGroupItems.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.lcGridItems,
-            this.lcGroupItemButtons});
+            this.lcGroupSearch,
+            this.lcGroupEditBase});
 			this.lcGroupItems.Location = new System.Drawing.Point(0, 50);
 			this.lcGroupItems.Name = "lcGroupItems";
 			this.lcGroupItems.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcGroupItems.Size = new System.Drawing.Size(994, 215);
+			this.lcGroupItems.Size = new System.Drawing.Size(914, 592);
 			this.lcGroupItems.TextVisible = false;
+			// 
+			// lcGroupEditBase
+			// 
+			this.lcGroupEditBase.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.lcGroupInput,
+            this.lcGroupAmount,
+            this.lcGroupPayInfo});
+			this.lcGroupEditBase.Location = new System.Drawing.Point(500, 326);
+			this.lcGroupEditBase.Name = "lcGroupEditBase";
+			this.lcGroupEditBase.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
+			this.lcGroupEditBase.Size = new System.Drawing.Size(404, 256);
+			this.lcGroupEditBase.TextVisible = false;
+			// 
+			// lcGroupPayInfo
+			// 
+			this.lcGroupPayInfo.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.lcItemPayType,
+            this.lcItemCustomer});
+			this.lcGroupPayInfo.Location = new System.Drawing.Point(0, 46);
+			this.lcGroupPayInfo.Name = "lcGroupPayInfo";
+			this.lcGroupPayInfo.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
+			this.lcGroupPayInfo.Size = new System.Drawing.Size(394, 82);
+			this.lcGroupPayInfo.TextVisible = false;
+			// 
+			// lcItemPayType
+			// 
+			this.lcItemPayType.AppearanceItemCaption.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold);
+			this.lcItemPayType.AppearanceItemCaption.Options.UseFont = true;
+			this.lcItemPayType.AppearanceItemCaption.Options.UseTextOptions = true;
+			this.lcItemPayType.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
+			this.lcItemPayType.Control = this.lupPayType;
+			this.lcItemPayType.Location = new System.Drawing.Point(0, 36);
+			this.lcItemPayType.Name = "lcItemPayType";
+			this.lcItemPayType.Size = new System.Drawing.Size(384, 36);
+			this.lcItemPayType.Text = "결제방법";
+			this.lcItemPayType.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.CustomSize;
+			this.lcItemPayType.TextSize = new System.Drawing.Size(120, 21);
+			this.lcItemPayType.TextToControlDistance = 5;
+			// 
+			// lupPayType
+			// 
+			this.lupPayType.DataSource = null;
+			this.lupPayType.DisplayMember = "";
+			this.lupPayType.GroupCode = null;
+			this.lupPayType.ListMember = "LIST_NAME";
+			this.lupPayType.Location = new System.Drawing.Point(644, 477);
+			this.lupPayType.Name = "lupPayType";
+			this.lupPayType.NullText = "[EditValue is null]";
+			this.lupPayType.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 14F);
+			this.lupPayType.Properties.Appearance.Options.UseFont = true;
+			this.lupPayType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.lupPayType.SelectedIndex = -1;
+			this.lupPayType.Size = new System.Drawing.Size(255, 32);
+			this.lupPayType.StyleController = this.lc;
+			this.lupPayType.TabIndex = 20;
+			this.lupPayType.ValueMember = "";
 			// 
 			// lcGroupItemButtons
 			// 
 			this.lcGroupItemButtons.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.lcButtonItemPanel});
-			this.lcGroupItemButtons.Location = new System.Drawing.Point(904, 0);
+			this.lcGroupItemButtons.Location = new System.Drawing.Point(914, 50);
 			this.lcGroupItemButtons.Name = "lcGroupItemButtons";
 			this.lcGroupItemButtons.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcGroupItemButtons.Size = new System.Drawing.Size(80, 205);
+			this.lcGroupItemButtons.Size = new System.Drawing.Size(80, 592);
 			this.lcGroupItemButtons.TextVisible = false;
 			// 
 			// lcButtonItemPanel
 			// 
 			this.lcButtonItemPanel.Control = this.pnlItemButtons;
 			this.lcButtonItemPanel.Location = new System.Drawing.Point(0, 0);
-			this.lcButtonItemPanel.MaxSize = new System.Drawing.Size(70, 0);
-			this.lcButtonItemPanel.MinSize = new System.Drawing.Size(70, 5);
 			this.lcButtonItemPanel.Name = "lcButtonItemPanel";
-			this.lcButtonItemPanel.Size = new System.Drawing.Size(70, 195);
-			this.lcButtonItemPanel.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.lcButtonItemPanel.Size = new System.Drawing.Size(70, 582);
 			this.lcButtonItemPanel.TextSize = new System.Drawing.Size(0, 0);
 			this.lcButtonItemPanel.TextVisible = false;
 			// 
 			// pnlItemButtons
 			// 
+			this.pnlItemButtons.Controls.Add(this.btnConfirm);
+			this.pnlItemButtons.Controls.Add(this.btnDiscountRat);
+			this.pnlItemButtons.Controls.Add(this.btnCancel);
 			this.pnlItemButtons.Controls.Add(this.btnItemDelete);
 			this.pnlItemButtons.Controls.Add(this.btnItemMinus);
 			this.pnlItemButtons.Controls.Add(this.btnItemPlus);
-			this.pnlItemButtons.Location = new System.Drawing.Point(918, 64);
+			this.pnlItemButtons.Controls.Add(this.btnDiscountAmt);
+			this.pnlItemButtons.Controls.Add(this.btnSearchCustomer);
+			this.pnlItemButtons.Location = new System.Drawing.Point(923, 59);
 			this.pnlItemButtons.Name = "pnlItemButtons";
-			this.pnlItemButtons.Size = new System.Drawing.Size(66, 191);
+			this.pnlItemButtons.Size = new System.Drawing.Size(66, 578);
 			this.pnlItemButtons.TabIndex = 19;
+			// 
+			// btnConfirm
+			// 
+			this.btnConfirm.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnConfirm.Appearance.Font = new System.Drawing.Font("나눔고딕", 12F, System.Drawing.FontStyle.Bold);
+			this.btnConfirm.Appearance.Options.UseFont = true;
+			this.btnConfirm.Image = ((System.Drawing.Image)(resources.GetObject("btnConfirm.Image")));
+			this.btnConfirm.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+			this.btnConfirm.Location = new System.Drawing.Point(5, 517);
+			this.btnConfirm.Name = "btnConfirm";
+			this.btnConfirm.Size = new System.Drawing.Size(56, 56);
+			this.btnConfirm.TabIndex = 3;
+			this.btnConfirm.Text = "완료";
+			this.btnConfirm.ToolTip = "판매완료";
+			// 
+			// btnDiscountRat
+			// 
+			this.btnDiscountRat.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnDiscountRat.Appearance.Font = new System.Drawing.Font("나눔고딕", 11F, System.Drawing.FontStyle.Bold);
+			this.btnDiscountRat.Appearance.Options.UseFont = true;
+			this.btnDiscountRat.Image = ((System.Drawing.Image)(resources.GetObject("btnDiscountRat.Image")));
+			this.btnDiscountRat.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+			this.btnDiscountRat.Location = new System.Drawing.Point(5, 393);
+			this.btnDiscountRat.Name = "btnDiscountRat";
+			this.btnDiscountRat.Size = new System.Drawing.Size(56, 56);
+			this.btnDiscountRat.TabIndex = 4;
+			this.btnDiscountRat.Text = "할인율(%)";
+			this.btnDiscountRat.ToolTip = "할인율(%)";
+			// 
+			// btnCancel
+			// 
+			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCancel.Appearance.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+			this.btnCancel.Appearance.Options.UseFont = true;
+			this.btnCancel.Image = ((System.Drawing.Image)(resources.GetObject("btnCancel.Image")));
+			this.btnCancel.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+			this.btnCancel.Location = new System.Drawing.Point(5, 455);
+			this.btnCancel.Name = "btnCancel";
+			this.btnCancel.Size = new System.Drawing.Size(56, 56);
+			this.btnCancel.TabIndex = 2;
+			this.btnCancel.Text = "취소";
+			this.btnCancel.ToolTip = "판매취소";
 			// 
 			// btnItemDelete
 			// 
-			this.btnItemDelete.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+			this.btnItemDelete.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnItemDelete.Appearance.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
-			this.btnItemDelete.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
 			this.btnItemDelete.Appearance.Options.UseFont = true;
-			this.btnItemDelete.Appearance.Options.UseForeColor = true;
 			this.btnItemDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnItemDelete.Image")));
 			this.btnItemDelete.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-			this.btnItemDelete.Location = new System.Drawing.Point(5, 130);
+			this.btnItemDelete.Location = new System.Drawing.Point(5, 129);
 			this.btnItemDelete.Name = "btnItemDelete";
 			this.btnItemDelete.Size = new System.Drawing.Size(56, 56);
 			this.btnItemDelete.TabIndex = 2;
+			this.btnItemDelete.ToolTip = "품목삭제";
 			// 
 			// btnItemMinus
 			// 
@@ -621,6 +693,7 @@
 			this.btnItemMinus.Size = new System.Drawing.Size(56, 56);
 			this.btnItemMinus.TabIndex = 1;
 			this.btnItemMinus.Text = "-";
+			this.btnItemMinus.ToolTip = "수량감소";
 			// 
 			// btnItemPlus
 			// 
@@ -629,179 +702,43 @@
 			this.btnItemPlus.Appearance.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Bold);
 			this.btnItemPlus.Appearance.Options.UseFont = true;
 			this.btnItemPlus.Image = ((System.Drawing.Image)(resources.GetObject("btnItemPlus.Image")));
+			this.btnItemPlus.ImageIndex = 0;
 			this.btnItemPlus.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
 			this.btnItemPlus.Location = new System.Drawing.Point(5, 5);
 			this.btnItemPlus.Name = "btnItemPlus";
 			this.btnItemPlus.Size = new System.Drawing.Size(56, 56);
 			this.btnItemPlus.TabIndex = 0;
-			this.btnItemPlus.Text = "+";
-			// 
-			// lcGroupEditBase
-			// 
-			this.lcGroupEditBase.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.lcGroupSearch,
-            this.lcGroupInput,
-            this.lcGroupAmount,
-            this.lcButtonPanel,
-            this.lcGroupPayInfo});
-			this.lcGroupEditBase.Location = new System.Drawing.Point(0, 277);
-			this.lcGroupEditBase.Name = "lcGroupEditBase";
-			this.lcGroupEditBase.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcGroupEditBase.Size = new System.Drawing.Size(994, 365);
-			this.lcGroupEditBase.TextVisible = false;
-			// 
-			// lcButtonPanel
-			// 
-			this.lcButtonPanel.Control = this.pnlPanel;
-			this.lcButtonPanel.Location = new System.Drawing.Point(492, 234);
-			this.lcButtonPanel.Name = "lcButtonPanel";
-			this.lcButtonPanel.Size = new System.Drawing.Size(492, 121);
-			this.lcButtonPanel.TextSize = new System.Drawing.Size(0, 0);
-			this.lcButtonPanel.TextVisible = false;
-			// 
-			// pnlPanel
-			// 
-			this.pnlPanel.Controls.Add(this.btnDiscountRat);
-			this.pnlPanel.Controls.Add(this.btnConfirm);
-			this.pnlPanel.Controls.Add(this.btnCancel);
-			this.pnlPanel.Controls.Add(this.btnDiscountAmt);
-			this.pnlPanel.Controls.Add(this.btnSearchCustomer);
-			this.pnlPanel.Location = new System.Drawing.Point(501, 520);
-			this.pnlPanel.Name = "pnlPanel";
-			this.pnlPanel.Size = new System.Drawing.Size(488, 117);
-			this.pnlPanel.TabIndex = 18;
-			// 
-			// btnDiscountRat
-			// 
-			this.btnDiscountRat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnDiscountRat.Appearance.Font = new System.Drawing.Font("나눔고딕", 11F, System.Drawing.FontStyle.Bold);
-			this.btnDiscountRat.Appearance.Options.UseFont = true;
-			this.btnDiscountRat.Image = ((System.Drawing.Image)(resources.GetObject("btnDiscountRat.Image")));
-			this.btnDiscountRat.Location = new System.Drawing.Point(116, 62);
-			this.btnDiscountRat.Name = "btnDiscountRat";
-			this.btnDiscountRat.Size = new System.Drawing.Size(105, 50);
-			this.btnDiscountRat.TabIndex = 4;
-			this.btnDiscountRat.Text = "할인(%)";
-			// 
-			// btnConfirm
-			// 
-			this.btnConfirm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnConfirm.Appearance.Font = new System.Drawing.Font("나눔고딕", 12F, System.Drawing.FontStyle.Bold);
-			this.btnConfirm.Appearance.ForeColor = System.Drawing.Color.Lime;
-			this.btnConfirm.Appearance.Options.UseFont = true;
-			this.btnConfirm.Appearance.Options.UseForeColor = true;
-			this.btnConfirm.Image = ((System.Drawing.Image)(resources.GetObject("btnConfirm.Image")));
-			this.btnConfirm.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-			this.btnConfirm.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.TopCenter;
-			this.btnConfirm.Location = new System.Drawing.Point(378, 6);
-			this.btnConfirm.Name = "btnConfirm";
-			this.btnConfirm.Size = new System.Drawing.Size(105, 105);
-			this.btnConfirm.TabIndex = 3;
-			this.btnConfirm.Text = "완료";
-			// 
-			// btnCancel
-			// 
-			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-			this.btnCancel.Appearance.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
-			this.btnCancel.Appearance.ForeColor = System.Drawing.Color.DarkGray;
-			this.btnCancel.Appearance.Options.UseFont = true;
-			this.btnCancel.Appearance.Options.UseForeColor = true;
-			this.btnCancel.Image = ((System.Drawing.Image)(resources.GetObject("btnCancel.Image")));
-			this.btnCancel.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-			this.btnCancel.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.TopCenter;
-			this.btnCancel.Location = new System.Drawing.Point(227, 49);
-			this.btnCancel.Name = "btnCancel";
-			this.btnCancel.Size = new System.Drawing.Size(105, 63);
-			this.btnCancel.TabIndex = 2;
-			this.btnCancel.Text = "취소";
+			this.btnItemPlus.ToolTip = "수량증가";
 			// 
 			// btnDiscountAmt
 			// 
-			this.btnDiscountAmt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnDiscountAmt.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnDiscountAmt.Appearance.Font = new System.Drawing.Font("나눔고딕", 11F, System.Drawing.FontStyle.Bold);
 			this.btnDiscountAmt.Appearance.Options.UseFont = true;
 			this.btnDiscountAmt.Image = ((System.Drawing.Image)(resources.GetObject("btnDiscountAmt.Image")));
-			this.btnDiscountAmt.Location = new System.Drawing.Point(116, 7);
+			this.btnDiscountAmt.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
+			this.btnDiscountAmt.Location = new System.Drawing.Point(5, 331);
 			this.btnDiscountAmt.Name = "btnDiscountAmt";
-			this.btnDiscountAmt.Size = new System.Drawing.Size(105, 50);
+			this.btnDiscountAmt.Size = new System.Drawing.Size(56, 56);
 			this.btnDiscountAmt.TabIndex = 1;
-			this.btnDiscountAmt.Text = "할인(￦)";
+			this.btnDiscountAmt.Text = "금액할인";
+			this.btnDiscountAmt.ToolTip = "금액할인";
 			// 
 			// btnSearchCustomer
 			// 
-			this.btnSearchCustomer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnSearchCustomer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnSearchCustomer.Appearance.Font = new System.Drawing.Font("나눔고딕", 11F, System.Drawing.FontStyle.Bold);
-			this.btnSearchCustomer.Appearance.ForeColor = System.Drawing.Color.Yellow;
 			this.btnSearchCustomer.Appearance.Options.UseFont = true;
-			this.btnSearchCustomer.Appearance.Options.UseForeColor = true;
 			this.btnSearchCustomer.Image = ((System.Drawing.Image)(resources.GetObject("btnSearchCustomer.Image")));
 			this.btnSearchCustomer.ImageLocation = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-			this.btnSearchCustomer.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.TopCenter;
-			this.btnSearchCustomer.Location = new System.Drawing.Point(5, 7);
+			this.btnSearchCustomer.Location = new System.Drawing.Point(5, 269);
 			this.btnSearchCustomer.Name = "btnSearchCustomer";
-			this.btnSearchCustomer.Size = new System.Drawing.Size(105, 105);
+			this.btnSearchCustomer.Size = new System.Drawing.Size(56, 56);
 			this.btnSearchCustomer.TabIndex = 0;
 			this.btnSearchCustomer.Text = "거래처검색";
-			// 
-			// lcGroupPayInfo
-			// 
-			this.lcGroupPayInfo.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.emptySpaceItem2,
-            this.lcItemPayType});
-			this.lcGroupPayInfo.Location = new System.Drawing.Point(492, 194);
-			this.lcGroupPayInfo.Name = "lcGroupPayInfo";
-			this.lcGroupPayInfo.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcGroupPayInfo.Size = new System.Drawing.Size(492, 40);
-			this.lcGroupPayInfo.TextVisible = false;
-			// 
-			// emptySpaceItem2
-			// 
-			this.emptySpaceItem2.AllowHotTrack = false;
-			this.emptySpaceItem2.Location = new System.Drawing.Point(0, 0);
-			this.emptySpaceItem2.Name = "emptySpaceItem2";
-			this.emptySpaceItem2.Size = new System.Drawing.Size(160, 30);
-			this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
-			// 
-			// lcItemPayType
-			// 
-			this.lcItemPayType.AppearanceItemCaption.Font = new System.Drawing.Font("맑은 고딕", 12F, System.Drawing.FontStyle.Bold);
-			this.lcItemPayType.AppearanceItemCaption.Options.UseFont = true;
-			this.lcItemPayType.AppearanceItemCaption.Options.UseTextOptions = true;
-			this.lcItemPayType.AppearanceItemCaption.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Far;
-			this.lcItemPayType.Control = this.lupPayType;
-			this.lcItemPayType.Location = new System.Drawing.Point(160, 0);
-			this.lcItemPayType.Name = "lcItemPayType";
-			this.lcItemPayType.Size = new System.Drawing.Size(322, 30);
-			this.lcItemPayType.Text = "결제방법";
-			this.lcItemPayType.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.CustomSize;
-			this.lcItemPayType.TextSize = new System.Drawing.Size(120, 21);
-			this.lcItemPayType.TextToControlDistance = 5;
-			// 
-			// lupPayType
-			// 
-			this.lupPayType.DataSource = null;
-			this.lupPayType.DisplayMember = "";
-			this.lupPayType.GroupCode = null;
-			this.lupPayType.ListMember = "LIST_NAME";
-			this.lupPayType.Location = new System.Drawing.Point(791, 485);
-			this.lupPayType.Name = "lupPayType";
-			this.lupPayType.NullText = "[EditValue is null]";
-			this.lupPayType.Properties.Appearance.Font = new System.Drawing.Font("맑은 고딕", 11F);
-			this.lupPayType.Properties.Appearance.Options.UseFont = true;
-			this.lupPayType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.lupPayType.SelectedIndex = -1;
-			this.lupPayType.Size = new System.Drawing.Size(193, 26);
-			this.lupPayType.StyleController = this.lc;
-			this.lupPayType.TabIndex = 20;
-			this.lupPayType.ValueMember = "";
-			// 
-			// splitterItem1
-			// 
-			this.splitterItem1.AllowHotTrack = true;
-			this.splitterItem1.Location = new System.Drawing.Point(0, 265);
-			this.splitterItem1.Name = "splitterItem1";
-			this.splitterItem1.Size = new System.Drawing.Size(994, 12);
+			this.btnSearchCustomer.ToolTip = "거래처검색";
 			// 
 			// SaleTranForm
 			// 
@@ -830,25 +767,19 @@
 			((System.ComponentModel.ISupportInitialize)(this.spnTotSumAmt.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupAmount)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupSearch)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupInput)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemCustomer)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtCustomer.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupItems)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGroupEditBase)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGroupPayInfo)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcItemPayType)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lupPayType.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupItemButtons)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcButtonItemPanel)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pnlItemButtons)).EndInit();
 			this.pnlItemButtons.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.lcGroupEditBase)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcButtonPanel)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.pnlPanel)).EndInit();
-			this.pnlPanel.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.lcGroupPayInfo)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcItemPayType)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lupPayType.Properties)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.splitterItem1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -857,8 +788,8 @@
 		#endregion
 
 		private DevExpress.XtraLayout.EmptySpaceItem esMonSaleAmt;
-		private Controls.Grid.XGrid gridFindItems;
-		private Controls.Grid.XGrid gridCategories;
+		private Controls.Grid.XGrid gridProducts;
+		private Controls.Grid.XGrid gridCategory;
 		private Controls.Grid.XGrid gridItems;
 		private DevExpress.XtraLayout.LayoutControlItem lcGridItems;
 		private DevExpress.XtraLayout.LayoutControlItem lcGridCategories;
@@ -883,8 +814,6 @@
 		private DevExpress.XtraEditors.TextEdit txtCustomer;
 		private DevExpress.XtraLayout.LayoutControlItem lcItemCustomer;
 		private DevExpress.XtraLayout.LayoutControlGroup lcGroupItemButtons;
-		private DevExpress.XtraEditors.PanelControl pnlPanel;
-		private DevExpress.XtraLayout.LayoutControlItem lcButtonPanel;
 		private DevExpress.XtraEditors.SimpleButton btnSearchCustomer;
 		private DevExpress.XtraEditors.SimpleButton btnCancel;
 		private DevExpress.XtraEditors.SimpleButton btnDiscountAmt;
@@ -895,10 +824,7 @@
 		private DevExpress.XtraEditors.SimpleButton btnItemMinus;
 		private DevExpress.XtraEditors.SimpleButton btnItemDelete;
 		private DevExpress.XtraEditors.SimpleButton btnDiscountRat;
-		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;
-		private DevExpress.XtraLayout.SplitterItem splitterItem1;
 		private DevExpress.XtraLayout.LayoutControlGroup lcGroupPayInfo;
-		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem2;
 		private Controls.Common.XLookup lupPayType;
 		private DevExpress.XtraLayout.LayoutControlItem lcItemPayType;
 	}

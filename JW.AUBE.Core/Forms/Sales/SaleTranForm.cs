@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Windows.Forms;
 using DevExpress.Utils;
+using DevExpress.XtraGrid.Views.Grid;
+using JW.AUBE.Base.Map;
 using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Controls.Grid;
 using JW.AUBE.Core.Utils;
@@ -11,6 +14,58 @@ namespace JW.AUBE.Core.Forms.Sales
 		public SaleTranForm()
 		{
 			InitializeComponent();
+
+			btnDiscountRat.Click += delegate (object sender, EventArgs e) { SetSaleInputMode(SaleInputMode.DiscountRate); };
+			btnDiscountAmt.Click += delegate (object sender, EventArgs e) { SetSaleInputMode(SaleInputMode.DiscountAmount); };
+
+			btnCancel.Click += delegate (object sender, EventArgs e) { DataInit(); };
+			btnConfirm.Click += delegate (object sender, EventArgs e) { ActSaveAndNew(); };
+
+			txtInput.Enter += delegate (object sender, EventArgs e)
+			{
+				switch (SaleInputMode)
+				{
+					case SaleInputMode.Item:
+						SetMessage("상품 바코드를 입력하거나 상품코드를 입력합니다.");
+						break;
+					case SaleInputMode.DiscountRate:
+						SetMessage("할인율(%)을 입력합니다.");
+						break;
+					case SaleInputMode.DiscountAmount:
+						SetMessage("할인금액을 입력합니다.");
+						break;
+				}
+			};
+			txtInput.KeyDown += delegate (object sender, KeyEventArgs e)
+			{
+			};
+
+			gridCategory.RowCellClick += delegate (object sender, RowCellClickEventArgs e)
+			{
+				if (e.RowHandle < 0)
+					return;
+
+				if (e.Button == MouseButtons.Left && e.Clicks == 1)
+				{
+					GetSaleProduct();
+				}
+			};
+		}
+
+		[DXBrowsable(false)]
+		public SaleInputMode SaleInputMode { get; set; }
+
+		protected override void OnShown(EventArgs e)
+		{
+			base.OnShown(e);
+			txtInput.Focus();
+		}
+
+		protected override void LoadForm()
+		{
+			base.LoadForm();
+			this.StartPosition = FormStartPosition.CenterScreen;
+			SaleInputMode = SaleInputMode.Item;
 		}
 
 		protected override void InitButtons()
@@ -26,7 +81,6 @@ namespace JW.AUBE.Core.Forms.Sales
 			lcItemCustomer.Text = "거래처 ";
 
 			lcItemInput.AppearanceItemCaption.BackColor = System.Drawing.Color.SteelBlue;
-			lcItemCustomer.AppearanceItemCaption.BackColor = System.Drawing.Color.SteelBlue;
 
 			txtCustomer.SetEnable(false);
 			spnTotSupAmt.SetEnable(false);
@@ -50,67 +104,38 @@ namespace JW.AUBE.Core.Forms.Sales
 		{
 			gridItems.Init();
 			gridItems.AddGridColumns(
-				new XGridColumn()
-				{
-					FieldName = "ROW_NO",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 40
-				}
+				new XGridColumn() { FieldName = "ROW_NO" },
+				new XGridColumn() { FieldName = "PRODUCT_ID", Visible = false },
+				new XGridColumn() { FieldName = "PRODUCT_CODE", HorzAlignment = HorzAlignment.Center, Width = 80 },
+				new XGridColumn() { FieldName = "PRODUCT_NAME", Width = 200 },
+				new XGridColumn() { FieldName = "SALE_PRICE", Width = 100, HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0" },
+				new XGridColumn() { FieldName = "DISC_RATE", Width = 80, HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0" },
+				new XGridColumn() { FieldName = "DISC_PRICE", Width = 100, HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0" },
+				new XGridColumn() { FieldName = "SALE_AMT", Width = 110, HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0" },
+				new XGridColumn() { FieldName = "DISC_AMT", Width = 100, HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0" },
+				new XGridColumn() { FieldName = "NPAY_AMT", Width = 110, HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0" },
+				new XGridColumn() { FieldName = "DISC_TYPE", HorzAlignment = HorzAlignment.Center, Width = 100 }
 				);
 		}
 		void InitGridCategory()
 		{
-			gridCategories.Init();
-			gridCategories.AddGridColumns(
-				new XGridColumn()
-				{
-					FieldName = "ROW_NO",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 40
-				},
-				new XGridColumn()
-				{
-					FieldName = "CATEGORY_ID",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 80,
-					Visible = false
-				},
-				new XGridColumn()
-				{
-					FieldName = "CATEGORY_NAME",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 200
-				});
+			gridCategory.Init();
+			gridCategory.AddGridColumns(
+				new XGridColumn() { FieldName = "CATEGORY_CODE", HorzAlignment = HorzAlignment.Center, Width = 80, Visible = false },
+				new XGridColumn() { FieldName = "CATEGORY_NAME", HorzAlignment = HorzAlignment.Near, Width = 160 }
+				);
+
+			GetSaleCategory();
 		}
 		void InitGridProducts()
 		{
-			gridFindItems.Init();
-			gridFindItems.AddGridColumns(
-				new XGridColumn()
-				{
-					FieldName = "ROW_NO",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 40
-				},
-				new XGridColumn()
-				{
-					FieldName = "PRODUCT_ID",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 80,
-					Visible = false
-				},
-				new XGridColumn()
-				{
-					FieldName = "PRODUCT_CODE",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 80
-				},
-				new XGridColumn()
-				{
-					FieldName = "PRODUCT_NAME",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 200
-				});
+			gridProducts.Init();
+			gridProducts.AddGridColumns(
+				new XGridColumn() { FieldName = "PRODUCT_ID", HorzAlignment = HorzAlignment.Center, Width = 80, Visible = false },
+				new XGridColumn() { FieldName = "PRODUCT_NAME", HorzAlignment = HorzAlignment.Near, Width = 200 },
+				new XGridColumn() { FieldName = "PRODUCT_CODE", HorzAlignment = HorzAlignment.Center, Width = 80 },
+				new XGridColumn() { FieldName = "SALE_PRICE", HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0", Width = 80 }
+				);
 		}
 
 		protected override void DataLoad(object param = null)
@@ -163,6 +188,45 @@ namespace JW.AUBE.Core.Forms.Sales
 			base.DataSave(arg, callback);
 		}
 
+		void SetSaleInputMode(SaleInputMode saleInputMode)
+		{
+			if (saleInputMode == SaleInputMode.Item)
+			{
+				lcItemInput.Text = "상품등록 ";
+			}
+			else if (saleInputMode == SaleInputMode.DiscountRate)
+			{
+				if (SaleInputMode == saleInputMode)
+				{
+					SetSaleInputMode(SaleInputMode.Item);
+					return;
+				}
+				else
+					lcItemInput.Text = "할인율(%) ";
+			}
+			else if (saleInputMode == SaleInputMode.DiscountAmount)
+			{
+				if (SaleInputMode == saleInputMode)
+				{
+					SetSaleInputMode(SaleInputMode.Item);
+					return;
+				}
+				else
+					lcItemInput.Text = "할인금액 ";
+			}
+			SaleInputMode = saleInputMode;
+			txtInput.Clear();
+			txtInput.Focus();
+		}
 
+		void GetSaleCategory()
+		{
+			gridCategory.BindData("Sales", "GetCategory", null, null);
+			GetSaleProduct();
+		}
+		void GetSaleProduct()
+		{
+			gridProducts.BindData("Sales", "GetProducts", null, new DataMap() { { "CATEGORY", gridCategory.GetValue(gridCategory.MainView.FocusedRowHandle, "CATEGORY_CODE") } });
+		}
 	}
 }

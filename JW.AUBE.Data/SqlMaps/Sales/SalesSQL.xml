@@ -180,6 +180,35 @@
 			]]>
 		</delete>
 
+		<select id="GetSaleCategory" parameterClass="DataMap" resultClass="SaleCategoryList" >
+			<![CDATA[
+				SELECT  AA.CODE		AS CATEGORY_CODE
+					,	AA.NAME		AS CATEGORY_NAME
+				FROM	UAA.CODES AA
+				WHERE	AA.PARENT_CODE = 'CATEGORY'
+				AND		AA.OPTION_VALUE1 = 'Y'
+				ORDER BY ISNULL(AA.SORT_SEQ, 99999), AA.NAME
+			]]>
+		</select>
+
+		<select id="GetSaleProducts" parameterClass="DataMap" resultClass="SaleProductsList" >
+			<![CDATA[
+				SELECT  AA.PRODUCT_ID
+					,	AA.PRODUCT_CODE
+					,	AA.PRODUCT_NAME
+					,	ISNULL(SP.SALE_PRICE, 0)	AS SALE_PRICE
+				FROM	UCD.PRODUCTS AA
+						LEFT JOIN
+							UCD.SALES_PRICE SP 
+								ON AA.PRODUCT_ID = SP.PRODUCT_ID
+									AND SP.BEG_DATE <= CONVERT(VARCHAR(8), GETDATE(), 112)
+									AND SP.END_DATE >= CONVERT(VARCHAR(8), GETDATE(), 112)
+				WHERE	AA.PRODUCT_TYPE IN ('G', 'P')
+				AND		AA.CATEGORY = #CATEGORY#
+				ORDER BY AA.PRODUCT_NAME
+			]]>
+		</select>
+		
 		<select id="GetSaleTranList" parameterClass="DataMap" resultClass="SaleTranList" >
 			<![CDATA[
 				SELECT  ROW_NUMBER() OVER (ORDER BY AA.SALE_ID, BB.ITEM_ID)	AS ROW_NO

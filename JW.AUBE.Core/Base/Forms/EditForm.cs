@@ -1009,5 +1009,10 @@ namespace JW.AUBE.Core.Base.Forms
 				ShowErrBox(ex);
 			}
 		}
+
+		public void SetMessage(string msg)
+		{
+			barStaticMessage.Caption = msg;
+		}
 	}
 }

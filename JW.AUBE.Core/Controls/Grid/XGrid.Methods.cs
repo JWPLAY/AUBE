@@ -97,7 +97,6 @@ namespace JW.AUBE.Core.Controls.Grid
 				(Grid.MainView as AdvBandedGridView).OptionsSelection.MultiSelect = true;
 				(Grid.MainView as AdvBandedGridView).OptionsSelection.MultiSelectMode = GridMultiSelectMode.RowSelect;
 				(Grid.MainView as AdvBandedGridView).OptionsView.ColumnAutoWidth = false;
-				(Grid.MainView as AdvBandedGridView).OptionsView.ShowFooter = false;
 				(Grid.MainView as AdvBandedGridView).OptionsBehavior.ReadOnly = true;
 				(Grid.MainView as AdvBandedGridView).OptionsBehavior.Editable = false;
 			}
@@ -116,7 +115,6 @@ namespace JW.AUBE.Core.Controls.Grid
 				(Grid.MainView as BandedGridView).OptionsSelection.MultiSelect = true;
 				(Grid.MainView as BandedGridView).OptionsSelection.MultiSelectMode = GridMultiSelectMode.RowSelect;
 				(Grid.MainView as BandedGridView).OptionsView.ColumnAutoWidth = false;
-				(Grid.MainView as BandedGridView).OptionsView.ShowFooter = false;
 				(Grid.MainView as BandedGridView).OptionsBehavior.ReadOnly = true;
 				(Grid.MainView as BandedGridView).OptionsBehavior.Editable = false;
 			}
@@ -135,7 +133,6 @@ namespace JW.AUBE.Core.Controls.Grid
 				(Grid.MainView as GridView).OptionsSelection.MultiSelect = true;
 				(Grid.MainView as GridView).OptionsSelection.MultiSelectMode = GridMultiSelectMode.RowSelect;
 				(Grid.MainView as GridView).OptionsView.ColumnAutoWidth = false;
-				(Grid.MainView as GridView).OptionsView.ShowFooter = false;
 				(Grid.MainView as GridView).OptionsBehavior.ReadOnly = true;
 				(Grid.MainView as GridView).OptionsBehavior.Editable = false;
 			}

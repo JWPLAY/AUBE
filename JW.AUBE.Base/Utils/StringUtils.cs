@@ -144,6 +144,13 @@ namespace JW.AUBE.Base.Utils
 			return retValue;
 		}
 
+		public static bool IsNumeric(this string str)
+		{
+			int numChk = 0;
+			bool isNum = int.TryParse(str, out numChk);
+			return isNum;
+		}
+
 		public enum StringAlignType
 		{
 			TEL

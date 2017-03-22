@@ -1004,5 +1004,20 @@ namespace JW.AUBE.Core.Controls.Grid
 				return ((DataView)MainView.DataSource).Table;
 			}
 		}
+
+		public void SelectRow(int rowIndex)
+		{
+			MainView.ClearSelection();
+			MainView.SelectRow(rowIndex);
+			MainView.FocusedRowHandle = rowIndex;
+		}
+
+		public void DeleteRow(int rowIndex)
+		{
+			if (rowIndex < 0)
+				return;
+
+			MainView.DeleteRow(rowIndex);
+		}
 	}
 }

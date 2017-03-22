@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace JW.AUBE.Base.Utils
 {
-	public class DateUtils
+	public static class DateUtils
 	{
 		/// <summary>
 		/// 문자열 8자리 Date를 문자열 10자리로 변경하여 반환한다.
@@ -39,7 +39,7 @@ namespace JW.AUBE.Base.Utils
 			return string.Format("{0}{3}{1}{3}{2}", str.Substring(0, 4), str.Substring(5, 2), str.Substring(8, 2), separator);
 		}
 
-		public static string DateTimeToString8(DateTime dt)
+		public static string DateTimeToString8(this DateTime dt)
 		{
 			return string.Format("{0:yyyyMMdd}", dt);
 		}
@@ -50,7 +50,7 @@ namespace JW.AUBE.Base.Utils
 		/// <param name="dt">DateTime</param>
 		/// <param name="separator">날짜구분문자</param>
 		/// <returns></returns>
-		public static string DateTimeToString10(DateTime dt, string separator)
+		public static string DateTimeToString10(this DateTime dt, string separator)
 		{
 			if (string.IsNullOrEmpty(separator))
 			{
@@ -66,7 +66,7 @@ namespace JW.AUBE.Base.Utils
 		/// <param name="dt">DateTime</param>
 		/// <param name="separator">날짜구분문자</param>
 		/// <returns></returns>
-		public static string DateTimeToString19(DateTime dt, string separator)
+		public static string DateTimeToString19(this DateTime dt, string separator)
 		{
 			if (string.IsNullOrEmpty(separator))
 			{
@@ -161,7 +161,7 @@ namespace JW.AUBE.Base.Utils
 			return DateTime.DaysInMonth(intYear, intMonth);
 		}
 
-		public static int WeeksInYear(DateTime date)
+		public static int WeeksInYear(this DateTime date)
 		{
 			var cal = new GregorianCalendar(GregorianCalendarTypes.Localized);
 			return cal.GetWeekOfYear(date, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
@@ -218,6 +218,36 @@ namespace JW.AUBE.Base.Utils
 				ret += str;
 			}
 			return ret;
+		}
+
+		public static string DayOfWeekName(this DateTime dt)
+		{
+			string weekName = string.Empty;
+			switch (dt.DayOfWeek)
+			{
+				case DayOfWeek.Monday:
+					weekName = "월";
+					break;
+				case DayOfWeek.Tuesday: 
+					weekName = "화";
+					break;
+				case DayOfWeek.Wednesday:
+					weekName = "수";
+					break;
+				case DayOfWeek.Thursday:
+					weekName = "목";
+					break;
+				case DayOfWeek.Friday:
+					weekName = "금";
+					break;
+				case DayOfWeek.Saturday:
+					weekName = "토";
+					break;
+				case DayOfWeek.Sunday:
+					weekName = "일";
+					break;
+			}
+			return weekName;
 		}
 	}
 }

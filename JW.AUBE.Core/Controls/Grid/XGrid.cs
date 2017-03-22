@@ -753,5 +753,37 @@ namespace JW.AUBE.Core.Controls.Grid
 
 		[Browsable(false)]
 		public string PageFooterRight { get; set; }
+
+		[Browsable(false)]
+		public DataTable Table
+		{
+			get
+			{
+				if (MainView.DataSource == null)
+				{
+					return null;
+				}
+				else
+				{
+					return ((DataView)MainView.DataSource).Table;
+				}
+			}
+		}
+
+		[Browsable(false)]
+		public int RowCount { get { return MainView.RowCount; } }
+
+		[Browsable(false)]
+		public int FocusedRowHandle
+		{
+			get
+			{
+				return MainView.FocusedRowHandle;
+			}
+			set
+			{
+				MainView.FocusedRowHandle = value;
+			}
+		}
 	}
 }

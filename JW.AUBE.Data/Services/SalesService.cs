@@ -213,5 +213,24 @@ namespace JW.AUBE.Service.Services
 				return req;
 			}
 		}
+
+		public static WasRequest GetSaleSumData(WasRequest req)
+		{
+			try
+			{
+				var data = DaoFactory.Instance.QueryForObject<SaleSumDataModel>("GetSaleSumData", req.Parameter);
+				req.DataList = new List<WasRequestData>()
+				{
+					new WasRequestData() { Data = data }
+				};
+				return req;
+			}
+			catch (Exception ex)
+			{
+				req.ErrorNumber = ex.HResult;
+				req.ErrorMessage = ex.Message;
+				return req;
+			}
+		}
 	}
 }

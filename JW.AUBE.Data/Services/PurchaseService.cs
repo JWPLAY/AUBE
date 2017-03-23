@@ -235,13 +235,10 @@ namespace JW.AUBE.Service.Services
 		{
 			try
 			{
-				var list = DaoFactory.Instance.QueryForList<PurcTranListDataModel>("GetPurcTranList", req.Parameter);
+				var list = DaoFactory.Instance.QueryForList<PurcTranListModel>("GetPurcTranList", req.Parameter);
 				req.DataList = new List<WasRequestData>()
 				{
-					new WasRequestData()
-					{
-						Data = list	//ConvertUtils.DataMapListToDataTable(list, req.SqlId)
-					}
+					new WasRequestData() { Data = list }
 				};
 				return req;
 			}

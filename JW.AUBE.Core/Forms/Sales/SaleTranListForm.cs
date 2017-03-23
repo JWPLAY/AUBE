@@ -22,12 +22,7 @@ namespace JW.AUBE.Core.Forms.Sales
 		protected override void InitButtons()
 
 		{
-			SetToolbarButtons(new Models.ToolbarButtons()
-			{
-				Refresh = true,
-				New = true,
-				Export = true
-			});
+			SetToolbarButtons(new Models.ToolbarButtons() { Refresh = true, New = true, Export = true });
 		}
 		protected override void InitControls()
 		{

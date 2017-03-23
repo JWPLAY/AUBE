@@ -31,18 +31,8 @@
 						LEFT JOIN
 							UAA.USERS U2
 								ON AA.UPD_USER = U2.USER_ID
-				WHERE	1=1
+				WHERE	AA.SALE_ID	= #SALE_ID#
 			]]>
-			<isNotEmpty property="SALE_ID">
-				<![CDATA[
-				AND		AA.SALE_ID	= #SALE_ID#
-			]]>
-			</isNotEmpty>
-			<isNotEmpty property="SALE_NO">
-				<![CDATA[
-				AND		AA.SALE_NO	= #SALE_NO#
-			]]>
-			</isNotEmpty>
 		</select>
 		<select id="GetSaleTranItem" parameterClass="DataMap" resultClass="SaleTranItem" >
 			<![CDATA[
@@ -69,9 +59,6 @@
 					,	U2.USER_NAME						AS UPD_USER_NAME
 					
 				FROM	UBZ.SALE_TRAN_ITEM AA
-						INNER JOIN
-							UBZ.SALE_TRAN BB
-								ON AA.SALE_ID = BB.SALE_ID
 						LEFT JOIN
 							UCD.PRODUCTS BB
 								ON AA.PRODUCT_ID = BB.PRODUCT_ID
@@ -81,20 +68,7 @@
 						LEFT JOIN
 							UAA.USERS U2 WITH (NOLOCK)
 								ON AA.UPD_USER = U2.USER_ID
-				WHERE	1=1
-				
-			]]>
-			<isNotEmpty property="SALE_ID">
-				<![CDATA[
-				AND		AA.SALE_ID	= #SALE_ID#
-			]]>
-			</isNotEmpty>
-			<isNotEmpty property="SALE_NO">
-			<![CDATA[
-				AND		BB.SALE_NO	= #SALE_NO#
-			]]>
-			</isNotEmpty>
-			<![CDATA[
+				WHERE	AA.SALE_ID	= #SALE_ID#
 				ORDER BY AA.ITEM_ID
 			]]>
 		</select>
@@ -103,12 +77,14 @@
 			<![CDATA[
 				INSERT INTO UBZ.SALE_TRAN
 				( 
-					SALE_NO, SALE_DATE, SALE_TYPE, CUSTOMER_ID,
+					SALE_NO, SALE_DATE, SALE_TYPE, CUSTOMER_ID, PAY_TYPE,
+					TOT_SALE_QTY, TOT_SALE_AMT, TOT_DISC_AMT, TOT_NPAY_AMT,
 					REMARKS, INS_TIME, INS_USER 
 				)
 				VALUES
 				( 
-					#SALE_NO#, #SALE_DATE#, #SALE_TYPE#, #CUSTOMER_ID#,
+					#SALE_NO#, #SALE_DATE#, #SALE_TYPE#, #CUSTOMER_ID#, #PAY_TYPE#,
+					0, 0, 0, 0,
 					#REMARKS#, GETDATE(), #INS_USER# 
 				)
 			]]>
@@ -124,10 +100,35 @@
 				SET     SALE_DATE		= #SALE_DATE#
 					,	SALE_TYPE		= #SALE_TYPE#
 					,	CUSTOMER_ID		= #CUSTOMER_ID#
+					,	PAY_TYPE		= #PAY_TYPE#
 					,	REMARKS			= #REMARKS#
 					,	UPD_TIME		= GETDATE()
 					,	UPD_USER		= #INS_USER#
 				WHERE	SALE_ID			= #SALE_ID#
+			]]>
+		</update>
+		<update id="UpdateSaleTranSum" parameterClass="DataMap">
+			<![CDATA[
+				UPDATE  AA
+				SET     TOT_SALE_QTY	= ISNULL(BB.SALE_QTY, 0)
+					,	TOT_SALE_AMT	= ISNULL(BB.SALE_AMT, 0)
+					,	TOT_DISC_AMT	= ISNULL(BB.DISC_AMT, 0)
+					,	TOT_NPAY_AMT	= ISNULL(BB.NPAY_AMT, 0)
+					,	UPD_TIME		= GETDATE()
+					,	UPD_USER		= #INS_USER#
+				FROM	UBZ.SALE_TRAN AA
+						LEFT JOIN
+						(
+							SELECT	SALE_ID
+								,	SUM(SALE_QTY)	AS SALE_QTY
+								,	SUM(SALE_AMT)	AS SALE_AMT
+								,	SUM(DISC_AMT)	AS DISC_AMT
+								,	SUM(NPAY_AMT)	AS NPAY_AMT
+							FROM	UBZ.SALE_TRAN_ITEM 
+							WHERE	SALE_ID = #SALE_ID#
+							GROUP BY SALE_ID
+						) BB ON AA.SALE_ID = BB.SALE_ID
+				WHERE	AA.SALE_ID	= #SALE_ID#
 			]]>
 		</update>
 		<delete id="DeleteSaleTran" parameterClass="DataMap">
@@ -153,11 +154,11 @@
 			<![CDATA[
 				INSERT INTO UBZ.SALE_TRAN_ITEM
 				( 
-					SALE_ID, PRODUCT_ID, SALE_PRICE, SALE_QTY, SALE_AMT, INS_TIME, INS_USER 
+					SALE_ID, PRODUCT_ID, SALE_PRICE, DISC_RATE, DISC_PRICE, SALE_QTY, SALE_AMT, DISC_AMT, NPAY_AMT, DISC_TYPE, INS_TIME, INS_USER 
 				)
 				VALUES
 				( 
-					#SALE_ID#, #PRODUCT_ID#, #SALE_PRICE#, #SALE_QTY#, #SALE_AMT#, GETDATE(), #INS_USER# 
+					#SALE_ID#, #PRODUCT_ID#, #SALE_PRICE#, #DISC_RATE#, #DISC_PRICE#, #SALE_QTY#, #SALE_AMT#, #DISC_AMT#, #NPAY_AMT#, #DISC_TYPE#, GETDATE(), #INS_USER# 
 				)
 			]]>
 			<selectKey type="post" property="ITEM_ID" resultClass="Int">
@@ -169,13 +170,18 @@
 		<update id="UpdateSaleTranItem" parameterClass="DataMap">
 			<![CDATA[
 				UPDATE  UBZ.SALE_TRAN
-				SET     PRODUCT_ID		= #PRODUCT_ID#
-					,	SALE_PRICE		= #SALE_PRICE#
-					,	SALE_QTY		= #SALE_QTY#
-					,	SALE_AMT		= #SALE_AMT#
-					,	UPD_TIME		= GETDATE()
-					,	UPD_USER		= #INS_USER#
-				WHERE	ITEM_ID			= #ITEM_ID#
+				SET     PRODUCT_ID	= #PRODUCT_ID#
+					,	SALE_PRICE	= #SALE_PRICE#
+					,	DISC_RATE	= #DISC_RATE#
+					,	DISC_PRICE	= #DISC_PRICE#
+					,	SALE_QTY	= #SALE_QTY#
+					,	SALE_AMT	= #SALE_AMT#
+					,	DISC_AMT	= #DISC_AMT#
+					,	NPAY_AMT	= #NPAY_AMT#
+					,	DISC_TYPE	= #DISC_TYPE#
+					,	UPD_TIME	= GETDATE()
+					,	UPD_USER	= #INS_USER#
+				WHERE	ITEM_ID		= #ITEM_ID#
 			]]>
 		</update>
 		<delete id="DeleteSaleTranItem" parameterClass="DataMap">

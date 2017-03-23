@@ -1,6 +1,6 @@
 ﻿namespace JW.AUBE.Model.Sales
 {
-	public class SaleTranListDataModel
+	public class SaleTranListModel
 	{
 		public int ROW_NO { get; set; }
 		public int SALE_ID { get; set; }

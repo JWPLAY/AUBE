@@ -1,6 +1,6 @@
 ﻿namespace JW.AUBE.Model.Purchase
 {
-	public class PurcTranListDataModel
+	public class PurcTranListModel
 	{
 		public int ROW_NO { get; set; }
 		public int PURC_ID { get; set; }

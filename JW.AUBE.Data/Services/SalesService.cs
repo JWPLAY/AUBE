@@ -16,7 +16,7 @@ namespace JW.AUBE.Service.Services
 		{
 			try
 			{
-				var list = DaoFactory.Instance.QueryForList<SaleTranListDataModel>("GetSaleTranList", req.Parameter);
+				var list = DaoFactory.Instance.QueryForList<SaleTranListModel>("GetSaleTranList", req.Parameter);
 				req.DataList = new List<WasRequestData>()
 				{
 					new WasRequestData() { Data = list }
@@ -70,44 +70,39 @@ namespace JW.AUBE.Service.Services
 
 				try
 				{
-					object product_id = null;
-					object reg_id = null;
-					string product_code = string.Empty;
+					object sale_id = null;
+					object sale_no = null;
+					object item_id = null;
 
-					//상품정보 저장
+					//마스터저장
 					if (req.DataList.Count > 0)
 					{
-						if (req.DataList[0].Data == null || (req.DataList[0].Data as DataTable).Rows.Count == 0)
-							throw new Exception("상품정보를 저장할 데이터가 존재하지 않습니다.");
+						if (req.DataList[0].Data == null)
+							throw new Exception("저장할 데이터가 존재하지 않습니다.");
 
 						DataMap data = (req.DataList[0].Data as DataTable).ToDataMapList()[0];
 
-						if (string.IsNullOrEmpty(data.GetValue("PRODUCT_CODE").ToStringNullToEmpty()))
+						if (string.IsNullOrEmpty(data.GetValue("SALE_NO").ToStringNullToEmpty()))
 						{
-							product_code = CommonDataUtils.GetProductCode(data.GetValue("PRODUCT_TYPE").ToString());
-							data.SetValue("PRODUCT_CODE", product_code);
+							sale_no = CommonDataUtils.GetSaleNo();
+							data.SetValue("SALE_NO", sale_no);
 						}
 
 						if (data.GetValue("ROWSTATE").ToStringNullToEmpty() == "INSERT")
 						{
-							product_id = DaoFactory.Instance.Insert("InsertProduct", data);
+							sale_id = DaoFactory.Instance.Insert("InsertSaleTran", data);
 						}
 						else if (data.GetValue("ROWSTATE").ToStringNullToEmpty() == "UPDATE")
 						{
-							DaoFactory.Instance.Update("UpdateProduct", data);
-							product_id = data.GetValue("PRODUCT_ID");
-						}
-						else if (data.GetValue("ROWSTATE").ToStringNullToEmpty() == "DELETE")
-						{
-							DaoFactory.Instance.Update("DeleteProduct", data);
-							product_id = data.GetValue("PRODUCT_ID");
+							DaoFactory.Instance.Update("UpdateSaleTran", data);
+							sale_id = data.GetValue("SALE_ID");
 						}
 						req.DataList[0].ErrorNumber = 0;
 						req.DataList[0].ErrorMessage = "SUCCESS";
-						req.DataList[0].ReturnValue = product_id;
+						req.DataList[0].ReturnValue = sale_id;
 					}
 
-					//원부자재정보 저장
+					//품목 저장
 					if (req.DataList.Count > 1)
 					{
 						if (req.DataList[1].Data != null && (req.DataList[1].Data as DataTable).Rows.Count > 0)
@@ -115,33 +110,79 @@ namespace JW.AUBE.Service.Services
 							IList<DataMap> list = (req.DataList[1].Data as DataTable).ToDataMapList();
 							foreach (DataMap map in list)
 							{
-								map.SetValue("PRODUCT_ID", product_id);
+								map.SetValue("SALE_ID", sale_id);
 
 								if (map.GetValue("ROWSTATE").ToStringNullToEmpty() == "INSERT")
 								{
-									reg_id = DaoFactory.Instance.Insert("InsertProductMaterial", map);
+									item_id = DaoFactory.Instance.Insert("InsertSaleTranItem", map);
+									DaoFactory.Instance.Update("UpdateSaleTranSum", map);
+
+									//재고반영
+									DaoFactory.Instance.QueryForObject<int>("BatchInventory", new DataMap()
+									{
+										{ "TRAN_ID", sale_id },
+										{ "TRAN_TP", "SL" },
+										{ "REG_TP", "II" },
+										{ "ITEM_ID", item_id },
+										{ "INS_USER", map.GetValue("INS_USER") }
+									});
 								}
 								else if (map.GetValue("ROWSTATE").ToStringNullToEmpty() == "UPDATE")
 								{
-									DaoFactory.Instance.Update("UpdateProductMaterial", map);
-									reg_id = map.GetValue("REG_ID");
+									item_id = map.GetValue("ITEM_ID");
+
+									//재고반영(-)
+									DaoFactory.Instance.QueryForObject<int>("BatchInventory", new DataMap()
+									{
+										{ "TRAN_ID", sale_id },
+										{ "TRAN_TP", "SL" },
+										{ "REG_TP", "UD" },
+										{ "ITEM_ID", item_id },
+										{ "INS_USER", map.GetValue("INS_USER") }
+									});
+
+									//구매내역 수정
+									DaoFactory.Instance.Update("UpdateSaleTranItem", map);
+									DaoFactory.Instance.Update("UpdateSaleTranSum", map);
+
+									//재고반영(+)
+									DaoFactory.Instance.QueryForObject<int>("BatchInventory", new DataMap()
+									{
+										{ "TRAN_ID", sale_id },
+										{ "TRAN_TP", "SL" },
+										{ "REG_TP", "UI" },
+										{ "ITEM_ID", item_id },
+										{ "INS_USER", map.GetValue("INS_USER") }
+									});
 								}
 								else if (map.GetValue("ROWSTATE").ToStringNullToEmpty() == "DELETE")
 								{
-									DaoFactory.Instance.Update("DeleteProductMaterial", map);
-									reg_id = map.GetValue("REG_ID");
+									item_id = map.GetValue("ITEM_ID");
+
+									//재고반영
+									DaoFactory.Instance.QueryForObject<int>("BatchInventory", new DataMap()
+									{
+										{ "TRAN_ID", sale_id },
+										{ "TRAN_TP", "SL" },
+										{ "REG_TP", "DD" },
+										{ "ITEM_ID", item_id },
+										{ "INS_USER", map.GetValue("INS_USER") }
+									});
+
+									DaoFactory.Instance.Update("DeleteSaleTranItem", map);
+									DaoFactory.Instance.Update("UpdateSaleTranSum", map);
 								}
 							}
 							req.DataList[1].ErrorNumber = 0;
 							req.DataList[1].ErrorMessage = "SUCCESS";
-							req.DataList[1].ReturnValue = product_id;
+							req.DataList[1].ReturnValue = item_id;
 						}
 					}
-					
+
 					if (isTran)
 						DaoFactory.Instance.CommitTransaction();
 				}
-				catch(Exception ex)
+				catch (Exception ex)
 				{
 					if (isTran)
 						DaoFactory.Instance.RollBackTransaction();
@@ -157,15 +198,24 @@ namespace JW.AUBE.Service.Services
 				return req;
 			}
 		}
-
 		public static WasRequest Delete(WasRequest req)
 		{
 			try
 			{
-				var map = DaoFactory.Instance.QueryForObject<DataMap>("SelectProduct", req.Parameter);
+				var map = DaoFactory.Instance.QueryForObject<SaleTranDataModel>("GetSaleTran", req.Parameter);
 				if (map != null)
 				{
-					DaoFactory.Instance.Insert("DeleteProduct", req.Parameter);
+					//삭제 전에 재고 반영한다.
+					DaoFactory.Instance.QueryForObject<int>("BatchInventory", new DataMap()
+					{
+						{ "TRAN_ID", req.Parameter.GetValue("SALE_ID") },
+						{ "TRAN_TP", "SL" },
+						{ "REG_TP", "DD" },
+						{ "ITEM_ID", 0 },
+						{ "INS_USER", req.Parameter.GetValue("INS_USER") }
+					});
+					
+					DaoFactory.Instance.Delete("DeleteSaleTran", req.Parameter);
 				}
 				return req;
 			}

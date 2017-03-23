@@ -23,8 +23,7 @@ namespace JW.AUBE.Core.Forms.Sales
 		public SaleTranForm()
 		{
 			InitializeComponent();
-
-			
+						
 			btnDiscountRat.Click += delegate (object sender, EventArgs e) { SetSaleInputMode(SaleInputMode.DiscountRate); };
 			btnDiscountAmt.Click += delegate (object sender, EventArgs e) { SetSaleInputMode(SaleInputMode.DiscountAmount); };
 
@@ -108,7 +107,7 @@ namespace JW.AUBE.Core.Forms.Sales
 					btnItemPlus.ImageLocation =
 						btnItemMinus.ImageLocation =
 						btnItemDelete.ImageLocation =
-						btnSearchCustomer.ImageLocation =
+						btnCustomer.ImageLocation =
 						btnDiscountRat.ImageLocation =
 						btnDiscountAmt.ImageLocation =
 						btnCancel.ImageLocation =
@@ -119,7 +118,7 @@ namespace JW.AUBE.Core.Forms.Sales
 					btnItemPlus.ImageLocation =
 						btnItemMinus.ImageLocation =
 						btnItemDelete.ImageLocation =
-						btnSearchCustomer.ImageLocation =
+						btnCustomer.ImageLocation =
 						btnDiscountRat.ImageLocation =
 						btnDiscountAmt.ImageLocation =
 						btnCancel.ImageLocation =
@@ -153,6 +152,17 @@ namespace JW.AUBE.Core.Forms.Sales
 				gridItems.DeleteRow(gridItems.FocusedRowHandle);
 				gridItems.UpdateCurrentRow();
 				CalcSaleItem();
+			};
+
+			btnCustomer.Click += delegate (object sender, EventArgs e)
+			{
+				var data = CodeHelper.ShowForm("CUSTOMER");
+				if (data != null && data.GetType() == typeof(DataMap))
+				{
+					txtCustomer.EditValue = (data as DataMap).GetValue("CUSTOMER_NAME");
+					txtCustomer.Tag = (data as DataMap).GetValue("CUSTOMER_ID");
+				}
+				txtInput.Focus();
 			};
 		}
 
@@ -209,8 +219,8 @@ namespace JW.AUBE.Core.Forms.Sales
 			gridItems.AddGridColumns(
 				new XGridColumn() { FieldName = "ROW_NO" },
 				new XGridColumn() { FieldName = "PRODUCT_ID", Visible = false },
-				new XGridColumn() { FieldName = "PRODUCT_CODE", HorzAlignment = HorzAlignment.Center, Width = 80 },
 				new XGridColumn() { FieldName = "PRODUCT_NAME", Width = 190 },
+				new XGridColumn() { FieldName = "PRODUCT_CODE", HorzAlignment = HorzAlignment.Center, Width = 80 },
 				new XGridColumn() { FieldName = "SALE_PRICE", Caption = "판매가", Width = 80, HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0" },
 				new XGridColumn() { FieldName = "DISC_RATE", Caption = "할인율", Width = 60, HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0" },
 				new XGridColumn() { FieldName = "DISC_PRICE", Caption = "할인가", Width = 80, HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0" },
@@ -240,10 +250,10 @@ namespace JW.AUBE.Core.Forms.Sales
 		{
 			gridProducts.Init();
 			gridProducts.AddGridColumns(
-				new XGridColumn() { FieldName = "PRODUCT_ID", HorzAlignment = HorzAlignment.Center, Width = 80, Visible = false },
-				new XGridColumn() { FieldName = "PRODUCT_NAME", HorzAlignment = HorzAlignment.Near, Width = 200 },
-				new XGridColumn() { FieldName = "PRODUCT_CODE", HorzAlignment = HorzAlignment.Center, Width = 80 },
-				new XGridColumn() { FieldName = "SALE_PRICE", HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0", Width = 80 }
+				new XGridColumn() { FieldName = "PRODUCT_ID", Caption = "품목ID", HorzAlignment = HorzAlignment.Center, Width = 80, Visible = false },
+				new XGridColumn() { FieldName = "PRODUCT_NAME", Caption = "품목명", HorzAlignment = HorzAlignment.Near, Width = 180 },
+				new XGridColumn() { FieldName = "SALE_PRICE", Caption = "판매가", HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0", Width = 80 },
+				new XGridColumn() { FieldName = "PRODUCT_CODE", Caption = "품목코드", HorzAlignment = HorzAlignment.Center, Width = 80 }
 				);
 			(gridProducts.MainView as GridView).RowHeight = 30;
 		}
@@ -295,7 +305,44 @@ namespace JW.AUBE.Core.Forms.Sales
 		}
 		protected override void DataSave(object arg, SaveCallback callback)
 		{
-			base.DataSave(arg, callback);
+			if (DataValidate() == false) return;
+			if (DataValidate(gridItems) == false) return;
+
+			try
+			{
+				DataTable mastData = new DataTable();
+				mastData.Columns.AddRange(new DataColumn[]
+				{
+					new DataColumn("SALE_DATE", typeof(string)),
+					new DataColumn("SALE_TYPE", typeof(string)),
+					new DataColumn("PAY_TYPE", typeof(string)),
+					new DataColumn("CUSTOMER_ID", typeof(int)),
+					new DataColumn("ROWSTATE", typeof(string))
+				});
+
+				mastData.Rows.Add(
+					DateTime.Now.ToString("yyyyMMdd"),
+					"0",
+					lupPayType.EditValue,
+					txtCustomer.Tag,
+					"INSERT"
+					);
+
+				DataTable itemData = GetSaleItemData();
+				if (itemData == null || itemData.Rows.Count == 0)
+					throw new Exception("품목을 입력해야 합니다.");
+
+				var res = ServerRequest.Execute("Sales", "Save", new DataTable[] { mastData, itemData });
+				if (res.ErrorNumber != 0)
+					throw new Exception(res.ErrorMessage);
+
+				ShowMsgBox("저장하였습니다.");
+				callback(arg, res.DataList[0].ReturnValue);
+			}
+			catch (Exception ex)
+			{
+				ShowErrBox(ex);
+			}
 		}
 		protected override void DataInit()
 		{
@@ -305,6 +352,7 @@ namespace JW.AUBE.Core.Forms.Sales
 
 			txtInput.Clear();
 			txtCustomer.Clear();
+			txtCustomer.Tag = null;
 			SetSaleInputMode(SaleInputMode.Item);
 			esTotSaleAmount.Text = "0";
 			esTotDiscAmount.Text = "0";
@@ -371,7 +419,7 @@ namespace JW.AUBE.Core.Forms.Sales
 			btnItemPlus.Text = btnItemPlus.ToolTip = "수량증가";
 			btnItemMinus.Text = btnItemMinus.ToolTip = "수량감소";
 			btnItemDelete.Text = btnItemDelete.ToolTip = "품목삭제";
-			btnSearchCustomer.Text = btnSearchCustomer.ToolTip = "거래처검색";
+			btnCustomer.Text = btnCustomer.ToolTip = "거래처검색";
 			btnDiscountRat.Text = btnDiscountRat.ToolTip = "할인율(%)";
 			btnDiscountAmt.Text = btnDiscountAmt.ToolTip = "할인액";
 			btnCancel.Text = btnCancel.ToolTip = "판매취소";
@@ -380,7 +428,7 @@ namespace JW.AUBE.Core.Forms.Sales
 			btnItemPlus.Font = 
 				btnItemMinus.Font = 
 				btnItemDelete.Font = 
-				btnSearchCustomer.Font = 
+				btnCustomer.Font = 
 				btnDiscountRat.Font = 
 				btnDiscountAmt.Font =
 				btnCancel.Font = 
@@ -415,6 +463,7 @@ namespace JW.AUBE.Core.Forms.Sales
 				gridItems.DataSource = GetSaleItemData();
 
 			int rowIndex = gridItems.AddNewRow();
+			gridItems.SetValue(rowIndex, "ROW_NO", (rowIndex + 1));
 			gridItems.SetValue(rowIndex, "PRODUCT_ID", model.PRODUCT_ID);
 			gridItems.SetValue(rowIndex, "PRODUCT_CODE", model.PRODUCT_CODE);
 			gridItems.SetValue(rowIndex, "PRODUCT_NAME", model.PRODUCT_NAME);
@@ -438,6 +487,7 @@ namespace JW.AUBE.Core.Forms.Sales
 		{
 			DataTable dt = new DataTable();
 			dt.Columns.AddRange(new DataColumn[] {
+				new DataColumn("ROW_NO", typeof(int)),
 				new DataColumn("ITEM_ID", typeof(int)),
 				new DataColumn("SALE_ID", typeof(int)),
 				new DataColumn("PRODUCT_ID", typeof(int)),
@@ -450,8 +500,27 @@ namespace JW.AUBE.Core.Forms.Sales
 				new DataColumn("SALE_AMT", typeof(decimal)),
 				new DataColumn("DISC_AMT", typeof(decimal)),
 				new DataColumn("NPAY_AMT", typeof(decimal)),
-				new DataColumn("DISC_TYPE", typeof(string))
+				new DataColumn("DISC_TYPE", typeof(string)),
+				new DataColumn("ROWSTATE", typeof(string))
 			});
+
+			if (gridItems.DataSource != null)
+			{
+				gridItems.Table.AsEnumerable().ToList().ForEach(row =>
+				{
+					if (row.RowState == DataRowState.Deleted)
+					{
+						if (row["ITEM_ID"].ToStringNullToEmpty().IsNullOrEmpty() == false)
+						{
+							dt.Rows.Add(null, row["ITEM_ID"], null, row["PRODUCT_ID"], null, null, row["SALE_PRICE"], row["DISC_RATE"], row["DISC_PRICE"], row["SALE_QTY"], row["SALE_AMT"], row["DISC_AMT"], row["NPAY_AMT"], row["DISC_TYPE"], "DELETE");
+						}
+					}
+					else
+					{
+						dt.Rows.Add(null, null, null, row["PRODUCT_ID"], null, null, row["SALE_PRICE"], row["DISC_RATE"], row["DISC_PRICE"], row["SALE_QTY"], row["SALE_AMT"], row["DISC_AMT"], row["NPAY_AMT"], row["DISC_TYPE"], "INSERT");
+					}
+				});
+			}
 
 			return dt;
 		}
@@ -487,7 +556,7 @@ namespace JW.AUBE.Core.Forms.Sales
 				int dcPrice = salePrice - salePrice * dcRate / 100;
 				int saleQty = gridItems.GetValue(rowIndex, "SALE_QTY").ToIntegerNullToZero();
 				int discAmt = gridItems.GetValue(rowIndex, "DISC_AMT").ToIntegerNullToZero();
-				if (dcPrice > 0)
+				if (dcRate > 0)
 					discAmt = (salePrice - dcPrice) * saleQty;
 				int saleAmt = saleQty * salePrice;
 				int npayAmt = saleAmt - discAmt;
@@ -551,7 +620,7 @@ namespace JW.AUBE.Core.Forms.Sales
 					if (gridItems.MainView.FocusedRowHandle < 0)
 						return;
 
-					int rowIndex = gridItems.MainView.FocusedRowHandle;
+					int rowIndex = gridItems.FocusedRowHandle;
 					int discAmt = txtInput.EditValue.ToIntegerNullToZero();
 
 					gridItems.SetValue(rowIndex, "DISC_RATE", 0);

@@ -32,6 +32,7 @@ namespace JW.AUBE.Core.Forms.Sales
 
 			txtCustomer.Init("CUSTOMER", "CUSTOMER_ID", "CUSTOMER_NAME", null, null);
 			txtProduct.Init("PRODUCT", "PRODUCT_ID", "PRODUCT_NAME", null, null);
+			datSaleDate.Init();
 
 			InitGrid();
 		}
@@ -41,9 +42,9 @@ namespace JW.AUBE.Core.Forms.Sales
 			gridList.ShowFooter = true;
 			gridList.AddGridColumns(
 				new XGridColumn() { FieldName = "ROW_NO" },
-				new XGridColumn() { FieldName = "SALE_NO", HorzAlignment = HorzAlignment.Center, Width = 80 },
 				new XGridColumn() { FieldName = "SALE_ID", HorzAlignment = HorzAlignment.Center, Width = 60, Visible = false },
 				new XGridColumn() { FieldName = "SALE_DATE", HorzAlignment = HorzAlignment.Center, Width = 100 },
+				new XGridColumn() { FieldName = "SALE_NO", HorzAlignment = HorzAlignment.Center, Width = 80 },
 				new XGridColumn() { FieldName = "SALE_TYPE", HorzAlignment = HorzAlignment.Center, Width = 80 },
 				new XGridColumn() { FieldName = "PAY_TYPE", HorzAlignment = HorzAlignment.Center, Width = 80 },
 				new XGridColumn() { FieldName = "CUSTOMER_ID", HorzAlignment = HorzAlignment.Center, Width = 100, Visible = false },
@@ -55,8 +56,12 @@ namespace JW.AUBE.Core.Forms.Sales
 				new XGridColumn() { FieldName = "PRODUCT_CODE", HorzAlignment = HorzAlignment.Center, Width = 100 },
 				new XGridColumn() { FieldName = "PRODUCT_NAME", Width = 200 },
 				new XGridColumn() { FieldName = "SALE_PRICE", HorzAlignment = HorzAlignment.Far, Width = 80, FormatType = FormatType.Numeric, FormatString = "N0" },
-				new XGridColumn() { FieldName = "SALE_QTY", HorzAlignment = HorzAlignment.Far, Width = 60, FormatType = FormatType.Numeric, FormatString = "N0" },
-				new XGridColumn() { FieldName = "SALE_AMT", HorzAlignment = HorzAlignment.Far, Width = 100, FormatType = FormatType.Numeric, FormatString = "N0", IsSummary = true, SummaryItemType = SummaryItemType.Sum },
+				new XGridColumn() { FieldName = "DISC_RATE", HorzAlignment = HorzAlignment.Far, Width = 80, FormatType = FormatType.Numeric, FormatString = "N0" },
+				new XGridColumn() { FieldName = "DISC_PRICE", HorzAlignment = HorzAlignment.Far, Width = 80, FormatType = FormatType.Numeric, FormatString = "N0" },
+				new XGridColumn() { FieldName = "SALE_QTY", Caption="판매수량", HorzAlignment = HorzAlignment.Far, Width = 60, FormatType = FormatType.Numeric, FormatString = "N0" },
+				new XGridColumn() { FieldName = "SALE_AMT", Caption="총매출액", HorzAlignment = HorzAlignment.Far, Width = 100, FormatType = FormatType.Numeric, FormatString = "N0", IsSummary = true, SummaryItemType = SummaryItemType.Sum },
+				new XGridColumn() { FieldName = "DISC_AMT", Caption="할인액", HorzAlignment = HorzAlignment.Far, Width = 100, FormatType = FormatType.Numeric, FormatString = "N0", IsSummary = true, SummaryItemType = SummaryItemType.Sum },
+				new XGridColumn() { FieldName = "NPAY_AMT", Caption = "순매출액", HorzAlignment = HorzAlignment.Far, Width = 100, FormatType = FormatType.Numeric, FormatString = "N0", IsSummary = true, SummaryItemType = SummaryItemType.Sum },
 				new XGridColumn() { FieldName = "PRODUCT_TYPE", HorzAlignment = HorzAlignment.Center, Width = 100 },
 				new XGridColumn() { FieldName = "CATEGORY", HorzAlignment = HorzAlignment.Center, Width = 100 },
 				new XGridColumn() { FieldName = "INS_TIME" },
@@ -66,6 +71,9 @@ namespace JW.AUBE.Core.Forms.Sales
 				new XGridColumn() { FieldName = "UPD_USER", Visible = false },
 				new XGridColumn() { FieldName = "UPD_USER_NAME" }
 				);
+
+			gridList.SetMerge("SALE_DATE", "SALE_NO");
+			//gridList.SetMerge("SALE_DATE", "SALE_NO", "SALE_TYPE", "CUSTOMER_ID", "CUSTOMER_NAME", "REMARKS");
 
 			gridList.SetColumnBackColor(Color.FromArgb(50, 50, 50), "ROW_NO");
 			gridList.SetColumnForeColor(Color.White, "ROW_NO");

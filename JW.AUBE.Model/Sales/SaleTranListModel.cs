@@ -16,8 +16,12 @@
 		public int PRODUCT_ID { get; set; }
 		public string PRODUCT_NAME { get; set; }
 		public decimal SALE_PRICE { get; set; }
+		public int DISC_RATE { get; set; }
+		public decimal DISC_PRICE { get; set; }
 		public int SALE_QTY { get; set; }
 		public decimal SALE_AMT { get; set; }
+		public decimal DISC_AMT { get; set; }
+		public decimal NPAY_AMT { get; set; }
 		public string PRODUCT_TYPE { get; set; }
 		public string CATEGORY { get; set; }
 		public string INS_TIME { get; set; }

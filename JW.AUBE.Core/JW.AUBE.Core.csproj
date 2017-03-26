@@ -195,6 +195,12 @@
     <Compile Include="Forms\Code\CustomersForm.Designer.cs">
       <DependentUpon>CustomersForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Credit\DepositEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Credit\DepositEditForm.Designer.cs">
+      <DependentUpon>DepositEditForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Inventory\InventoryListForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -394,6 +400,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Code\CustomersForm.resx">
       <DependentUpon>CustomersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Credit\DepositEditForm.resx">
+      <DependentUpon>DepositEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Inventory\InventoryListForm.resx">
       <DependentUpon>InventoryListForm.cs</DependentUpon>

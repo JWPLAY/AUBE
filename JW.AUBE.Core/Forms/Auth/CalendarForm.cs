@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Windows.Forms;
 using DevExpress.Utils;
 using DevExpress.XtraGrid.Views.Grid;
-using JW.AUBE.Base.Map;
+using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.DBTran.Model;
+using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Controls.Grid;
@@ -13,7 +14,6 @@ using JW.AUBE.Core.Enumerations;
 using JW.AUBE.Core.Messages;
 using JW.AUBE.Core.Models;
 using JW.AUBE.Core.Utils;
-using JW.AUBE.Base.DBTran.Controller;
 
 namespace JW.AUBE.Core.Forms.Auth
 {
@@ -39,17 +39,8 @@ namespace JW.AUBE.Core.Forms.Auth
 		protected override void InitButtons()
 		{
 			base.InitButtons();
-			SetToolbarButtons(new ToolbarButtons()
-			{
-				Refresh = true,
-				Save = true
-			});
-
-			//btnCreate.Enabled = this.IsDataEdit;
-			btnCreate.Click += delegate (object sender, EventArgs e)
-			{
-				doCreate();
-			};
+			SetToolbarButtons(new ToolbarButtons() { Refresh = true, Save = true });
+			btnCreate.Click += delegate (object sender, EventArgs e) { doCreate(); };
 		}
 
 		protected override void InitControls()
@@ -78,96 +69,19 @@ namespace JW.AUBE.Core.Forms.Auth
 			gridList.Init();
 			gridList.AddGridColumns
 			(
-				new XGridColumn()
-				{
-					FieldName = "DAY_OF_YEAR",
-					Caption = "NO",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 50
-				},
-				new XGridColumn()
-				{
-					FieldName = "CAL_DATE",
-					Caption = "일자",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 100
-				},
-				new XGridColumn()
-				{
-					FieldName = "WEEK_NAME",
-					Caption = "요일",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 50
-				},
-				new XGridColumn()
-				{
-					FieldName = "CAL_YEAR",
-					Caption = "년",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 50
-				},
-				new XGridColumn()
-				{
-					FieldName = "CAL_MONTH",
-					Caption = "월",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 50
-				},
-				new XGridColumn()
-				{
-					FieldName = "CAL_DAY",
-					Caption = "일",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 50
-				},
-				new XGridColumn()
-				{
-					FieldName = "QUARTER",
-					Caption = "분기",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 50
-				},
-				new XGridColumn()
-				{
-					FieldName = "DAY_OF_WEEK",
-					Caption = "주일수",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 60
-				},
-				new XGridColumn()
-				{
-					FieldName = "WEEK_OF_MONTH",
-					Caption = "월주차",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 60
-				},
-				new XGridColumn()
-				{
-					FieldName = "WEEK_OF_YEAR",
-					Caption = "연주차",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 60
-				},
-				new XGridColumn()
-				{
-					FieldName = "HOLIDAY_YN",
-					Caption = "휴일여부",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 80
-				},
-				new XGridColumn()
-				{
-					FieldName = "HOLIDAY_NAME",
-					Caption = "휴일명",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 100
-				},
-				new XGridColumn()
-				{
-					FieldName = "REMARKS",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 200
-				}
+				new XGridColumn() { FieldName = "DAY_OF_YEAR", Caption = "NO", HorzAlignment = HorzAlignment.Center, Width = 50 },
+				new XGridColumn() { FieldName = "CAL_DATE", Caption = "일자", HorzAlignment = HorzAlignment.Center, Width = 100 },
+				new XGridColumn() { FieldName = "WEEK_NAME", Caption = "요일", HorzAlignment = HorzAlignment.Center, Width = 50 },
+				new XGridColumn() { FieldName = "CAL_YEAR", Caption = "년", HorzAlignment = HorzAlignment.Center, Width = 50 },
+				new XGridColumn() { FieldName = "CAL_MONTH", Caption = "월", HorzAlignment = HorzAlignment.Center, Width = 50 },
+				new XGridColumn() { FieldName = "CAL_DAY", Caption = "일", HorzAlignment = HorzAlignment.Center, Width = 50 },
+				new XGridColumn() { FieldName = "QUARTER", Caption = "분기", HorzAlignment = HorzAlignment.Center, Width = 50 },
+				new XGridColumn() { FieldName = "DAY_OF_WEEK", Caption = "주일수", HorzAlignment = HorzAlignment.Center, Width = 60 },
+				new XGridColumn() { FieldName = "WEEK_OF_MONTH", Caption = "월주차", HorzAlignment = HorzAlignment.Center, Width = 60 },
+				new XGridColumn() { FieldName = "WEEK_OF_YEAR", Caption = "연주차", HorzAlignment = HorzAlignment.Center, Width = 60 },
+				new XGridColumn() { FieldName = "HOLIDAY_YN", Caption = "휴일여부", HorzAlignment = HorzAlignment.Center, Width = 80 },
+				new XGridColumn() { FieldName = "HOLIDAY_NAME", Caption = "휴일명", HorzAlignment = HorzAlignment.Near, Width = 100 },
+				new XGridColumn() { FieldName = "REMARKS", HorzAlignment = HorzAlignment.Near, Width = 200 }
 			);
 
 			gridList.SetRepositoryItemCheckEdit("HOLIDAY_YN");
@@ -201,7 +115,7 @@ namespace JW.AUBE.Core.Forms.Auth
 					if (e.RowHandle != view.FocusedRowHandle)
 					{
 						if (view.GetRowCellValue(e.RowHandle, "HOLIDAY_YN").ToString() == "Y")
-							e.Appearance.BackColor = System.Drawing.Color.LightPink;
+							e.Appearance.BackColor = Color.Pink;
 					}
 				}
 				catch(Exception ex)
@@ -227,6 +141,7 @@ namespace JW.AUBE.Core.Forms.Auth
 			txtUpdTime.Clear();
 			txtUpdUser.Clear();
 
+			SetToolbarButtons(new ToolbarButtons() { Refresh = true, Save = true });
 			this.EditMode = EditModeEnum.New;
 			txtHolidayName.Focus();
 		}
@@ -245,21 +160,20 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			try
 			{
-				DataTable dt = (DataTable)DBTranHelper.SingleRequest("Base", "GetData", "SelectCalendar", new DataMap() { { "CAL_DATE", id } });
-				if (dt == null || dt.Rows.Count == 0)
+				DataMap res = (DataMap)DBTranHelper.GetData("Base", "GetData", "SelectCalendar", new DataMap() { { "CAL_DATE", id } }).TranList[0].Data;
+				if (res == null)
 					throw new Exception("조회할 데이터가 없습니다.");
 
-				DataRow row = dt.Rows[0];
+				datCalDate.SetDateChar8(res.GetValue("CAL_DATE"));
+				chkHolidayYn.EditValue = res.GetValue("HOLIDAY_YN");
+				txtHolidayName.EditValue = res.GetValue("HOLIDAY_NAME");
+				memRemarks.EditValue = res.GetValue("REMARKS");
+				txtInsTime.EditValue = res.GetValue("INS_TIME");
+				txtInsUser.EditValue = res.GetValue("INS_USER_NAME");
+				txtUpdTime.EditValue = res.GetValue("UPD_TIME");
+				txtUpdUser.EditValue = res.GetValue("UPD_USER_NAME");
 
-				datCalDate.EditValue = row["CAL_DATE"].ToDateTime();
-				chkHolidayYn.EditValue = row["HOLIDAY_YN"];
-				txtHolidayName.EditValue = row["HOLIDAY_NAME"];
-				memRemarks.EditValue = row["REMARKS"];
-				txtInsTime.EditValue = row["INS_TIME"];
-				txtInsUser.EditValue = row["INS_USER_NAME"];
-				txtUpdTime.EditValue = row["UPD_TIME"];
-				txtUpdUser.EditValue = row["UPD_USER_NAME"];
-
+				SetToolbarButtons(new ToolbarButtons() { Refresh = true, Save = true, Delete = true });
 				this.EditMode = EditModeEnum.Modify;
 				txtHolidayName.Focus();
 
@@ -274,16 +188,16 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			try
 			{
-				DataTable dt = (new DataMap()
+				DataMap data = new DataMap()
 				{
 					{ "CAL_DATE", datCalDate.GetDateChar8() },
 					{ "HOLIDAY_YN", chkHolidayYn.EditValue },
 					{ "HOLIDAY_NAME", txtHolidayName.EditValue },
 					{ "REMARKS", memRemarks.EditValue },
 					{ "ROWSTATE", "UPDATE" }
-				}).ToDataTable();
+				};
 				
-				var res = DBTranHelper.Request(new DBTranSet()
+				var res = DBTranHelper.Execute(new DBTranSet()
 				{
 					ServiceId = "Base",
 					ProcessId = "Save",
@@ -294,7 +208,7 @@ namespace JW.AUBE.Core.Forms.Auth
 						{
 							SqlId = "Calendar",
 							KeyField = "CAL_DATE",
-							Data = dt
+							Data = data
 						}
 					}
 				});
@@ -306,6 +220,44 @@ namespace JW.AUBE.Core.Forms.Auth
 				callback(arg, res.TranList[0].ReturnValue);
 			}
 			catch(Exception ex)
+			{
+				ShowErrBox(ex);
+			}
+		}
+
+		protected override void DataDelete(object arg, DeleteCallback callback)
+		{
+			try
+			{
+				DataMap data = new DataMap()
+				{
+					{ "CAL_DATE", datCalDate.GetDateChar8() },
+					{ "ROWSTATE", "DELETE" }
+				};
+
+				var res = DBTranHelper.Execute(new DBTranSet()
+				{
+					ServiceId = "Base",
+					ProcessId = "Save",
+					IsTransaction = true,
+					TranList = new DBTranData[]
+					{
+						new DBTranData()
+						{
+							SqlId = "Calendar",
+							KeyField = "CAL_DATE",
+							Data = data
+						}
+					}
+				});
+
+				if (res.ErrorNumber != 0)
+					throw new Exception(res.ErrorMessage);
+
+				ShowMsgBox("저장하였습니다.");
+				callback(arg, res.TranList[0].ReturnValue);
+			}
+			catch (Exception ex)
 			{
 				ShowErrBox(ex);
 			}

@@ -12,6 +12,7 @@ using JW.AUBE.Core.Models;
 using JW.AUBE.Core.Utils;
 using JW.AUBE.Core.PostCode;
 using JW.AUBE.Base.DBTran.Controller;
+using JW.AUBE.Base.DBTran.Model;
 
 namespace JW.AUBE.Core.Forms.Code
 {
@@ -504,7 +505,17 @@ namespace JW.AUBE.Core.Forms.Code
 				DataTable dt = lc.GroupToDataTable(lcGroupEdit, lcGroupBizEdit)
 					.SetValue("ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE");
 
-				var res = DBTranHelper.Execute("Customer", "Save", new DataTable[] { dt, GetPhoneData(), GetAddressData() });
+				var res = DBTranHelper.Execute(new DBTranSet()
+				{
+					ServiceId = "Customer",
+					ProcessId = "Save",
+					TranList = new DBTranData[]
+					{
+						new DBTranData() { Data = dt },
+						new DBTranData() { Data = GetPhoneData() },
+						new DBTranData() { Data = GetAddressData() }
+					}
+				});
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -525,13 +536,13 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				DataTable dt = (new DataMap()
+				DataMap data = new DataMap()
 				{
 					{ "ID", txtCustomerId.EditValue },
 					{ "ROWSTATE", "DELETE" }
-				}).ToDataTable();
+				};
 
-				var res = DBTranHelper.SingleRequest("Base", "Save", "Customer", dt, "ID");
+				var res = DBTranHelper.Execute("Base", "Save", "Customer", data);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -657,7 +668,19 @@ namespace JW.AUBE.Core.Forms.Code
 				}
 				else
 				{
-					var res = DBTranHelper.SingleRequest("Base", "Save", "CustomerPhones", dt);
+					var res = DBTranHelper.Execute(new DBTranSet()
+					{
+						ServiceId = "Base",
+						ProcessId = "Save",
+						TranList = new DBTranData[]
+						{
+							new DBTranData()
+							{
+								SqlId = "CustomerPhones",
+								Data = dt
+							}
+						}
+					});
 					if (res.ErrorNumber != 0)
 						throw new Exception(res.ErrorMessage);
 
@@ -698,7 +721,19 @@ namespace JW.AUBE.Core.Forms.Code
 				}
 				else
 				{
-					var res = DBTranHelper.SingleRequest("Customer", "SaveCustomerAddress", "CustomerAddress", dt);
+					var res = DBTranHelper.Execute(new DBTranSet()
+					{
+						ServiceId = "Customer",
+						ProcessId = "SaveCustomerAddress",
+						TranList = new DBTranData[] 
+						{
+							new DBTranData()
+							{
+								SqlId = "CustomerAddress",
+								Data = dt
+							}
+						}
+					});
 					if (res.ErrorNumber != 0)
 						throw new Exception(res.ErrorMessage);
 

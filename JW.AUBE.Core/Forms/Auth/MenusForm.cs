@@ -29,14 +29,7 @@ namespace JW.AUBE.Core.Forms.Auth
 		protected override void InitButtons()
 		{
 			base.InitButtons();
-			SetToolbarButtons(new ToolbarButtons()
-			{
-				New = true,
-				Refresh = true,
-				Save = true,
-				SaveAndNew = true,
-				Delete = true
-			});
+			SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true });
 		}
 		protected override void InitControls()
 		{
@@ -67,44 +60,12 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			gridList.Init();
 			gridList.AddGridColumns(
-				new XGridColumn()
-				{
-					FieldName = "ROW_NO",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 40
-				},
-				new XGridColumn()
-				{
-					FieldName = "HIER_ID",
-					HorzAlignment = HorzAlignment.Near,
-					Visible = false
-				},
-				new XGridColumn()
-				{
-					FieldName = "HIER_NAME",
-					CaptionCode = "MENU_NAME",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 300
-				},
-				new XGridColumn()
-				{
-					FieldName = "MENU_ID",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 80
-				},
-				new XGridColumn()
-				{
-					FieldName = "SORT_SEQ",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 80
-				},
-				new XGridColumn()
-				{
-					FieldName = "USE_YN",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 80,
-					RepositoryItem = gridList.GetRepositoryItemCheckEdit()
-				}
+				new XGridColumn() { FieldName = "ROW_NO" },
+				new XGridColumn() { FieldName = "HIER_ID", HorzAlignment = HorzAlignment.Near, Visible = false },
+				new XGridColumn() { FieldName = "HIER_NAME", CaptionCode = "MENU_NAME", HorzAlignment = HorzAlignment.Near, Width = 300 },
+				new XGridColumn() { FieldName = "MENU_ID", HorzAlignment = HorzAlignment.Center, Width = 80 },
+				new XGridColumn() { FieldName = "SORT_SEQ", HorzAlignment = HorzAlignment.Center, Width = 80 },
+				new XGridColumn() { FieldName = "USE_YN", HorzAlignment = HorzAlignment.Near, Width = 80, RepositoryItem = gridList.GetRepositoryItemCheckEdit() }
 			);
 
 			gridList.RowCellClick += delegate (object sender, RowCellClickEventArgs e)
@@ -150,7 +111,8 @@ namespace JW.AUBE.Core.Forms.Auth
 			txtUpdTime.Clear();
 			txtUpdUserName.Clear();
 
-			this.EditMode = EditModeEnum.New;
+			SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true });
+			EditMode = EditModeEnum.New;
 			txtMenuName.Focus();
 		}
 
@@ -168,29 +130,28 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			try
 			{
-				DataTable dt = (DataTable)DBTranHelper.SingleRequest("Base", "GetData", "SelectMenu", new DataMap() { { "MENU_ID", id } });
-				if (dt == null || dt.Rows.Count == 0)
+				DataMap data = (DataMap)(DBTranHelper.GetData("Base", "GetData", "SelectMenu", new DataMap() { { "MENU_ID", id } }).TranList[0].Data);
+				if (data == null)
 					throw new Exception("조회할 데이터가 없습니다.");
 
-				DataRow row = dt.Rows[0];
+				txtMenuId.EditValue = data.GetValue("MENU_ID");
+				txtMenuName.EditValue = data.GetValue("MENU_NAME");
+				txtParentId.EditValue = data.GetValue("PARENT_ID");
+				numSortSeq.EditValue = data.GetValue("SORT_SEQ");
+				txtAssembly.EditValue = data.GetValue("ASSEMBLY");
+				txtNamespace.EditValue = data.GetValue("NAMESPACE");
+				txtInstance.EditValue = data.GetValue("INSTANCE");
+				lupFormType.EditValue = data.GetValue("FORM_TYPE");
+				chkUseYn.EditValue = data.GetValue("USE_YN");
+				memRemarks.EditValue = data.GetValue("REMARKS");
 
-				txtMenuId.EditValue = row["MENU_ID"];
-				txtMenuName.EditValue = row["MENU_NAME"];
-				txtParentId.EditValue = row["PARENT_ID"];
-				numSortSeq.EditValue = row["SORT_SEQ"];
-				txtAssembly.EditValue = row["ASSEMBLY"];
-				txtNamespace.EditValue = row["NAMESPACE"];
-				txtInstance.EditValue = row["INSTANCE"];
-				lupFormType.EditValue = row["FORM_TYPE"];
-				chkUseYn.EditValue = row["USE_YN"];
-				memRemarks.EditValue = row["REMARKS"];
+				txtInsTime.EditValue = data.GetValue("INS_TIME");
+				txtInsUserName.EditValue = data.GetValue("INS_USER_NAME");
+				txtUpdTime.EditValue = data.GetValue("UPD_TIME");
+				txtUpdUserName.EditValue = data.GetValue("UPD_USER_NAME");
 
-				txtInsTime.EditValue = row["INS_TIME"];
-				txtInsUserName.EditValue = row["INS_USER_NAME"];
-				txtUpdTime.EditValue = row["UPD_TIME"];
-				txtUpdUserName.EditValue = row["UPD_USER_NAME"];
-
-				this.EditMode = EditModeEnum.Modify;
+				SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true, Delete = true });
+				EditMode = EditModeEnum.Modify;
 				txtMenuName.Focus();
 
 			}
@@ -207,7 +168,7 @@ namespace JW.AUBE.Core.Forms.Auth
 				DataMap map = lc.ItemToDataMap();
 				map.SetValue("ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE");
 
-				var res = DBTranHelper.SingleRequest("Base", "Save", "Menu", map.ToDataTable(), "MENU_ID");
+				var res = DBTranHelper.Execute("Base", "Save", "Menu", map);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -224,13 +185,13 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			try
 			{
-				DataTable dt = (new DataMap()
+				DataMap map = new DataMap()
 				{
 					{ "MENU_ID", txtMenuId.EditValue },
 					{ "ROWSTATE", "DELETE" }
-				}).ToDataTable();
+				};
 
-				var res = DBTranHelper.SingleRequest("Base", "Save", "Menu", dt, "MENU_ID");
+				var res = DBTranHelper.Execute("Base", "Save", "Menu", map);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

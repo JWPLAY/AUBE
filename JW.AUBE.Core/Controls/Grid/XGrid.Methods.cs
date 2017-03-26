@@ -1006,7 +1006,7 @@ namespace JW.AUBE.Core.Controls.Grid
 		public void BindData(string serviceId = null, string processId = null, string sqlId = null, DataMap param = null, bool bestFit = false)
 		{
 			int rowIndex = this.MainView.FocusedRowHandle;
-			this.DataSource = DBTranHelper.SingleRequest(serviceId, processId, sqlId, param);
+			this.DataSource = DBTranHelper.GetData(serviceId, processId, sqlId, param).TranList[0].Data;
 			if (this.DataSource == null)
 			{
 				this.EmptyDataTableBinding();

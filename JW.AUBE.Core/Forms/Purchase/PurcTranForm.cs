@@ -10,6 +10,7 @@ using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using JW.AUBE.Base.DBTran.Controller;
+using JW.AUBE.Base.DBTran.Model;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Base.Forms;
@@ -205,7 +206,6 @@ namespace JW.AUBE.Core.Forms.Purchase
 			try
 			{
 				var res = DBTranHelper.GetData("Purchase", parameters);
-				if (res.TranList.Length > 0)
 				{
 					if (res.TranList[0].Data == null)
 						throw new Exception("조회 데이터가 없습니다.");
@@ -251,14 +251,23 @@ namespace JW.AUBE.Core.Forms.Purchase
 
 			try
 			{
-				DataTable mst = lc.GroupToDataTable(lcGroupEdit1, lcGroupEdit2);
+				DataMap mst = lc.GroupToDataMap(lcGroupEdit1, lcGroupEdit2);
 				mst.SetValue("ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE");
 
 				DataTable item = GetPurcItemData();
 				if (item == null || item.Rows.Count == 0)
 					throw new Exception("구매품목을 입력해야 합니다.");
 
-				var res = DBTranHelper.Execute("Purchase", "Save", new DataTable[] { mst, item });
+				var res = DBTranHelper.Execute(new DBTranSet()
+				{
+					ServiceId = "Purchase",
+					ProcessId = "Save",
+					TranList = new DBTranData[] 
+					{
+						new DBTranData() { Data = mst },
+						new DBTranData() { Data = item }
+					}
+				});
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

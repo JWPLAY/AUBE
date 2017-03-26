@@ -355,7 +355,7 @@
 		<select id="GetSaleCustomerList" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
 				SELECT  AA.CUSTOMER_ID
-					,	CC.CUSTOMER_NAME
+					,	ISNULL(CC.CUSTOMER_NAME,'일반고객')	AS CUSTOMER_NAME
 					,	SUM(BB.SALE_QTY)	AS SALE_QTY
 					,	SUM(BB.NPAY_AMT)	AS SALE_AMT
 				FROM	UBZ.SALE_TRAN AA
@@ -373,7 +373,7 @@
 		</select>
 		<select id="GetSaleCategoryList" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
-				SELECT  ISNULL(PP.CATEGORY, MM.NAME)	AS CATEGORY
+				SELECT  ISNULL(MM.NAME, PP.CATEGORY)	AS CATEGORY
 					,	SUM(BB.SALE_QTY)				AS SALE_QTY
 					,	SUM(BB.NPAY_AMT)				AS SALE_AMT
 				FROM	UBZ.SALE_TRAN AA
@@ -389,13 +389,13 @@
 									AND MM.PARENT_CODE = 'CATEGORY'
 				WHERE	AA.SALE_DATE >= #ST_SALE_DATE#
 				AND		AA.SALE_DATE <= #ED_SALE_DATE#
-				GROUP BY ISNULL(PP.CATEGORY, MM.NAME)
+				GROUP BY ISNULL(MM.NAME, PP.CATEGORY)
 				ORDER BY SALE_AMT DESC
 			]]>
 		</select>
 		<select id="GetSalePayTypeList" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
-				SELECT  ISNULL(AA.PAY_TYPE, MM.NAME)	AS CATEGORY
+				SELECT  ISNULL(MM.NAME, AA.PAY_TYPE)	AS PAY_TYPE
 					,	SUM(BB.SALE_QTY)				AS SALE_QTY
 					,	SUM(BB.NPAY_AMT)				AS SALE_AMT
 				FROM	UBZ.SALE_TRAN AA
@@ -408,7 +408,7 @@
 									AND MM.PARENT_CODE = 'PAY_TYPE'
 				WHERE	AA.SALE_DATE >= #ST_SALE_DATE#
 				AND		AA.SALE_DATE <= #ED_SALE_DATE#
-				GROUP BY ISNULL(AA.PAY_TYPE, MM.NAME)
+				GROUP BY ISNULL(MM.NAME, AA.PAY_TYPE)
 				ORDER BY SALE_AMT DESC
 			]]>
 		</select>

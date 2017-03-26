@@ -137,11 +137,11 @@ namespace JW.AUBE
 					return;
 				}
 
-				var data = DBTranHelper.SingleRequest("Auth", "CheckLoginUser", null, new DataMap()
+				var data = DBTranHelper.GetData("Auth", "CheckLoginUser", null, new DataMap()
 				{
 					{ "LOGIN_ID", txtLoginId.EditValue },
 					{ "LOGIN_PW", txtPassword.EditValue }
-				});
+				}).TranList[0].Data;
 
 				if (data == null)
 					throw new Exception("로그인 사용자의 정보가 정확하지 않습니다.");

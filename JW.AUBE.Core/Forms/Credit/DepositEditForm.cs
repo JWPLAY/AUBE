@@ -10,13 +10,12 @@ using JW.AUBE.Core.Controls.Grid;
 using JW.AUBE.Core.Enumerations;
 using JW.AUBE.Core.Models;
 using JW.AUBE.Core.Utils;
-using JW.AUBE.Model.Production;
 
-namespace JW.AUBE.Core.Forms.Production
+namespace JW.AUBE.Core.Forms.Credit
 {
-	public partial class ProdTranForm : EditForm
+	public partial class DepositEditForm : EditForm
 	{
-		public ProdTranForm()
+		public DepositEditForm()
 		{
 			InitializeComponent();
 		}
@@ -24,7 +23,7 @@ namespace JW.AUBE.Core.Forms.Production
 		protected override void OnShown(EventArgs e)
 		{
 			base.OnShown(e);
-			datSchProdDate.Focus();
+			datSchDepositDate.Focus();
 		}
 
 		protected override void InitButtons()
@@ -37,25 +36,25 @@ namespace JW.AUBE.Core.Forms.Production
 		{
 			base.InitControls();
 
-			lcItemProdDate.Tag = true;
-			lcItemProduct.Tag = true;
+			lcItemDepositDate.Tag = true;
+			lcItemCustomer.Tag = true;
 
 			SetFieldNames();
 
-			lcItemSchProdDate.SetFieldCaption("조회기간");
-			lcItemSchProduct.SetFieldCaption("검색제품명");
+			lcItemSchDepositDate.SetFieldCaption("조회기간");
+			lcItemSchCustomer.SetFieldCaption("검색거래처");
 			
-			txtProdId.SetEnable(false);
+			txtDepositId.SetEnable(false);
 			txtInsTime.SetEnable(false);
 			txtInsUserName.SetEnable(false);
 			txtUpdTime.SetEnable(false);
 			txtUpdUserName.SetEnable(false);
 						
-			datSchProdDate.Init();
-			datProdDate.Init();
-			spnProdQty.SetFormat("N0", false);
-			txtProductId.Init("PROD_PRODUCT", "PRODUCT_ID", "PRODUCT_NAME", null, null);
-			txtSchProduct.Init("PROD_PRODUCT", "PRODUCT_ID", "PRODUCT_NAME", null, null);
+			datSchDepositDate.Init();
+			datDepositDate.Init();
+			spnDepositAmt.SetFormat("N0", false);
+			txtCustomerId.Init("CUSTOMER", "CUSTOMER_ID", "CUSTOMER_NAME", null, null);
+			txtSchCustomerId.Init("CUSTOMER", "CUSTOMER_ID", "CUSTOMER_NAME", null, null);
 
 			InitGrid();
 		}
@@ -67,12 +66,11 @@ namespace JW.AUBE.Core.Forms.Production
 			gridList.AddGridColumns(new XGridColumn[]
 			{
 				new XGridColumn() { FieldName="ROW_NO" },
-				new XGridColumn() { FieldName="PROD_ID", Visible = false },
-				new XGridColumn() { FieldName="PROD_DATE", HorzAlignment = HorzAlignment.Center, Width=100 },
-				new XGridColumn() { FieldName="PRODUCT_ID",   HorzAlignment = HorzAlignment.Center, Width = 60, Visible = false },
-				new XGridColumn() { FieldName="PRODUCT_CODE", HorzAlignment = HorzAlignment.Center, Width = 80  },
-				new XGridColumn() { FieldName="PRODUCT_NAME", HorzAlignment = HorzAlignment.Near,   Width = 200 },
-				new XGridColumn() { FieldName="PROD_QTY", HorzAlignment = HorzAlignment.Far, Width = 80, FormatType = FormatType.Numeric, FormatString = "N0" },
+				new XGridColumn() { FieldName="DEPOSIT_ID", Visible = false },
+				new XGridColumn() { FieldName="DEPOSIT_DATE", HorzAlignment = HorzAlignment.Center, Width = 100 },
+				new XGridColumn() { FieldName="CUSTOMER_ID",   HorzAlignment = HorzAlignment.Center, Width = 80, Visible = false },
+				new XGridColumn() { FieldName="CUSTOMER_NAME", HorzAlignment = HorzAlignment.Near,   Width = 180 },
+				new XGridColumn() { FieldName="DEPOSIT_AMT", HorzAlignment = HorzAlignment.Far, Width = 100, FormatType = FormatType.Numeric, FormatString = "N0" },
 				new XGridColumn() { FieldName="REMARKS", Width = 200 },
 				new XGridColumn() { FieldName="INS_TIME" },
 				new XGridColumn() { FieldName="INS_USER", Visible = false },
@@ -95,7 +93,7 @@ namespace JW.AUBE.Core.Forms.Production
 					if (e.Button == MouseButtons.Left && e.Clicks == 1)
 					{
 						GridView view = sender as GridView;
-						DetailDataLoad(view.GetRowCellValue(e.RowHandle, "PROD_ID"));
+						DetailDataLoad(view.GetRowCellValue(e.RowHandle, "DEPOSIT_ID"));
 					}
 				}
 				catch(Exception ex)
@@ -116,9 +114,9 @@ namespace JW.AUBE.Core.Forms.Production
 		{
 			try
 			{
-				txtProdId.Clear();
-				txtProductId.Clear();
-				spnProdQty.Clear();
+				txtDepositId.Clear();
+				txtCustomerId.Clear();
+				spnDepositAmt.Clear();
 				memRemarks.Clear();
 				txtInsTime.Clear();
 				txtInsUserName.Clear();
@@ -127,7 +125,7 @@ namespace JW.AUBE.Core.Forms.Production
 
 				SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true });
 				this.EditMode = EditModeEnum.New;
-				datProdDate.Focus();
+				datDepositDate.Focus();
 			}
 			catch(Exception ex)
 			{
@@ -139,11 +137,11 @@ namespace JW.AUBE.Core.Forms.Production
 		{
 			try
 			{
-				gridList.BindData("Production", "GetList", null, new DataMap()
+				gridList.BindData("Credit", "GetDepositList", null, new DataMap()
 				{
-					{ "ST_PROD_DATE", datSchProdDate.DateFrEdit.GetDateChar8() },
-					{ "ED_PROD_DATE", datSchProdDate.DateToEdit.GetDateChar8() },
-					{ "PRODUCT_ID", txtProductId.EditValue }					
+					{ "ST_DEPOSIT_DATE", datSchDepositDate.DateFrEdit.GetDateChar8() },
+					{ "ED_DEPOSIT_DATE", datSchDepositDate.DateToEdit.GetDateChar8() },
+					{ "CUSTOMER_ID", txtCustomerId.EditValue }					
 				});
 
 				if (param != null)
@@ -161,23 +159,30 @@ namespace JW.AUBE.Core.Forms.Production
 		{
 			try
 			{
-				var res = DBTranHelper.GetData<ProdTranDataModel>("Production", new DataMap() { { "PROD_ID", id } });
+				var res = DBTranHelper.GetData("Credit", new DataMap() { { "DEPOSIT_ID", id } });
+				if (res.TranList.Length > 0)
+				{
+					if (res.TranList[0].Data == null)
+						throw new Exception("조회 데이터가 없습니다.");
 
-				txtProdId.EditValue = res.PROD_ID;
-				datProdDate.SetDateChar8(res.PROD_DATE);
-				txtProductId.EditValue = res.PRODUCT_ID;
-				txtProductId.EditText = res.PRODUCT_NAME;
-				spnProdQty.EditValue = res.PROD_QTY;
-				memRemarks.EditValue = res.REMARKS;
+					DataMap data = (DataMap)res.TranList[0].Data;
 
-				txtInsTime.EditValue = res.INS_TIME;
-				txtInsUserName.EditValue = res.INS_USER_NAME;
-				txtUpdTime.EditValue = res.UPD_TIME;
-				txtUpdUserName.EditValue = res.UPD_USER_NAME;
+					txtDepositId.EditValue = data.GetValue("DEPOSIT_ID");
+					datDepositDate.SetDateChar8(data.GetValue("DEPOSIT_DATE"));
+					txtCustomerId.EditValue = data.GetValue("CUSTOMER_ID");
+					txtCustomerId.EditText = data.GetValue("CUSTOMER_NAME");
+					spnDepositAmt.EditValue = data.GetValue("DEPOSIT_AMT");
+					memRemarks.EditValue = data.GetValue("REMARKS");
+
+					txtInsTime.EditValue = data.GetValue("INS_TIME");
+					txtInsUserName.EditValue = data.GetValue("INS_USER_NAME");
+					txtUpdTime.EditValue = data.GetValue("UPD_TIME");
+					txtUpdUserName.EditValue = data.GetValue("UPD_USER_NAME");
+				}
 
 				SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true, Delete = true });
 				this.EditMode = EditModeEnum.Modify;
-				txtProductId.Focus();
+				txtCustomerId.Focus();
 
 			}
 			catch(Exception ex)
@@ -193,7 +198,7 @@ namespace JW.AUBE.Core.Forms.Production
 				DataMap map = lcGroupEdit.ItemToDataMap();
 				map.SetValue("ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE");
 
-				var res = DBTranHelper.Execute("Production", "Save", map);
+				var res = DBTranHelper.Execute("Credit", "SaveDeposit", map);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -210,13 +215,13 @@ namespace JW.AUBE.Core.Forms.Production
 		{
 			try
 			{
-				DataMap data = new DataMap()
+				DataMap map = new DataMap()
 				{
-					{ "PROD_ID", txtProdId.EditValue },
+					{ "DEPOSIT_ID", txtDepositId.EditValue },
 					{ "ROWSTATE", "DELETE" }
 				};
 
-				var res = DBTranHelper.Execute("Production", "Save", data);
+				var res = DBTranHelper.Execute("Credit", "SaveDeposit", map);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

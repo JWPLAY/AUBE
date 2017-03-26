@@ -27,12 +27,7 @@ namespace JW.AUBE.Core.Forms.Auth
 		protected override void InitButtons()
 		{
 			base.InitButtons();
-			SetToolbarButtons(new ToolbarButtons()
-			{
-				Refresh = true,
-				Save = true,
-				SaveAndNew = true
-			});
+			SetToolbarButtons(new ToolbarButtons() { Refresh = true, Save = true, SaveAndNew = true });
 		}
 		protected override void InitControls()
 		{
@@ -210,7 +205,7 @@ namespace JW.AUBE.Core.Forms.Auth
 					return;
 				}
 
-				var res = DBTranHelper.SingleRequest("Base", "Save", "UserMenus", dt);
+				var res = DBTranHelper.Execute("Base", "Save", "UserMenus", dt);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

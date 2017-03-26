@@ -13,7 +13,7 @@ namespace JW.AUBE.Core.Utils
 		{
 			try
 			{
-				var dtDictionaries = DBTranHelper.SingleRequest("Auth", "GetDictionaries", "Dictionaries", new DataMap() { });
+				var dtDictionaries = DBTranHelper.GetData<DataTable>("Auth", "GetDictionaries", "Dictionaries", null);
 				if (dtDictionaries != null && (dtDictionaries as DataTable).Rows.Count > 0)
 				{
 					foreach (DataRow dr in (dtDictionaries as DataTable).Rows)
@@ -22,7 +22,7 @@ namespace JW.AUBE.Core.Utils
 					}
 				}
 
-				var dtMessages = DBTranHelper.SingleRequest("Auth", "GetMessages", "Messages", new DataMap() { });
+				var dtMessages = DBTranHelper.GetData<DataTable>("Auth", "GetMessages", "Messages", null);
 				if (dtMessages != null && (dtMessages as DataTable).Rows.Count > 0)
 				{
 					foreach (DataRow dr in (dtMessages as DataTable).Rows)

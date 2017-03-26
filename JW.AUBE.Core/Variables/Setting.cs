@@ -56,7 +56,7 @@ namespace JW.AUBE.Core.Variables
 
 				try
 				{
-					DataTable data = (DataTable)DBTranHelper.SingleRequest("Auth", "GetSettings", "Setting", new DataMap());
+					DataTable data = (DataTable)DBTranHelper.GetData("Auth", "GetSettings", "Setting", new DataMap()).TranList[0].Data;
 					if (data != null && data.Rows.Count > 0)
 					{
 						foreach (DataRow row in data.Rows)

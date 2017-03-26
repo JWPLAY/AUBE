@@ -9,6 +9,7 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid.Views.Grid;
 using JW.AUBE.Base.DBTran.Controller;
+using JW.AUBE.Base.DBTran.Model;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Base.Forms;
@@ -388,7 +389,16 @@ namespace JW.AUBE.Core.Forms.Sales
 				if (itemData == null || itemData.Rows.Count == 0)
 					throw new Exception("품목을 입력해야 합니다.");
 
-				var res = DBTranHelper.Execute("Sales", "Save", new DataTable[] { mastData, itemData });
+				var res = DBTranHelper.Execute(new DBTranSet()
+				{
+					ServiceId = "Sales",
+					ProcessId = "Save",
+					TranList = new DBTranData[]
+					{
+						new DBTranData() { Data = mastData },
+						new DBTranData() { Data = itemData }
+					}
+				});
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

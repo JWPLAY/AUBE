@@ -220,7 +220,7 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			try
 			{
-				DataTable dt = (DataTable)DBTranHelper.SingleRequest("Base", "GetData", "SelectCode", new DataMap() { { "CODE_ID", id } });
+				DataTable dt = (DataTable)DBTranHelper.GetData("Base", "GetData", "SelectCode", new DataMap() { { "CODE_ID", id } }).TranList[0].Data;
 				if (dt == null || dt.Rows.Count == 0)
 					throw new Exception("조회할 데이터가 없습니다.");
 
@@ -262,7 +262,7 @@ namespace JW.AUBE.Core.Forms.Auth
 			{
 				if (DataValidate() == false) return;
 
-				DataTable dt = (new DataMap()
+				DataMap data = new DataMap()
 				{
 					{ "CODE_ID", txtCodeId.EditValue },
 					{ "PARENT_CODE", lupParentCode.EditValue },
@@ -279,9 +279,9 @@ namespace JW.AUBE.Core.Forms.Auth
 					{ "OPTION_VALUE4", txtOptionValue4.EditValue },
 					{ "OPTION_VALUE5", txtOptionValue5.EditValue },
 					{ "ROWSTATE", ( this.EditMode == EditModeEnum.New ) ? "INSERT" : "UPDATE" }
-				}).ToDataTable();
+				};
 
-				var res = DBTranHelper.SingleRequest("Base", "Save", "Code", dt, "CODE_ID");
+				var res = DBTranHelper.Execute("Base", "Save", "Code", data);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -298,13 +298,13 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			try
 			{
-				DataTable dt = (new DataMap()
+				DataMap data = new DataMap()
 				{
 					{ "CODE_ID", txtCodeId.EditValue },
 					{ "ROWSTATE", "DELETE" }
-				}).ToDataTable();
+				};
 
-				var res = DBTranHelper.SingleRequest("Base", "Save", "Code", dt, "CODE_ID");
+				var res = DBTranHelper.Execute("Base", "Save", "Code", data);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

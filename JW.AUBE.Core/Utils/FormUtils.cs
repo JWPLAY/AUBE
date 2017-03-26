@@ -71,15 +71,13 @@ namespace JW.AUBE.Core.Utils
 				string rtfValue;
 				string helpName;
 
-				DataTable data = (DataTable)DBTranHelper.SingleRequest("Auth", "GetHelpContent", null, new DataMap() { { "HELP_ID", helpId }, { "MENU_ID", menuId } });
-				if (data != null && data.Rows.Count > 0)
+				DataMap data = (DataMap)DBTranHelper.GetData("Auth", "GetHelpContent", null, new DataMap() { { "HELP_ID", helpId }, { "MENU_ID", menuId } }).TranList[0].Data;
+				if (data != null)
 				{
-					DataRow row = data.Rows[0];
-
-					helpId = row["ID"];
-					helpName = row["NAME"].ToStringNullToEmpty();
-					rtfValue = row["CONTENT_BY_RTE"].ToStringNullToEmpty();
-					textValue = row["CONTENT"].ToStringNullToEmpty();
+					helpId = data.GetValue("ID");
+					helpName = data.GetValue("NAME").ToStringNullToEmpty();
+					rtfValue = data.GetValue("CONTENT_BY_RTE").ToStringNullToEmpty();
+					textValue = data.GetValue("CONTENT").ToStringNullToEmpty();
 
 					if (rtfValue.IsNullOrEmpty() == false || textValue.IsNullOrEmpty() == false)
 					{
@@ -92,10 +90,10 @@ namespace JW.AUBE.Core.Utils
 						{
 							form.ContentByRte = rtfValue;
 						}
-						form.InsertDtime = row["INS_TIME"].ToStringNullToEmpty();
-						form.InsertUserName = row["INS_USER_NAME"].ToStringNullToEmpty();
-						form.UpdateDtime = row["UPD_TIME"].ToStringNullToEmpty();
-						form.UpdateUserName = row["UPD_USER_ID"].ToStringNullToEmpty();
+						form.InsertDtime = data.GetValue("INS_TIME").ToStringNullToEmpty();
+						form.InsertUserName = data.GetValue("INS_USER_NAME").ToStringNullToEmpty();
+						form.UpdateDtime = data.GetValue("UPD_TIME").ToStringNullToEmpty();
+						form.UpdateUserName = data.GetValue("UPD_USER_ID").ToStringNullToEmpty();
 						form.StartPosition = FormStartPosition.CenterScreen;
 						form.TopMost = true;
 						form.Show();

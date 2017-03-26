@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Data;
 using DevExpress.Utils;
 using DevExpress.XtraGrid.Views.Grid;
 using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Map;
-using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Controls.Grid;
 using JW.AUBE.Core.Enumerations;
@@ -29,14 +27,7 @@ namespace JW.AUBE.Core.Forms.Auth
 		protected override void InitButtons()
 		{
 			base.InitButtons();
-			SetToolbarButtons(new ToolbarButtons()
-			{
-				New = true,
-				Refresh = true,
-				Save = true,
-				SaveAndNew = true,
-				Delete = true
-			});
+			SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true });
 		}
 		protected override void InitControls()
 		{
@@ -61,30 +52,10 @@ namespace JW.AUBE.Core.Forms.Auth
 			gridList.Init();
 			gridList.AddGridColumns
 			(
-				new XGridColumn()
-				{
-					FieldName = "ROW_NO",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 40
-				},
-				new XGridColumn()
-				{
-					FieldName = "DICTIONARY_ID",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 80
-				},
-				new XGridColumn()
-				{
-					FieldName = "LOGICAL_NAME",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 200
-				},
-				new XGridColumn()
-				{
-					FieldName = "PHYSICAL_NAME",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 200
-				}
+				new XGridColumn() { FieldName = "ROW_NO" },
+				new XGridColumn() { FieldName = "DICTIONARY_ID", HorzAlignment = HorzAlignment.Center, Width = 80 },
+				new XGridColumn() { FieldName = "LOGICAL_NAME", Width = 200 },
+				new XGridColumn() { FieldName = "PHYSICAL_NAME", Width = 200 }
 			);
 
 			gridList.RowCellClick += delegate (object sender, RowCellClickEventArgs e)
@@ -123,6 +94,7 @@ namespace JW.AUBE.Core.Forms.Auth
 			txtUpdTime.Clear();
 			txtUpdUser.Clear();
 
+			SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true });
 			this.EditMode = EditModeEnum.New;
 			txtLogicalName.Focus();
 		}
@@ -141,21 +113,20 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			try
 			{
-				DataTable dt = (DataTable)DBTranHelper.SingleRequest("Base", "GetData", "SelectDictionaries", new DataMap() { { "DICTIONARY_ID", id } });
-				if (dt == null || dt.Rows.Count == 0)
+				DataMap data = (DataMap)DBTranHelper.GetData("Base", "GetData", "SelectDictionaries", new DataMap() { { "DICTIONARY_ID", id } }).TranList[0].Data;
+				if (data == null)
 					throw new Exception("조회할 데이터가 없습니다.");
 
-				DataRow row = dt.Rows[0];
+				txtDictionaryId.EditValue = data.GetValue("DICTIONARY_ID");
+				txtLogicalName.EditValue = data.GetValue("LOGICAL_NAME");
+				txtPhysicalName.EditValue = data.GetValue("PHYSICAL_NAME");
+				memDescription.EditValue = data.GetValue("DESCRIPTION");
+				txtInsTime.EditValue = data.GetValue("INS_TIME");
+				txtInsUser.EditValue = data.GetValue("INS_USER_NAME");
+				txtUpdTime.EditValue = data.GetValue("UPD_TIME");
+				txtUpdUser.EditValue = data.GetValue("UPD_USER_NAME");
 
-				txtDictionaryId.EditValue = row["DICTIONARY_ID"];
-				txtLogicalName.EditValue = row["LOGICAL_NAME"];
-				txtPhysicalName.EditValue = row["PHYSICAL_NAME"];
-				memDescription.EditValue = row["DESCRIPTION"];
-				txtInsTime.EditValue = row["INS_TIME"];
-				txtInsUser.EditValue = row["INS_USER_NAME"];
-				txtUpdTime.EditValue = row["UPD_TIME"];
-				txtUpdUser.EditValue = row["UPD_USER_NAME"];
-
+				SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true, Delete = true });
 				this.EditMode = EditModeEnum.Modify;
 				txtLogicalName.Focus();
 
@@ -170,16 +141,16 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			try
 			{
-				DataTable dt = (new DataMap()
+				DataMap data = new DataMap()
 				{
 					{ "DICTIONARY_ID", txtDictionaryId.EditValue },
 					{ "LOGICAL_NAME", txtLogicalName.EditValue },
 					{ "PHYSICAL_NAME", txtPhysicalName.EditValue },
 					{ "DESCRIPTION", memDescription.EditValue },
 					{ "ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE" }
-				}).ToDataTable();
+				};
 
-				var res = DBTranHelper.SingleRequest("Base", "Save", "Dictionary", dt, "DICTIONARY_ID");
+				var res = DBTranHelper.Execute("Base", "Save", "Dictionary", data);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -196,13 +167,13 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			try
 			{
-				DataTable dt = (new DataMap()
+				DataMap data = new DataMap()
 				{
 					{ "DICTIONARY_ID", txtDictionaryId.EditValue },
 					{ "ROWSTATE", "DELETE" }
-				}).ToDataTable();
+				};
 
-				var res = DBTranHelper.SingleRequest("Base", "Save", "Dictionary", dt, "DICTIONARY_ID");
+				var res = DBTranHelper.Execute("Base", "Save", "Dictionary", data);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

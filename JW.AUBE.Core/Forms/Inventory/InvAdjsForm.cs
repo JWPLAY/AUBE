@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using DevExpress.Utils;
 using DevExpress.XtraGrid.Views.Grid;
 using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Map;
-using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Controls.Grid;
 using JW.AUBE.Core.Enumerations;
@@ -162,26 +160,19 @@ namespace JW.AUBE.Core.Forms.Inventory
 		{
 			try
 			{
-				var res = DBTranHelper.GetData("InvAdjs", new DataMap() { { "ADJS_ID", id } });
-				if (res.TranList.Length > 0)
-				{
-					if (res.TranList[0].Data == null)
-						throw new Exception("조회 데이터가 없습니다.");
+				var res = DBTranHelper.GetData<InvAdjsDataModel>("InvAdjs", new DataMap() { { "ADJS_ID", id } });
 
-					InvAdjsDataModel model = (InvAdjsDataModel)res.TranList[0].Data;
+				txtAdjsId.EditValue = res.ADJS_ID;
+				datAdjsDate.SetDateChar8(res.ADJS_DATE);
+				txtProductId.EditValue = res.PRODUCT_ID;
+				txtProductId.EditText = res.PRODUCT_NAME;
+				spnAdjsQty.EditValue = res.ADJS_QTY;
+				memRemarks.EditValue = res.REMARKS;
 
-					txtAdjsId.EditValue = model.ADJS_ID;
-					datAdjsDate.SetDateChar8(model.ADJS_DATE);
-					txtProductId.EditValue = model.PRODUCT_ID;
-					txtProductId.EditText = model.PRODUCT_NAME;
-					spnAdjsQty.EditValue = model.ADJS_QTY;
-					memRemarks.EditValue = model.REMARKS;
-
-					txtInsTime.EditValue = model.INS_TIME;
-					txtInsUserName.EditValue = model.INS_USER_NAME;
-					txtUpdTime.EditValue = model.UPD_TIME;
-					txtUpdUserName.EditValue = model.UPD_USER_NAME;
-				}
+				txtInsTime.EditValue = res.INS_TIME;
+				txtInsUserName.EditValue = res.INS_USER_NAME;
+				txtUpdTime.EditValue = res.UPD_TIME;
+				txtUpdUserName.EditValue = res.UPD_USER_NAME;
 
 				SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true, Delete = true });
 				this.EditMode = EditModeEnum.Modify;
@@ -201,7 +192,7 @@ namespace JW.AUBE.Core.Forms.Inventory
 				DataMap map = lcGroupEdit.ItemToDataMap();
 				map.SetValue("ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE");
 
-				var res = DBTranHelper.Execute("InvAdjs", "Save", new DataTable[] { map.ToDataTable() });
+				var res = DBTranHelper.Execute("InvAdjs", "Save", map);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -218,13 +209,13 @@ namespace JW.AUBE.Core.Forms.Inventory
 		{
 			try
 			{
-				DataTable dt = (new DataMap()
+				DataMap data = new DataMap()
 				{
 					{ "ADJS_ID", txtAdjsId.EditValue },
 					{ "ROWSTATE", "DELETE" }
-				}).ToDataTable();
+				};
 
-				var res = DBTranHelper.SingleRequest("InvAdjs", "Save", null, dt);
+				var res = DBTranHelper.Execute("InvAdjs", "Save", data);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

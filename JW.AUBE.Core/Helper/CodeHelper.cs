@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Map;
-using JW.AUBE.Core.Utils;
 
 namespace JW.AUBE.Core.Helper
 {
@@ -17,7 +16,7 @@ namespace JW.AUBE.Core.Helper
 					parameters = new DataMap();
 				}
 				parameters.SetValue("PARENT_CODE", parentCodeId);
-				return (DataTable)DBTranHelper.SingleRequest("CodeHelp", "GetCodeHelpLookup", string.Empty, parameters);
+				return DBTranHelper.GetData<DataTable>("CodeHelp", "GetCodeHelpLookup", parameters);
 			}
 			catch
 			{
@@ -33,7 +32,7 @@ namespace JW.AUBE.Core.Helper
 					parameters = new DataMap();
 				}
 				parameters.SetValue("PARENT_CODE", parentCodeId);
-				return (DataTable)DBTranHelper.SingleRequest("CodeHelp", "GetCodeHelpLookup", string.Empty, parameters);
+				return DBTranHelper.GetData<DataTable>("CodeHelp", "GetCodeHelpLookup", parameters);
 			}
 			catch
 			{

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
@@ -12,8 +11,7 @@ namespace JW.AUBE.Core.Utils
 		{
 			try
 			{
-				DataTable dt = map.ToDataTable();
-				var res = DBTranHelper.SingleRequest("Base", "Save", "Address", dt);
+				var res = DBTranHelper.Execute("Base", "Save", "Address", map);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

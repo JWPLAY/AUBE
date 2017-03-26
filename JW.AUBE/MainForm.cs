@@ -602,11 +602,11 @@ namespace JW.AUBE
 			{
 				if (mainMenu != null)
 				{
-					var list = DBTranHelper.SingleRequest("Auth", "GetMainMenus", "MainMenus", new DataMap()
+					var list = DBTranHelper.GetData("Auth", "GetMainMenus", "MainMenus", new DataMap()
 					{
 						{ "USER_ID", GlobalVar.Settings.GetValue("USER_ID") },
 						{ "MENU_GROUP", "BIZ" }
-					});
+					}).TranList[0].Data;
 
 					if (list != null)
 					{
@@ -632,11 +632,11 @@ namespace JW.AUBE
 					var navGroup = navBarNavigate.Groups.Where(x => x.Name == "navBarGroupSystem").FirstOrDefault();
 					navGroup.ItemLinks.Clear();
 
-					var list = DBTranHelper.SingleRequest("Auth", "GetMainMenus", "MainMenus", new DataMap()
+					var list = DBTranHelper.GetData("Auth", "GetMainMenus", "MainMenus", new DataMap()
 					{
 						{ "USER_ID", GlobalVar.Settings.GetValue("USER_ID") },
 						{ "MENU_GROUP", "SYS" }
-					});
+					}).TranList[0].Data;
 
 					if (list != null)
 					{

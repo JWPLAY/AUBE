@@ -122,7 +122,7 @@
     <EmbeddedResource Include="SqlMaps\Code\CustomersSQL.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SqlMaps\Purchase\PurchaseSQL.xml">
+    <EmbeddedResource Include="SqlMaps\Business\PurchaseSQL.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
@@ -151,28 +151,33 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SqlMaps\Sales\SalesSQL.xml">
+    <EmbeddedResource Include="SqlMaps\Business\SalesSQL.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SqlMaps\Production\ProductionSQL.xml">
+    <EmbeddedResource Include="SqlMaps\Business\ProductionSQL.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SqlMaps\Inventory\InventorySQL.xml" />
+    <EmbeddedResource Include="SqlMaps\Business\InventorySQL.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SqlMaps\Inventory\InventoryAdjsSQL.xml">
+    <EmbeddedResource Include="SqlMaps\Business\InventoryAdjsSQL.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SqlMaps\Profit\CostPriceSQL.xml" />
+    <EmbeddedResource Include="SqlMaps\Business\CostPriceSQL.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SqlMaps\Profit\ProfitSQL.xml" />
+    <EmbeddedResource Include="SqlMaps\Business\ProfitSQL.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SqlMaps\Business\CreditSQL.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

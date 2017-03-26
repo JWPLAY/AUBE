@@ -247,7 +247,7 @@ namespace JW.AUBE.Core.Controls.Grid
 		public void SetRepositoryItemLookUpEdit(string fieldName, string valueMember, string displayMember, string serviceId, string processId, string sqlId, DataMap parameters)
 		{
 			RepositoryItemLookUpEdit edit = GetRepositoryItemLookUpEdit(valueMember, displayMember);
-			edit.DataSource = DBTranHelper.SingleRequest(serviceId, processId, sqlId, parameters);
+			edit.DataSource = DBTranHelper.GetData(serviceId, processId, sqlId, parameters).TranList[0].Data;
 			SetRepositoryItem(fieldName, edit);
 		}
 

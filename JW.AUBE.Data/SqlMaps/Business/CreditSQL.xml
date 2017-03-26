@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+	namespace="JW.AUBE.Service.SqlMaps"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<statements>
+		<select id="GetDepositList" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT  ROW_NUMBER() OVER (ORDER BY AA.DEPOSIT_ID)	AS ROW_NO
+					,	AA.DEPOSIT_ID
+					,	dbo.DateCharToChar10(AA.DEPOSIT_DATE)		AS DEPOSIT_DATE
+					,	AA.CUSTOMER_ID
+					,	CC.CUSTOMER_NAME
+					,	AA.DEPOSIT_AMT
+					,	AA.REMARKS
+					,	dbo.DateTimeToChar20(AA.INS_TIME)		AS INS_TIME
+					,	AA.INS_USER
+					,	U1.USER_NAME							AS INS_USER_NAME
+					,	dbo.DateTimeToChar20(AA.UPD_TIME)		AS UPD_TIME
+					,	AA.UPD_USER
+					,	U2.USER_NAME							AS UPD_USER_NAME
+				FROM	UBZ.DEPOSIT AA
+						LEFT JOIN
+							UCD.CUSTOMERS CC
+								ON AA.CUSTOMER_ID = PP.CUSTOMER_ID
+						LEFT JOIN
+							UAA.USERS U1
+								ON AA.INS_USER = U1.USER_ID
+						LEFT JOIN
+							UAA.USERS U2 
+								ON AA.UPD_USER = U2.USER_ID
+				WHERE	1=1				
+			]]>
+			<isNotEmpty property="ST_DEPOSIT_DATE">
+			<![CDATA[
+				AND		AA.DEPOSIT_DATE >= #ST_DEPOSIT_DATE#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty property="ED_DEPOSIT_DATE">
+				<![CDATA[
+				AND		AA.DEPOSIT_DATE <= #ED_DEPOSIT_DATE#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty property="CUSTOMER_ID">
+				<![CDATA[
+				AND		AA.CUSTOMER_ID = #CUSTOMER_ID#
+			]]>
+			</isNotEmpty>
+			<![CDATA[
+				ORDER BY ROW_NO
+			]]>
+		</select>
+		<select id="GetDepositData" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT  AA.DEPOSIT_ID
+					,	AA.DEPOSIT_DATE
+					,	AA.CUSTOMER_ID
+					,	CC.CUSTOMER_NAME
+					,	AA.DEPOSIT_AMT
+					,	AA.REMARKS
+					,	dbo.DateTimeToChar20(AA.INS_TIME)		AS INS_TIME
+					,	AA.INS_USER
+					,	U1.USER_NAME							AS INS_USER_NAME
+					,	dbo.DateTimeToChar20(AA.UPD_TIME)		AS UPD_TIME
+					,	AA.UPD_USER
+					,	U2.USER_NAME							AS UPD_USER_NAME
+				FROM	UBZ.DEPOSIT AA
+						LEFT JOIN
+							UCD.CUSTOMERS CC
+								ON AA.CUSTOMER_ID = PP.CUSTOMER_ID
+						LEFT JOIN
+							UAA.USERS U1
+								ON AA.INS_USER = U1.USER_ID
+						LEFT JOIN
+							UAA.USERS U2 
+								ON AA.UPD_USER = U2.USER_ID
+				WHERE	AA.PROD_ID = #PROD_ID#
+			]]>
+		</select>
+		<insert id="InsertDeposit" parameterClass="DataMap" >
+			<![CDATA[
+				INSERT INTO UBZ.DEPOSIT
+				( 
+					DEPOSIT_DATE, CUSTOMER_ID, DEPOSIT_AMT, REMARKS, INS_TIME, INS_USER 
+				)
+				VALUES
+				( 
+					#DEPOSIT_DATE#, #CUSTOMER_ID#, #DEPOSIT_AMT#, #REMARKS#, GETDATE(), #INS_USER# 
+				)
+			]]>
+			<selectKey type="post" property="DEPOSIT_ID" resultClass="Int">
+				<![CDATA[
+					SELECT @@IDENTITY AS DEPOSIT_ID
+				]]>
+			</selectKey>
+		</insert>
+		<update id="UpdateDeposit" parameterClass="DataMap">
+			<![CDATA[
+				UPDATE  UBZ.DEPOSIT
+				SET     DEPOSIT_DATE	= #DEPOSIT_DATE#
+					,	CUSTOMER_ID		= #CUSTOMER_ID#
+					,	DEPOSIT_AMT		= #DEPOSIT_AMT#
+					,	REMARKS			= #REMARKS#
+					,	UPD_TIME		= GETDATE()
+					,	UPD_USER		= #INS_USER#
+				WHERE	DEPOSIT_ID		= #DEPOSIT_ID#
+			]]>
+		</update>
+		<delete id="DeleteDeposit" parameterClass="DataMap">
+			<![CDATA[
+				DELETE
+				FROM	UBZ.DEPOSIT
+				WHERE	DEPOSIT_ID = #DEPOSIT_ID#
+			]]>
+		</delete>
+	</statements>
+</sqlMap>

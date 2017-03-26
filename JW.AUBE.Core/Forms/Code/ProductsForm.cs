@@ -7,6 +7,7 @@ using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid.Views.Grid;
 using JW.AUBE.Base.DBTran.Controller;
+using JW.AUBE.Base.DBTran.Model;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Base.Forms;
@@ -336,7 +337,16 @@ namespace JW.AUBE.Core.Forms.Code
 				DataMap map = lcGroupEdit.ItemToDataMap();
 				map.SetValue("ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE");
 
-				var res = DBTranHelper.Execute("Product", "Save", new DataTable[] { map.ToDataTable(), GetMaterialData() });
+				var res = DBTranHelper.Execute(new DBTranSet()
+				{
+					ServiceId = "Product",
+					ProcessId = "Save",
+					TranList = new DBTranData[]
+					{
+						new DBTranData() { Data = map },
+						new DBTranData() { Data = GetMaterialData() }
+					}
+				});
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -353,13 +363,13 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				DataTable dt = (new DataMap()
+				DataMap data = new DataMap()
 				{
 					{ "PRODUCT_ID", txtProductId.EditValue },
 					{ "ROWSTATE", "DELETE" }
-				}).ToDataTable();
+				};
 
-				var res = DBTranHelper.SingleRequest("Base", "Save", "Product", dt, "PRODUCT_ID");
+				var res = DBTranHelper.Execute("Base", "Save", "Product", data);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -393,7 +403,19 @@ namespace JW.AUBE.Core.Forms.Code
 				if (dt == null || dt.Rows.Count == 0)
 					throw new Exception("저장할 건이 없습니다.");
 
-				var res = DBTranHelper.SingleRequest("Base", "Save", "ProductMaterial", dt);
+				var res = DBTranHelper.Execute(new DBTranSet()
+				{
+					ServiceId = "Base",
+					ProcessId = "Save",
+					TranList = new DBTranData[] 
+					{
+						new DBTranData()
+						{
+							SqlId = "ProductMaterial",
+							Data = dt
+						}
+					}
+				});
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

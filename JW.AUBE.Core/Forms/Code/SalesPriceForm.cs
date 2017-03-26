@@ -277,10 +277,10 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				DataMap map = lcGroupEdit1.ItemToDataMap();
-				map.SetValue("ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE");
+				DataMap data = lcGroupEdit1.ItemToDataMap();
+				data.SetValue("ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE");
 
-				var res = DBTranHelper.Execute("Product", "SaveSalesPrice", new DataTable[] { map.ToDataTable() });
+				var res = DBTranHelper.Execute("Product", "SaveSalesPrice", data);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -297,13 +297,13 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				DataTable dt = (new DataMap()
+				DataMap data = new DataMap()
 				{
 					{ "REG_ID", txtRegId.EditValue },
 					{ "ROWSTATE", "DELETE" }
-				}).ToDataTable();
+				};
 
-				var res = DBTranHelper.Execute("Product", "SaveSalesPrice", new DataTable[] { dt });
+				var res = DBTranHelper.Execute("Product", "SaveSalesPrice", data);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

@@ -369,7 +369,7 @@ namespace JW.AUBE.Core.Forms.Code
 					{ "ROWSTATE", "DELETE" }
 				};
 
-				var res = DBTranHelper.Execute("Base", "Save", "Product", data);
+				var res = DBTranHelper.Execute("Base", "Save", "Product", data, null);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

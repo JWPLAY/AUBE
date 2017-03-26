@@ -25,6 +25,7 @@ namespace JW.AUBE.Service.Services
 
 				foreach (DBTranData req in reqset.TranList)
 				{
+					req.Parameter.SetValue("INS_USER", reqset.UserId);
 					var list = DaoFactory.Instance.QueryForList<DataMap>(req.SqlId, req.Parameter);
 					req.Data = ConvertUtils.DataMapListToDataTable(list, req.SqlId);
 				}
@@ -53,6 +54,7 @@ namespace JW.AUBE.Service.Services
 
 				foreach (DBTranData req in reqset.TranList)
 				{
+					req.Parameter.SetValue("INS_USER", reqset.UserId);
 					req.Data = DaoFactory.Instance.QueryForObject<DataMap>(req.SqlId, req.Parameter);
 				}
 				return reqset;
@@ -90,13 +92,36 @@ namespace JW.AUBE.Service.Services
 				{
 					foreach (DBTranData data in req.TranList)
 					{
-						if (data.Data == null || (data.Data as DataTable).Rows.Count == 0)
+						if (data.Data == null)
 							continue;
 
-						IList<DataMap> list = (data.Data as DataTable).ToDataMapList();
+						if (data.Data.GetType() == typeof(DataTable) && (data.Data as DataTable).Rows.Count == 0)
+							continue;
+
+						IList<DataMap> list = null;
+
+						if (data.Data.GetType() == typeof(DataTable))
+						{
+							list = (data.Data as DataTable).ToDataMapList();
+						}
+						else if (data.Data.GetType() == typeof(DataMap))
+						{
+							list = new List<DataMap>();
+							list.Add((data.Data as DataMap));
+						}
+						else
+						{
+							continue;
+						}
+
 						foreach (DataMap map in list)
 						{
-							if (isKey && data.IsMaster == false && keyField.ToStringNullToEmpty() != "" && keyValue.ToStringNullToEmpty() != "")
+							map.SetValue("INS_USER", req.UserId);
+
+							if (isKey && 
+								data.IsMaster == false && 
+								keyField.ToStringNullToEmpty() != "" && 
+								keyValue.ToStringNullToEmpty() != "")
 							{
 								map.SetValue(keyField, keyValue);
 							}
@@ -124,7 +149,8 @@ namespace JW.AUBE.Service.Services
 									keyValue = map.GetValue(data.KeyField);
 							}
 
-							if (data.IsMaster && data.KeyField.ToStringNullToEmpty() != "")
+							if (data.IsMaster && 
+								data.KeyField.ToStringNullToEmpty() != "")
 							{
 								isKey = true;
 								keyField = data.KeyField;
@@ -169,10 +195,21 @@ namespace JW.AUBE.Service.Services
 
 				foreach (DBTranData req in reqset.TranList)
 				{
-					var map = DaoFactory.Instance.QueryForObject<DataMap>(string.Format("Select{0}", req.SqlId), req.Parameter);
+					DataMap parameter = null;
+					if (req.Data == null)
+						continue;
+					if (req.Data.GetType() == typeof(DataMap))
+						parameter = (req.Data as DataMap);
+					else if (req.Data.GetType() == typeof(DataTable))
+						parameter = (req.Data as DataTable).ToDataMap();
+					else
+						continue;
+
+					parameter.SetValue("INS_USER", reqset.UserId);
+					var map = DaoFactory.Instance.QueryForObject<DataMap>(string.Format("Select{0}", req.SqlId), parameter);
 					if (map != null)
 					{
-						DaoFactory.Instance.Insert("Delete{0}", req.Parameter);
+						DaoFactory.Instance.Insert("Delete{0}", parameter);
 					}
 				}
 				return reqset;
@@ -194,6 +231,9 @@ namespace JW.AUBE.Service.Services
 
 				foreach (DBTranData req in reqset.TranList)
 				{
+					if (req.Parameter == null)
+						req.Parameter = new DataMap();
+					req.Parameter.SetValue("INS_USER", reqset.UserId);
 					DaoFactory.Instance.QueryForObject<int>(req.SqlId, req.Parameter);
 				}
 				return reqset;

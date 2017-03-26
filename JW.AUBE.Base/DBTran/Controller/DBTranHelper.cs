@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Data;
 using JW.AUBE.Base.DBTran.Model;
 using JW.AUBE.Base.Map;
-using JW.AUBE.Base.Variables;
 using JW.AUBE.Base.Utils;
+using JW.AUBE.Base.Variables;
 
 namespace JW.AUBE.Base.DBTran.Controller
 {
@@ -13,6 +12,7 @@ namespace JW.AUBE.Base.DBTran.Controller
 		{
 			try
 			{
+				reqset.UserId = GlobalVar.Settings.GetValue("USER_ID").ToIntegerNullToZero();
 				return (new DBTranController()).Execute(reqset);
 			}
 			catch
@@ -20,52 +20,19 @@ namespace JW.AUBE.Base.DBTran.Controller
 				throw;
 			}
 		}
-		public static DBTranSet Execute(string serviceId, string processId, DataMap parameter)
+		public static DBTranSet Execute(string serviceId, string processId, object data, string keyField)
 		{
-			try
-			{
-				if (parameter == null)
-					throw new Exception("처리할 데이터가 없습니다.");
-
-				if (string.IsNullOrEmpty(serviceId))
-					serviceId = "Base";
-
-				parameter.SetValue("INS_USER", GlobalVar.Settings.GetValue("USER_ID"));
-
-				var res = (new DBTranSet()
-				{
-					ServiceId = serviceId,
-					ProcessId = processId,
-					TranList = new DBTranData[]
-					{
-						new DBTranData() {Parameter = parameter }
-					}
-				}).Execute();
-
-				if (res == null)
-					throw new Exception("요청결과가 없습니다.");
-
-				if (res.ErrorNumber != 0)
-					throw new Exception(res.ErrorMessage);
-
-				return res;
-			}
-			catch
-			{
-				throw;
-			}
+			return Execute(serviceId, processId, null, data, keyField);
 		}
-		public static DBTranSet Execute(string serviceId, string processId, string sqlId, DataMap parameter)
+		public static DBTranSet Execute(string serviceId, string processId, string sqlId, object data, string keyField)
 		{
 			try
 			{
-				if (parameter == null)
+				if (data == null)
 					throw new Exception("처리할 데이터가 없습니다.");
 
 				if (string.IsNullOrEmpty(serviceId))
 					serviceId = "Base";
-
-				parameter.SetValue("INS_USER", GlobalVar.Settings.GetValue("USER_ID"));
 
 				var res = (new DBTranSet()
 				{
@@ -75,84 +42,8 @@ namespace JW.AUBE.Base.DBTran.Controller
 					{
 						new DBTranData()
 						{
-							SqlId = sqlId,
-							Parameter = parameter
-						}
-					}
-				}).Execute();
-
-				if (res == null)
-					throw new Exception("요청결과가 없습니다.");
-
-				if (res.ErrorNumber != 0)
-					throw new Exception(res.ErrorMessage);
-
-				return res;
-			}
-			catch
-			{
-				throw;
-			}
-		}
-
-		public static DBTranSet Execute(string serviceId, string processId, DataTable data)
-		{
-			try
-			{
-				if (data == null || data.Rows.Count == 0)
-					throw new Exception("처리할 데이터가 없습니다.");
-
-				if (string.IsNullOrEmpty(serviceId))
-					serviceId = "Base";
-
-				data.SetValue("INS_USER", GlobalVar.Settings.GetValue("USER_ID"));
-
-				var res = (new DBTranSet()
-				{
-					ServiceId = serviceId,
-					ProcessId = processId,
-					TranList = new DBTranData[]
-					{
-						new DBTranData()
-						{
-							Data = data
-						}
-					}
-				}).Execute();
-
-				if (res == null)
-					throw new Exception("요청결과가 없습니다.");
-
-				if (res.ErrorNumber != 0)
-					throw new Exception(res.ErrorMessage);
-
-				return res;
-			}
-			catch
-			{
-				throw;
-			}
-		}
-		public static DBTranSet Execute(string serviceId, string processId, string sqlId, DataTable data)
-		{
-			try
-			{
-				if (data == null || data.Rows.Count == 0)
-					throw new Exception("처리할 데이터가 없습니다.");
-
-				if (string.IsNullOrEmpty(serviceId))
-					serviceId = "Base";
-
-				data.SetValue("INS_USER", GlobalVar.Settings.GetValue("USER_ID"));
-
-				var res = (new DBTranSet()
-				{
-					ServiceId = serviceId,
-					ProcessId = processId,
-					TranList = new DBTranData[]
-					{
-						new DBTranData()
-						{
+							IsMaster = true,
+							KeyField = keyField,
 							SqlId = sqlId,
 							Data = data
 						}
@@ -173,6 +64,14 @@ namespace JW.AUBE.Base.DBTran.Controller
 			}
 		}
 
+		public static DBTranSet GetData(string serviceId, DataMap parameter)
+		{
+			return GetData(serviceId, null, null, parameter);
+		}
+		public static DBTranSet GetData(string serviceId, string processId, DataMap parameter)
+		{
+			return GetData(serviceId, processId, null, parameter);
+		}
 		public static DBTranSet GetData(string serviceId, string processId, string sqlId, DataMap parameter)
 		{
 			try
@@ -216,14 +115,6 @@ namespace JW.AUBE.Base.DBTran.Controller
 				throw;
 			}
 		}
-		public static DBTranSet GetData(string serviceId, string processId, DataMap parameter)
-		{
-			return GetData(serviceId, processId, null, parameter);
-		}
-		public static DBTranSet GetData(string serviceId, DataMap parameter)
-		{
-			return GetData(serviceId, null, null, parameter);
-		}
 
 		public static T GetData<T>(string serviceId, DataMap parameter)
 		{
@@ -248,6 +139,9 @@ namespace JW.AUBE.Base.DBTran.Controller
 			{
 				if (string.IsNullOrEmpty(serviceId))
 					serviceId = "Base";
+
+				if (string.IsNullOrEmpty(processId))
+					processId = "GetData";
 
 				if (parameter == null)
 					parameter = new DataMap();

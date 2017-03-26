@@ -192,7 +192,7 @@ namespace JW.AUBE.Core.Forms.Inventory
 				DataMap map = lcGroupEdit.ItemToDataMap();
 				map.SetValue("ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE");
 
-				var res = DBTranHelper.Execute("InvAdjs", "Save", map);
+				var res = DBTranHelper.Execute("InvAdjs", "Save", map, "ADJS_ID");
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -215,7 +215,7 @@ namespace JW.AUBE.Core.Forms.Inventory
 					{ "ROWSTATE", "DELETE" }
 				};
 
-				var res = DBTranHelper.Execute("InvAdjs", "Save", data);
+				var res = DBTranHelper.Execute("InvAdjs", "Save", data, null);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

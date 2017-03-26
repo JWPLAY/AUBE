@@ -218,7 +218,7 @@ namespace JW.AUBE.Base.Utils
 		/// <param name="tableName">데이터테이블명</param>
 		/// <returns>변환한 데이터테이블</returns>
 		/// </param></summary>
-		public static DataTable DataMapListToDataTable(this IList<DataMap> list, string tableName)
+		public static DataTable DataMapListToDataTable(this IList<DataMap> list, string tableName = null)
 		{
 			if (list == null || list.Count == 0)
 			{

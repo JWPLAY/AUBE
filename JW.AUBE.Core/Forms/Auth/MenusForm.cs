@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Data;
 using DevExpress.Utils;
 using DevExpress.XtraGrid.Views.Grid;
 using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Map;
-using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Controls.Grid;
 using JW.AUBE.Core.Enumerations;
@@ -61,11 +59,11 @@ namespace JW.AUBE.Core.Forms.Auth
 			gridList.Init();
 			gridList.AddGridColumns(
 				new XGridColumn() { FieldName = "ROW_NO" },
-				new XGridColumn() { FieldName = "HIER_ID", HorzAlignment = HorzAlignment.Near, Visible = false },
-				new XGridColumn() { FieldName = "HIER_NAME", CaptionCode = "MENU_NAME", HorzAlignment = HorzAlignment.Near, Width = 300 },
+				new XGridColumn() { FieldName = "HIER_ID", Visible = false },
+				new XGridColumn() { FieldName = "HIER_NAME", CaptionCode = "MENU_NAME", Width = 300 },
 				new XGridColumn() { FieldName = "MENU_ID", HorzAlignment = HorzAlignment.Center, Width = 80 },
 				new XGridColumn() { FieldName = "SORT_SEQ", HorzAlignment = HorzAlignment.Center, Width = 80 },
-				new XGridColumn() { FieldName = "USE_YN", HorzAlignment = HorzAlignment.Near, Width = 80, RepositoryItem = gridList.GetRepositoryItemCheckEdit() }
+				new XGridColumn() { FieldName = "USE_YN", HorzAlignment = HorzAlignment.Center, Width = 80, RepositoryItem = gridList.GetRepositoryItemCheckEdit() }
 			);
 
 			gridList.RowCellClick += delegate (object sender, RowCellClickEventArgs e)
@@ -168,7 +166,7 @@ namespace JW.AUBE.Core.Forms.Auth
 				DataMap map = lc.ItemToDataMap();
 				map.SetValue("ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE");
 
-				var res = DBTranHelper.Execute("Base", "Save", "Menu", map);
+				var res = DBTranHelper.Execute("Base", "Save", "Menu", map, "MENU_ID");
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -191,7 +189,7 @@ namespace JW.AUBE.Core.Forms.Auth
 					{ "ROWSTATE", "DELETE" }
 				};
 
-				var res = DBTranHelper.Execute("Base", "Save", "Menu", map);
+				var res = DBTranHelper.Execute("Base", "Save", "Menu", map, "MENU_ID");
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

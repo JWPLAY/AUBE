@@ -137,7 +137,7 @@ namespace JW.AUBE.Core.Forms.Credit
 		{
 			try
 			{
-				gridList.BindData("Credit", "GetDepositList", null, new DataMap()
+				gridList.BindData("Base", "GetList", "GetDepositList", new DataMap()
 				{
 					{ "ST_DEPOSIT_DATE", datSchDepositDate.DateFrEdit.GetDateChar8() },
 					{ "ED_DEPOSIT_DATE", datSchDepositDate.DateToEdit.GetDateChar8() },
@@ -159,26 +159,19 @@ namespace JW.AUBE.Core.Forms.Credit
 		{
 			try
 			{
-				var res = DBTranHelper.GetData("Credit", new DataMap() { { "DEPOSIT_ID", id } });
-				if (res.TranList.Length > 0)
-				{
-					if (res.TranList[0].Data == null)
-						throw new Exception("조회 데이터가 없습니다.");
+				var data = DBTranHelper.GetData<DataMap>("Base", "GetData", "GetDepositData", new DataMap() { { "DEPOSIT_ID", id } });
 
-					DataMap data = (DataMap)res.TranList[0].Data;
+				txtDepositId.EditValue = data.GetValue("DEPOSIT_ID");
+				datDepositDate.SetDateChar8(data.GetValue("DEPOSIT_DATE"));
+				txtCustomerId.EditValue = data.GetValue("CUSTOMER_ID");
+				txtCustomerId.EditText = data.GetValue("CUSTOMER_NAME");
+				spnDepositAmt.EditValue = data.GetValue("DEPOSIT_AMT");
+				memRemarks.EditValue = data.GetValue("REMARKS");
 
-					txtDepositId.EditValue = data.GetValue("DEPOSIT_ID");
-					datDepositDate.SetDateChar8(data.GetValue("DEPOSIT_DATE"));
-					txtCustomerId.EditValue = data.GetValue("CUSTOMER_ID");
-					txtCustomerId.EditText = data.GetValue("CUSTOMER_NAME");
-					spnDepositAmt.EditValue = data.GetValue("DEPOSIT_AMT");
-					memRemarks.EditValue = data.GetValue("REMARKS");
-
-					txtInsTime.EditValue = data.GetValue("INS_TIME");
-					txtInsUserName.EditValue = data.GetValue("INS_USER_NAME");
-					txtUpdTime.EditValue = data.GetValue("UPD_TIME");
-					txtUpdUserName.EditValue = data.GetValue("UPD_USER_NAME");
-				}
+				txtInsTime.EditValue = data.GetValue("INS_TIME");
+				txtInsUserName.EditValue = data.GetValue("INS_USER_NAME");
+				txtUpdTime.EditValue = data.GetValue("UPD_TIME");
+				txtUpdUserName.EditValue = data.GetValue("UPD_USER_NAME");
 
 				SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true, Delete = true });
 				this.EditMode = EditModeEnum.Modify;
@@ -198,7 +191,7 @@ namespace JW.AUBE.Core.Forms.Credit
 				DataMap map = lcGroupEdit.ItemToDataMap();
 				map.SetValue("ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE");
 
-				var res = DBTranHelper.Execute("Credit", "SaveDeposit", map);
+				var res = DBTranHelper.Execute("Base", "Save", "Deposit", map, "DEPOSIT_ID");
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -221,7 +214,7 @@ namespace JW.AUBE.Core.Forms.Credit
 					{ "ROWSTATE", "DELETE" }
 				};
 
-				var res = DBTranHelper.Execute("Credit", "SaveDeposit", map);
+				var res = DBTranHelper.Execute("Base", "Save", "Deposit", map, null);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

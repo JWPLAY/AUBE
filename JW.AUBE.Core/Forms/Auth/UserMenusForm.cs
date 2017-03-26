@@ -205,7 +205,7 @@ namespace JW.AUBE.Core.Forms.Auth
 					return;
 				}
 
-				var res = DBTranHelper.Execute("Base", "Save", "UserMenus", dt);
+				var res = DBTranHelper.Execute("Base", "Save", "UserMenus", dt, null);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

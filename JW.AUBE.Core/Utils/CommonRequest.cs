@@ -11,7 +11,7 @@ namespace JW.AUBE.Core.Utils
 		{
 			try
 			{
-				var res = DBTranHelper.Execute("Base", "Save", "Address", map);
+				var res = DBTranHelper.Execute("Base", "Save", "Address", map, "ADDRESS_ID");
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

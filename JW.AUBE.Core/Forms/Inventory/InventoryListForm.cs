@@ -40,12 +40,7 @@ namespace JW.AUBE.Core.Forms.Inventory
 		protected override void InitButtons()
 
 		{
-			SetToolbarButtons(new Models.ToolbarButtons()
-			{
-				Refresh = true,
-				New = true,
-				Export = true
-			});
+			SetToolbarButtons(new Models.ToolbarButtons() { Refresh = true });
 		}
 		protected override void InitControls()
 		{

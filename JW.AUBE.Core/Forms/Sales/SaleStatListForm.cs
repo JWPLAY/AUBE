@@ -82,7 +82,7 @@ namespace JW.AUBE.Core.Forms.Sales
 				p.SetValue("ST_SALE_DATE", datSaleDate.DateFrEdit.GetDateChar8());
 				p.SetValue("ED_SALE_DATE", datSaleDate.DateToEdit.GetDateChar8());
 
-				var res = DBTranHelper.Execute("Sales", "GetSaleStat", p);
+				var res = DBTranHelper.GetData("Sales", "GetSaleStat", p);
 
 				if (res.TranList.Length == 0)
 					throw new Exception("조회 데이터가 없습니다.");

@@ -150,7 +150,7 @@ namespace JW.AUBE.Core.Forms.Auth
 					{ "ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE" }
 				};
 
-				var res = DBTranHelper.Execute("Base", "Save", "Dictionary", data);
+				var res = DBTranHelper.Execute("Base", "Save", "Dictionary", data, "DICTIONARY_ID");
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -173,7 +173,7 @@ namespace JW.AUBE.Core.Forms.Auth
 					{ "ROWSTATE", "DELETE" }
 				};
 
-				var res = DBTranHelper.Execute("Base", "Save", "Dictionary", data);
+				var res = DBTranHelper.Execute("Base", "Save", "Dictionary", data, null);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

@@ -538,11 +538,11 @@ namespace JW.AUBE.Core.Forms.Code
 			{
 				DataMap data = new DataMap()
 				{
-					{ "ID", txtCustomerId.EditValue },
+					{ "CUSTOMER_ID", txtCustomerId.EditValue },
 					{ "ROWSTATE", "DELETE" }
 				};
 
-				var res = DBTranHelper.Execute("Base", "Save", "Customer", data);
+				var res = DBTranHelper.Execute("Base", "Save", "Customer", data, "CUSTOMER_ID");
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -668,19 +668,7 @@ namespace JW.AUBE.Core.Forms.Code
 				}
 				else
 				{
-					var res = DBTranHelper.Execute(new DBTranSet()
-					{
-						ServiceId = "Base",
-						ProcessId = "Save",
-						TranList = new DBTranData[]
-						{
-							new DBTranData()
-							{
-								SqlId = "CustomerPhones",
-								Data = dt
-							}
-						}
-					});
+					var res = DBTranHelper.Execute("Base", "Save", "CustomerPhones", dt, null);
 					if (res.ErrorNumber != 0)
 						throw new Exception(res.ErrorMessage);
 
@@ -721,19 +709,7 @@ namespace JW.AUBE.Core.Forms.Code
 				}
 				else
 				{
-					var res = DBTranHelper.Execute(new DBTranSet()
-					{
-						ServiceId = "Customer",
-						ProcessId = "SaveCustomerAddress",
-						TranList = new DBTranData[] 
-						{
-							new DBTranData()
-							{
-								SqlId = "CustomerAddress",
-								Data = dt
-							}
-						}
-					});
+					var res = DBTranHelper.Execute("Customer", "SaveCustomerAddress", "CustomerAddress", dt, null);
 					if (res.ErrorNumber != 0)
 						throw new Exception(res.ErrorMessage);
 

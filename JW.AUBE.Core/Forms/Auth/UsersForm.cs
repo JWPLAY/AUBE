@@ -154,7 +154,7 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			try
 			{
-				DataMap dt = new DataMap()
+				DataMap data = new DataMap()
 				{
 					{ "USER_ID", txtUserId.EditValue },
 					{ "USER_NAME", txtUserName.EditValue },
@@ -166,7 +166,7 @@ namespace JW.AUBE.Core.Forms.Auth
 					{ "ROWSTATE", (this.EditMode== EditModeEnum.New)?"INSERT":"UPDATE" }
 				};
 
-				var res = DBTranHelper.Execute("Base", "Save", "User", dt);
+				var res = DBTranHelper.Execute("Base", "Save", "User", data, "USER_ID");
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -190,7 +190,7 @@ namespace JW.AUBE.Core.Forms.Auth
 					{ "ROWSTATE", "DELETE" }
 				};
 
-				var res = DBTranHelper.Execute("Base", "Save", "User", data);
+				var res = DBTranHelper.Execute("Base", "Save", "User", data, null);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

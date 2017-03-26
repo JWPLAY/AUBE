@@ -290,7 +290,7 @@ namespace JW.AUBE.Core.Forms.Purchase
 					{ "ROWSTATE", "DELETE" }
 				};
 
-				var res = DBTranHelper.Execute("Purchase", "Delete", map);
+				var res = DBTranHelper.Execute("Purchase", "Delete", map, null);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

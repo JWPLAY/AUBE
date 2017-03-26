@@ -280,7 +280,7 @@ namespace JW.AUBE.Core.Forms.Code
 				DataMap data = lcGroupEdit1.ItemToDataMap();
 				data.SetValue("ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE");
 
-				var res = DBTranHelper.Execute("Product", "SaveSalesPrice", data);
+				var res = DBTranHelper.Execute("Product", "SaveSalesPrice", data, "REG_ID");
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -303,7 +303,7 @@ namespace JW.AUBE.Core.Forms.Code
 					{ "ROWSTATE", "DELETE" }
 				};
 
-				var res = DBTranHelper.Execute("Product", "SaveSalesPrice", data);
+				var res = DBTranHelper.Execute("Product", "SaveSalesPrice", data, null);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

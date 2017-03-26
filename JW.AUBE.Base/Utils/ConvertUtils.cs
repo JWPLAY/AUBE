@@ -228,7 +228,10 @@ namespace JW.AUBE.Base.Utils
 
 			foreach (var key in list[0].Keys)
 			{
-				data.Columns.Add(key);
+				if (key.EndsWith("_QTY") || key.EndsWith("_AMT") || key.EndsWith("_RAT"))
+					data.Columns.Add(key, typeof(decimal));
+				else
+					data.Columns.Add(key);
 			}
 			foreach (DataMap p in list)
 			{

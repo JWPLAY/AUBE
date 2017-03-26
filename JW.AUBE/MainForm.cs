@@ -29,6 +29,7 @@ using JW.AUBE.Core.Interfaces;
 using JW.AUBE.Core.Forms.Sales;
 using JW.AUBE.Model.Auth;
 using System.Collections.Generic;
+using JW.AUBE.Base.DBTran.Controller;
 
 namespace JW.AUBE
 {
@@ -342,7 +343,7 @@ namespace JW.AUBE
 		{
 			try
 			{
-				//var res = ServerRequest.SingleRequest("Auth", "Logout", null, new DataMap()
+				//var res = DBTranHelper.SingleRequest("Auth", "Logout", null, new DataMap()
 				//{
 				//	{ "USER_ID", GlobalVar.Settings.GetValue("USER_ID") },
 				//	{ "MAC_ADDRESS", CommonUtils.GetMacAddress() }
@@ -601,7 +602,7 @@ namespace JW.AUBE
 			{
 				if (mainMenu != null)
 				{
-					var list = ServerRequest.SingleRequest("Auth", "GetMainMenus", "MainMenus", new DataMap()
+					var list = DBTranHelper.SingleRequest("Auth", "GetMainMenus", "MainMenus", new DataMap()
 					{
 						{ "USER_ID", GlobalVar.Settings.GetValue("USER_ID") },
 						{ "MENU_GROUP", "BIZ" }
@@ -631,7 +632,7 @@ namespace JW.AUBE
 					var navGroup = navBarNavigate.Groups.Where(x => x.Name == "navBarGroupSystem").FirstOrDefault();
 					navGroup.ItemLinks.Clear();
 
-					var list = ServerRequest.SingleRequest("Auth", "GetMainMenus", "MainMenus", new DataMap()
+					var list = DBTranHelper.SingleRequest("Auth", "GetMainMenus", "MainMenus", new DataMap()
 					{
 						{ "USER_ID", GlobalVar.Settings.GetValue("USER_ID") },
 						{ "MENU_GROUP", "SYS" }
@@ -853,7 +854,7 @@ namespace JW.AUBE
 						((IEditForm)form).FormType = Core.Enumerations.FormTypeEnum.ListAndEdit;
 					else
 						((IEditForm)form).FormType = Core.Enumerations.FormTypeEnum.List;
-					((IEditForm)form).IsDataList = (data.VIEW_YN == "Y") ? true : false;
+					((IEditForm)form).IsTranList = (data.VIEW_YN == "Y") ? true : false;
 					((IEditForm)form).IsDataEdit = (data.EDIT_YN == "Y") ? true : false;
 				}
 
@@ -935,7 +936,7 @@ namespace JW.AUBE
 					StartPosition = FormStartPosition.CenterScreen
 				};
 				((IEditForm)form).FormType = Core.Enumerations.FormTypeEnum.Edit;
-				((IEditForm)form).IsDataList = true;
+				((IEditForm)form).IsTranList = true;
 				((IEditForm)form).IsDataEdit = true;
 				form.Show();
 			} 

@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
+using JW.AUBE.Base.DBTran.Model;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
-using JW.AUBE.Base.Was.Models;
 using JW.AUBE.Model.Profit;
 using JW.AUBE.Service.Mappers;
 
@@ -11,15 +10,12 @@ namespace JW.AUBE.Service.Services
 {
 	public static class CostPriceService
 	{
-		public static WasRequest GetList(WasRequest req)
+		public static DBTranSet GetList(DBTranSet req)
 		{
 			try
 			{
-				var list = DaoFactory.Instance.QueryForList<CostPriceListModel>("GetCostPriceList", req.Parameter);
-				req.DataList = new List<WasRequestData>()
-				{
-					new WasRequestData() { Data = list }
-				};
+				var list = DaoFactory.Instance.QueryForList<CostPriceListModel>("GetCostPriceList", req.TranList[0].Parameter);
+				req.TranList[0].Data = list;
 				return req;
 			}
 			catch (Exception ex)
@@ -30,7 +26,7 @@ namespace JW.AUBE.Service.Services
 			}
 		}
 
-		public static WasRequest Save(WasRequest req)
+		public static DBTranSet Save(DBTranSet req)
 		{
 			bool isTran = false;
 
@@ -39,7 +35,7 @@ namespace JW.AUBE.Service.Services
 				if (req == null)
 					throw new Exception("처리할 요청이 정확하지 않습니다.");
 
-				if (req.DataList == null || req.DataList.Count == 0)
+				if (req.TranList == null || req.TranList.Length == 0)
 					throw new Exception("처리할 데이터가 없습니다.");
 
 				DaoFactory.Instance.BeginTransaction();
@@ -47,12 +43,12 @@ namespace JW.AUBE.Service.Services
 
 				try
 				{
-					if (req.DataList.Count > 0)
+					if (req.TranList.Length > 0)
 					{
-						if (req.DataList[0].Data == null)
+						if (req.TranList[0].Data == null)
 							throw new Exception("저장할 데이터가 존재하지 않습니다.");
 
-						DataMap data = (req.DataList[0].Data as DataTable).ToDataMapList()[0];
+						DataMap data = (req.TranList[0].Data as DataTable).ToDataMapList()[0];
 
 						if (data.GetValue("ROWSTATE").ToStringNullToEmpty() == "INSERT")
 						{
@@ -66,9 +62,9 @@ namespace JW.AUBE.Service.Services
 						{
 							DaoFactory.Instance.Update("DeleteCostPrice", data);
 						}
-						req.DataList[0].ErrorNumber = 0;
-						req.DataList[0].ErrorMessage = "SUCCESS";
-						req.DataList[0].ReturnValue = null;
+						req.TranList[0].ErrorNumber = 0;
+						req.TranList[0].ErrorMessage = "SUCCESS";
+						req.TranList[0].ReturnValue = null;
 					}
 					
 					if (isTran)

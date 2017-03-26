@@ -65,6 +65,10 @@
     <Compile Include="Constants\RegiPathConsts.cs" />
     <Compile Include="Constants\ServerConsts.cs" />
     <Compile Include="Constants\SkinConsts.cs" />
+    <Compile Include="DBTran\Model\DBTranData.cs" />
+    <Compile Include="DBTran\Model\DBTranSet.cs" />
+    <Compile Include="DBTran\Controller\DBTranController.cs" />
+    <Compile Include="DBTran\Controller\DBTranHelper.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Map\DataMap.cs" />
     <Compile Include="Map\SchemaMap.cs" />
@@ -93,8 +97,6 @@
     <Compile Include="Utils\TypeUtils.cs" />
     <Compile Include="Utils\UnsafeNativeMethods.cs" />
     <Compile Include="Variables\GlobalVar.cs" />
-    <Compile Include="Was\Models\WasRequestData.cs" />
-    <Compile Include="Was\Models\WasRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

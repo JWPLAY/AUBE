@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using DevExpress.Utils;
 using DevExpress.XtraGrid.Views.Grid;
+using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Base.Forms;
@@ -237,15 +238,15 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				var res = ServerRequest.GetData("Product", "GetSalesPriceData", new DataMap()
+				var res = DBTranHelper.GetData("Product", "GetSalesPriceData", new DataMap()
 				{
 					{ "REG_ID", reg_id }
 				});
 
-				if (res.DataList.Count == 0 || res.DataList[0].Data == null)
+				if (res.TranList.Length == 0 || res.TranList[0].Data == null)
 					throw new Exception("조회 데이터가 없습니다.");
 
-				SalesPriceDataModel model = (SalesPriceDataModel)res.DataList[0].Data;
+				SalesPriceDataModel model = (SalesPriceDataModel)res.TranList[0].Data;
 
 				txtRegId.EditValue = model.REG_ID;
 				txtProductId.EditValue = model.PRODUCT_ID;
@@ -279,12 +280,12 @@ namespace JW.AUBE.Core.Forms.Code
 				DataMap map = lcGroupEdit1.ItemToDataMap();
 				map.SetValue("ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE");
 
-				var res = ServerRequest.Execute("Product", "SaveSalesPrice", new DataTable[] { map.ToDataTable() });
+				var res = DBTranHelper.Execute("Product", "SaveSalesPrice", new DataTable[] { map.ToDataTable() });
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
 				ShowMsgBox("저장하였습니다.");
-				callback(arg, res.DataList[0].ReturnValue);
+				callback(arg, res.TranList[0].ReturnValue);
 			}
 			catch(Exception ex)
 			{
@@ -302,7 +303,7 @@ namespace JW.AUBE.Core.Forms.Code
 					{ "ROWSTATE", "DELETE" }
 				}).ToDataTable();
 
-				var res = ServerRequest.Execute("Product", "SaveSalesPrice", new DataTable[] { dt });
+				var res = DBTranHelper.Execute("Product", "SaveSalesPrice", new DataTable[] { dt });
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

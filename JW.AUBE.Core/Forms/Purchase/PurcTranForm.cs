@@ -9,6 +9,7 @@ using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Base.Forms;
@@ -203,13 +204,13 @@ namespace JW.AUBE.Core.Forms.Purchase
 		{
 			try
 			{
-				var res = ServerRequest.GetData("Purchase", parameters);
-				if (res.DataList.Count > 0)
+				var res = DBTranHelper.GetData("Purchase", parameters);
+				if (res.TranList.Length > 0)
 				{
-					if (res.DataList[0].Data == null)
+					if (res.TranList[0].Data == null)
 						throw new Exception("조회 데이터가 없습니다.");
 
-					PurcTranDataModel model = (PurcTranDataModel)res.DataList[0].Data;
+					PurcTranDataModel model = (PurcTranDataModel)res.TranList[0].Data;
 
 					txtPurcId.EditValue = model.PURC_ID;
 					txtPurcNo.EditValue = model.PURC_NO;
@@ -227,9 +228,9 @@ namespace JW.AUBE.Core.Forms.Purchase
 					this.ParamsData = model.PURC_ID;
 				}
 
-				if (res.DataList.Count > 1)
+				if (res.TranList.Length > 1)
 				{
-					gridItem.DataSource = (res.DataList[1].Data as IList<PurcTranItemDataModel>).ListToDataTable();
+					gridItem.DataSource = (res.TranList[1].Data as IList<PurcTranItemDataModel>).ListToDataTable();
 				}
 
 				SetToolbarButtons(new Models.ToolbarButtons() { Refresh = true, New = true, Save = true, SaveAndNew = true, Delete = true });
@@ -257,12 +258,12 @@ namespace JW.AUBE.Core.Forms.Purchase
 				if (item == null || item.Rows.Count == 0)
 					throw new Exception("구매품목을 입력해야 합니다.");
 
-				var res = ServerRequest.Execute("Purchase", "Save", new DataTable[] { mst, item });
+				var res = DBTranHelper.Execute("Purchase", "Save", new DataTable[] { mst, item });
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
 				ShowMsgBox("저장하였습니다.");
-				callback(arg, res.DataList[0].ReturnValue);
+				callback(arg, res.TranList[0].ReturnValue);
 			}
 			catch (Exception ex)
 			{
@@ -280,7 +281,7 @@ namespace JW.AUBE.Core.Forms.Purchase
 					{ "ROWSTATE", "DELETE" }
 				};
 
-				var res = ServerRequest.Execute("Purchase", "Delete", map);
+				var res = DBTranHelper.Execute("Purchase", "Delete", map);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

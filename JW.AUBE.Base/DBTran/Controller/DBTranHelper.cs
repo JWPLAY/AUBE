@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using JW.AUBE.Base.DBTran.Model;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Base.Variables;
-using JW.AUBE.Base.Was.Models;
-using JW.AUBE.Core.Was.Controllers;
 
-namespace JW.AUBE.Core.Utils
+namespace JW.AUBE.Base.DBTran.Controller
 {
-	public static class ServerRequest
+	public static class DBTranHelper
 	{
-		public static WasRequest Request(this WasRequest reqset)
+		public static DBTranSet Request(this DBTranSet reqset)
 		{
 			try
 			{
-				return (new WasController()).Execute(reqset);
+				return (new DBTranController()).Execute(reqset);
 			}
 			catch
 			{
@@ -23,7 +22,7 @@ namespace JW.AUBE.Core.Utils
 			}
 		}
 
-		public static WasRequest GetData(string serviceId, DataMap parameter)
+		public static DBTranSet GetData(string serviceId, DataMap parameter)
 		{
 			try
 			{
@@ -34,7 +33,7 @@ namespace JW.AUBE.Core.Utils
 				throw;
 			}
 		}
-		public static WasRequest GetData(string serviceId, string processId, DataMap parameter)
+		public static DBTranSet GetData(string serviceId, string processId, DataMap parameter)
 		{
 			try
 			{
@@ -47,11 +46,14 @@ namespace JW.AUBE.Core.Utils
 				if (parameter.ContainsKey("INS_USER") == false)
 					parameter.SetValue("INS_USER", GlobalVar.Settings.GetValue("USER_ID"));
 
-				var res = (new WasRequest()
+				var res = (new DBTranSet()
 				{
 					ServiceId = serviceId,
 					ProcessId = processId,
-					Parameter = parameter
+					TranList = new DBTranData[]
+					{
+						new DBTranData() { Parameter = parameter }
+					}
 				}).Request();
 
 				if (res == null)
@@ -60,7 +62,7 @@ namespace JW.AUBE.Core.Utils
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
-				if (res.DataList == null || res.DataList.Count == 0)
+				if (res.TranList == null || res.TranList.Length == 0)
 					throw new Exception("요청결과의 데이터가 없습니다.");
 
 				return res;
@@ -71,18 +73,18 @@ namespace JW.AUBE.Core.Utils
 			}
 		}
 
-		public static WasRequest Execute(string serviceId, string processId, DataTable[] datalist)
+		public static DBTranSet Execute(string serviceId, string processId, DataTable[] TranList)
 		{
 			try
 			{
-				if (datalist == null || datalist.Length == 0)
+				if (TranList == null || TranList.Length == 0)
 					throw new Exception("처리할 데이터가 없습니다.");
 
 				if (string.IsNullOrEmpty(serviceId))
 					serviceId = "Base";
 
-				List<WasRequestData> reqdatalist = new List<WasRequestData>();
-				foreach(DataTable dt in datalist)
+				List<DBTranData> reqlist = new List<DBTranData>();
+				foreach (DataTable dt in TranList)
 				{
 					if (dt.Columns.Contains("INS_USER") == false)
 						dt.Columns.Add("INS_USER", typeof(int));
@@ -90,14 +92,14 @@ namespace JW.AUBE.Core.Utils
 					foreach (DataRow dr in dt.Rows)
 						dr["INS_USER"] = GlobalVar.Settings.GetValue("USER_ID");
 
-					reqdatalist.Add(new WasRequestData() { Data = dt });
+					reqlist.Add(new DBTranData() { Data = dt });
 				}
 
-				var res = (new WasRequest()
+				var res = (new DBTranSet()
 				{
 					ServiceId = serviceId,
 					ProcessId = processId,
-					DataList = reqdatalist
+					TranList = reqlist.ToArray()
 				}).Request();
 
 				if (res == null)
@@ -113,7 +115,7 @@ namespace JW.AUBE.Core.Utils
 				throw;
 			}
 		}
-		public static WasRequest Execute(string serviceId, string processId, DataMap parameter)
+		public static DBTranSet Execute(string serviceId, string processId, DataMap parameter)
 		{
 			try
 			{
@@ -125,11 +127,14 @@ namespace JW.AUBE.Core.Utils
 
 				parameter.SetValue("INS_USER", GlobalVar.Settings.GetValue("USER_ID"));
 
-				var res = (new WasRequest()
+				var res = (new DBTranSet()
 				{
 					ServiceId = serviceId,
 					ProcessId = processId,
-					Parameter = parameter
+					TranList = new DBTranData[]
+					{
+						new DBTranData() {Parameter = parameter }
+					}
 				}).Request();
 
 				if (res == null)
@@ -146,7 +151,7 @@ namespace JW.AUBE.Core.Utils
 			}
 		}
 
-		public static object SingleRequest(this WasRequest req)
+		public static object SingleRequest(this DBTranSet req)
 		{
 			try
 			{
@@ -154,16 +159,16 @@ namespace JW.AUBE.Core.Utils
 
 				if (req.ErrorNumber == 0)
 				{
-					if (req.DataList == null ||
-						req.DataList.Count == 0 ||
-						req.DataList[0] == null ||
-						req.DataList[0].Data == null)
+					if (req.TranList == null ||
+						req.TranList.Length == 0 ||
+						req.TranList[0] == null ||
+						req.TranList[0].Data == null)
 					{
 						return null;
 					}
 					else
 					{
-						return req.DataList[0].Data;
+						return req.TranList[0].Data;
 					}
 				}
 				else
@@ -189,17 +194,16 @@ namespace JW.AUBE.Core.Utils
 				if (parameter.ContainsKey("INS_USER") == false)
 					parameter.SetValue("INS_USER", GlobalVar.Settings.GetValue("USER_ID"));
 
-				var res = (new WasRequest()
+				var res = (new DBTranSet()
 				{
 					ServiceId = serviceId,
 					ProcessId = processId,
-					SqlId = sqlId,
-					Parameter = parameter,
-					DataList = new List<WasRequestData>()
+					TranList = new DBTranData[]
 					{
-						new WasRequestData()
+						new DBTranData()
 						{
 							SqlId = sqlId,
+							Parameter = parameter,
 							Data = parameter.ToDataTable()
 						}
 					}
@@ -207,7 +211,7 @@ namespace JW.AUBE.Core.Utils
 
 				if (res.ErrorNumber == 0)
 				{
-					if (res.DataList == null || res.DataList.Count == 0 || res.DataList[0] == null)
+					if (res.TranList == null || res.TranList.Length == 0 || res.TranList[0] == null)
 					{
 						throw new Exception("서버 요청에 대한 응답이 없습니다.\r\n확인 후 다시 시도하세요!!!");
 					}
@@ -216,7 +220,7 @@ namespace JW.AUBE.Core.Utils
 				{
 					throw new Exception(res.ErrorMessage);
 				}
-				return res.DataList[0].Data;
+				return res.TranList[0].Data;
 			}
 			catch
 			{
@@ -224,7 +228,7 @@ namespace JW.AUBE.Core.Utils
 			}
 		}
 
-		public static WasRequest SingleRequest(string serviceId, string processId, string sqlId, DataTable data, string keyField = null)
+		public static DBTranSet SingleRequest(string serviceId, string processId, string sqlId, DataTable data, string keyField = null)
 		{
 			try
 			{
@@ -238,14 +242,14 @@ namespace JW.AUBE.Core.Utils
 					}
 				}
 
-				var res = Request(new WasRequest()
+				var res = Request(new DBTranSet()
 				{
 					ServiceId = serviceId,
 					ProcessId = processId,
 					IsTransaction = true,
-					DataList = new List<WasRequestData>()
+					TranList = new DBTranData[]
 					{
-						new WasRequestData()
+						new DBTranData()
 						{
 							SqlId = sqlId,
 							KeyField = keyField,
@@ -268,7 +272,7 @@ namespace JW.AUBE.Core.Utils
 			}
 		}
 
-		public static WasRequest ProcedureCall(string sqlId, DataMap parameter)
+		public static DBTranSet ProcedureCall(string sqlId, DataMap parameter)
 		{
 			try
 			{
@@ -278,14 +282,21 @@ namespace JW.AUBE.Core.Utils
 				if (parameter.ContainsKey("INS_USER") == false)
 					parameter.SetValue("INS_USER", GlobalVar.Settings.GetValue("USER_ID"));
 
-				var res = (new WasRequest()
-							{
-								ServiceId = "Base",
-								ProcessId = "ProcedureCall",
-								SqlId = sqlId,
-								Parameter = parameter,
-								IsTransaction = true
-							}).Request();
+				var res = (new DBTranSet()
+				{
+					ServiceId = "Base",
+					ProcessId = "ProcedureCall",
+					IsTransaction = true,
+					TranList = new DBTranData[]
+					{
+						new DBTranData()
+						{
+							SqlId = sqlId,
+							Parameter = parameter,
+
+						}
+					}
+				}).Request();
 
 				if (res == null)
 					throw new Exception("처리결과를 수신하지 못했습니다.");

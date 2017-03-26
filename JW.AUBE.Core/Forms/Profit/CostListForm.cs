@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using DevExpress.Utils;
 using DevExpress.XtraGrid.Views.Grid;
+using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Base.Forms;
@@ -118,7 +119,7 @@ namespace JW.AUBE.Core.Forms.Profit
 
 			try
 			{
-				var res = ServerRequest.ProcedureCall("CreateCostPrice", new DataMap() { { "CLOSING_YM", datClosingYm.GetDateChar6() } });
+				var res = DBTranHelper.ProcedureCall("CreateCostPrice", new DataMap() { { "CLOSING_YM", datClosingYm.GetDateChar6() } });
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

@@ -14,7 +14,7 @@ namespace JW.AUBE.Core.Base.Interface
 		bool IsLoaded { get; }
 
 		bool IsDataEdit { get; set; }
-		bool IsDataList { get; set; }
+		bool IsTranList { get; set; }
 		FormTypeEnum FormType { get; set; }
 
 		void SetToolbarButtons(ToolbarButtons toolbarButtons);

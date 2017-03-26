@@ -13,6 +13,7 @@ using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.XtraPrinting;
 using JW.AUBE.Base.Constants;
+using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Base.Variables;
@@ -1005,7 +1006,7 @@ namespace JW.AUBE.Core.Controls.Grid
 		public void BindData(string serviceId = null, string processId = null, string sqlId = null, DataMap param = null, bool bestFit = false)
 		{
 			int rowIndex = this.MainView.FocusedRowHandle;
-			this.DataSource = ServerRequest.SingleRequest(serviceId, processId, sqlId, param);
+			this.DataSource = DBTranHelper.SingleRequest(serviceId, processId, sqlId, param);
 			if (this.DataSource == null)
 			{
 				this.EmptyDataTableBinding();

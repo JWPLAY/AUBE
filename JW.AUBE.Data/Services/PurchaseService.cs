@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
-using JW.AUBE.Base.Was.Models;
+using JW.AUBE.Base.DBTran.Model;
 using JW.AUBE.Service.Mappers;
 using JW.AUBE.Model.Purchase;
 using JW.AUBE.Service.Utils;
@@ -18,23 +18,23 @@ namespace JW.AUBE.Service.Services
 		/// </summary>
 		/// <param name="req">WasRequest</param>
 		/// <returns>WasRequest</returns>
-		public static WasRequest GetData(WasRequest req)
+		public static DBTranSet GetData(DBTranSet req)
 		{
 			try
 			{
-				if (req.Parameter.GetValue("PURC_ID").ToStringNullToEmpty().IsNullOrEmpty() && req.Parameter.GetValue("PURC_NO").IsNullOrEmpty() == false)
+				if (req.TranList[0].Parameter.GetValue("PURC_ID").ToStringNullToEmpty().IsNullOrEmpty() && req.TranList[0].Parameter.GetValue("PURC_NO").IsNullOrEmpty() == false)
 				{
-					var id = DaoFactory.Instance.QueryForObject<string>("GetPurcIdByPurcNo", req.Parameter);
-					req.Parameter.SetValue("PURC_ID", id);
+					var id = DaoFactory.Instance.QueryForObject<string>("GetPurcIdByPurcNo", req.TranList[0].Parameter);
+					req.TranList[0].Parameter.SetValue("PURC_ID", id);
 				}
 
-				var data = DaoFactory.Instance.QueryForObject<PurcTranDataModel>("GetPurcTran", req.Parameter);
-				var list = DaoFactory.Instance.QueryForList<PurcTranItemDataModel>("GetPurcTranItem", req.Parameter);
+				var data = DaoFactory.Instance.QueryForObject<PurcTranDataModel>("GetPurcTran", req.TranList[0].Parameter);
+				var list = DaoFactory.Instance.QueryForList<PurcTranItemDataModel>("GetPurcTranItem", req.TranList[0].Parameter);
 
-				req.DataList = new List<WasRequestData>()
+				req.TranList = new DBTranData[]
 				{
-					new WasRequestData(){ Data = data },
-					new WasRequestData(){ Data = list }
+					new DBTranData(){ Data = data },
+					new DBTranData(){ Data = list }
 				};
 				return req;
 			}
@@ -52,7 +52,7 @@ namespace JW.AUBE.Service.Services
 		/// </summary>
 		/// <param name="req">WasRequest</param>
 		/// <returns>WasRequest</returns>
-		public static WasRequest Save(WasRequest req)
+		public static DBTranSet Save(DBTranSet req)
 		{
 			bool isTran = false;
 
@@ -61,7 +61,7 @@ namespace JW.AUBE.Service.Services
 				if (req == null)
 					throw new Exception("처리할 요청이 정확하지 않습니다.");
 
-				if (req.DataList == null || req.DataList.Count == 0)
+				if (req.TranList == null || req.TranList.Length == 0)
 					throw new Exception("처리할 데이터가 없습니다.");
 
 				DaoFactory.Instance.BeginTransaction();
@@ -74,12 +74,12 @@ namespace JW.AUBE.Service.Services
 					object item_id = null;
 
 					//마스터저장
-					if (req.DataList.Count > 0)
+					if (req.TranList.Length > 0)
 					{
-						if (req.DataList[0].Data == null)
+						if (req.TranList[0].Data == null)
 							throw new Exception("저장할 데이터가 존재하지 않습니다.");
 
-						DataMap data = (req.DataList[0].Data as DataTable).ToDataMapList()[0];
+						DataMap data = (req.TranList[0].Data as DataTable).ToDataMapList()[0];
 
 						if (string.IsNullOrEmpty(data.GetValue("PURC_NO").ToStringNullToEmpty()))
 						{
@@ -96,17 +96,17 @@ namespace JW.AUBE.Service.Services
 							DaoFactory.Instance.Update("UpdatePurcTran", data);
 							purc_id = data.GetValue("PURC_ID");
 						}
-						req.DataList[0].ErrorNumber = 0;
-						req.DataList[0].ErrorMessage = "SUCCESS";
-						req.DataList[0].ReturnValue = purc_id;
+						req.TranList[0].ErrorNumber = 0;
+						req.TranList[0].ErrorMessage = "SUCCESS";
+						req.TranList[0].ReturnValue = purc_id;
 					}
 
 					//구매상품내역 저장
-					if (req.DataList.Count > 1)
+					if (req.TranList.Length > 1)
 					{
-						if (req.DataList[1].Data != null && (req.DataList[1].Data as DataTable).Rows.Count > 0)
+						if (req.TranList[1].Data != null && (req.TranList[1].Data as DataTable).Rows.Count > 0)
 						{
-							IList<DataMap> list = (req.DataList[1].Data as DataTable).ToDataMapList();
+							IList<DataMap> list = (req.TranList[1].Data as DataTable).ToDataMapList();
 							foreach (DataMap map in list)
 							{
 								map.SetValue("PURC_ID", purc_id);
@@ -169,9 +169,9 @@ namespace JW.AUBE.Service.Services
 									DaoFactory.Instance.Update("DeletePurcTranItem", map);
 								}
 							}
-							req.DataList[1].ErrorNumber = 0;
-							req.DataList[1].ErrorMessage = "SUCCESS";
-							req.DataList[1].ReturnValue = item_id;
+							req.TranList[1].ErrorNumber = 0;
+							req.TranList[1].ErrorMessage = "SUCCESS";
+							req.TranList[1].ReturnValue = item_id;
 						}
 					}
 					
@@ -201,25 +201,25 @@ namespace JW.AUBE.Service.Services
 		/// </summary>
 		/// <param name="req">WasRequest</param>
 		/// <returns>WasRequest</returns>
-		public static WasRequest Delete(WasRequest req)
+		public static DBTranSet Delete(DBTranSet req)
 		{
 			try
 			{
-				var map = DaoFactory.Instance.QueryForObject<PurcTranDataModel>("GetPurcTran", req.Parameter);
+				var map = DaoFactory.Instance.QueryForObject<PurcTranDataModel>("GetPurcTran", req.TranList[0].Parameter);
 				if (map != null)
 				{
 					//삭제 전에 재고 반영한다.
 					DaoFactory.Instance.QueryForObject<int>("BatchInventory", new DataMap()
 					{
-						{ "TRAN_ID", req.Parameter.GetValue("PURC_ID") },
+						{ "TRAN_ID", req.TranList[0].Parameter.GetValue("PURC_ID") },
 						{ "TRAN_TP", "PC" },
 						{ "REG_TP", "DD" },
 						{ "ITEM_ID", 0 },
-						{ "INS_USER", req.Parameter.GetValue("INS_USER") }
+						{ "INS_USER", req.TranList[0].Parameter.GetValue("INS_USER") }
 					});
 
 					//구매내역을 삭제한다.
-					DaoFactory.Instance.Delete("DeletePurcTran", req.Parameter);
+					DaoFactory.Instance.Delete("DeletePurcTran", req.TranList[0].Parameter);
 				}
 				return req;
 			}
@@ -231,15 +231,12 @@ namespace JW.AUBE.Service.Services
 			}
 		}
 
-		public static WasRequest GetPurcTranList(WasRequest req)
+		public static DBTranSet GetPurcTranList(DBTranSet req)
 		{
 			try
 			{
-				var list = DaoFactory.Instance.QueryForList<PurcTranListModel>("GetPurcTranList", req.Parameter);
-				req.DataList = new List<WasRequestData>()
-				{
-					new WasRequestData() { Data = list }
-				};
+				var list = DaoFactory.Instance.QueryForList<PurcTranListModel>("GetPurcTranList", req.TranList[0].Parameter);
+				req.TranList[0].Data = list;
 				return req;
 			}
 			catch (Exception ex)

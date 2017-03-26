@@ -11,6 +11,7 @@ using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Models;
 using JW.AUBE.Core.Utils;
 using JW.AUBE.Core.PostCode;
+using JW.AUBE.Base.DBTran.Controller;
 
 namespace JW.AUBE.Core.Forms.Code
 {
@@ -428,7 +429,7 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				var res = ServerRequest.GetData("Customer", new DataMap() { { "CUSTOMER_ID", id } });
+				var res = DBTranHelper.GetData("Customer", new DataMap() { { "CUSTOMER_ID", id } });
 
 				if (res == null)
 					throw new Exception("처리결과를 수신하지 못했습니다.");
@@ -436,15 +437,15 @@ namespace JW.AUBE.Core.Forms.Code
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
-				if (res.DataList == null || res.DataList.Count == 0)
+				if (res.TranList == null || res.TranList.Length == 0)
 					throw new Exception("처리결과 데이터가 없습니다.");
 
-				if (res.DataList.Count > 0)
+				if (res.TranList.Length > 0)
 				{
-					if (res.DataList[0].Data == null || (res.DataList[0].Data as DataTable).Rows.Count == 0)
+					if (res.TranList[0].Data == null || (res.TranList[0].Data as DataTable).Rows.Count == 0)
 						throw new Exception("조회할 데이터가 없습니다.");
 
-					DataRow row = (res.DataList[0].Data as DataTable).Rows[0];
+					DataRow row = (res.TranList[0].Data as DataTable).Rows[0];
 
 					txtCustomerId.EditValue = row["CUSTOMER_ID"];
 					txtCustomerName.EditValue = row["CUSTOMER_NAME"];
@@ -473,14 +474,14 @@ namespace JW.AUBE.Core.Forms.Code
 					txtUpdUserName.EditValue = row["UPD_USER_NAME"];
 				}
 
-				if (res.DataList.Count > 1)
+				if (res.TranList.Length > 1)
 				{
-					gridPhones.DataSource = res.DataList[1].Data;
+					gridPhones.DataSource = res.TranList[1].Data;
 				}
 
-				if (res.DataList.Count > 2)
+				if (res.TranList.Length > 2)
 				{
-					gridAddress.DataSource = res.DataList[2].Data;
+					gridAddress.DataSource = res.TranList[2].Data;
 				}
 
 				btnAddressSave.Enabled =
@@ -503,16 +504,16 @@ namespace JW.AUBE.Core.Forms.Code
 				DataTable dt = lc.GroupToDataTable(lcGroupEdit, lcGroupBizEdit)
 					.SetValue("ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE");
 
-				var res = ServerRequest.Execute("Customer", "Save", new DataTable[] { dt, GetPhoneData(), GetAddressData() });
+				var res = DBTranHelper.Execute("Customer", "Save", new DataTable[] { dt, GetPhoneData(), GetAddressData() });
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
-				txtCustomerId.EditValue = res.DataList[0].ReturnValue;
+				txtCustomerId.EditValue = res.TranList[0].ReturnValue;
 				DataSavePhones();
 				DataSaveAddress();
 
 				ShowMsgBox("저장하였습니다.");
-				callback(arg, res.DataList[0].ReturnValue);
+				callback(arg, res.TranList[0].ReturnValue);
 			}
 			catch(Exception ex)
 			{
@@ -530,7 +531,7 @@ namespace JW.AUBE.Core.Forms.Code
 					{ "ROWSTATE", "DELETE" }
 				}).ToDataTable();
 
-				var res = ServerRequest.SingleRequest("Base", "Save", "Customer", dt, "ID");
+				var res = DBTranHelper.SingleRequest("Base", "Save", "Customer", dt, "ID");
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -656,7 +657,7 @@ namespace JW.AUBE.Core.Forms.Code
 				}
 				else
 				{
-					var res = ServerRequest.SingleRequest("Base", "Save", "CustomerPhones", dt);
+					var res = DBTranHelper.SingleRequest("Base", "Save", "CustomerPhones", dt);
 					if (res.ErrorNumber != 0)
 						throw new Exception(res.ErrorMessage);
 
@@ -697,7 +698,7 @@ namespace JW.AUBE.Core.Forms.Code
 				}
 				else
 				{
-					var res = ServerRequest.SingleRequest("Customer", "SaveCustomerAddress", "CustomerAddress", dt);
+					var res = DBTranHelper.SingleRequest("Customer", "SaveCustomerAddress", "CustomerAddress", dt);
 					if (res.ErrorNumber != 0)
 						throw new Exception(res.ErrorMessage);
 

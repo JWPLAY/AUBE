@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using DevExpress.Utils;
 using DevExpress.XtraEditors;
+using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Base.Variables;
@@ -136,7 +137,7 @@ namespace JW.AUBE
 					return;
 				}
 
-				var data = ServerRequest.SingleRequest("Auth", "CheckLoginUser", null, new DataMap()
+				var data = DBTranHelper.SingleRequest("Auth", "CheckLoginUser", null, new DataMap()
 				{
 					{ "LOGIN_ID", txtLoginId.EditValue },
 					{ "LOGIN_PW", txtPassword.EditValue }

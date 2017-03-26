@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
+using JW.AUBE.Base.DBTran.Model;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
-using JW.AUBE.Base.Was.Models;
 using JW.AUBE.Model.Auth;
 using JW.AUBE.Service.Mappers;
 
@@ -17,12 +16,12 @@ namespace JW.AUBE.Service.Services
 		/// </summary>
 		/// <param name="req">WasRequest</param>
 		/// <returns>WasRequest</returns>
-		public static WasRequest CheckLoginUser(WasRequest req)
+		public static DBTranSet CheckLoginUser(DBTranSet req)
 		{
 			try
 			{
-				req.Parameter.SetValue("USER_ID", null);
-				var data = DaoFactory.Instance.QueryForObject<LoginUserDataModel>("GetLoginUser", req.Parameter);
+				req.TranList[0].Parameter.SetValue("USER_ID", null);
+				var data = DaoFactory.Instance.QueryForObject<LoginUserDataModel>("GetLoginUser", req.TranList[0].Parameter);
 
 				if (data == null)
 				{
@@ -45,21 +44,18 @@ namespace JW.AUBE.Service.Services
 					return req;
 				}
 
-				req.Parameter.SetValue("USER_ID", data.USER_ID);
+				req.TranList[0].Parameter.SetValue("USER_ID", data.USER_ID);
 
 				try
 				{
-					DaoFactory.Instance.Insert("InsertLoginLog", req.Parameter);
+					DaoFactory.Instance.Insert("InsertLoginLog", req.TranList[0].Parameter);
 				}
 				catch (Exception ex)
 				{
 					throw new Exception("로그인로그 저장 중 오류가 발생하였습니다.\r\n" + ErrorUtils.GetMessage(ex));
 				}
 
-				req.DataList = new List<WasRequestData>()
-				{
-					new WasRequestData() { Data = data }
-				};
+				req.TranList[0].Data = data;
 				return req;
 			}
 			catch (Exception ex)
@@ -76,13 +72,13 @@ namespace JW.AUBE.Service.Services
 		/// </summary>
 		/// <param name="req">WasRequest</param>
 		/// <returns>WasRequest</returns>
-		public static WasRequest Logout(WasRequest req)
+		public static DBTranSet Logout(DBTranSet req)
 		{
 			try
 			{
 				try
 				{
-					DaoFactory.Instance.Update("UpdateLogout", req.Parameter);
+					DaoFactory.Instance.Update("UpdateLogout", req.TranList[0].Parameter);
 				}
 				catch (Exception ex)
 				{
@@ -104,15 +100,12 @@ namespace JW.AUBE.Service.Services
 		/// </summary>
 		/// <param name="req">WasRequest</param>
 		/// <returns>WasRequest</returns>
-		public static WasRequest GetMainMenus(WasRequest req)
+		public static DBTranSet GetMainMenus(DBTranSet req)
 		{
 			try
 			{
-				var list = DaoFactory.Instance.QueryForList<MainMenuDataModel>("GetMainMenus", req.Parameter);
-				req.DataList = new List<WasRequestData>()
-				{
-					new WasRequestData() { Data = list }
-				};
+				var list = DaoFactory.Instance.QueryForList<MainMenuDataModel>("GetMainMenus", req.TranList[0].Parameter);
+				req.TranList[0].Data = list;
 				return req;
 			}
 			catch (Exception ex)
@@ -129,23 +122,17 @@ namespace JW.AUBE.Service.Services
 		/// </summary>
 		/// <param name="req">WasRequest</param>
 		/// <returns>WasRequest</returns>
-		public static WasRequest GetFormData(WasRequest req)
+		public static DBTranSet GetFormData(DBTranSet req)
 		{
 			try
 			{
-				var data = DaoFactory.Instance.QueryForObject<DataMap>("GetViewData", req.Parameter);
+				var data = DaoFactory.Instance.QueryForObject<DataMap>("GetViewData", req.TranList[0].Parameter);
 				List<DataMap> list = new List<DataMap>();
 				if (data != null)
 				{
 					list.Add(data);
 				}
-				req.DataList = new List<WasRequestData>()
-				{
-					new WasRequestData()
-					{
-						Data = ConvertUtils.DataMapListToDataTable(list, "GetFormData")
-					}
-				};
+				req.TranList[0].Data = ConvertUtils.DataMapListToDataTable(list, "GetFormData");
 				return req;
 			}
 			catch (Exception ex)
@@ -162,14 +149,14 @@ namespace JW.AUBE.Service.Services
 		/// </summary>
 		/// <param name="req">WasRequest</param>
 		/// <returns>WasRequest</returns>
-		public static WasRequest SaveBookmark(WasRequest req)
+		public static DBTranSet SaveBookmark(DBTranSet req)
 		{
 			try
 			{
-				var map = DaoFactory.Instance.QueryForObject<DataMap>("SelectBookmark", req.Parameter);
-				if (map == null || map.GetValue("user_id") == null)
+				var map = DaoFactory.Instance.QueryForObject<DataMap>("SelectBookmark", req.TranList[0].Parameter);
+				if (map == null || map.GetValue("USER_ID") == null)
 				{
-					DaoFactory.Instance.Insert("InsertBookmark", req.Parameter);
+					DaoFactory.Instance.Insert("InsertBookmark", req.TranList[0].Parameter);
 				}
 				return req;
 			}
@@ -187,18 +174,12 @@ namespace JW.AUBE.Service.Services
 		/// </summary>
 		/// <param name="req">WasRequest</param>
 		/// <returns>WasRequest</returns>
-		public static WasRequest GetDictionaries(WasRequest req)
+		public static DBTranSet GetDictionaries(DBTranSet req)
 		{
 			try
 			{
-				IList<DataMap> list = DaoFactory.Instance.QueryForList<DataMap>("GetDictionaries", req.Parameter);
-				req.DataList = new List<WasRequestData>()
-				{
-					new WasRequestData()
-					{
-						Data = ConvertUtils.DataMapListToDataTable(list, req.SqlId)
-					}
-				};
+				IList<DataMap> list = DaoFactory.Instance.QueryForList<DataMap>("GetDictionaries", req.TranList[0].Parameter);
+				req.TranList[0].Data = ConvertUtils.DataMapListToDataTable(list, req.TranList[0].SqlId);
 				return req;
 			}
 			catch (Exception ex)
@@ -209,18 +190,12 @@ namespace JW.AUBE.Service.Services
 			}
 		}
 
-		public static WasRequest GetMessages(WasRequest req)
+		public static DBTranSet GetMessages(DBTranSet req)
 		{
 			try
 			{
-				IList<DataMap> list = DaoFactory.Instance.QueryForList<DataMap>("GetMessages", req.Parameter);
-				req.DataList = new List<WasRequestData>()
-				{
-					new WasRequestData()
-					{
-						Data = ConvertUtils.DataMapListToDataTable(list, req.SqlId)
-					}
-				};
+				IList<DataMap> list = DaoFactory.Instance.QueryForList<DataMap>("GetMessages", req.TranList[0].Parameter);
+				req.TranList[0].Data = ConvertUtils.DataMapListToDataTable(list, req.TranList[0].SqlId);
 				return req;
 			}
 			catch (Exception ex)
@@ -237,18 +212,12 @@ namespace JW.AUBE.Service.Services
 		/// </summary>
 		/// <param name="req">WasRequest</param>
 		/// <returns>WasRequest</returns>
-		public static WasRequest GetSettings(WasRequest req)
+		public static DBTranSet GetSettings(DBTranSet req)
 		{
 			try
 			{
-				var list = DaoFactory.Instance.QueryForList<DataMap>("GetSettings", req.Parameter);
-				req.DataList = new List<WasRequestData>()
-				{
-					new WasRequestData()
-					{
-						Data = ConvertUtils.DataMapListToDataTable(list, req.SqlId)
-					}
-				};
+				var list = DaoFactory.Instance.QueryForList<DataMap>("GetSettings", req.TranList[0].Parameter);
+				req.TranList[0].Data = ConvertUtils.DataMapListToDataTable(list, req.TranList[0].SqlId);
 				return req;
 			}
 			catch (Exception ex)
@@ -265,22 +234,16 @@ namespace JW.AUBE.Service.Services
 		/// </summary>
 		/// <param name="req">WasRequest</param>
 		/// <returns>WasRequest</returns>
-		public static WasRequest GetHelpContent(WasRequest req)
+		public static DBTranSet GetHelpContent(DBTranSet req)
 		{
 			try
 			{
-				var data = DaoFactory.Instance.QueryForObject<DataMap>("GetHelpContent", req.Parameter);
+				var data = DaoFactory.Instance.QueryForObject<DataMap>("GetHelpContent", req.TranList[0].Parameter);
 				List<DataMap> list = new List<DataMap>();
 				if (data != null)
 					list.Add(data);
 
-				req.DataList = new List<WasRequestData>()
-				{
-					new WasRequestData()
-					{
-						Data = ConvertUtils.DataMapListToDataTable(list, req.SqlId)
-					}
-				};
+				req.TranList[0].Data = ConvertUtils.DataMapListToDataTable(list, req.TranList[0].SqlId);
 				return req;
 			}
 			catch (Exception ex)
@@ -297,18 +260,12 @@ namespace JW.AUBE.Service.Services
 		/// </summary>
 		/// <param name="req">WasRequest</param>
 		/// <returns>WasRequest</returns>
-		public static WasRequest GetStyles(WasRequest req)
+		public static DBTranSet GetStyles(DBTranSet req)
 		{
 			try
 			{
-				var list = DaoFactory.Instance.QueryForList<DataMap>("GetStyles", req.Parameter);
-				req.DataList = new List<WasRequestData>()
-				{
-					new WasRequestData()
-					{
-						Data = ConvertUtils.DataMapListToDataTable(list, req.SqlId)
-					}
-				};
+				var list = DaoFactory.Instance.QueryForList<DataMap>("GetStyles", req.TranList[0].Parameter);
+				req.TranList[0].Data = ConvertUtils.DataMapListToDataTable(list, req.TranList[0].SqlId);
 				return req;
 			}
 			catch (Exception ex)

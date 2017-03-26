@@ -5,14 +5,15 @@ using System.Windows.Forms;
 using DevExpress.Utils;
 using DevExpress.XtraGrid.Views.Grid;
 using JW.AUBE.Base.Map;
+using JW.AUBE.Base.DBTran.Model;
 using JW.AUBE.Base.Utils;
-using JW.AUBE.Base.Was.Models;
 using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Controls.Grid;
 using JW.AUBE.Core.Enumerations;
 using JW.AUBE.Core.Messages;
 using JW.AUBE.Core.Models;
 using JW.AUBE.Core.Utils;
+using JW.AUBE.Base.DBTran.Controller;
 
 namespace JW.AUBE.Core.Forms.Auth
 {
@@ -244,7 +245,7 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			try
 			{
-				DataTable dt = (DataTable)ServerRequest.SingleRequest("Base", "GetData", "SelectCalendar", new DataMap() { { "CAL_DATE", id } });
+				DataTable dt = (DataTable)DBTranHelper.SingleRequest("Base", "GetData", "SelectCalendar", new DataMap() { { "CAL_DATE", id } });
 				if (dt == null || dt.Rows.Count == 0)
 					throw new Exception("조회할 데이터가 없습니다.");
 
@@ -282,14 +283,14 @@ namespace JW.AUBE.Core.Forms.Auth
 					{ "ROWSTATE", "UPDATE" }
 				}).ToDataTable();
 				
-				var res = ServerRequest.Request(new WasRequest()
+				var res = DBTranHelper.Request(new DBTranSet()
 				{
 					ServiceId = "Base",
 					ProcessId = "Save",
 					IsTransaction = true,
-					DataList = new List<WasRequestData>()
+					TranList = new DBTranData[]
 					{
-						new WasRequestData()
+						new DBTranData()
 						{
 							SqlId = "Calendar",
 							KeyField = "CAL_DATE",
@@ -302,7 +303,7 @@ namespace JW.AUBE.Core.Forms.Auth
 					throw new Exception(res.ErrorMessage);
 
 				ShowMsgBox("저장하였습니다.");
-				callback(arg, res.DataList[0].ReturnValue);
+				callback(arg, res.TranList[0].ReturnValue);
 			}
 			catch(Exception ex)
 			{
@@ -317,7 +318,7 @@ namespace JW.AUBE.Core.Forms.Auth
 
 			try
 			{
-				var res = ServerRequest.ProcedureCall("CreateCalendar", new DataMap() { { "CAL_YEAR", datCalYear.GetDateChar4().ToIntegerNullToZero() } });
+				var res = DBTranHelper.ProcedureCall("CreateCalendar", new DataMap() { { "CAL_YEAR", datCalYear.GetDateChar4().ToIntegerNullToZero() } });
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

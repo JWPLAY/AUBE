@@ -331,5 +331,86 @@
 				ORDER BY ROW_NO
 			]]>
 		</select>
+
+		<select id="GetSaleProductList" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT  BB.PRODUCT_ID
+					,	PP.PRODUCT_CODE
+					,	PP.PRODUCT_NAME
+					,	SUM(BB.SALE_QTY)	AS SALE_QTY
+					,	SUM(BB.NPAY_AMT)	AS SALE_AMT
+				FROM	UBZ.SALE_TRAN AA
+						INNER JOIN
+							UBZ.SALE_TRAN_ITEM BB 
+								ON AA.SALE_ID = BB.SALE_ID
+						LEFT JOIN
+							UCD.PRODUCTS PP
+								ON BB.PRODUCT_ID = PP.PRODUCT_ID
+				WHERE	AA.SALE_DATE >= #ST_SALE_DATE#
+				AND		AA.SALE_DATE <= #ED_SALE_DATE#
+				GROUP BY BB.PRODUCT_ID, PP.PRODUCT_CODE, PP.PRODUCT_NAME
+				ORDER BY SALE_AMT DESC
+			]]>
+		</select>
+		<select id="GetSaleCustomerList" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT  AA.CUSTOMER_ID
+					,	CC.CUSTOMER_NAME
+					,	SUM(BB.SALE_QTY)	AS SALE_QTY
+					,	SUM(BB.NPAY_AMT)	AS SALE_AMT
+				FROM	UBZ.SALE_TRAN AA
+						INNER JOIN
+							UBZ.SALE_TRAN_ITEM BB 
+								ON AA.SALE_ID = BB.SALE_ID
+						LEFT JOIN
+							UCD.CUSTOMERS CC
+								ON AA.CUSTOMER_ID = CC.CUSTOMER_ID
+				WHERE	AA.SALE_DATE >= #ST_SALE_DATE#
+				AND		AA.SALE_DATE <= #ED_SALE_DATE#
+				GROUP BY AA.CUSTOMER_ID, CC.CUSTOMER_NAME
+				ORDER BY SALE_AMT DESC
+			]]>
+		</select>
+		<select id="GetSaleCategoryList" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT  ISNULL(PP.CATEGORY, MM.NAME)	AS CATEGORY
+					,	SUM(BB.SALE_QTY)				AS SALE_QTY
+					,	SUM(BB.NPAY_AMT)				AS SALE_AMT
+				FROM	UBZ.SALE_TRAN AA
+						INNER JOIN
+							UBZ.SALE_TRAN_ITEM BB 
+								ON AA.SALE_ID = BB.SALE_ID
+						LEFT JOIN
+							UCD.PRODUCTS PP
+								ON BB.PRODUCT_ID = PP.PRODUCT_ID
+						LEFT JOIN
+							UAA.CODES MM
+								ON PP.CATEGORY = MM.CODE
+									AND MM.PARENT_CODE = 'CATEGORY'
+				WHERE	AA.SALE_DATE >= #ST_SALE_DATE#
+				AND		AA.SALE_DATE <= #ED_SALE_DATE#
+				GROUP BY ISNULL(PP.CATEGORY, MM.NAME)
+				ORDER BY SALE_AMT DESC
+			]]>
+		</select>
+		<select id="GetSalePayTypeList" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT  ISNULL(AA.PAY_TYPE, MM.NAME)	AS CATEGORY
+					,	SUM(BB.SALE_QTY)				AS SALE_QTY
+					,	SUM(BB.NPAY_AMT)				AS SALE_AMT
+				FROM	UBZ.SALE_TRAN AA
+						INNER JOIN
+							UBZ.SALE_TRAN_ITEM BB 
+								ON AA.SALE_ID = BB.SALE_ID
+						LEFT JOIN
+							UAA.CODES MM
+								ON AA.PAY_TYPE = MM.CODE
+									AND MM.PARENT_CODE = 'PAY_TYPE'
+				WHERE	AA.SALE_DATE >= #ST_SALE_DATE#
+				AND		AA.SALE_DATE <= #ED_SALE_DATE#
+				GROUP BY ISNULL(AA.PAY_TYPE, MM.NAME)
+				ORDER BY SALE_AMT DESC
+			]]>
+		</select>
 	</statements>
 </sqlMap>

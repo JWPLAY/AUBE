@@ -8,6 +8,7 @@ using DevExpress.Utils;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid.Views.Grid;
+using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Base.Forms;
@@ -26,6 +27,7 @@ namespace JW.AUBE.Core.Forms.Sales
 						
 			btnDiscountRat.Click += delegate (object sender, EventArgs e) { SetSaleInputMode(SaleInputMode.DiscountRate); };
 			btnDiscountAmt.Click += delegate (object sender, EventArgs e) { SetSaleInputMode(SaleInputMode.DiscountAmount); };
+			btnChangeQty.Click += delegate (object sender, EventArgs e) { SetSaleInputMode(SaleInputMode.ChangeQty); };
 
 			btnCancel.Click += delegate (object sender, EventArgs e) { DataInit(); };
 			btnConfirm.Click += delegate (object sender, EventArgs e) { ActSaveAndNew(); };
@@ -86,12 +88,31 @@ namespace JW.AUBE.Core.Forms.Sales
 							SALE_PRICE = view.GetRowCellValue(e.RowHandle, "SALE_PRICE").ToIntegerNullToZero(),
 							DISC_RATE = 0,
 							DISC_PRICE = view.GetRowCellValue(e.RowHandle, "SALE_PRICE").ToIntegerNullToZero(),
-							SALE_QTY = 1,
+							SALE_QTY = (lupSaleType.EditValue.ToString() == "0") ? 1 : -1,
 							SALE_AMT = view.GetRowCellValue(e.RowHandle, "SALE_PRICE").ToIntegerNullToZero(),
 							DISC_AMT = 0,
 							NPAY_AMT = view.GetRowCellValue(e.RowHandle, "SALE_PRICE").ToIntegerNullToZero(),
 							DISC_TYPE = "00"
 						});
+						txtInput.Focus();
+					}
+				}
+				catch(Exception ex)
+				{
+					ShowErrBox(ex);
+				}
+			};
+			gridItems.RowCellStyle += delegate (object sender, RowCellStyleEventArgs e)
+			{
+				if (e.RowHandle < 0)
+					return;
+
+				try
+				{
+					if (e.Column.FieldName.EndsWith("_QTY") || e.Column.FieldName.EndsWith("_AMT"))
+					{
+						if (e.CellValue.ToDecimalNullToZero() < 0)
+							e.Appearance.ForeColor = Color.Red;
 					}
 				}
 				catch(Exception ex)
@@ -131,29 +152,38 @@ namespace JW.AUBE.Core.Forms.Sales
 				if (gridItems.FocusedRowHandle < 0)
 					return;
 
-				int saleQty = gridItems.GetValue(gridItems.FocusedRowHandle, "SALE_QTY").ToIntegerNullToZero() + 1;
+				int saleQty = gridItems.GetValue(gridItems.FocusedRowHandle, "SALE_QTY").ToIntegerNullToZero();
+				if (lupSaleType.EditValue.ToString() == "0")
+					saleQty += 1;
+				else
+					saleQty -= 1;
 				gridItems.SetValue(gridItems.FocusedRowHandle, "SALE_QTY", saleQty);
 				gridItems.UpdateCurrentRow();
-				CalcSaleItem();
+				CalcSaleItem(gridItems.FocusedRowHandle);
+				txtInput.Focus();
 			};
 			btnItemMinus.Click += delegate (object sender, EventArgs e)
 			{
 				if (gridItems.FocusedRowHandle < 0)
 					return;
 
-				int saleQty = gridItems.GetValue(gridItems.FocusedRowHandle, "SALE_QTY").ToIntegerNullToZero() - 1;
-				if (saleQty >= 0)
-					gridItems.SetValue(gridItems.FocusedRowHandle, "SALE_QTY", saleQty);
+				int saleQty = gridItems.GetValue(gridItems.FocusedRowHandle, "SALE_QTY").ToIntegerNullToZero();
+				if (lupSaleType.EditValue.ToString() == "0")
+					saleQty -= 1;
+				else
+					saleQty += 1;
+				gridItems.SetValue(gridItems.FocusedRowHandle, "SALE_QTY", saleQty);
 				gridItems.UpdateCurrentRow();
-				CalcSaleItem();
+				CalcSaleItem(gridItems.FocusedRowHandle);
+				txtInput.Focus();
 			};
 			btnItemDelete.Click += delegate (object sender, EventArgs e)
 			{
 				gridItems.DeleteRow(gridItems.FocusedRowHandle);
 				gridItems.UpdateCurrentRow();
-				CalcSaleItem();
+				CalcSaleItem(gridItems.FocusedRowHandle);
+				txtInput.Focus();
 			};
-
 			btnCustomer.Click += delegate (object sender, EventArgs e)
 			{
 				var data = CodeHelper.ShowForm("CUSTOMER");
@@ -164,6 +194,8 @@ namespace JW.AUBE.Core.Forms.Sales
 				}
 				txtInput.Focus();
 			};
+
+			lupSaleType.EditValueChanged += delegate (object sender, EventArgs e) { ChangeSaleType(); };
 		}
 
 		[Browsable(false)]
@@ -195,10 +227,19 @@ namespace JW.AUBE.Core.Forms.Sales
 			base.InitControls();
 
 			SetFieldNames();
+
 			lcItemInput.Text = "상품등록";
 			lcItemCustomer.Text = "거래처";
+			lcItemSaleType.Text = "판매형태";
+			lcItemPayType.Text = "결제방법";
+			esTotSaleAmountTitle.Text = "총금액";
+			esTotDiscAmountTitle.Text = "할인액";
+			esTotNpayAmountTitle.Text = "결제액";
 
-			lcItemInput.AppearanceItemCaption.BackColor = Color.DarkBlue;
+			lcItemInput.AppearanceItemCaption.TextOptions.HAlignment =
+				lcItemCustomer.AppearanceItemCaption.TextOptions.HAlignment =
+				lcItemSaleType.AppearanceItemCaption.TextOptions.HAlignment =
+				lcItemPayType.AppearanceItemCaption.TextOptions.HAlignment = HorzAlignment.Center;
 
 			txtCustomer.SetEnable(false);
 
@@ -210,12 +251,27 @@ namespace JW.AUBE.Core.Forms.Sales
 
 		void InitCombo()
 		{
+			lupSaleType.BindData("SALE_TYPE", null, null, true);
 			lupPayType.BindData("PAY_TYPE", null, null, true);
-			lupPayType.Properties.AppearanceDropDown.Font = lupPayType.Font;
+
+			lupSaleType.Properties.AppearanceDropDown.Font =
+				lupPayType.Properties.AppearanceDropDown.Font = lupPayType.Font;
+
+			lupSaleType.Properties.Appearance.TextOptions.HAlignment =
+				lupSaleType.Properties.AppearanceDisabled.TextOptions.HAlignment =
+				lupSaleType.Properties.AppearanceFocused.TextOptions.HAlignment =
+				lupSaleType.Properties.AppearanceDropDown.TextOptions.HAlignment =
+				lupSaleType.Properties.AppearanceReadOnly.TextOptions.HAlignment =
+			lupPayType.Properties.Appearance.TextOptions.HAlignment =
+				lupPayType.Properties.AppearanceDisabled.TextOptions.HAlignment =
+				lupPayType.Properties.AppearanceFocused.TextOptions.HAlignment =
+				lupPayType.Properties.AppearanceDropDown.TextOptions.HAlignment =
+				lupPayType.Properties.AppearanceReadOnly.TextOptions.HAlignment = HorzAlignment.Center;
 		}
 		void InitGridItems()
 		{
 			gridItems.Init();
+			gridItems.ShowFooter = true;
 			gridItems.AddGridColumns(
 				new XGridColumn() { FieldName = "ROW_NO" },
 				new XGridColumn() { FieldName = "PRODUCT_ID", Visible = false },
@@ -262,13 +318,13 @@ namespace JW.AUBE.Core.Forms.Sales
 		{
 			try
 			{
-				//var res = ServerRequest.GetData("Sales",  new DataMap() { { "PRODUCT_ID", id } });
-				//if (res.DataList.Count > 0)
+				//var res = DBTranHelper.GetData("Sales",  new DataMap() { { "PRODUCT_ID", id } });
+				//if (res.TranList.Length > 0)
 				//{
-				//	if (res.DataList[0].Data == null || res.DataList[0].Data.Rows.Count == 0)
+				//	if (res.TranList[0].Data == null || res.TranList[0].Data.Rows.Count == 0)
 				//		throw new Exception("조회 데이터가 없습니다.");
 
-				//	DataRow row = res.DataList[0].Data.Rows[0];
+				//	DataRow row = res.TranList[0].Data.Rows[0];
 
 				//	txtProductId.EditValue = row["PRODUCT_ID"];
 				//	txtProductCode.EditValue = row["PRODUCT_CODE"];
@@ -287,9 +343,9 @@ namespace JW.AUBE.Core.Forms.Sales
 				//	txtUpdUserName.EditValue = row["UPD_USER_NAME"];
 				//}
 
-				//if (res.DataList.Count > 1)
+				//if (res.TranList.Length > 1)
 				//{
-				//	gridMaterials.DataSource = res.DataList[1].Data;
+				//	gridMaterials.DataSource = res.TranList[1].Data;
 				//}
 
 				//onProductTypeChanged();
@@ -322,7 +378,7 @@ namespace JW.AUBE.Core.Forms.Sales
 
 				mastData.Rows.Add(
 					DateTime.Now.ToString("yyyyMMdd"),
-					"0",
+					lupSaleType.EditValue,
 					lupPayType.EditValue,
 					txtCustomer.Tag,
 					"INSERT"
@@ -332,12 +388,12 @@ namespace JW.AUBE.Core.Forms.Sales
 				if (itemData == null || itemData.Rows.Count == 0)
 					throw new Exception("품목을 입력해야 합니다.");
 
-				var res = ServerRequest.Execute("Sales", "Save", new DataTable[] { mastData, itemData });
+				var res = DBTranHelper.Execute("Sales", "Save", new DataTable[] { mastData, itemData });
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
 				ShowMsgBox("저장하였습니다.");
-				callback(arg, res.DataList[0].ReturnValue);
+				callback(arg, res.TranList[0].ReturnValue);
 			}
 			catch (Exception ex)
 			{
@@ -354,6 +410,8 @@ namespace JW.AUBE.Core.Forms.Sales
 			txtCustomer.Clear();
 			txtCustomer.Tag = null;
 			SetSaleInputMode(SaleInputMode.Item);
+			lupSaleType.EditValue = "0";
+			lupPayType.EditValue = "10";
 			esTotSaleAmount.Text = "0";
 			esTotDiscAmount.Text = "0";
 			esTotNpayAmount.Text = "0";
@@ -368,7 +426,21 @@ namespace JW.AUBE.Core.Forms.Sales
 		{
 			if (saleInputMode == SaleInputMode.Item)
 			{
-				lcItemInput.Text = "상품등록 ";
+				lcItemInput.Text = "상품등록";
+				lcItemInput.AppearanceItemCaption.BackColor = Color.SteelBlue;
+			}
+			else if (saleInputMode == SaleInputMode.ChangeQty)
+			{
+				if (SaleInputMode == saleInputMode)
+				{
+					SetSaleInputMode(SaleInputMode.Item);
+					return;
+				}
+				else
+				{
+					lcItemInput.Text = "수량변경";
+					lcItemInput.AppearanceItemCaption.BackColor = Color.DarkOrchid;
+				}
 			}
 			else if (saleInputMode == SaleInputMode.DiscountRate)
 			{
@@ -378,7 +450,10 @@ namespace JW.AUBE.Core.Forms.Sales
 					return;
 				}
 				else
-					lcItemInput.Text = "할인율(%) ";
+				{
+					lcItemInput.Text = "할인율(%)";
+					lcItemInput.AppearanceItemCaption.BackColor = Color.DarkOrange;
+				}
 			}
 			else if (saleInputMode == SaleInputMode.DiscountAmount)
 			{
@@ -388,7 +463,10 @@ namespace JW.AUBE.Core.Forms.Sales
 					return;
 				}
 				else
-					lcItemInput.Text = "할인금액 ";
+				{
+					lcItemInput.Text = "할인금액";
+					lcItemInput.AppearanceItemCaption.BackColor = Color.DarkSalmon;
+				}
 			}
 			SaleInputMode = saleInputMode;
 			txtInput.Clear();
@@ -419,6 +497,7 @@ namespace JW.AUBE.Core.Forms.Sales
 			btnItemPlus.Text = btnItemPlus.ToolTip = "수량증가";
 			btnItemMinus.Text = btnItemMinus.ToolTip = "수량감소";
 			btnItemDelete.Text = btnItemDelete.ToolTip = "품목삭제";
+			btnChangeQty.Text = btnChangeQty.ToolTip = "수량변경";
 			btnCustomer.Text = btnCustomer.ToolTip = "거래처검색";
 			btnDiscountRat.Text = btnDiscountRat.ToolTip = "할인율(%)";
 			btnDiscountAmt.Text = btnDiscountAmt.ToolTip = "할인액";
@@ -428,6 +507,7 @@ namespace JW.AUBE.Core.Forms.Sales
 			btnItemPlus.Font = 
 				btnItemMinus.Font = 
 				btnItemDelete.Font = 
+				btnChangeQty.Font = 
 				btnCustomer.Font = 
 				btnDiscountRat.Font = 
 				btnDiscountAmt.Font =
@@ -439,13 +519,13 @@ namespace JW.AUBE.Core.Forms.Sales
 		{
 			try
 			{
-				var res = ServerRequest.GetData("Sales", "GetSaleSumData", null);
-				if (res.DataList.Count > 0)
+				var res = DBTranHelper.GetData("Sales", "GetSaleSumData", null);
+				if (res.TranList.Length > 0)
 				{
-					if (res.DataList[0].Data == null)
+					if (res.TranList[0].Data == null)
 						throw new Exception("조회 데이터가 없습니다.");
 
-					SaleSumDataModel model = res.DataList[0].Data as SaleSumDataModel;
+					SaleSumDataModel model = res.TranList[0].Data as SaleSumDataModel;
 					esDaySaleCount.Text = string.Format("{0:N0}", model.SALE_DAY_COUNT);
 					esDaySaleAmount.Text = string.Format("{0:N0}", model.SALE_DAY_AMOUNT);
 					esMonSaleAmount.Text = string.Format("{0:N0}", model.SALE_MON_AMOUNT);
@@ -546,11 +626,10 @@ namespace JW.AUBE.Core.Forms.Sales
 			esTotNpayAmount.Text = string.Format("{0:N0}", d_tot_npay_amount);
 		}
 
-		private void CalcSaleItem()
+		private void CalcSaleItem(int rowIndex)
 		{
 			if (gridItems.RowCount > 0)
 			{
-				int rowIndex = gridItems.MainView.FocusedRowHandle;
 				int salePrice = gridItems.GetValue(rowIndex, "SALE_PRICE").ToIntegerNullToZero();
 				int dcRate = gridItems.GetValue(rowIndex, "DISC_RATE").ToIntegerNullToZero();
 				int dcPrice = salePrice - salePrice * dcRate / 100;
@@ -568,10 +647,23 @@ namespace JW.AUBE.Core.Forms.Sales
 				gridItems.SetValue(rowIndex, "SALE_AMT", saleAmt);
 				gridItems.SetValue(rowIndex, "DISC_AMT", discAmt);
 				gridItems.SetValue(rowIndex, "NPAY_AMT", npayAmt);
-				gridItems.SetValue(rowIndex, "DISC_TYPE", "10");
 				gridItems.UpdateCurrentRow();
 			}
 			SetSaleAmount();
+		}
+
+		private void ChangeSaleType()
+		{
+			if (gridItems.RowCount > 0)
+			{
+				for (int i = 0; i < gridItems.RowCount; i++)
+				{
+					gridItems.SetValue(i, "SALE_QTY", gridItems.GetValue(i, "SALE_QTY").ToIntegerNullToZero() * -1);
+					gridItems.UpdateCurrentRow();
+					CalcSaleItem(i);
+				}
+				txtInput.Focus();
+			}
 		}
 
 		private void InputEnter()
@@ -579,6 +671,32 @@ namespace JW.AUBE.Core.Forms.Sales
 			if (SaleInputMode == SaleInputMode.Item)
 			{
 
+			}
+			else if (SaleInputMode == SaleInputMode.ChangeQty)
+			{
+				if (txtInput.EditValue.ToStringNullToEmpty().IsNumeric() == false)
+				{
+					ShowMsgBox("변경할 수량을 숫자로 입력하세요.");
+					txtInput.Clear();
+					txtInput.Focus();
+				}
+				else
+				{
+					if (gridItems.FocusedRowHandle < 0)
+						return;
+
+					int rowIndex = gridItems.FocusedRowHandle;
+					int qty = txtInput.EditValue.ToIntegerNullToZero();
+
+					gridItems.SetValue(rowIndex, "SALE_QTY", qty);
+					gridItems.UpdateCurrentRow();
+
+					CalcSaleItem(gridItems.FocusedRowHandle);
+
+					SetSaleInputMode(SaleInputMode.Item);
+					txtInput.Clear();
+					txtInput.Focus();
+				}
 			}
 			else if (SaleInputMode == SaleInputMode.DiscountRate)
 			{
@@ -590,17 +708,17 @@ namespace JW.AUBE.Core.Forms.Sales
 				}
 				else
 				{
-					if (gridItems.MainView.FocusedRowHandle < 0)
+					if (gridItems.FocusedRowHandle < 0)
 						return;
 
-					int rowIndex = gridItems.MainView.FocusedRowHandle;
+					int rowIndex = gridItems.FocusedRowHandle;
 					int dcRate = txtInput.EditValue.ToIntegerNullToZero();
 
 					gridItems.SetValue(rowIndex, "DISC_RATE", dcRate);
 					gridItems.SetValue(rowIndex, "DISC_TYPE", "10");
 					gridItems.UpdateCurrentRow();
 
-					CalcSaleItem();
+					CalcSaleItem(gridItems.FocusedRowHandle);
 
 					SetSaleInputMode(SaleInputMode.Item);
 					txtInput.Clear();
@@ -617,7 +735,7 @@ namespace JW.AUBE.Core.Forms.Sales
 				}
 				else
 				{
-					if (gridItems.MainView.FocusedRowHandle < 0)
+					if (gridItems.FocusedRowHandle < 0)
 						return;
 
 					int rowIndex = gridItems.FocusedRowHandle;
@@ -628,7 +746,7 @@ namespace JW.AUBE.Core.Forms.Sales
 					gridItems.SetValue(rowIndex, "DISC_TYPE", "20");
 					gridItems.UpdateCurrentRow();
 
-					CalcSaleItem();
+					CalcSaleItem(gridItems.FocusedRowHandle);
 
 					SetSaleInputMode(SaleInputMode.Item);
 					txtInput.Clear();

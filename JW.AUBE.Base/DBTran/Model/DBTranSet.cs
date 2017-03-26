@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Runtime.Serialization;
-using JW.AUBE.Base.Map;
 
-namespace JW.AUBE.Base.Was.Models
+namespace JW.AUBE.Base.DBTran.Model
 {
 	[DataContract]
-	public class WasRequest : IDisposable
+	public class DBTranSet : IDisposable
 	{
 		[DataMember]
 		public string ServiceId { get; set; }
@@ -19,16 +17,10 @@ namespace JW.AUBE.Base.Was.Models
 		public string DatabaseId { get; set; }
 
 		[DataMember]
-		public string SqlId { get; set; }
-
-		[DataMember]
 		public bool IsTransaction { get; set; }
 
 		[DataMember]
-		public DataMap Parameter { get; set; }
-
-		[DataMember]
-		public List<WasRequestData> DataList { get; set; }
+		public DBTranData[] TranList { get; set; }
 
 		[DataMember]
 		public int UserId { get; set; }
@@ -45,11 +37,10 @@ namespace JW.AUBE.Base.Was.Models
 		[DataMember]
 		public string ErrorMessage { get; set; }
 
-		public WasRequest()
+		public DBTranSet()
 		{
 			IsTransaction = true;
-			Parameter = new DataMap();
-			DataList = new List<WasRequestData>();
+			TranList = null;
 			ErrorNumber = 0;
 			ErrorMessage = "SUCCESS";
 		}
@@ -64,18 +55,17 @@ namespace JW.AUBE.Base.Was.Models
 		{
 			if (disposing)
 			{
-				if (DataList != null && DataList.Count > 0)
+				if (TranList != null && TranList.Length > 0)
 				{
-					foreach (WasRequestData data in DataList)
+					foreach (DBTranData data in TranList)
 					{
 						if (data != null)
 						{
 							data.Dispose();
 						}
 					}
-					DataList = null;
+					TranList = null;
 				}
-				if (Parameter != null) Parameter = null;
 			}
 		}
 	}

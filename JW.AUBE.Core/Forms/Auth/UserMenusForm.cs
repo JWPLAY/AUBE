@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using DevExpress.Utils;
 using DevExpress.XtraGrid.Views.Grid;
+using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Variables;
-using JW.AUBE.Base.Was.Models;
-using JW.AUBE.Core.Controls.Grid;
 using JW.AUBE.Core.Base.Forms;
+using JW.AUBE.Core.Controls.Grid;
 using JW.AUBE.Core.Models;
-using JW.AUBE.Core.Utils;
 
 namespace JW.AUBE.Core.Forms.Auth
 {
@@ -212,7 +210,7 @@ namespace JW.AUBE.Core.Forms.Auth
 					return;
 				}
 
-				var res = ServerRequest.SingleRequest("Base", "Save", "UserMenus", dt);
+				var res = DBTranHelper.SingleRequest("Base", "Save", "UserMenus", dt);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

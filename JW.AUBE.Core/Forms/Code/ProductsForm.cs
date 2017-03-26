@@ -6,6 +6,7 @@ using DevExpress.Utils;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid.Views.Grid;
+using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Base.Forms;
@@ -288,13 +289,13 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				var res = ServerRequest.GetData("Product", new DataMap() { { "PRODUCT_ID", id } });
-				if (res.DataList.Count > 0)
+				var res = DBTranHelper.GetData("Product", new DataMap() { { "PRODUCT_ID", id } });
+				if (res.TranList.Length > 0)
 				{
-					if (res.DataList[0].Data == null)
+					if (res.TranList[0].Data == null)
 						throw new Exception("조회 데이터가 없습니다.");
 
-					ProductDataModel model = (ProductDataModel)res.DataList[0].Data;
+					ProductDataModel model = (ProductDataModel)res.TranList[0].Data;
 
 					txtProductId.EditValue = model.PRODUCT_ID;
 					txtProductCode.EditValue = model.PRODUCT_CODE;
@@ -312,21 +313,15 @@ namespace JW.AUBE.Core.Forms.Code
 					txtUpdUserName.EditValue = model.UPD_USER_NAME;				
 				}
 
-				if (res.DataList.Count > 1)
+				if (res.TranList.Length > 1)
 				{
-					gridMaterials.DataSource = res.DataList[1].Data;
+					gridMaterials.DataSource = res.TranList[1].Data;
 				}
 
 				onProductTypeChanged();
 
 				this.EditMode = EditModeEnum.Modify;
 				txtProductName.Focus();
-
-				ShowMsgBox(string.Format("BackColor : {0},{1},{2}", txtFindText.BackColor.R, txtFindText.BackColor.G, txtFindText.BackColor.B) + Environment.NewLine + 
-					string.Format("ForeColor : {0},{1},{2}", txtFindText.ForeColor.R, txtFindText.ForeColor.G, txtFindText.ForeColor.B) + Environment.NewLine +
-					string.Format("Grid Header BackColor : {0},{1},{2}", gridList.MainView.Columns["ROW_NO"].AppearanceHeader.BackColor.R, gridList.MainView.Columns["ROW_NO"].AppearanceHeader.BackColor.G, gridList.MainView.Columns["ROW_NO"].AppearanceHeader.BackColor.B) + Environment.NewLine +
-					string.Format("Grid Header ForeColor : {0},{1},{2}", gridList.MainView.Columns["ROW_NO"].AppearanceHeader.ForeColor.R, gridList.MainView.Columns["ROW_NO"].AppearanceHeader.ForeColor.G, gridList.MainView.Columns["ROW_NO"].AppearanceHeader.ForeColor.B)
-					);
 			}
 			catch(Exception ex)
 			{
@@ -341,12 +336,12 @@ namespace JW.AUBE.Core.Forms.Code
 				DataMap map = lcGroupEdit.ItemToDataMap();
 				map.SetValue("ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE");
 
-				var res = ServerRequest.Execute("Product", "Save", new DataTable[] { map.ToDataTable(), GetMaterialData() });
+				var res = DBTranHelper.Execute("Product", "Save", new DataTable[] { map.ToDataTable(), GetMaterialData() });
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
 				ShowMsgBox("저장하였습니다.");
-				callback(arg, res.DataList[0].ReturnValue);
+				callback(arg, res.TranList[0].ReturnValue);
 			}
 			catch(Exception ex)
 			{
@@ -364,7 +359,7 @@ namespace JW.AUBE.Core.Forms.Code
 					{ "ROWSTATE", "DELETE" }
 				}).ToDataTable();
 
-				var res = ServerRequest.SingleRequest("Base", "Save", "Product", dt, "PRODUCT_ID");
+				var res = DBTranHelper.SingleRequest("Base", "Save", "Product", dt, "PRODUCT_ID");
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
@@ -398,7 +393,7 @@ namespace JW.AUBE.Core.Forms.Code
 				if (dt == null || dt.Rows.Count == 0)
 					throw new Exception("저장할 건이 없습니다.");
 
-				var res = ServerRequest.SingleRequest("Base", "Save", "ProductMaterial", dt);
+				var res = DBTranHelper.SingleRequest("Base", "Save", "ProductMaterial", dt);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

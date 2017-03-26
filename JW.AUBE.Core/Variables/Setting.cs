@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 using DevExpress.Utils;
 using JW.AUBE.Base.Constants;
+using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Logging;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
@@ -55,7 +56,7 @@ namespace JW.AUBE.Core.Variables
 
 				try
 				{
-					DataTable data = (DataTable)ServerRequest.SingleRequest("Auth", "GetSettings", "Setting", new DataMap());
+					DataTable data = (DataTable)DBTranHelper.SingleRequest("Auth", "GetSettings", "Setting", new DataMap());
 					if (data != null && data.Rows.Count > 0)
 					{
 						foreach (DataRow row in data.Rows)

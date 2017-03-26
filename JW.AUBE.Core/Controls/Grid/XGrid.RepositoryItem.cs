@@ -9,6 +9,7 @@ using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
+using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Core.Utils;
 
@@ -246,7 +247,7 @@ namespace JW.AUBE.Core.Controls.Grid
 		public void SetRepositoryItemLookUpEdit(string fieldName, string valueMember, string displayMember, string serviceId, string processId, string sqlId, DataMap parameters)
 		{
 			RepositoryItemLookUpEdit edit = GetRepositoryItemLookUpEdit(valueMember, displayMember);
-			edit.DataSource = ServerRequest.SingleRequest(serviceId, processId, sqlId, parameters);
+			edit.DataSource = DBTranHelper.SingleRequest(serviceId, processId, sqlId, parameters);
 			SetRepositoryItem(fieldName, edit);
 		}
 

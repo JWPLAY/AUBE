@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Windows.Forms;
+using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Resources;
@@ -12,7 +13,7 @@ namespace JW.AUBE.Core.Utils
 		{
 			try
 			{
-				var dtDictionaries = ServerRequest.SingleRequest("Auth", "GetDictionaries", "Dictionaries", new DataMap() { });
+				var dtDictionaries = DBTranHelper.SingleRequest("Auth", "GetDictionaries", "Dictionaries", new DataMap() { });
 				if (dtDictionaries != null && (dtDictionaries as DataTable).Rows.Count > 0)
 				{
 					foreach (DataRow dr in (dtDictionaries as DataTable).Rows)
@@ -21,7 +22,7 @@ namespace JW.AUBE.Core.Utils
 					}
 				}
 
-				var dtMessages = ServerRequest.SingleRequest("Auth", "GetMessages", "Messages", new DataMap() { });
+				var dtMessages = DBTranHelper.SingleRequest("Auth", "GetMessages", "Messages", new DataMap() { });
 				if (dtMessages != null && (dtMessages as DataTable).Rows.Count > 0)
 				{
 					foreach (DataRow dr in (dtMessages as DataTable).Rows)

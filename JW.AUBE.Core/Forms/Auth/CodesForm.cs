@@ -2,6 +2,7 @@
 using System.Data;
 using DevExpress.Utils;
 using DevExpress.XtraGrid.Views.Grid;
+using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Base.Forms;
@@ -219,7 +220,7 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			try
 			{
-				DataTable dt = (DataTable)ServerRequest.SingleRequest("Base", "GetData", "SelectCode", new DataMap() { { "CODE_ID", id } });
+				DataTable dt = (DataTable)DBTranHelper.SingleRequest("Base", "GetData", "SelectCode", new DataMap() { { "CODE_ID", id } });
 				if (dt == null || dt.Rows.Count == 0)
 					throw new Exception("조회할 데이터가 없습니다.");
 
@@ -280,12 +281,12 @@ namespace JW.AUBE.Core.Forms.Auth
 					{ "ROWSTATE", ( this.EditMode == EditModeEnum.New ) ? "INSERT" : "UPDATE" }
 				}).ToDataTable();
 
-				var res = ServerRequest.SingleRequest("Base", "Save", "Code", dt, "CODE_ID");
+				var res = DBTranHelper.SingleRequest("Base", "Save", "Code", dt, "CODE_ID");
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
 				ShowMsgBox("저장하였습니다.");
-				callback(arg, res.DataList[0].ReturnValue);
+				callback(arg, res.TranList[0].ReturnValue);
 			}
 			catch(Exception ex)
 			{
@@ -303,7 +304,7 @@ namespace JW.AUBE.Core.Forms.Auth
 					{ "ROWSTATE", "DELETE" }
 				}).ToDataTable();
 
-				var res = ServerRequest.SingleRequest("Base", "Save", "Code", dt, "CODE_ID");
+				var res = DBTranHelper.SingleRequest("Base", "Save", "Code", dt, "CODE_ID");
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

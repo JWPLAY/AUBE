@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 
@@ -12,14 +13,14 @@ namespace JW.AUBE.Core.Utils
 			try
 			{
 				DataTable dt = map.ToDataTable();
-				var res = ServerRequest.SingleRequest("Base", "Save", "Address", dt);
+				var res = DBTranHelper.SingleRequest("Base", "Save", "Address", dt);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
-				if (res.DataList[0].ReturnValue == null)
+				if (res.TranList[0].ReturnValue == null)
 					throw new Exception("반환값이 정확하지 않습니다.");
 
-				return res.DataList[0].ReturnValue.ToIntegerNullToZero();
+				return res.TranList[0].ReturnValue.ToIntegerNullToZero();
 			}
 			catch
 			{

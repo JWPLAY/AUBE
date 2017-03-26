@@ -164,7 +164,7 @@ namespace JW.AUBE.Core.Base.Forms
 
 		[Browsable(true)]
 		[Category("Customize")]
-		public bool IsDataList { get; set; }
+		public bool IsTranList { get; set; }
 
 		[Browsable(true)]
 		[Category("Customize")]

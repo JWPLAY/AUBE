@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
-using JW.AUBE.Base.Was.Models;
+using JW.AUBE.Base.DBTran.Model;
 using JW.AUBE.Service.Mappers;
 
 namespace JW.AUBE.Service.Services
@@ -16,27 +16,27 @@ namespace JW.AUBE.Service.Services
 		/// </summary>
 		/// <param name="req">WasRequest</param>
 		/// <returns>WasRequest</returns>
-		public static WasRequest GetData(WasRequest req)
+		public static DBTranSet GetData(DBTranSet req)
 		{
 			try
 			{
-				var customerData = DaoFactory.Instance.QueryForList<DataMap>("SelectCustomer", req.Parameter);
-				var phonesData = DaoFactory.Instance.QueryForList<DataMap>("SelectCustomerPhones", req.Parameter);
-				var addressData = DaoFactory.Instance.QueryForList<DataMap>("SelectCustomerAddress", req.Parameter);
+				var customerData = DaoFactory.Instance.QueryForList<DataMap>("SelectCustomer", req.TranList[0].Parameter);
+				var phonesData = DaoFactory.Instance.QueryForList<DataMap>("SelectCustomerPhones", req.TranList[0].Parameter);
+				var addressData = DaoFactory.Instance.QueryForList<DataMap>("SelectCustomerAddress", req.TranList[0].Parameter);
 
-				req.DataList = new List<WasRequestData>()
+				req.TranList = new DBTranData[]
 				{
-					new WasRequestData()
+					new DBTranData()
 					{
 						Data = ConvertUtils.DataMapListToDataTable(customerData, "Customer")
 					}
 					,
-					new WasRequestData()
+					new DBTranData()
 					{
 						Data = ConvertUtils.DataMapListToDataTable(phonesData, "CustomerPhones")
 					}
 					,
-					new WasRequestData()
+					new DBTranData()
 					{
 						Data = ConvertUtils.DataMapListToDataTable(addressData, "CustomerAddress")
 					}
@@ -57,7 +57,7 @@ namespace JW.AUBE.Service.Services
 		/// </summary>
 		/// <param name="req">WasRequest</param>
 		/// <returns>WasRequest</returns>
-		public static WasRequest Save(WasRequest req)
+		public static DBTranSet Save(DBTranSet req)
 		{
 			bool isTran = false;
 
@@ -66,7 +66,7 @@ namespace JW.AUBE.Service.Services
 				if (req == null)
 					throw new Exception("처리할 요청이 정확하지 않습니다.");
 
-				if (req.DataList == null || req.DataList.Count == 0)
+				if (req.TranList == null || req.TranList.Length == 0)
 					throw new Exception("처리할 데이터가 없습니다.");
 
 				DaoFactory.Instance.BeginTransaction();
@@ -80,12 +80,12 @@ namespace JW.AUBE.Service.Services
 					object biz_address_id = null;
 
 					//거래처정보 저장
-					if (req.DataList.Count > 0)
+					if (req.TranList.Length > 0)
 					{
-						if (req.DataList[0].Data == null || (req.DataList[0].Data as DataTable).Rows.Count == 0)
+						if (req.TranList[0].Data == null || (req.TranList[0].Data as DataTable).Rows.Count == 0)
 							throw new Exception("거래처정보를 저장할 데이터가 존재하지 않습니다.");
 
-						DataMap data = (req.DataList[0].Data as DataTable).ToDataMapList()[0];
+						DataMap data = (req.TranList[0].Data as DataTable).ToDataMapList()[0];
 
 						rowState = data.GetValue("ROWSTATE").ToStringNullToEmpty();
 
@@ -150,9 +150,9 @@ namespace JW.AUBE.Service.Services
 							DaoFactory.Instance.Update("DeleteCustomer", data);
 							customer_id = data.GetValue("CUSTOMER_ID");
 						}
-						req.DataList[0].ErrorNumber = 0;
-						req.DataList[0].ErrorMessage = "SUCCESS";
-						req.DataList[0].ReturnValue = customer_id;
+						req.TranList[0].ErrorNumber = 0;
+						req.TranList[0].ErrorMessage = "SUCCESS";
+						req.TranList[0].ReturnValue = customer_id;
 					}
 					
 					if (isTran)
@@ -181,14 +181,14 @@ namespace JW.AUBE.Service.Services
 		/// </summary>
 		/// <param name="req">WasRequest</param>
 		/// <returns>WasRequest</returns>
-		public static WasRequest Delete(WasRequest req)
+		public static DBTranSet Delete(DBTranSet req)
 		{
 			try
 			{
-				var map = DaoFactory.Instance.QueryForObject<DataMap>("SelectCustomer", req.Parameter);
+				var map = DaoFactory.Instance.QueryForObject<DataMap>("SelectCustomer", req.TranList[0].Parameter);
 				if (map != null)
 				{
-					DaoFactory.Instance.Insert("DeleteCustomer", req.Parameter);
+					DaoFactory.Instance.Insert("DeleteCustomer", req.TranList[0].Parameter);
 				}
 				return req;
 			}
@@ -200,7 +200,7 @@ namespace JW.AUBE.Service.Services
 			}
 		}
 
-		public static WasRequest SaveCustomerAddress(WasRequest req)
+		public static DBTranSet SaveCustomerAddress(DBTranSet req)
 		{
 			bool isTran = false;
 
@@ -209,7 +209,7 @@ namespace JW.AUBE.Service.Services
 				if (req == null)
 					throw new Exception("처리할 요청이 정확하지 않습니다.");
 
-				if (req.DataList == null || req.DataList.Count == 0)
+				if (req.TranList == null || req.TranList.Length == 0)
 					throw new Exception("처리할 데이터가 없습니다.");
 
 				DaoFactory.Instance.BeginTransaction();
@@ -221,12 +221,12 @@ namespace JW.AUBE.Service.Services
 					object reg_id = null;
 					object address_id = null;
 
-					if (req.DataList.Count > 0)
+					if (req.TranList.Length > 0)
 					{
-						if (req.DataList[0].Data == null || (req.DataList[0].Data as DataTable).Rows.Count == 0)
+						if (req.TranList[0].Data == null || (req.TranList[0].Data as DataTable).Rows.Count == 0)
 							throw new Exception("저장할 데이터가 존재하지 않습니다.");
 
-						foreach (DataRow row in (req.DataList[0].Data as DataTable).Rows)
+						foreach (DataRow row in (req.TranList[0].Data as DataTable).Rows)
 						{
 							DataMap map = row.ToDataMap();
 							if (map == null || map.Count == 0)
@@ -275,9 +275,9 @@ namespace JW.AUBE.Service.Services
 								DaoFactory.Instance.Update("DeleteCustomer", map);
 								reg_id = map.GetValue("REG_ID");
 							}
-							req.DataList[0].ErrorNumber = 0;
-							req.DataList[0].ErrorMessage = "SUCCESS";
-							req.DataList[0].ReturnValue = reg_id;
+							req.TranList[0].ErrorNumber = 0;
+							req.TranList[0].ErrorMessage = "SUCCESS";
+							req.TranList[0].ReturnValue = reg_id;
 						}
 					}
 

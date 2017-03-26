@@ -3,13 +3,16 @@ using System.Data;
 using System.Runtime.Serialization;
 using JW.AUBE.Base.Map;
 
-namespace JW.AUBE.Base.Was.Models
+namespace JW.AUBE.Base.DBTran.Model
 {
 	[DataContract]
-	public class WasRequestData : IDisposable
+	public class DBTranData : IDisposable
 	{
 		[DataMember]
 		public string SqlId { get; set; }
+
+		[DataMember]
+		public DataMap Parameter { get; set; }
 
 		[DataMember]
 		public bool IsMaster { get; set; }
@@ -18,10 +21,10 @@ namespace JW.AUBE.Base.Was.Models
 		public string KeyField { get; set; }
 
 		[DataMember]
-		public object Data { get; set; }
+		public string DataModelName { get; set; }
 
 		[DataMember]
-		public SchemaMap Schema { get; set; }
+		public object Data { get; set; }
 
 		[DataMember]
 		public int PageNo { get; set; }
@@ -47,10 +50,9 @@ namespace JW.AUBE.Base.Was.Models
 		[DataMember]
 		public string ErrorMessage { get; set; }
 
-		public WasRequestData()
+		public DBTranData()
 		{
 			IsMaster = false;
-			Schema = new SchemaMap();
 			PageNo = 0;
 			PageSize = 0;
 			TotalPages = 0;
@@ -69,7 +71,6 @@ namespace JW.AUBE.Base.Was.Models
 		{
 			if (disposing)
 			{
-				// Free other state (managed objects).
 				if (Data != null)
 				{
 					if (Data.GetType() == typeof(DataTable))
@@ -78,10 +79,9 @@ namespace JW.AUBE.Base.Was.Models
 					}
 					Data = null;
 				}
-				if (Schema != null) Schema = null;
+				if (Parameter != null)
+					Parameter = null;
 			}
-			// Free your own state (unmanaged objects).
-			// Set large fields to null.
 		}
 	}
 }

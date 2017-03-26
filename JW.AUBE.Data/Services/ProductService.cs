@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
-using JW.AUBE.Base.Was.Models;
+using  JW.AUBE.Base.DBTran.Model;
 using JW.AUBE.Service.Mappers;
 using JW.AUBE.Model.Codes;
 using JW.AUBE.Service.Utils;
@@ -12,14 +12,33 @@ namespace JW.AUBE.Service.Services
 {
 	public static class ProductService
 	{
-		public static WasRequest GetList(WasRequest req)
+		public static DBTranSet GetList(DBTranSet req)
 		{
 			try
 			{
-				var list = DaoFactory.Instance.QueryForList<ProductListModel>("SelectProducts", req.Parameter);
-				req.DataList = new List<WasRequestData>()
+				var list = DaoFactory.Instance.QueryForList<ProductListModel>("SelectProducts", req.TranList[0].Parameter);
+				req.TranList[0].Data = list;
+				return req;
+			}
+			catch (Exception ex)
+			{
+				req.ErrorNumber = ex.HResult;
+				req.ErrorMessage = ex.Message;
+				return req;
+			}
+		}
+
+		public static DBTranSet GetData(DBTranSet req)
+		{
+			try
+			{
+				var product = DaoFactory.Instance.QueryForObject<ProductDataModel>("SelectProduct", req.TranList[0].Parameter);
+				var materials = DaoFactory.Instance.QueryForList<ProductMaterialListModel>("SelectProductMaterials", req.TranList[0].Parameter);
+
+				req.TranList = new DBTranData[]
 				{
-					new WasRequestData() { Data = list }
+					new DBTranData() {Data = product },
+					new DBTranData() {Data = materials }
 				};
 				return req;
 			}
@@ -31,29 +50,7 @@ namespace JW.AUBE.Service.Services
 			}
 		}
 
-		public static WasRequest GetData(WasRequest req)
-		{
-			try
-			{
-				var product = DaoFactory.Instance.QueryForObject<ProductDataModel>("SelectProduct", req.Parameter);
-				var materials = DaoFactory.Instance.QueryForList<ProductMaterialListModel>("SelectProductMaterials", req.Parameter);
-
-				req.DataList = new List<WasRequestData>()
-				{
-					new WasRequestData() {Data = product },
-					new WasRequestData() {Data = materials }
-				};
-				return req;
-			}
-			catch (Exception ex)
-			{
-				req.ErrorNumber = ex.HResult;
-				req.ErrorMessage = ex.Message;
-				return req;
-			}
-		}
-
-		public static WasRequest Save(WasRequest req)
+		public static DBTranSet Save(DBTranSet req)
 		{
 			bool isTran = false;
 
@@ -62,7 +59,7 @@ namespace JW.AUBE.Service.Services
 				if (req == null)
 					throw new Exception("처리할 요청이 정확하지 않습니다.");
 
-				if (req.DataList == null || req.DataList.Count == 0)
+				if (req.TranList == null || req.TranList.Length == 0)
 					throw new Exception("처리할 데이터가 없습니다.");
 
 				DaoFactory.Instance.BeginTransaction();
@@ -75,12 +72,12 @@ namespace JW.AUBE.Service.Services
 					string product_code = string.Empty;
 
 					//상품정보 저장
-					if (req.DataList.Count > 0)
+					if (req.TranList.Length > 0)
 					{
-						if (req.DataList[0].Data == null || (req.DataList[0].Data as DataTable).Rows.Count == 0)
+						if (req.TranList[0].Data == null || (req.TranList[0].Data as DataTable).Rows.Count == 0)
 							throw new Exception("상품정보를 저장할 데이터가 존재하지 않습니다.");
 
-						DataMap data = (req.DataList[0].Data as DataTable).ToDataMapList()[0];
+						DataMap data = (req.TranList[0].Data as DataTable).ToDataMapList()[0];
 
 						if (string.IsNullOrEmpty(data.GetValue("PRODUCT_CODE").ToStringNullToEmpty()))
 						{
@@ -102,17 +99,17 @@ namespace JW.AUBE.Service.Services
 							DaoFactory.Instance.Update("DeleteProduct", data);
 							product_id = data.GetValue("PRODUCT_ID");
 						}
-						req.DataList[0].ErrorNumber = 0;
-						req.DataList[0].ErrorMessage = "SUCCESS";
-						req.DataList[0].ReturnValue = product_id;
+						req.TranList[0].ErrorNumber = 0;
+						req.TranList[0].ErrorMessage = "SUCCESS";
+						req.TranList[0].ReturnValue = product_id;
 					}
 
 					//원부자재정보 저장
-					if (req.DataList.Count > 1)
+					if (req.TranList.Length > 1)
 					{
-						if (req.DataList[1].Data != null && (req.DataList[1].Data as DataTable).Rows.Count > 0)
+						if (req.TranList[1].Data != null && (req.TranList[1].Data as DataTable).Rows.Count > 0)
 						{
-							IList<DataMap> list = (req.DataList[1].Data as DataTable).ToDataMapList();
+							IList<DataMap> list = (req.TranList[1].Data as DataTable).ToDataMapList();
 							foreach (DataMap map in list)
 							{
 								map.SetValue("PRODUCT_ID", product_id);
@@ -132,9 +129,9 @@ namespace JW.AUBE.Service.Services
 									reg_id = map.GetValue("REG_ID");
 								}
 							}
-							req.DataList[1].ErrorNumber = 0;
-							req.DataList[1].ErrorMessage = "SUCCESS";
-							req.DataList[1].ReturnValue = product_id;
+							req.TranList[1].ErrorNumber = 0;
+							req.TranList[1].ErrorMessage = "SUCCESS";
+							req.TranList[1].ReturnValue = product_id;
 						}
 					}
 					
@@ -158,14 +155,14 @@ namespace JW.AUBE.Service.Services
 			}
 		}
 
-		public static WasRequest Delete(WasRequest req)
+		public static DBTranSet Delete(DBTranSet req)
 		{
 			try
 			{
-				var map = DaoFactory.Instance.QueryForObject<DataMap>("SelectProduct", req.Parameter);
+				var map = DaoFactory.Instance.QueryForObject<DataMap>("SelectProduct", req.TranList[0].Parameter);
 				if (map != null)
 				{
-					DaoFactory.Instance.Insert("DeleteProduct", req.Parameter);
+					DaoFactory.Instance.Insert("DeleteProduct", req.TranList[0].Parameter);
 				}
 				return req;
 			}
@@ -177,15 +174,12 @@ namespace JW.AUBE.Service.Services
 			}
 		}
 
-		public static WasRequest GetSalesPriceList(WasRequest req)
+		public static DBTranSet GetSalesPriceList(DBTranSet req)
 		{
 			try
 			{
-				var list = DaoFactory.Instance.QueryForList<SalesPriceListModel>("GetSalesPriceList", req.Parameter);
-				req.DataList = new List<WasRequestData>()
-				{
-					new WasRequestData() { Data = list }
-				};
+				var list = DaoFactory.Instance.QueryForList<SalesPriceListModel>("GetSalesPriceList", req.TranList[0].Parameter);
+				req.TranList[0].Data = list;
 				return req;
 			}
 			catch (Exception ex)
@@ -196,15 +190,12 @@ namespace JW.AUBE.Service.Services
 			}
 		}
 
-		public static WasRequest GetSalesPriceData(WasRequest req)
+		public static DBTranSet GetSalesPriceData(DBTranSet req)
 		{
 			try
 			{
-				var data = DaoFactory.Instance.QueryForObject<SalesPriceDataModel>("GetSalesPriceData", req.Parameter);
-				req.DataList = new List<WasRequestData>()
-				{
-					new WasRequestData() { Data = data }
-				};
+				var data = DaoFactory.Instance.QueryForObject<SalesPriceDataModel>("GetSalesPriceData", req.TranList[0].Parameter);
+				req.TranList[0].Data = data;
 				return req;
 			}
 			catch (Exception ex)
@@ -215,7 +206,7 @@ namespace JW.AUBE.Service.Services
 			}
 		}
 
-		public static WasRequest SaveSalesPrice(WasRequest req)
+		public static DBTranSet SaveSalesPrice(DBTranSet req)
 		{
 			bool isTran = false;
 
@@ -224,7 +215,7 @@ namespace JW.AUBE.Service.Services
 				if (req == null)
 					throw new Exception("처리할 요청이 정확하지 않습니다.");
 
-				if (req.DataList == null || req.DataList.Count == 0)
+				if (req.TranList == null || req.TranList.Length == 0)
 					throw new Exception("처리할 데이터가 없습니다.");
 
 				DaoFactory.Instance.BeginTransaction();
@@ -235,12 +226,12 @@ namespace JW.AUBE.Service.Services
 					object product_id = null;
 					object reg_id = null;
 					
-					if (req.DataList.Count > 0)
+					if (req.TranList.Length > 0)
 					{
-						if (req.DataList[0].Data == null || (req.DataList[0].Data as DataTable).Rows.Count == 0)
+						if (req.TranList[0].Data == null || (req.TranList[0].Data as DataTable).Rows.Count == 0)
 							throw new Exception("상품정보를 저장할 데이터가 존재하지 않습니다.");
 
-						DataMap data = (req.DataList[0].Data as DataTable).ToDataMapList()[0];
+						DataMap data = (req.TranList[0].Data as DataTable).ToDataMapList()[0];
 
 						product_id = data.GetValue("PRODUCT_ID");
 
@@ -260,9 +251,9 @@ namespace JW.AUBE.Service.Services
 							DaoFactory.Instance.Update("DeleteSalesPrice", data);
 							
 						}
-						req.DataList[0].ErrorNumber = 0;
-						req.DataList[0].ErrorMessage = "SUCCESS";
-						req.DataList[0].ReturnValue = reg_id;
+						req.TranList[0].ErrorNumber = 0;
+						req.TranList[0].ErrorMessage = "SUCCESS";
+						req.TranList[0].ReturnValue = reg_id;
 					}
 
 					if (isTran)

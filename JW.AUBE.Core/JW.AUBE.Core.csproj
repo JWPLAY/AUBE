@@ -244,6 +244,12 @@
     <Compile Include="Forms\Sales\SaleTranForm.Designer.cs">
       <DependentUpon>SaleTranForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Sales\SaleStatListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Sales\SaleStatListForm.Designer.cs">
+      <DependentUpon>SaleStatListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Sales\SaleTranListForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -306,7 +312,6 @@
     <Compile Include="Utils\LayoutUtils.cs" />
     <Compile Include="Utils\NavBarUtils.cs" />
     <Compile Include="Utils\ResourceUtils.cs" />
-    <Compile Include="Utils\ServerRequest.cs" />
     <Compile Include="Utils\SkinUtils.cs" />
     <Compile Include="Utils\SplashUtils.cs" />
     <Compile Include="Variables\Setting.cs" />
@@ -337,8 +342,6 @@
     </Compile>
     <Compile Include="Base\Interface\IBaseForm.cs" />
     <Compile Include="Base\Interface\IEditForm.cs" />
-    <Compile Include="Was\Controllers\WasController.cs" />
-    <Compile Include="Was\Helper\WasHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -415,6 +418,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Sales\SaleTranForm.resx">
       <DependentUpon>SaleTranForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Sales\SaleStatListForm.resx">
+      <DependentUpon>SaleStatListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Sales\SaleTranListForm.resx">
       <DependentUpon>SaleTranListForm.cs</DependentUpon>

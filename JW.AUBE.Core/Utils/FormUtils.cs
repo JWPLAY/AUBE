@@ -3,6 +3,7 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Base.Forms;
@@ -70,7 +71,7 @@ namespace JW.AUBE.Core.Utils
 				string rtfValue;
 				string helpName;
 
-				DataTable data = (DataTable)ServerRequest.SingleRequest("Auth", "GetHelpContent", null, new DataMap() { { "HELP_ID", helpId }, { "MENU_ID", menuId } });
+				DataTable data = (DataTable)DBTranHelper.SingleRequest("Auth", "GetHelpContent", null, new DataMap() { { "HELP_ID", helpId }, { "MENU_ID", menuId } });
 				if (data != null && data.Rows.Count > 0)
 				{
 					DataRow row = data.Rows[0];

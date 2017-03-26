@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using JW.AUBE.Base.DBTran.Model;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
-using JW.AUBE.Base.Was.Models;
 using JW.AUBE.Service.Mappers;
 
 namespace JW.AUBE.Service.Services
@@ -16,25 +16,25 @@ namespace JW.AUBE.Service.Services
 		/// </summary>
 		/// <param name="req">WasRequest</param>
 		/// <returns>WasRequest</returns>
-		public static WasRequest GetList(WasRequest req)
+		public static DBTranSet GetList(DBTranSet reqset)
 		{
 			try
 			{
-				var list = DaoFactory.Instance.QueryForList<DataMap>(req.SqlId, req.Parameter);
-				req.DataList = new List<WasRequestData>()
+				if (reqset.TranList == null || reqset.TranList.Length == 0)
+					throw new Exception("처리요청이 없습니다.");
+
+				foreach (DBTranData req in reqset.TranList)
 				{
-					new WasRequestData()
-					{
-						Data = ConvertUtils.DataMapListToDataTable(list, req.SqlId)
-					}
-				};
-				return req;
+					var list = DaoFactory.Instance.QueryForList<DataMap>(req.SqlId, req.Parameter);
+					req.Data = ConvertUtils.DataMapListToDataTable(list, req.SqlId);
+				}
+				return reqset;
 			}
 			catch (Exception ex)
 			{
-				req.ErrorNumber = ex.HResult;
-				req.ErrorMessage = ex.Message;
-				return req;
+				reqset.ErrorNumber = ex.HResult;
+				reqset.ErrorMessage = ex.Message;
+				return reqset;
 			}
 		}
 
@@ -44,29 +44,24 @@ namespace JW.AUBE.Service.Services
 		/// </summary>
 		/// <param name="req">WasRequest</param>
 		/// <returns>WasRequest</returns>
-		public static WasRequest GetData(WasRequest req)
+		public static DBTranSet GetData(DBTranSet reqset)
 		{
 			try
 			{
-				var data = DaoFactory.Instance.QueryForObject<DataMap>(req.SqlId, req.Parameter);
-				List<DataMap> list = new List<DataMap>();
-				if (data != null)
-					list.Add(data);
+				if (reqset.TranList == null || reqset.TranList.Length == 0)
+					throw new Exception("처리요청이 없습니다.");
 
-				req.DataList = new List<WasRequestData>()
+				foreach (DBTranData req in reqset.TranList)
 				{
-					new WasRequestData()
-					{
-						Data = ConvertUtils.DataMapListToDataTable(list, req.SqlId)
-					}
-				};
-				return req;
+					req.Data = DaoFactory.Instance.QueryForObject<DataMap>(req.SqlId, req.Parameter);
+				}
+				return reqset;
 			}
 			catch (Exception ex)
 			{
-				req.ErrorNumber = ex.HResult;
-				req.ErrorMessage = ex.Message;
-				return req;
+				reqset.ErrorNumber = ex.HResult;
+				reqset.ErrorMessage = ex.Message;
+				return reqset;
 			}
 		}
 
@@ -76,7 +71,7 @@ namespace JW.AUBE.Service.Services
 		/// </summary>
 		/// <param name="req">WasRequest</param>
 		/// <returns>WasRequest</returns>
-		public static WasRequest Save(WasRequest req)
+		public static DBTranSet Save(DBTranSet req)
 		{
 			bool isTran = false;
 			string keyField = string.Empty;
@@ -93,7 +88,7 @@ namespace JW.AUBE.Service.Services
 
 				try
 				{
-					foreach (WasRequestData data in req.DataList)
+					foreach (DBTranData data in req.TranList)
 					{
 						if (data.Data == null || (data.Data as DataTable).Rows.Count == 0)
 							continue;
@@ -165,37 +160,49 @@ namespace JW.AUBE.Service.Services
 		/// </summary>
 		/// <param name="req">WasRequest</param>
 		/// <returns>WasRequest</returns>
-		public static WasRequest Delete(WasRequest req)
+		public static DBTranSet Delete(DBTranSet reqset)
 		{
 			try
 			{
-				var map = DaoFactory.Instance.QueryForObject<DataMap>(string.Format("Select{0}", req.SqlId), req.Parameter);
-				if (map != null)
+				if (reqset.TranList == null || reqset.TranList.Length == 0)
+					throw new Exception("처리요청이 없습니다.");
+
+				foreach (DBTranData req in reqset.TranList)
 				{
-					DaoFactory.Instance.Insert("Delete{0}", req.Parameter);
+					var map = DaoFactory.Instance.QueryForObject<DataMap>(string.Format("Select{0}", req.SqlId), req.Parameter);
+					if (map != null)
+					{
+						DaoFactory.Instance.Insert("Delete{0}", req.Parameter);
+					}
 				}
-				return req;
+				return reqset;
 			}
 			catch (Exception ex)
 			{
-				req.ErrorNumber = ex.HResult;
-				req.ErrorMessage = ex.Message;
-				return req;
+				reqset.ErrorNumber = ex.HResult;
+				reqset.ErrorMessage = ex.Message;
+				return reqset;
 			}
 		}
 
-		public static WasRequest ProcedureCall(WasRequest req)
+		public static DBTranSet ProcedureCall(DBTranSet reqset)
 		{
 			try
 			{
-				DaoFactory.Instance.QueryForObject<int>(req.SqlId, req.Parameter);
-				return req;
+				if (reqset.TranList == null || reqset.TranList.Length == 0)
+					throw new Exception("처리요청이 없습니다.");
+
+				foreach (DBTranData req in reqset.TranList)
+				{
+					DaoFactory.Instance.QueryForObject<int>(req.SqlId, req.Parameter);
+				}
+				return reqset;
 			}
 			catch (Exception ex)
 			{
-				req.ErrorNumber = ex.HResult;
-				req.ErrorMessage = ex.Message;
-				return req;
+				reqset.ErrorNumber = ex.HResult;
+				reqset.ErrorMessage = ex.Message;
+				return reqset;
 			}
 		}
 	}

@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using DevExpress.Utils;
 using DevExpress.XtraGrid.Views.Grid;
+using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Base.Forms;
@@ -162,13 +163,13 @@ namespace JW.AUBE.Core.Forms.Production
 		{
 			try
 			{
-				var res = ServerRequest.GetData("Production", new DataMap() { { "PROD_ID", id } });
-				if (res.DataList.Count > 0)
+				var res = DBTranHelper.GetData("Production", new DataMap() { { "PROD_ID", id } });
+				if (res.TranList.Length > 0)
 				{
-					if (res.DataList[0].Data == null)
+					if (res.TranList[0].Data == null)
 						throw new Exception("조회 데이터가 없습니다.");
 
-					ProdTranDataModel model = (ProdTranDataModel)res.DataList[0].Data;
+					ProdTranDataModel model = (ProdTranDataModel)res.TranList[0].Data;
 
 					txtProdId.EditValue = model.PROD_ID;
 					datProdDate.SetDateChar8(model.PROD_DATE);
@@ -201,12 +202,12 @@ namespace JW.AUBE.Core.Forms.Production
 				DataMap map = lcGroupEdit.ItemToDataMap();
 				map.SetValue("ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE");
 
-				var res = ServerRequest.Execute("Production", "Save", new DataTable[] { map.ToDataTable() });
+				var res = DBTranHelper.Execute("Production", "Save", new DataTable[] { map.ToDataTable() });
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 
 				ShowMsgBox("저장하였습니다.");
-				callback(arg, res.DataList[0].ReturnValue);
+				callback(arg, res.TranList[0].ReturnValue);
 			}
 			catch(Exception ex)
 			{
@@ -224,7 +225,7 @@ namespace JW.AUBE.Core.Forms.Production
 					{ "ROWSTATE", "DELETE" }
 				}).ToDataTable();
 
-				var res = ServerRequest.SingleRequest("Production", "Save", null, dt);
+				var res = DBTranHelper.SingleRequest("Production", "Save", null, dt);
 				if (res.ErrorNumber != 0)
 					throw new Exception(res.ErrorMessage);
 

@@ -14,7 +14,7 @@ namespace JW.AUBE.Core.PostCode
 	[ComVisible(true)]
 	public partial class SearchPostCodeForm : XtraForm
 	{
-		private bool bOpened = false;	//중복실행방지
+		//private bool bOpened = false;	//중복실행방지
 
 		public SearchPostCodeForm()
 		{
@@ -48,7 +48,7 @@ namespace JW.AUBE.Core.PostCode
 			try
 			{
 				wb.ObjectForScripting = this;
-				//wb.AllowWebBrowserDrop = false;
+				wb.AllowWebBrowserDrop = false;
 				//wb.IsWebBrowserContextMenuEnabled = false;
 				//wb.WebBrowserShortcutsEnabled = false;
 

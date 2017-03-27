@@ -138,6 +138,24 @@ namespace JW.AUBE.Core.Controls.Grid
 				(Grid.MainView as GridView).OptionsBehavior.Editable = false;
 			}
 
+			if (MainView is GridView || MainView is BandedGridView || MainView is AdvBandedGridView)
+			{
+				if (AppearanceObject.DefaultFont.Size > 10f)
+				{
+					(Grid.MainView as GridView).OptionsView.RowAutoHeight = true;
+				}
+				else if (AppearanceObject.DefaultFont.Size > 9f)
+				{
+					(Grid.MainView as GridView).OptionsView.RowAutoHeight = false;
+					(Grid.MainView as GridView).RowHeight = 20;
+				}
+				else
+				{
+					(Grid.MainView as GridView).OptionsView.RowAutoHeight = false;
+					(Grid.MainView as GridView).RowHeight = 18;
+				}
+			}
+
 			if (GlobalVar.Settings.GetValue("GRID_SKIN").IsNullOrEmpty() == false)
 			{
 				LookAndFeel.UseDefaultLookAndFeel = false;
@@ -1020,6 +1038,23 @@ namespace JW.AUBE.Core.Controls.Grid
 			if (bestFit)
 			{
 				BestFitColumns();
+			}
+		}
+
+		public int GetRowHeight()
+		{
+			if (_GridViewType == GridViewType.GridView || _GridViewType == GridViewType.BandedGridView || _GridViewType == GridViewType.AdvBandedGridView)
+			{
+				GridViewInfo viewInfo = (MainView as GridView).GetViewInfo() as GridViewInfo;
+				const int GridControlMaxHeight = 30000;
+				int height = viewInfo.CalcRealViewHeight(new Rectangle(0, 0, (MainView as GridView).GridControl.Width, GridControlMaxHeight));
+				if (height >= GridControlMaxHeight)
+					height = (MainView as GridView).GridControl.Parent.Height;
+				return height;
+			}
+			else
+			{
+				return -1;
 			}
 		}
 	}

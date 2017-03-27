@@ -40,6 +40,21 @@ namespace JW.AUBE.Core.Controls.Common
 				OptionsBehavior.AllowExpandOnDblClick = false;
 				OptionsBehavior.PopulateServiceColumns = true;
 				OptionsSelection.EnableAppearanceFocusedRow = true;
+
+				if (AppearanceObject.DefaultFont.Size > 10f)
+				{
+					OptionsBehavior.AutoNodeHeight = true;
+				}
+				else if (AppearanceObject.DefaultFont.Size > 9f)
+				{
+					OptionsBehavior.AutoNodeHeight = false;
+					RowHeight = 22;
+				}
+				else
+				{
+					OptionsBehavior.AutoNodeHeight = false;
+					RowHeight = 20;
+				}
 			}
 			catch
 			{

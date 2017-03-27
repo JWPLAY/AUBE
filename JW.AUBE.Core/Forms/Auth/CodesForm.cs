@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Windows.Forms;
 using DevExpress.Utils;
 using DevExpress.XtraGrid.Views.Grid;
 using JW.AUBE.Base.DBTran.Controller;
@@ -28,14 +29,7 @@ namespace JW.AUBE.Core.Forms.Auth
 		protected override void InitButtons()
 		{
 			base.InitButtons();
-			SetToolbarButtons(new ToolbarButtons()
-			{
-				New = true,
-				Refresh = true,
-				Save = true,
-				SaveAndNew = true,
-				Delete = true
-			});
+			SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true });
 		}
 		protected override void InitControls()
 		{
@@ -72,83 +66,18 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			gridList.Init();
 			gridList.AddGridColumns(
-				new XGridColumn()
-				{
-					FieldName = "ROW_NO",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 40
-				},
-				new XGridColumn()
-				{
-					FieldName = "HIER_ID",
-					HorzAlignment = HorzAlignment.Near,
-					Visible = false
-				},
-				new XGridColumn()
-				{
-					FieldName = "HIER_NAME",
-					CaptionCode = "CODE_NAME",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 250
-				},
-				new XGridColumn()
-				{
-					FieldName = "CODE_ID",
-					Caption = "ID",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 80,
-					Visible = false
-				},
-				new XGridColumn()
-				{
-					FieldName = "CODE",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 120
-				},
-				new XGridColumn()
-				{
-					FieldName = "VALUE",
-					CaptionCode = "CODE_VALUE",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 120
-				},
-				new XGridColumn()
-				{
-					FieldName = "USE_YN",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 80,
-					RepositoryItem = gridList.GetRepositoryItemCheckEdit()
-				},
-				new XGridColumn()
-				{
-					FieldName = "OPTION_VALUE1",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 100
-				},
-				new XGridColumn()
-				{
-					FieldName = "OPTION_VALUE2",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 100
-				},
-				new XGridColumn()
-				{
-					FieldName = "OPTION_VALUE3",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 100
-				},
-				new XGridColumn()
-				{
-					FieldName = "OPTION_VALUE4",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 100
-				},
-				new XGridColumn()
-				{
-					FieldName = "OPTION_VALUE5",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 100
-				}
+				new XGridColumn() { FieldName = "ROW_NO" },
+				new XGridColumn() { FieldName = "HIER_ID", Visible = false },
+				new XGridColumn() { FieldName = "HIER_NAME", CaptionCode = "CODE_NAME", Width = 250 },
+				new XGridColumn() { FieldName = "CODE_ID", Caption = "ID", HorzAlignment = HorzAlignment.Center, Width = 80, Visible = false },
+				new XGridColumn() { FieldName = "CODE", Width = 120 },
+				new XGridColumn() { FieldName = "VALUE", CaptionCode = "CODE_VALUE", Width = 120 },
+				new XGridColumn() { FieldName = "USE_YN", HorzAlignment = HorzAlignment.Center, Width = 80, RepositoryItem = gridList.GetRepositoryItemCheckEdit() },
+				new XGridColumn() { FieldName = "OPTION_VALUE1", Width = 100 },
+				new XGridColumn() { FieldName = "OPTION_VALUE2", Width = 100 },
+				new XGridColumn() { FieldName = "OPTION_VALUE3", Width = 100 },
+				new XGridColumn() { FieldName = "OPTION_VALUE4", Width = 100 },
+				new XGridColumn() { FieldName = "OPTION_VALUE5", Width = 100 }
 			);
 
 			gridList.RowCellClick += delegate (object sender, RowCellClickEventArgs e)
@@ -158,13 +87,13 @@ namespace JW.AUBE.Core.Forms.Auth
 
 				try
 				{
-					if (e.Button == System.Windows.Forms.MouseButtons.Left && e.Clicks == 1)
+					if (e.Button == MouseButtons.Left && e.Clicks == 1)
 					{
 						GridView view = sender as GridView;
 						DetailDataLoad(view.GetRowCellValue(e.RowHandle, "CODE_ID"));
 					}
 				}
-				catch(Exception ex)
+				catch (Exception ex)
 				{
 					ShowErrBox(ex);
 				}
@@ -202,6 +131,7 @@ namespace JW.AUBE.Core.Forms.Auth
 			txtUpdTime.Clear();
 			txtUpdUser.Clear();
 
+			SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true });
 			this.EditMode = EditModeEnum.New;
 			txtCode.Focus();
 		}
@@ -209,6 +139,7 @@ namespace JW.AUBE.Core.Forms.Auth
 		protected override void DataLoad(object param = null)
 		{
 			gridList.BindData("Base", "GetList", "SelectCodes", new DataMap() { { "FIND_TEXT", txtFindText.EditValue } });
+
 			if (param != null)
 				DetailDataLoad(param);
 			else
@@ -219,33 +150,30 @@ namespace JW.AUBE.Core.Forms.Auth
 		{
 			try
 			{
-				DataTable dt = (DataTable)DBTranHelper.GetData("Base", "GetData", "SelectCode", new DataMap() { { "CODE_ID", id } }).TranList[0].Data;
-				if (dt == null || dt.Rows.Count == 0)
-					throw new Exception("조회할 데이터가 없습니다.");
+				var data = DBTranHelper.GetData<DataMap>("Base", "GetData", "SelectCode", new DataMap() { { "CODE_ID", id } });
 
-				DataRow row = dt.Rows[0];
-
-				txtCodeId.EditValue = row["CODE_ID"];
+				txtCodeId.EditValue = data.GetValue("CODE_ID");
 				lupParentCode.BindData("CODE_GROUP", null, "ROOT", true);
-				lupParentCode.EditValue = row["PARENT_CODE"];
-				txtCode.EditValue = row["CODE"];
-				txtName.EditValue = row["NAME"];
-				txtValue.EditValue = row["VALUE"];
-				spnSortSeq.EditValue = row["SORT_SEQ"];
-				spnMaxLength.EditValue = row["MAX_LENGTH"];
-				chkUseYn.EditValue = row["USE_YN"];
-				memDescription.EditValue = row["DESCRIPTION"];
-				txtOptionValue1.EditValue = row["OPTION_VALUE1"];
-				txtOptionValue2.EditValue = row["OPTION_VALUE2"];
-				txtOptionValue3.EditValue = row["OPTION_VALUE3"];
-				txtOptionValue4.EditValue = row["OPTION_VALUE4"];
-				txtOptionValue5.EditValue = row["OPTION_VALUE5"];
+				lupParentCode.EditValue = data.GetValue("PARENT_CODE");
+				txtCode.EditValue = data.GetValue("CODE");
+				txtName.EditValue = data.GetValue("NAME");
+				txtValue.EditValue = data.GetValue("VALUE");
+				spnSortSeq.EditValue = data.GetValue("SORT_SEQ");
+				spnMaxLength.EditValue = data.GetValue("MAX_LENGTH");
+				chkUseYn.EditValue = data.GetValue("USE_YN");
+				memDescription.EditValue = data.GetValue("DESCRIPTION");
+				txtOptionValue1.EditValue = data.GetValue("OPTION_VALUE1");
+				txtOptionValue2.EditValue = data.GetValue("OPTION_VALUE2");
+				txtOptionValue3.EditValue = data.GetValue("OPTION_VALUE3");
+				txtOptionValue4.EditValue = data.GetValue("OPTION_VALUE4");
+				txtOptionValue5.EditValue = data.GetValue("OPTION_VALUE5");
 
-				txtInsTime.EditValue = row["INS_TIME"];
-				txtInsUser.EditValue = row["INS_USER_NAME"];
-				txtUpdTime.EditValue = row["UPD_TIME"];
-				txtUpdUser.EditValue = row["UPD_USER_NAME"];
+				txtInsTime.EditValue = data.GetValue("INS_TIME");
+				txtInsUser.EditValue = data.GetValue("INS_USER_NAME");
+				txtUpdTime.EditValue = data.GetValue("UPD_TIME");
+				txtUpdUser.EditValue = data.GetValue("UPD_USER_NAME");
 
+				SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true, Delete = true });
 				this.EditMode = EditModeEnum.Modify;
 				txtCode.Focus();
 			}
@@ -257,10 +185,10 @@ namespace JW.AUBE.Core.Forms.Auth
 
 		protected override void DataSave(object arg, SaveCallback callback)
 		{
+			if (DataValidate() == false) return;
+
 			try
 			{
-				if (DataValidate() == false) return;
-
 				DataMap data = new DataMap()
 				{
 					{ "CODE_ID", txtCodeId.EditValue },
@@ -316,6 +244,5 @@ namespace JW.AUBE.Core.Forms.Auth
 				ShowErrBox(ex);
 			}
 		}
-		
 	}
 }

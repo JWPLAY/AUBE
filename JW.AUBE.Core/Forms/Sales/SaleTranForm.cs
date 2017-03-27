@@ -148,53 +148,10 @@ namespace JW.AUBE.Core.Forms.Sales
 				}
 			};
 
-			btnItemPlus.Click += delegate (object sender, EventArgs e)
-			{
-				if (gridItems.FocusedRowHandle < 0)
-					return;
-
-				int saleQty = gridItems.GetValue(gridItems.FocusedRowHandle, "SALE_QTY").ToIntegerNullToZero();
-				if (lupSaleType.EditValue.ToString() == "0")
-					saleQty += 1;
-				else
-					saleQty -= 1;
-				gridItems.SetValue(gridItems.FocusedRowHandle, "SALE_QTY", saleQty);
-				gridItems.UpdateCurrentRow();
-				CalcSaleItem(gridItems.FocusedRowHandle);
-				txtInput.Focus();
-			};
-			btnItemMinus.Click += delegate (object sender, EventArgs e)
-			{
-				if (gridItems.FocusedRowHandle < 0)
-					return;
-
-				int saleQty = gridItems.GetValue(gridItems.FocusedRowHandle, "SALE_QTY").ToIntegerNullToZero();
-				if (lupSaleType.EditValue.ToString() == "0")
-					saleQty -= 1;
-				else
-					saleQty += 1;
-				gridItems.SetValue(gridItems.FocusedRowHandle, "SALE_QTY", saleQty);
-				gridItems.UpdateCurrentRow();
-				CalcSaleItem(gridItems.FocusedRowHandle);
-				txtInput.Focus();
-			};
-			btnItemDelete.Click += delegate (object sender, EventArgs e)
-			{
-				gridItems.DeleteRow(gridItems.FocusedRowHandle);
-				gridItems.UpdateCurrentRow();
-				CalcSaleItem(gridItems.FocusedRowHandle);
-				txtInput.Focus();
-			};
-			btnCustomer.Click += delegate (object sender, EventArgs e)
-			{
-				var data = CodeHelper.ShowForm("CUSTOMER");
-				if (data != null && data.GetType() == typeof(DataMap))
-				{
-					txtCustomer.EditValue = (data as DataMap).GetValue("CUSTOMER_NAME");
-					txtCustomer.Tag = (data as DataMap).GetValue("CUSTOMER_ID");
-				}
-				txtInput.Focus();
-			};
+			btnItemPlus.Click += delegate (object sender, EventArgs e) { PlusButtonClick(); };
+			btnItemMinus.Click += delegate (object sender, EventArgs e) { MinusButtonClick(); };
+			btnItemDelete.Click += delegate (object sender, EventArgs e) { DeleteButtonClick(); };
+			btnCustomer.Click += delegate (object sender, EventArgs e) { SearchCustomer(); };
 
 			lupSaleType.EditValueChanged += delegate (object sender, EventArgs e) { ChangeSaleType(); };
 		}
@@ -748,6 +705,57 @@ namespace JW.AUBE.Core.Forms.Sales
 					txtInput.Focus();
 				}
 			}
+		}
+
+		private void SearchCustomer()
+		{
+            var data = CodeHelper.ShowForm("CUSTOMER");
+			if (data != null && data.GetType() == typeof(DataMap))
+			{
+				txtCustomer.EditValue = (data as DataMap).GetValue("CUSTOMER_NAME");
+				txtCustomer.Tag = (data as DataMap).GetValue("CUSTOMER_ID");
+			}
+			txtInput.Focus();
+		}
+
+		private void PlusButtonClick()
+		{
+            if (gridItems.FocusedRowHandle < 0)
+				return;
+			
+			int saleQty = gridItems.GetValue(gridItems.FocusedRowHandle, "SALE_QTY").ToIntegerNullToZero();
+			if (lupSaleType.EditValue.ToString() == "0")
+				saleQty += 1;
+			else
+				saleQty -= 1;
+			gridItems.SetValue(gridItems.FocusedRowHandle, "SALE_QTY", saleQty);
+			gridItems.UpdateCurrentRow();
+			CalcSaleItem(gridItems.FocusedRowHandle);
+			txtInput.Focus();
+		}
+
+		private void MinusButtonClick()
+		{
+            if (gridItems.FocusedRowHandle < 0)
+				return;
+			
+			int saleQty = gridItems.GetValue(gridItems.FocusedRowHandle, "SALE_QTY").ToIntegerNullToZero();
+			if (lupSaleType.EditValue.ToString() == "0")
+				saleQty -= 1;
+			else
+				saleQty += 1;
+			gridItems.SetValue(gridItems.FocusedRowHandle, "SALE_QTY", saleQty);
+			gridItems.UpdateCurrentRow();
+			CalcSaleItem(gridItems.FocusedRowHandle);
+			txtInput.Focus();
+		}
+
+		private void DeleteButtonClick()
+		{
+			gridItems.DeleteRow(gridItems.FocusedRowHandle);
+			gridItems.UpdateCurrentRow();
+			CalcSaleItem(gridItems.FocusedRowHandle);
+			txtInput.Focus();
 		}
 	}
 }

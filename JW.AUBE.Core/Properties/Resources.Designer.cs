@@ -59,5 +59,24 @@ namespace JW.AUBE.Core.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   &lt;!doctype html&gt;
+        ///&lt;html lang=&quot;ko&quot;&gt;
+        ///&lt;head&gt;
+        ///&lt;meta charset=&quot;utf-8&quot;&gt;
+        ///&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+        ///&lt;meta name=&quot;viewport&quot; content=&quot;user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width&quot;&gt;
+        ///&lt;title&gt;우편번호검색&lt;/title&gt;
+        ///&lt;!--&lt;script type=&quot;text/javascript&quot; src=&quot;http://dmaps.daum.net/map_js_init/postcode.v2.js&quot;&gt;&lt;/script&gt;--&gt;
+        ///	&lt;script src=&quot;http://dmaps.daum.net/map_js_init/postcode.v2.js?autoload=false&quot;&gt;&lt;/script&gt;
+        ///&lt;/head&gt;
+        ///&lt;body style=&quot;background-color:#C00C0[나머지 문자열은 잘림]&quot;;과(와) 유사한 지역화된 문자열을 찾습니다.
+        /// </summary>
+        internal static string searchpostcode {
+            get {
+                return ResourceManager.GetString("searchpostcode", resourceCulture);
+            }
+        }
     }
 }

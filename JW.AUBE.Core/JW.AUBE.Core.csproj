@@ -572,7 +572,7 @@
     <Content Include="Images\Home_16x16.png" />
     <Content Include="Images\Home_32x32.png" />
     <EmbeddedResource Include="PostCode\searchpostcode.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <None Include="packages.config" />
   </ItemGroup>

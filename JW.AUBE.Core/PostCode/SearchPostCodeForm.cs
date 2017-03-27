@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Runtime.InteropServices;
 using System.Security.Permissions;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
@@ -11,10 +9,10 @@ using Newtonsoft.Json.Linq;
 namespace JW.AUBE.Core.PostCode
 {
 	[PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
-	[ComVisible(true)]
+	[System.Runtime.InteropServices.ComVisibleAttribute(true)]
 	public partial class SearchPostCodeForm : XtraForm
 	{
-		//private bool bOpened = false;	//중복실행방지
+		private bool bOpened = false;   //중복실행방지
 
 		public SearchPostCodeForm()
 		{
@@ -24,11 +22,11 @@ namespace JW.AUBE.Core.PostCode
 			{
 				try
 				{
-					//if (!bOpened)
-					//{
-					//	wb.Document.InvokeScript("daumEmbedOpen", new object[] { });
-					//	bOpened = true;
-					//}
+					if (!bOpened)
+					{
+						wb.Document.InvokeScript("daumEmbedOpen", new object[] { });
+						bOpened = true;
+					}
 				}
 				catch (Exception ex)
 				{
@@ -51,9 +49,10 @@ namespace JW.AUBE.Core.PostCode
 				wb.AllowWebBrowserDrop = false;
 				//wb.IsWebBrowserContextMenuEnabled = false;
 				//wb.WebBrowserShortcutsEnabled = false;
-
-				string curDir = Directory.GetCurrentDirectory();
-				wb.Url = new Uri(string.Format("file:///{0}/PostCode/searchpostcode.html", curDir));
+				string html = Properties.Resources.searchpostcode;
+				wb.DocumentText = html;
+				//string curDir = Directory.GetCurrentDirectory();
+				//wb.Url = new Uri(string.Format("file:///{0}/PostCode/searchpostcode.html", curDir));
 				//wb.Navigate(new Uri(@"http://www.dwcts.co.kr/daumpostcode.html"));
 				//http://www.dwcts.co.kr/daumpostcode.html
 			}
@@ -65,7 +64,7 @@ namespace JW.AUBE.Core.PostCode
 
 		public DataMap ReturnData { get; set; }
 
-		public void DaumApiCallback(object data)
+		public void Callback(object data)
 		{
 			try
 			{
@@ -87,6 +86,11 @@ namespace JW.AUBE.Core.PostCode
 			{
 				MsgBox.Show(ex);			
 			}
+		}
+
+		public void Callback2(object data)
+		{
+			MsgBox.Show(data.ToString());
 		}
 	}
 }

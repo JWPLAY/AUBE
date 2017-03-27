@@ -44,14 +44,7 @@ namespace JW.AUBE.Core.Forms.Code
 		protected override void InitButtons()
 		{
 			base.InitButtons();
-			SetToolbarButtons(new ToolbarButtons()
-			{
-				New = true,
-				Refresh = true,
-				Save = true,
-				SaveAndNew = true,
-				Delete = true
-			});
+			SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true });
 
 			btnAddressAdd.Enabled =
 				btnAddressDel.Enabled =
@@ -400,6 +393,7 @@ namespace JW.AUBE.Core.Forms.Code
 				btnAddressSave.Enabled =
 					btnPhoneSave.Enabled = false;
 
+				SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true });
 				this.EditMode = EditModeEnum.New;
 				txtCustomerName.Focus();
 			}
@@ -488,6 +482,7 @@ namespace JW.AUBE.Core.Forms.Code
 				btnAddressSave.Enabled =
 					btnPhoneSave.Enabled = true;
 
+				SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true, Delete = true });
 				this.EditMode = EditModeEnum.Modify;
 				txtCustomerName.Focus();
 

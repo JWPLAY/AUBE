@@ -130,6 +130,37 @@ namespace JW.AUBE.Core.Controls.Grid
 
 			MainGrid.HandleCreated += MainGridHandleCreated;
 			MainGrid.HandleDestroyed += MainGridHandleDestroyed;
+
+			_GridView.CellMerge += ViewCellMerge;
+			_BandedGridView.CellMerge += ViewCellMerge;
+			_AdvBandedGridView.CellMerge += ViewCellMerge;
+		}
+
+		private void ViewCellMerge(object sender, CellMergeEventArgs e)
+		{
+			if (_MergeColumns.Contains(e.Column.FieldName) == false) return;
+
+			bool is_merge = false;
+			int idx = _MergeColumns.IndexOf(e.Column.FieldName);
+			if (idx > 0)
+			{
+				for (int i = 0; i < idx; i++)
+				{
+					string bas1 = this.GetValue(e.RowHandle1, _MergeColumns[i]) == null ? null : this.GetValue(e.RowHandle1, _MergeColumns[i]).ToString();
+					string bas2 = this.GetValue(e.RowHandle2, _MergeColumns[i]) == null ? null : this.GetValue(e.RowHandle2, _MergeColumns[i]).ToString();
+					is_merge = (bas1 == bas2);
+					if (is_merge == false)
+						break;
+				}
+			}
+			else
+			{
+				is_merge = true;
+			}
+			string val_1 = this.GetValue(e.RowHandle1, e.Column.FieldName) == null ? null : this.GetValue(e.RowHandle1, e.Column.FieldName).ToString();
+			string val_2 = this.GetValue(e.RowHandle2, e.Column.FieldName) == null ? null : this.GetValue(e.RowHandle2, e.Column.FieldName).ToString();
+			e.Merge = (is_merge && (val_1 == val_2));
+			e.Handled = true;
 		}
 
 		private void MainViewKeyDown(object sender, KeyEventArgs e)

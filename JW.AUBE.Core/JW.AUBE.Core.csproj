@@ -231,6 +231,12 @@
     <Compile Include="Forms\Production\ProdTranForm.Designer.cs">
       <DependentUpon>ProdTranForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Production\ProdStatForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Production\ProdStatForm.Designer.cs">
+      <DependentUpon>ProdStatForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Profit\ProfitListForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -430,6 +436,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Production\ProdTranForm.resx">
       <DependentUpon>ProdTranForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Production\ProdStatForm.resx">
+      <DependentUpon>ProdStatForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Profit\ProfitListForm.resx">
       <DependentUpon>ProfitListForm.cs</DependentUpon>

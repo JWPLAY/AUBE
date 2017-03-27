@@ -72,8 +72,8 @@ namespace JW.AUBE.Core.Forms.Sales
 				new XGridColumn() { FieldName = "UPD_USER_NAME" }
 				);
 
-			gridList.SetMerge("SALE_DATE", "SALE_NO");
-			//gridList.SetMerge("SALE_DATE", "SALE_NO", "SALE_TYPE", "CUSTOMER_ID", "CUSTOMER_NAME", "REMARKS");
+			//gridList.SetMerge("SALE_DATE", "SALE_NO");
+			gridList.SetMerge("SALE_DATE", "SALE_NO", "SALE_TYPE", "CUSTOMER_ID", "CUSTOMER_NAME", "REMARKS");
 
 			gridList.SetColumnBackColor(Color.FromArgb(50, 50, 50), "ROW_NO");
 			gridList.SetColumnForeColor(Color.White, "ROW_NO");

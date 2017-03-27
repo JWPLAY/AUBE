@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
-using  JW.AUBE.Base.DBTran.Model;
+using JW.AUBE.Base.DBTran.Model;
 using JW.AUBE.Service.Mappers;
 using JW.AUBE.Model.Sales;
 using JW.AUBE.Service.Utils;
@@ -78,6 +78,7 @@ namespace JW.AUBE.Service.Services
 							throw new Exception("저장할 데이터가 존재하지 않습니다.");
 
 						DataMap data = (req.TranList[0].Data as DataTable).ToDataMapList()[0];
+						data.SetValue("INS_USER", req.UserId);
 
 						if (string.IsNullOrEmpty(data.GetValue("SALE_NO").ToStringNullToEmpty()))
 						{
@@ -108,6 +109,7 @@ namespace JW.AUBE.Service.Services
 							foreach (DataMap map in list)
 							{
 								map.SetValue("SALE_ID", sale_id);
+								map.SetValue("INS_USER", req.UserId);
 
 								if (map.GetValue("ROWSTATE").ToStringNullToEmpty() == "INSERT")
 								{
@@ -209,7 +211,7 @@ namespace JW.AUBE.Service.Services
 						{ "TRAN_TP", "SL" },
 						{ "REG_TP", "DD" },
 						{ "ITEM_ID", 0 },
-						{ "INS_USER", req.TranList[0].Parameter.GetValue("INS_USER") }
+						{ "INS_USER", req.UserId }
 					});
 					
 					DaoFactory.Instance.Delete("DeleteSaleTran", req.TranList[0].Parameter);

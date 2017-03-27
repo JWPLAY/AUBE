@@ -315,55 +315,19 @@ namespace JW.AUBE.Core.Forms.Sales
 			(gridProducts.MainView as GridView).RowHeight = 30;
 		}
 
-		protected override void DataLoad(object param = null)
-		{
-			try
-			{
-				//var res = DBTranHelper.GetData("Sales",  new DataMap() { { "PRODUCT_ID", id } });
-				//if (res.TranList.Length > 0)
-				//{
-				//	if (res.TranList[0].Data == null || res.TranList[0].Data.Rows.Count == 0)
-				//		throw new Exception("조회 데이터가 없습니다.");
-
-				//	DataRow row = res.TranList[0].Data.Rows[0];
-
-				//	txtProductId.EditValue = row["PRODUCT_ID"];
-				//	txtProductCode.EditValue = row["PRODUCT_CODE"];
-				//	txtProductName.EditValue = row["PRODUCT_NAME"];
-				//	txtBarcode.EditValue = row["BARCODE"];
-				//	lupProductType.EditValue = row["PRODUCT_TYPE"];
-				//	lupCategory.EditValue = row["CATEGORY"];
-				//	lupUnitType.EditValue = row["UNIT_TYPE"];
-				//	txtBarcode.EditValue = row["BARCODE"];
-				//	chkUseYn.EditValue = row["USE_YN"];
-				//	memRemarks.EditValue = row["REMARKS"];
-
-				//	txtInsTime.EditValue = row["INS_TIME"];
-				//	txtInsUserName.EditValue = row["INS_USER_NAME"];
-				//	txtUpdTime.EditValue = row["UPD_TIME"];
-				//	txtUpdUserName.EditValue = row["UPD_USER_NAME"];
-				//}
-
-				//if (res.TranList.Length > 1)
-				//{
-				//	gridMaterials.DataSource = res.TranList[1].Data;
-				//}
-
-				//onProductTypeChanged();
-
-				//this.EditMode = EditModeEnum.Modify;
-				//txtProductName.Focus();
-
-			}
-			catch (Exception ex)
-			{
-				ShowErrBox(ex);
-			}
-		}
 		protected override void DataSave(object arg, SaveCallback callback)
 		{
+			gridItems.PostEditor();
+			gridItems.UpdateCurrentRow();
+
 			if (DataValidate() == false) return;
 			if (DataValidate(gridItems) == false) return;
+
+			if (lupPayType.EditValue.ToString() == "30" && txtCustomer.EditValue.ToStringNullToEmpty() == "")
+			{
+				ShowMsgBox("외상거래의 경우 거래처를 입력해야 합니다.");
+				return;
+			}
 
 			try
 			{
@@ -680,7 +644,28 @@ namespace JW.AUBE.Core.Forms.Sales
 		{
 			if (SaleInputMode == SaleInputMode.Item)
 			{
+				if (txtInput.EditValue.ToStringNullToEmpty().IsNullOrEmpty() == false)
+				{
+					var res = DBTranHelper.GetData<DataMap>("Product", "GetDataByBarcode", new DataMap() { { "BARCODE", txtInput.EditValue } });
+					if (res == null)
+						throw new Exception("데이터가 정확하지 않습니다.");
 
+					SetSaleItem(new SaleTranItemDataModel()
+					{
+						PRODUCT_ID = res.GetValue("PRODUCT_ID").ToIntegerNullToZero(),
+						PRODUCT_CODE = res.GetValue("PRODUCT_CODE").ToStringNullToEmpty(),
+						PRODUCT_NAME = res.GetValue("PRODUCT_NAME").ToStringNullToEmpty(),
+						SALE_PRICE = res.GetValue("SALE_PRICE").ToIntegerNullToZero(),
+						DISC_RATE = 0,
+						DISC_PRICE = res.GetValue("SALE_PRICE").ToIntegerNullToZero(),
+						SALE_QTY = (lupSaleType.EditValue.ToString() == "0") ? 1 : -1,
+						SALE_AMT = res.GetValue("SALE_PRICE").ToIntegerNullToZero(),
+						DISC_AMT = 0,
+						NPAY_AMT = res.GetValue("SALE_PRICE").ToIntegerNullToZero(),
+						DISC_TYPE = "00"
+					});
+					txtInput.Focus();
+				}
 			}
 			else if (SaleInputMode == SaleInputMode.ChangeQty)
 			{

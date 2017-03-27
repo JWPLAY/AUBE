@@ -116,5 +116,69 @@
 				WHERE	PROD_ID = #PROD_ID#
 			]]>
 		</delete>
+
+		<select id="GetProductionList" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT  ROW_NUMBER() OVER (ORDER BY AA.PROD_ID, IT.ITEM_ID)	AS ROW_NO
+					,	AA.PROD_ID
+					,	dbo.DateCharToChar10(AA.PROD_DATE)					AS PROD_DATE
+					,	AA.PRODUCT_ID
+					,	PP.PRODUCT_CODE
+					,	PP.PRODUCT_NAME
+					,	AA.PROD_QTY
+					,	AA.REMARKS
+					,	ROW_NUMBER() OVER (PARTITION BY AA.PROD_ID ORDER BY IT.ITEM_ID)	AS ITEM_NO
+					,	IT.PRODUCT_ID							AS MATERIAL_ID
+					,	P2.PRODUCT_NAME							AS MATERIAL_NAME
+					,	IT.INV_QTY								AS INPUT_QTY
+					,	dbo.DateTimeToChar20(AA.INS_TIME)		AS INS_TIME
+					,	AA.INS_USER
+					,	U1.USER_NAME							AS INS_USER_NAME
+					,	dbo.DateTimeToChar20(AA.UPD_TIME)		AS UPD_TIME
+					,	AA.UPD_USER
+					,	U2.USER_NAME							AS UPD_USER_NAME
+				FROM	UBZ.PROD_TRAN AA
+						LEFT JOIN
+							UBZ.INVENTORY_TRAN IT
+								ON AA.PROD_ID = IT.TRAN_ID
+									AND IT.TRAN_TP = 'PU'
+						LEFT JOIN
+							UCD.PRODUCTS PP
+								ON AA.PRODUCT_ID = PP.PRODUCT_ID
+						LEFT JOIN
+							UCD.PRODUCTS P2
+								ON IT.PRODUCT_ID = P2.PRODUCT_ID
+						LEFT JOIN
+							UAA.USERS U1
+								ON AA.INS_USER = U1.USER_ID
+						LEFT JOIN
+							UAA.USERS U2 
+								ON AA.UPD_USER = U2.USER_ID
+				WHERE	1=1				
+			]]>
+			<isNotEmpty property="ST_PROD_DATE">
+				<![CDATA[
+				AND		AA.PROD_DATE >= #ST_PROD_DATE#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty property="ED_PROD_DATE">
+				<![CDATA[
+				AND		AA.PROD_DATE <= #ED_PROD_DATE#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty property="PRODUCT_ID">
+				<![CDATA[
+				AND		AA.PRODUCT_ID = #PRODUCT_ID#
+			]]>
+			</isNotEmpty>
+			<isNotEmpty property="MATERIAL_ID">
+				<![CDATA[
+				AND		IT.PRODUCT_ID = #MATERIAL_ID#
+			]]>
+			</isNotEmpty>
+			<![CDATA[
+				ORDER BY ROW_NO
+			]]>
+		</select>
 	</statements>
 </sqlMap>

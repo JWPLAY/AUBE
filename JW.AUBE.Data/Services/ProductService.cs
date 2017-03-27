@@ -275,5 +275,21 @@ namespace JW.AUBE.Service.Services
 				return req;
 			}
 		}
+
+		public static DBTranSet GetDataByBarcode(DBTranSet req)
+		{
+			try
+			{
+				var data = DaoFactory.Instance.QueryForObject<DataMap>("GetProductId", req.TranList[0].Parameter);
+				req.TranList[0].Data = data;
+				return req;
+			}
+			catch (Exception ex)
+			{
+				req.ErrorNumber = ex.HResult;
+				req.ErrorMessage = ex.Message;
+				return req;
+			}
+		}
 	}
 }

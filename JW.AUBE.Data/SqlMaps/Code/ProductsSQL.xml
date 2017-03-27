@@ -136,6 +136,24 @@
 				]]>
 		</select>
 
+		<select id="GetDataByBarcode" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT  TOP 1
+						AA.PRODUCT_ID
+					,	AA.PRODUCT_CODE
+					,	AA.PRODUCT_NAME
+					,	ISNULL(SP.SALE_PRICE, 0)	AS SALE_PRICE
+				FROM	UCD.PRODUCTS AA WITH (NOLOCK)
+						LEFT JOIN
+							UCD.SALES_PRICE SP WITH (NOLOCK)
+								ON AA.PRODUCT_ID = SP.PRODUCT_ID
+									AND SP.BEG_DATE <= CONVERT(VARCHAR(8), GETDATE(), 112)
+									AND SP.END_DATE >= CONVERT(VARCHAR(8), GETDATE(), 112)
+				WHERE	AA.BARCODE = #BARCODE#
+				ORDER BY ISNULL(AA.UPD_DTM, AA.REG_DTM) DESC
+				]]>
+		</select>
+
 		<select id="GetSalesPriceList" parameterClass="DataMap" resultClass="SalesPriceListModel" >
 			<![CDATA[
 				SELECT  ROW_NUMBER() OVER (ORDER BY AA.BEG_DATE)	AS ROW_NO

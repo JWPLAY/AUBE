@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JW.AUBE.Model", "JW.AUBE.Mo
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "JW.AUBE.Setup", "JW.AUBE.Setup\JW.AUBE.Setup.vdproj", "{B664D3FF-EB57-47CE-808A-87485E98AEC0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JW.AUBE.Web", "JW.AUBE.Web\JW.AUBE.Web.csproj", "{096ACCF7-3CAC-4085-BF55-C16F9A758170}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{30F5EC55-1D6C-4EA3-89B0-F9CD6B60A17C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B664D3FF-EB57-47CE-808A-87485E98AEC0}.Debug|Any CPU.ActiveCfg = Debug
 		{B664D3FF-EB57-47CE-808A-87485E98AEC0}.Release|Any CPU.ActiveCfg = Release
+		{096ACCF7-3CAC-4085-BF55-C16F9A758170}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{096ACCF7-3CAC-4085-BF55-C16F9A758170}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{096ACCF7-3CAC-4085-BF55-C16F9A758170}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{096ACCF7-3CAC-4085-BF55-C16F9A758170}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

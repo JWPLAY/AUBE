@@ -20,6 +20,9 @@ namespace JW.AUBE.Core.PostCode
 
 			wb.DocumentCompleted += delegate (object sender, WebBrowserDocumentCompletedEventArgs e)
 			{
+				while (wb.ReadyState != WebBrowserReadyState.Complete)
+					Application.DoEvents();
+
 				try
 				{
 					if (!bOpened)
@@ -49,12 +52,11 @@ namespace JW.AUBE.Core.PostCode
 				wb.AllowWebBrowserDrop = false;
 				//wb.IsWebBrowserContextMenuEnabled = false;
 				//wb.WebBrowserShortcutsEnabled = false;
-				string html = Properties.Resources.searchpostcode;
-				wb.DocumentText = html;
+				//string html = Properties.Resources.searchpostcode;
+				//wb.DocumentText = html;
 				//string curDir = Directory.GetCurrentDirectory();
 				//wb.Url = new Uri(string.Format("file:///{0}/PostCode/searchpostcode.html", curDir));
-				//wb.Navigate(new Uri(@"http://www.dwcts.co.kr/daumpostcode.html"));
-				//http://www.dwcts.co.kr/daumpostcode.html
+				wb.Navigate(new Uri(@"http://do.dwcts.co.kr/Html/searchpostcode.html"));
 			}
 			catch (Exception ex)
 			{
@@ -86,11 +88,6 @@ namespace JW.AUBE.Core.PostCode
 			{
 				MsgBox.Show(ex);			
 			}
-		}
-
-		public void Callback2(object data)
-		{
-			MsgBox.Show(data.ToString());
 		}
 	}
 }

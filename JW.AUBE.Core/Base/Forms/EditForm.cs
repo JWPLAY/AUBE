@@ -369,6 +369,7 @@ namespace JW.AUBE.Core.Base.Forms
 				SetLayout();
 
 				barTitle.Caption = this.Text;
+				barTitle.ItemAppearance.Normal.ForeColor = Color.White;
 				barTitle.ItemAppearance.Normal.BackColor = Color.Black;
 				barTitle.ItemAppearance.Normal.BackColor2 = Color.Transparent;
 				barStaticMessage.Caption = string.Empty;

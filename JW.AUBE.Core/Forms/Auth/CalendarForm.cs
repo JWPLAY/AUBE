@@ -115,7 +115,12 @@ namespace JW.AUBE.Core.Forms.Auth
 					if (e.RowHandle != view.FocusedRowHandle)
 					{
 						if (view.GetRowCellValue(e.RowHandle, "HOLIDAY_YN").ToString() == "Y")
-							e.Appearance.BackColor = Color.Pink;
+						{
+							if (view.GetRowCellValue(e.RowHandle, "WEEK_NAME").ToString() == "토")
+								e.Appearance.ForeColor = Color.Blue;
+							else
+								e.Appearance.ForeColor = Color.Red;
+						}
 					}
 				}
 				catch(Exception ex)

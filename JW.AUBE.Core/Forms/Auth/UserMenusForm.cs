@@ -168,6 +168,12 @@ namespace JW.AUBE.Core.Forms.Auth
 
 		protected override void DataSave(object arg, SaveCallback callback)
 		{
+			if (gridMenus.RowCount > 0)
+			{
+				gridMenus.PostEditor();
+				gridMenus.UpdateCurrentRow();
+			}
+
 			try
 			{
 				DataTable dt = new DataTable();

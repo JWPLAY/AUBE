@@ -28,8 +28,9 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-			this.barManager = new DevExpress.XtraBars.BarManager();
+			this.barManager = new DevExpress.XtraBars.BarManager(this.components);
 			this.barTools = new DevExpress.XtraBars.Bar();
 			this.barButtonNav = new DevExpress.XtraBars.BarButtonItem();
 			this.barButtonFav = new DevExpress.XtraBars.BarButtonItem();
@@ -52,12 +53,12 @@
 			this.barStatusBarCulture = new DevExpress.XtraBars.BarStaticItem();
 			this.barStatusBarDatetime = new DevExpress.XtraBars.BarStaticItem();
 			this.chkKeepAlive = new DevExpress.XtraBars.BarCheckItem();
-			this.barAndDockingController = new DevExpress.XtraBars.BarAndDockingController();
+			this.barAndDockingController = new DevExpress.XtraBars.BarAndDockingController(this.components);
 			this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-			this.dockManager = new DevExpress.XtraBars.Docking.DockManager();
+			this.dockManager = new DevExpress.XtraBars.Docking.DockManager(this.components);
 			this.dockPanelLog = new DevExpress.XtraBars.Docking.DockPanel();
 			this.controlContainer1 = new DevExpress.XtraBars.Docking.ControlContainer();
 			this.dpFavorite = new DevExpress.XtraBars.Docking.DockPanel();
@@ -69,7 +70,7 @@
 			this.dockPanelMainMenu_Container = new DevExpress.XtraBars.Docking.ControlContainer();
 			this.navBarNavigate = new DevExpress.XtraNavBar.NavBarControl();
 			this.navBarGroup1 = new DevExpress.XtraNavBar.NavBarGroup();
-			this.toolTipController = new DevExpress.Utils.ToolTipController();
+			this.toolTipController = new DevExpress.Utils.ToolTipController(this.components);
 			this.barSubItemPanels = new DevExpress.XtraBars.BarSubItem();
 			this.barPopupUxButtonpandAll = new DevExpress.XtraBars.BarButtonItem();
 			this.barPopupButtonCollapseAll = new DevExpress.XtraBars.BarButtonItem();
@@ -80,15 +81,15 @@
 			this.barPopupButtonSave = new DevExpress.XtraBars.BarButtonItem();
 			this.barButtonTabPageCloseAll = new DevExpress.XtraBars.BarButtonItem();
 			this.barButtonTabPageCloseAllButThis = new DevExpress.XtraBars.BarButtonItem();
-			this.imageCollection = new DevExpress.Utils.ImageCollection();
-			this.mdiManager = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager();
-			this.timerMainTime = new System.Windows.Forms.Timer();
-			this.popupMenuOfMainMenu = new DevExpress.XtraBars.PopupMenu();
-			this.popupMenuOfBookmark = new DevExpress.XtraBars.PopupMenu();
-			this.timerHomeShow = new System.Windows.Forms.Timer();
-			this.alertAprvCheck = new DevExpress.XtraBars.Alerter.AlertControl();
-			this.notifyIcon1 = new System.Windows.Forms.NotifyIcon();
-			this.popupMenuTabPage = new DevExpress.XtraBars.PopupMenu();
+			this.imageCollection = new DevExpress.Utils.ImageCollection(this.components);
+			this.mdiManager = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
+			this.timerMainTime = new System.Windows.Forms.Timer(this.components);
+			this.popupMenuOfMainMenu = new DevExpress.XtraBars.PopupMenu(this.components);
+			this.popupMenuOfBookmark = new DevExpress.XtraBars.PopupMenu(this.components);
+			this.timerHomeShow = new System.Windows.Forms.Timer(this.components);
+			this.alertAprvCheck = new DevExpress.XtraBars.Alerter.AlertControl(this.components);
+			this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+			this.popupMenuTabPage = new DevExpress.XtraBars.PopupMenu(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.barManager)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.barAndDockingController)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dockManager)).BeginInit();
@@ -188,45 +189,45 @@
 			// 
 			this.barButtonNav.Caption = "메인메뉴";
 			this.barButtonNav.CategoryGuid = new System.Guid("a88229de-4627-4658-b6a2-102960a89e38");
-			this.barButtonNav.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonNav.Glyph")));
 			this.barButtonNav.Id = 29;
-			this.barButtonNav.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonNav.LargeGlyph")));
+			this.barButtonNav.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonNav.ImageOptions.Image")));
+			this.barButtonNav.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonNav.ImageOptions.LargeImage")));
 			this.barButtonNav.Name = "barButtonNav";
 			// 
 			// barButtonFav
 			// 
 			this.barButtonFav.Caption = "즐겨찾기";
 			this.barButtonFav.CategoryGuid = new System.Guid("a88229de-4627-4658-b6a2-102960a89e38");
-			this.barButtonFav.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonFav.Glyph")));
 			this.barButtonFav.Id = 39;
-			this.barButtonFav.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonFav.LargeGlyph")));
+			this.barButtonFav.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonFav.ImageOptions.Image")));
+			this.barButtonFav.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonFav.ImageOptions.LargeImage")));
 			this.barButtonFav.Name = "barButtonFav";
 			// 
 			// barButtonLog
 			// 
 			this.barButtonLog.Caption = "오류로그";
 			this.barButtonLog.CategoryGuid = new System.Guid("a88229de-4627-4658-b6a2-102960a89e38");
-			this.barButtonLog.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonLog.Glyph")));
 			this.barButtonLog.Id = 42;
-			this.barButtonLog.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonLog.LargeGlyph")));
+			this.barButtonLog.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonLog.ImageOptions.Image")));
+			this.barButtonLog.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonLog.ImageOptions.LargeImage")));
 			this.barButtonLog.Name = "barButtonLog";
 			// 
 			// barButtonHome
 			// 
 			this.barButtonHome.Caption = "Home";
 			this.barButtonHome.CategoryGuid = new System.Guid("a88229de-4627-4658-b6a2-102960a89e38");
-			this.barButtonHome.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonHome.Glyph")));
 			this.barButtonHome.Id = 34;
-			this.barButtonHome.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonHome.LargeGlyph")));
+			this.barButtonHome.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonHome.ImageOptions.Image")));
+			this.barButtonHome.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonHome.ImageOptions.LargeImage")));
 			this.barButtonHome.Name = "barButtonHome";
 			// 
 			// barButtonSetting
 			// 
 			this.barButtonSetting.Caption = "Setting";
 			this.barButtonSetting.CategoryGuid = new System.Guid("a88229de-4627-4658-b6a2-102960a89e38");
-			this.barButtonSetting.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonSetting.Glyph")));
 			this.barButtonSetting.Id = 67;
-			this.barButtonSetting.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonSetting.LargeGlyph")));
+			this.barButtonSetting.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonSetting.ImageOptions.Image")));
+			this.barButtonSetting.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonSetting.ImageOptions.LargeImage")));
 			this.barButtonSetting.Name = "barButtonSetting";
 			// 
 			// barMainMenu
@@ -260,10 +261,10 @@
 			this.barButtonClose.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
 			this.barButtonClose.Caption = "종료";
 			this.barButtonClose.CategoryGuid = new System.Guid("bec3a755-f9e4-4762-8f97-437727239f80");
-			this.barButtonClose.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonClose.Glyph")));
 			this.barButtonClose.Id = 18;
+			this.barButtonClose.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonClose.ImageOptions.Image")));
+			this.barButtonClose.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonClose.ImageOptions.LargeImage")));
 			this.barButtonClose.ItemShortcut = new DevExpress.XtraBars.BarShortcut(System.Windows.Forms.Keys.F12);
-			this.barButtonClose.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonClose.LargeGlyph")));
 			this.barButtonClose.Name = "barButtonClose";
 			// 
 			// barSubItemEdit
@@ -278,9 +279,9 @@
 			// 
 			this.barButtonChangePassword.Caption = "사용자 정보 변경";
 			this.barButtonChangePassword.CategoryGuid = new System.Guid("187f1f34-7a4a-479d-83b8-80cebc184b65");
-			this.barButtonChangePassword.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonChangePassword.Glyph")));
 			this.barButtonChangePassword.Id = 25;
-			this.barButtonChangePassword.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonChangePassword.LargeGlyph")));
+			this.barButtonChangePassword.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonChangePassword.ImageOptions.Image")));
+			this.barButtonChangePassword.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonChangePassword.ImageOptions.LargeImage")));
 			this.barButtonChangePassword.Name = "barButtonChangePassword";
 			// 
 			// barSubItemView
@@ -308,18 +309,18 @@
 			// 
 			this.barButtonDomain.Caption = "용어사전 다운로드";
 			this.barButtonDomain.CategoryGuid = new System.Guid("99851dff-d89b-4f5f-8a8e-af8c9e6cf4d7");
-			this.barButtonDomain.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonDomain.Glyph")));
 			this.barButtonDomain.Id = 53;
-			this.barButtonDomain.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonDomain.LargeGlyph")));
+			this.barButtonDomain.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonDomain.ImageOptions.Image")));
+			this.barButtonDomain.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonDomain.ImageOptions.LargeImage")));
 			this.barButtonDomain.Name = "barButtonDomain";
 			// 
 			// barButtonAbout
 			// 
 			this.barButtonAbout.Caption = "About";
 			this.barButtonAbout.CategoryGuid = new System.Guid("99851dff-d89b-4f5f-8a8e-af8c9e6cf4d7");
-			this.barButtonAbout.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonAbout.Glyph")));
 			this.barButtonAbout.Id = 35;
-			this.barButtonAbout.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonAbout.LargeGlyph")));
+			this.barButtonAbout.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonAbout.ImageOptions.Image")));
+			this.barButtonAbout.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonAbout.ImageOptions.LargeImage")));
 			this.barButtonAbout.Name = "barButtonAbout";
 			// 
 			// barStatusBar
@@ -388,11 +389,11 @@
 			// chkKeepAlive
 			// 
 			this.chkKeepAlive.Caption = "데이터수신";
-			this.chkKeepAlive.Glyph = ((System.Drawing.Image)(resources.GetObject("chkKeepAlive.Glyph")));
-			this.chkKeepAlive.GlyphDisabled = ((System.Drawing.Image)(resources.GetObject("chkKeepAlive.GlyphDisabled")));
 			this.chkKeepAlive.Id = 62;
-			this.chkKeepAlive.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("chkKeepAlive.LargeGlyph")));
-			this.chkKeepAlive.LargeGlyphDisabled = ((System.Drawing.Image)(resources.GetObject("chkKeepAlive.LargeGlyphDisabled")));
+			this.chkKeepAlive.ImageOptions.DisabledImage = ((System.Drawing.Image)(resources.GetObject("chkKeepAlive.ImageOptions.DisabledImage")));
+			this.chkKeepAlive.ImageOptions.DisabledLargeImage = ((System.Drawing.Image)(resources.GetObject("chkKeepAlive.ImageOptions.DisabledLargeImage")));
+			this.chkKeepAlive.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("chkKeepAlive.ImageOptions.Image")));
+			this.chkKeepAlive.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("chkKeepAlive.ImageOptions.LargeImage")));
 			this.chkKeepAlive.Name = "chkKeepAlive";
 			// 
 			// barAndDockingController
@@ -406,28 +407,32 @@
 			this.barDockControlTop.CausesValidation = false;
 			this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
 			this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
-			this.barDockControlTop.Size = new System.Drawing.Size(1084, 56);
+			this.barDockControlTop.Manager = this.barManager;
+			this.barDockControlTop.Size = new System.Drawing.Size(1084, 52);
 			// 
 			// barDockControlBottom
 			// 
 			this.barDockControlBottom.CausesValidation = false;
 			this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.barDockControlBottom.Location = new System.Drawing.Point(0, 511);
-			this.barDockControlBottom.Size = new System.Drawing.Size(1084, 31);
+			this.barDockControlBottom.Location = new System.Drawing.Point(0, 518);
+			this.barDockControlBottom.Manager = this.barManager;
+			this.barDockControlBottom.Size = new System.Drawing.Size(1084, 24);
 			// 
 			// barDockControlLeft
 			// 
 			this.barDockControlLeft.CausesValidation = false;
 			this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-			this.barDockControlLeft.Location = new System.Drawing.Point(0, 56);
-			this.barDockControlLeft.Size = new System.Drawing.Size(0, 455);
+			this.barDockControlLeft.Location = new System.Drawing.Point(0, 52);
+			this.barDockControlLeft.Manager = this.barManager;
+			this.barDockControlLeft.Size = new System.Drawing.Size(0, 466);
 			// 
 			// barDockControlRight
 			// 
 			this.barDockControlRight.CausesValidation = false;
 			this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-			this.barDockControlRight.Location = new System.Drawing.Point(1084, 56);
-			this.barDockControlRight.Size = new System.Drawing.Size(0, 455);
+			this.barDockControlRight.Location = new System.Drawing.Point(1084, 52);
+			this.barDockControlRight.Manager = this.barManager;
+			this.barDockControlRight.Size = new System.Drawing.Size(0, 466);
 			// 
 			// dockManager
 			// 
@@ -479,18 +484,18 @@
 			this.dpFavorite.FloatVertical = true;
 			this.dpFavorite.ID = new System.Guid("a5e98a7a-fef2-43d9-af20-020bb44847c4");
 			this.dpFavorite.Image = ((System.Drawing.Image)(resources.GetObject("dpFavorite.Image")));
-			this.dpFavorite.Location = new System.Drawing.Point(818, 56);
+			this.dpFavorite.Location = new System.Drawing.Point(818, 52);
 			this.dpFavorite.Name = "dpFavorite";
 			this.dpFavorite.OriginalSize = new System.Drawing.Size(266, 391);
-			this.dpFavorite.Size = new System.Drawing.Size(266, 455);
+			this.dpFavorite.Size = new System.Drawing.Size(266, 466);
 			this.dpFavorite.Text = "Favorite";
 			// 
 			// dockPanel1_Container
 			// 
 			this.dockPanel1_Container.Controls.Add(this.navBarFavorite);
-			this.dockPanel1_Container.Location = new System.Drawing.Point(5, 26);
+			this.dockPanel1_Container.Location = new System.Drawing.Point(5, 39);
 			this.dockPanel1_Container.Name = "dockPanel1_Container";
-			this.dockPanel1_Container.Size = new System.Drawing.Size(257, 425);
+			this.dockPanel1_Container.Size = new System.Drawing.Size(257, 423);
 			this.dockPanel1_Container.TabIndex = 0;
 			// 
 			// navBarFavorite
@@ -506,7 +511,7 @@
 			this.navBarFavorite.OptionsNavPane.ShowExpandButton = false;
 			this.navBarFavorite.OptionsNavPane.ShowGroupImageInHeader = true;
 			this.navBarFavorite.PaintStyleKind = DevExpress.XtraNavBar.NavBarViewKind.NavigationPane;
-			this.navBarFavorite.Size = new System.Drawing.Size(257, 425);
+			this.navBarFavorite.Size = new System.Drawing.Size(257, 423);
 			this.navBarFavorite.StoreDefaultPaintStyleName = true;
 			this.navBarFavorite.TabIndex = 0;
 			this.navBarFavorite.Text = "즐겨찾기";
@@ -533,24 +538,27 @@
 			this.dpNavigation.FloatVertical = true;
 			this.dpNavigation.ID = new System.Guid("98baa37f-b8a0-4579-8915-c1e07f9c317f");
 			this.dpNavigation.Image = ((System.Drawing.Image)(resources.GetObject("dpNavigation.Image")));
-			this.dpNavigation.Location = new System.Drawing.Point(0, 56);
+			this.dpNavigation.Location = new System.Drawing.Point(0, 52);
 			this.dpNavigation.Name = "dpNavigation";
 			this.dpNavigation.OriginalSize = new System.Drawing.Size(274, 200);
-			this.dpNavigation.Size = new System.Drawing.Size(274, 455);
+			this.dpNavigation.Size = new System.Drawing.Size(274, 466);
 			this.dpNavigation.Text = "Navigation";
 			// 
 			// dockPanelMainMenu_Container
 			// 
 			this.dockPanelMainMenu_Container.Controls.Add(this.navBarNavigate);
-			this.dockPanelMainMenu_Container.Location = new System.Drawing.Point(4, 26);
+			this.dockPanelMainMenu_Container.Location = new System.Drawing.Point(4, 39);
 			this.dockPanelMainMenu_Container.Name = "dockPanelMainMenu_Container";
 			this.dockPanelMainMenu_Container.Padding = new System.Windows.Forms.Padding(2);
-			this.dockPanelMainMenu_Container.Size = new System.Drawing.Size(265, 425);
+			this.dockPanelMainMenu_Container.Size = new System.Drawing.Size(265, 423);
 			this.dockPanelMainMenu_Container.TabIndex = 0;
 			// 
 			// navBarNavigate
 			// 
 			this.navBarNavigate.ActiveGroup = this.navBarGroup1;
+			this.navBarNavigate.Appearance.Background.BackColor = System.Drawing.Color.White;
+			this.navBarNavigate.Appearance.Background.Options.UseBackColor = true;
+			this.navBarNavigate.BackColor = System.Drawing.Color.White;
 			this.navBarNavigate.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.navBarNavigate.Groups.AddRange(new DevExpress.XtraNavBar.NavBarGroup[] {
             this.navBarGroup1});
@@ -559,7 +567,7 @@
 			this.navBarNavigate.OptionsNavPane.ExpandedWidth = 261;
 			this.navBarNavigate.OptionsNavPane.ShowExpandButton = false;
 			this.navBarNavigate.PaintStyleKind = DevExpress.XtraNavBar.NavBarViewKind.NavigationPane;
-			this.navBarNavigate.Size = new System.Drawing.Size(261, 421);
+			this.navBarNavigate.Size = new System.Drawing.Size(261, 419);
 			this.navBarNavigate.StoreDefaultPaintStyleName = true;
 			this.navBarNavigate.TabIndex = 1;
 			this.navBarNavigate.Text = "navBarControl1";
@@ -573,94 +581,91 @@
 			// barSubItemPanels
 			// 
 			this.barSubItemPanels.Caption = "Panels";
-			this.barSubItemPanels.Glyph = ((System.Drawing.Image)(resources.GetObject("barSubItemPanels.Glyph")));
 			this.barSubItemPanels.Id = 43;
-			this.barSubItemPanels.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barSubItemPanels.LargeGlyph")));
+			this.barSubItemPanels.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barSubItemPanels.ImageOptions.Image")));
+			this.barSubItemPanels.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barSubItemPanels.ImageOptions.LargeImage")));
 			this.barSubItemPanels.Name = "barSubItemPanels";
 			// 
 			// barPopupUxButtonpandAll
 			// 
 			this.barPopupUxButtonpandAll.Caption = "전체확장";
 			this.barPopupUxButtonpandAll.CategoryGuid = new System.Guid("0435dc73-6ef8-49fc-b877-fa038cb079b7");
-			this.barPopupUxButtonpandAll.Glyph = ((System.Drawing.Image)(resources.GetObject("barPopupUxButtonpandAll.Glyph")));
 			this.barPopupUxButtonpandAll.Id = 46;
-			this.barPopupUxButtonpandAll.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barPopupUxButtonpandAll.LargeGlyph")));
+			this.barPopupUxButtonpandAll.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barPopupUxButtonpandAll.ImageOptions.Image")));
+			this.barPopupUxButtonpandAll.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barPopupUxButtonpandAll.ImageOptions.LargeImage")));
 			this.barPopupUxButtonpandAll.Name = "barPopupUxButtonpandAll";
 			// 
 			// barPopupButtonCollapseAll
 			// 
 			this.barPopupButtonCollapseAll.Caption = "전체축소";
 			this.barPopupButtonCollapseAll.CategoryGuid = new System.Guid("0435dc73-6ef8-49fc-b877-fa038cb079b7");
-			this.barPopupButtonCollapseAll.Glyph = ((System.Drawing.Image)(resources.GetObject("barPopupButtonCollapseAll.Glyph")));
 			this.barPopupButtonCollapseAll.Id = 47;
-			this.barPopupButtonCollapseAll.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barPopupButtonCollapseAll.LargeGlyph")));
+			this.barPopupButtonCollapseAll.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barPopupButtonCollapseAll.ImageOptions.Image")));
+			this.barPopupButtonCollapseAll.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barPopupButtonCollapseAll.ImageOptions.LargeImage")));
 			this.barPopupButtonCollapseAll.Name = "barPopupButtonCollapseAll";
 			// 
 			// barPopupButtonRefresh
 			// 
 			this.barPopupButtonRefresh.Caption = "새로고침";
 			this.barPopupButtonRefresh.CategoryGuid = new System.Guid("0435dc73-6ef8-49fc-b877-fa038cb079b7");
-			this.barPopupButtonRefresh.Glyph = ((System.Drawing.Image)(resources.GetObject("barPopupButtonRefresh.Glyph")));
 			this.barPopupButtonRefresh.Id = 48;
-			this.barPopupButtonRefresh.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barPopupButtonRefresh.LargeGlyph")));
+			this.barPopupButtonRefresh.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barPopupButtonRefresh.ImageOptions.Image")));
+			this.barPopupButtonRefresh.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barPopupButtonRefresh.ImageOptions.LargeImage")));
 			this.barPopupButtonRefresh.Name = "barPopupButtonRefresh";
 			// 
 			// barPopupButtonBookmark
 			// 
 			this.barPopupButtonBookmark.Caption = "나만의 메뉴 추가";
 			this.barPopupButtonBookmark.CategoryGuid = new System.Guid("0435dc73-6ef8-49fc-b877-fa038cb079b7");
-			this.barPopupButtonBookmark.Glyph = ((System.Drawing.Image)(resources.GetObject("barPopupButtonBookmark.Glyph")));
 			this.barPopupButtonBookmark.Id = 49;
-			this.barPopupButtonBookmark.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barPopupButtonBookmark.LargeGlyph")));
+			this.barPopupButtonBookmark.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barPopupButtonBookmark.ImageOptions.Image")));
+			this.barPopupButtonBookmark.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barPopupButtonBookmark.ImageOptions.LargeImage")));
 			this.barPopupButtonBookmark.Name = "barPopupButtonBookmark";
 			// 
 			// barPopupButtonDelete
 			// 
 			this.barPopupButtonDelete.Caption = "나만의 메뉴 삭제";
 			this.barPopupButtonDelete.CategoryGuid = new System.Guid("47a24670-3f86-4b66-91ca-9b7113276500");
-			this.barPopupButtonDelete.Glyph = ((System.Drawing.Image)(resources.GetObject("barPopupButtonDelete.Glyph")));
 			this.barPopupButtonDelete.Id = 52;
-			this.barPopupButtonDelete.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barPopupButtonDelete.LargeGlyph")));
+			this.barPopupButtonDelete.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barPopupButtonDelete.ImageOptions.Image")));
+			this.barPopupButtonDelete.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barPopupButtonDelete.ImageOptions.LargeImage")));
 			this.barPopupButtonDelete.Name = "barPopupButtonDelete";
 			// 
 			// barPopupButtonDelete_Like
 			// 
 			this.barPopupButtonDelete_Like.Caption = "나만의 메뉴 삭제";
-			this.barPopupButtonDelete_Like.Glyph = ((System.Drawing.Image)(resources.GetObject("barPopupButtonDelete_Like.Glyph")));
 			this.barPopupButtonDelete_Like.Id = 63;
-			this.barPopupButtonDelete_Like.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barPopupButtonDelete_Like.LargeGlyph")));
+			this.barPopupButtonDelete_Like.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barPopupButtonDelete_Like.ImageOptions.Image")));
+			this.barPopupButtonDelete_Like.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barPopupButtonDelete_Like.ImageOptions.LargeImage")));
 			this.barPopupButtonDelete_Like.Name = "barPopupButtonDelete_Like";
 			// 
 			// barPopupButtonSave
 			// 
 			this.barPopupButtonSave.Caption = "나만의 메뉴 저장";
-			this.barPopupButtonSave.Glyph = ((System.Drawing.Image)(resources.GetObject("barPopupButtonSave.Glyph")));
 			this.barPopupButtonSave.Id = 64;
-			this.barPopupButtonSave.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barPopupButtonSave.LargeGlyph")));
+			this.barPopupButtonSave.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barPopupButtonSave.ImageOptions.Image")));
+			this.barPopupButtonSave.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barPopupButtonSave.ImageOptions.LargeImage")));
 			this.barPopupButtonSave.Name = "barPopupButtonSave";
 			// 
 			// barButtonTabPageCloseAll
 			// 
 			this.barButtonTabPageCloseAll.Caption = "모든 화면 닫기";
-			this.barButtonTabPageCloseAll.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonTabPageCloseAll.Glyph")));
 			this.barButtonTabPageCloseAll.Id = 65;
-			this.barButtonTabPageCloseAll.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonTabPageCloseAll.LargeGlyph")));
+			this.barButtonTabPageCloseAll.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonTabPageCloseAll.ImageOptions.Image")));
+			this.barButtonTabPageCloseAll.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonTabPageCloseAll.ImageOptions.LargeImage")));
 			this.barButtonTabPageCloseAll.Name = "barButtonTabPageCloseAll";
 			// 
 			// barButtonTabPageCloseAllButThis
 			// 
 			this.barButtonTabPageCloseAllButThis.Caption = "이 화면을 제외하고 모든 화면 닫기";
-			this.barButtonTabPageCloseAllButThis.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonTabPageCloseAllButThis.Glyph")));
 			this.barButtonTabPageCloseAllButThis.Id = 66;
-			this.barButtonTabPageCloseAllButThis.LargeGlyph = ((System.Drawing.Image)(resources.GetObject("barButtonTabPageCloseAllButThis.LargeGlyph")));
+			this.barButtonTabPageCloseAllButThis.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonTabPageCloseAllButThis.ImageOptions.Image")));
+			this.barButtonTabPageCloseAllButThis.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonTabPageCloseAllButThis.ImageOptions.LargeImage")));
 			this.barButtonTabPageCloseAllButThis.Name = "barButtonTabPageCloseAllButThis";
 			// 
 			// imageCollection
 			// 
-			//this.imageCollection.ImageStream = ((DevExpress.Utils.ImageCollectionStreamer)(resources.GetObject("imageCollection.ImageStream")));
-			//this.imageCollection.Images.SetKeyName(0, "menu_group_small.png");
-			//this.imageCollection.Images.SetKeyName(1, "menu_group_select_small.png");
-			//this.imageCollection.Images.SetKeyName(2, "menu_item_small.png");
+			this.imageCollection.ImageStream = ((DevExpress.Utils.ImageCollectionStreamer)(resources.GetObject("imageCollection.ImageStream")));
 			// 
 			// mdiManager
 			// 

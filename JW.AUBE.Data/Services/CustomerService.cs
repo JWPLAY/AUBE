@@ -86,6 +86,7 @@ namespace JW.AUBE.Service.Services
 							throw new Exception("거래처정보를 저장할 데이터가 존재하지 않습니다.");
 
 						DataMap data = (req.TranList[0].Data as DataTable).ToDataMapList()[0];
+						data.SetValue("INS_USER", req.UserId);
 
 						rowState = data.GetValue("ROWSTATE").ToStringNullToEmpty();
 
@@ -185,10 +186,11 @@ namespace JW.AUBE.Service.Services
 		{
 			try
 			{
-				var map = DaoFactory.Instance.QueryForObject<DataMap>("SelectCustomer", req.TranList[0].Parameter);
+				DataMap data = req.TranList[0].Data as DataMap;
+				var map = DaoFactory.Instance.QueryForObject<DataMap>("SelectCustomer", data);
 				if (map != null)
 				{
-					DaoFactory.Instance.Insert("DeleteCustomer", req.TranList[0].Parameter);
+					DaoFactory.Instance.Insert("DeleteCustomer", data);
 				}
 				return req;
 			}
@@ -232,6 +234,7 @@ namespace JW.AUBE.Service.Services
 							if (map == null || map.Count == 0)
 								continue;
 
+							map.SetValue("INS_USER", req.UserId);
 							rowState = map.GetValue("ROWSTATE").ToString();
 
 							if (rowState == "INSERT" || rowState == "UPDATE")

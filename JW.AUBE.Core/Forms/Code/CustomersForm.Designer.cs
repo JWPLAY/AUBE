@@ -66,17 +66,6 @@
 			this.lcItemUpdUserName = new DevExpress.XtraLayout.LayoutControlItem();
 			this.txtUpdUserName = new DevExpress.XtraEditors.TextEdit();
 			this.lcTabGroup = new DevExpress.XtraLayout.TabbedControlGroup();
-			this.lcTabGroupAddress = new DevExpress.XtraLayout.LayoutControlGroup();
-			this.lcGridAddressList = new DevExpress.XtraLayout.LayoutControlItem();
-			this.gridAddress = new JW.AUBE.Core.Controls.Grid.XGrid();
-			this.lcTabGroupAddressButtons = new DevExpress.XtraLayout.LayoutControlGroup();
-			this.emptySpaceItem7 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.lcButtonAddressAdd = new DevExpress.XtraLayout.LayoutControlItem();
-			this.btnAddressAdd = new DevExpress.XtraEditors.SimpleButton();
-			this.lcButtonAddressDel = new DevExpress.XtraLayout.LayoutControlItem();
-			this.btnAddressDel = new DevExpress.XtraEditors.SimpleButton();
-			this.lcButtonAddressSave = new DevExpress.XtraLayout.LayoutControlItem();
-			this.btnAddressSave = new DevExpress.XtraEditors.SimpleButton();
 			this.lcTabGroupBiz = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.lcGroupBizEdit = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.lcItemBizRegId = new DevExpress.XtraLayout.LayoutControlItem();
@@ -111,6 +100,8 @@
 			this.emptySpaceItem16 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.emptySpaceItem17 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.emptySpaceItem18 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.lcButtonSearchPostCode = new DevExpress.XtraLayout.LayoutControlItem();
+			this.btnSearchPostCode = new DevExpress.XtraEditors.SimpleButton();
 			this.lcTabGroupPhones = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.lcGridPhoneList = new DevExpress.XtraLayout.LayoutControlItem();
 			this.gridPhones = new JW.AUBE.Core.Controls.Grid.XGrid();
@@ -122,8 +113,17 @@
 			this.btnPhoneDel = new DevExpress.XtraEditors.SimpleButton();
 			this.lcButtonPhoneSave = new DevExpress.XtraLayout.LayoutControlItem();
 			this.btnPhoneSave = new DevExpress.XtraEditors.SimpleButton();
-			this.btnSearchPostCode = new DevExpress.XtraEditors.SimpleButton();
-			this.lcButtonSearchPostCode = new DevExpress.XtraLayout.LayoutControlItem();
+			this.lcTabGroupAddress = new DevExpress.XtraLayout.LayoutControlGroup();
+			this.lcGridAddressList = new DevExpress.XtraLayout.LayoutControlItem();
+			this.gridAddress = new JW.AUBE.Core.Controls.Grid.XGrid();
+			this.lcTabGroupAddressButtons = new DevExpress.XtraLayout.LayoutControlGroup();
+			this.emptySpaceItem7 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.lcButtonAddressAdd = new DevExpress.XtraLayout.LayoutControlItem();
+			this.btnAddressAdd = new DevExpress.XtraEditors.SimpleButton();
+			this.lcButtonAddressDel = new DevExpress.XtraLayout.LayoutControlItem();
+			this.btnAddressDel = new DevExpress.XtraEditors.SimpleButton();
+			this.lcButtonAddressSave = new DevExpress.XtraLayout.LayoutControlItem();
+			this.btnAddressSave = new DevExpress.XtraEditors.SimpleButton();
 			((System.ComponentModel.ISupportInitialize)(this.lc)).BeginInit();
 			this.lc.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupBase)).BeginInit();
@@ -163,13 +163,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.lcItemUpdUserName)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtUpdUserName.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcTabGroup)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcTabGroupAddress)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcGridAddressList)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcTabGroupAddressButtons)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem7)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcButtonAddressAdd)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcButtonAddressDel)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcButtonAddressSave)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcTabGroupBiz)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupBizEdit)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemBizRegId)).BeginInit();
@@ -204,6 +197,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem16)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem17)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem18)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcButtonSearchPostCode)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcTabGroupPhones)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGridPhoneList)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcTabGroupPhonesButtons)).BeginInit();
@@ -211,7 +205,13 @@
 			((System.ComponentModel.ISupportInitialize)(this.lcButtonPhoneAdd)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcButtonPhoneDel)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcButtonPhoneSave)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcButtonSearchPostCode)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcTabGroupAddress)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGridAddressList)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcTabGroupAddressButtons)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem7)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcButtonAddressAdd)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcButtonAddressDel)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcButtonAddressSave)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// lc
@@ -251,7 +251,7 @@
 			this.lc.Controls.Add(this.txtFindText);
 			this.lc.Location = new System.Drawing.Point(0, 44);
 			this.lc.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(922, 213, 457, 350);
-			this.lc.Size = new System.Drawing.Size(998, 548);
+			this.lc.Size = new System.Drawing.Size(998, 552);
 			// 
 			// lcGroupBase
 			// 
@@ -260,10 +260,9 @@
             this.lcGroupEdit,
             this.lcGroupRegInfo,
             this.lcTabGroup});
-			this.lcGroupBase.Location = new System.Drawing.Point(0, -13);
 			this.lcGroupBase.Name = "Root";
 			this.lcGroupBase.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcGroupBase.Size = new System.Drawing.Size(981, 563);
+			this.lcGroupBase.Size = new System.Drawing.Size(981, 561);
 			// 
 			// lcGroupFind
 			// 
@@ -273,7 +272,7 @@
 			this.lcGroupFind.Location = new System.Drawing.Point(0, 0);
 			this.lcGroupFind.Name = "lcGroupFind";
 			this.lcGroupFind.Padding = new DevExpress.XtraLayout.Utils.Padding(4, 4, 4, 4);
-			this.lcGroupFind.Size = new System.Drawing.Size(343, 559);
+			this.lcGroupFind.Size = new System.Drawing.Size(343, 557);
 			this.lcGroupFind.Text = "검색";
 			this.lcGroupFind.TextVisible = false;
 			// 
@@ -296,7 +295,7 @@
 			// 
 			// txtFindText
 			// 
-			this.txtFindText.Location = new System.Drawing.Point(139, 24);
+			this.txtFindText.Location = new System.Drawing.Point(139, 37);
 			this.txtFindText.Name = "txtFindText";
 			this.txtFindText.Size = new System.Drawing.Size(190, 20);
 			this.txtFindText.StyleController = this.lc;
@@ -307,7 +306,7 @@
 			this.lcGridList.Control = this.gridList;
 			this.lcGridList.Location = new System.Drawing.Point(0, 57);
 			this.lcGridList.Name = "lcGridList";
-			this.lcGridList.Size = new System.Drawing.Size(329, 488);
+			this.lcGridList.Size = new System.Drawing.Size(329, 486);
 			this.lcGridList.TextSize = new System.Drawing.Size(0, 0);
 			this.lcGridList.TextVisible = false;
 			// 
@@ -316,8 +315,9 @@
 			this.gridList.Compress = false;
 			this.gridList.DataSource = null;
 			this.gridList.Editable = true;
+			this.gridList.FocusedRowHandle = -2147483648;
 			this.gridList.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
-			this.gridList.Location = new System.Drawing.Point(11, 55);
+			this.gridList.Location = new System.Drawing.Point(11, 68);
 			this.gridList.Name = "gridList";
 			this.gridList.PageFooterCenter = null;
 			this.gridList.PageFooterLeft = null;
@@ -329,8 +329,9 @@
 			this.gridList.PrintFooter = null;
 			this.gridList.PrintHeader = null;
 			this.gridList.ReadOnly = false;
+			this.gridList.ShowFooter = false;
 			this.gridList.ShowGroupPanel = false;
-			this.gridList.Size = new System.Drawing.Size(325, 484);
+			this.gridList.Size = new System.Drawing.Size(325, 482);
 			this.gridList.TabIndex = 7;
 			// 
 			// lcGroupEdit
@@ -370,7 +371,7 @@
 			// 
 			// txtCustomerId
 			// 
-			this.txtCustomerId.Location = new System.Drawing.Point(475, -2);
+			this.txtCustomerId.Location = new System.Drawing.Point(475, 11);
 			this.txtCustomerId.Name = "txtCustomerId";
 			this.txtCustomerId.Size = new System.Drawing.Size(125, 20);
 			this.txtCustomerId.StyleController = this.lc;
@@ -389,7 +390,7 @@
 			// 
 			// txtCustomerName
 			// 
-			this.txtCustomerName.Location = new System.Drawing.Point(475, 22);
+			this.txtCustomerName.Location = new System.Drawing.Point(475, 35);
 			this.txtCustomerName.Name = "txtCustomerName";
 			this.txtCustomerName.Size = new System.Drawing.Size(325, 20);
 			this.txtCustomerName.StyleController = this.lc;
@@ -424,7 +425,7 @@
 			// 
 			// memRemarks
 			// 
-			this.memRemarks.Location = new System.Drawing.Point(475, 141);
+			this.memRemarks.Location = new System.Drawing.Point(475, 154);
 			this.memRemarks.Name = "memRemarks";
 			this.memRemarks.Size = new System.Drawing.Size(475, 56);
 			this.memRemarks.StyleController = this.lc;
@@ -441,7 +442,7 @@
 			// chkUseYn
 			// 
 			this.chkUseYn.EditValue = "N";
-			this.chkUseYn.Location = new System.Drawing.Point(475, 118);
+			this.chkUseYn.Location = new System.Drawing.Point(475, 131);
 			this.chkUseYn.Name = "chkUseYn";
 			this.chkUseYn.Properties.AutoWidth = true;
 			this.chkUseYn.Properties.Caption = "";
@@ -465,7 +466,7 @@
 			// 
 			// txtEmail
 			// 
-			this.txtEmail.Location = new System.Drawing.Point(475, 70);
+			this.txtEmail.Location = new System.Drawing.Point(475, 83);
 			this.txtEmail.Name = "txtEmail";
 			this.txtEmail.Size = new System.Drawing.Size(275, 20);
 			this.txtEmail.StyleController = this.lc;
@@ -484,7 +485,7 @@
 			// 
 			// txtHpage
 			// 
-			this.txtHpage.Location = new System.Drawing.Point(475, 94);
+			this.txtHpage.Location = new System.Drawing.Point(475, 107);
 			this.txtHpage.Name = "txtHpage";
 			this.txtHpage.Size = new System.Drawing.Size(275, 20);
 			this.txtHpage.StyleController = this.lc;
@@ -531,7 +532,7 @@
 			this.lupCustomerType.DisplayMember = "";
 			this.lupCustomerType.GroupCode = null;
 			this.lupCustomerType.ListMember = "LIST_NAME";
-			this.lupCustomerType.Location = new System.Drawing.Point(475, 46);
+			this.lupCustomerType.Location = new System.Drawing.Point(475, 59);
 			this.lupCustomerType.Name = "lupCustomerType";
 			this.lupCustomerType.NullText = "[EditValue is null]";
 			this.lupCustomerType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -557,7 +558,7 @@
             this.lcItemInsUserName,
             this.lcItemUpdTime,
             this.lcItemUpdUserName});
-			this.lcGroupRegInfo.Location = new System.Drawing.Point(343, 497);
+			this.lcGroupRegInfo.Location = new System.Drawing.Point(343, 495);
 			this.lcGroupRegInfo.Name = "lcGroupRegInfo";
 			this.lcGroupRegInfo.Padding = new DevExpress.XtraLayout.Utils.Padding(4, 4, 4, 4);
 			this.lcGroupRegInfo.Size = new System.Drawing.Size(634, 62);
@@ -573,7 +574,7 @@
 			// 
 			// txtInsTime
 			// 
-			this.txtInsTime.Location = new System.Drawing.Point(475, 495);
+			this.txtInsTime.Location = new System.Drawing.Point(475, 506);
 			this.txtInsTime.Name = "txtInsTime";
 			this.txtInsTime.Size = new System.Drawing.Size(183, 20);
 			this.txtInsTime.StyleController = this.lc;
@@ -589,7 +590,7 @@
 			// 
 			// txtInsUserName
 			// 
-			this.txtInsUserName.Location = new System.Drawing.Point(475, 519);
+			this.txtInsUserName.Location = new System.Drawing.Point(475, 530);
 			this.txtInsUserName.Name = "txtInsUserName";
 			this.txtInsUserName.Size = new System.Drawing.Size(183, 20);
 			this.txtInsUserName.StyleController = this.lc;
@@ -605,7 +606,7 @@
 			// 
 			// txtUpdTime
 			// 
-			this.txtUpdTime.Location = new System.Drawing.Point(783, 495);
+			this.txtUpdTime.Location = new System.Drawing.Point(783, 506);
 			this.txtUpdTime.Name = "txtUpdTime";
 			this.txtUpdTime.Size = new System.Drawing.Size(187, 20);
 			this.txtUpdTime.StyleController = this.lc;
@@ -621,7 +622,7 @@
 			// 
 			// txtUpdUserName
 			// 
-			this.txtUpdUserName.Location = new System.Drawing.Point(783, 519);
+			this.txtUpdUserName.Location = new System.Drawing.Point(783, 530);
 			this.txtUpdUserName.Name = "txtUpdUserName";
 			this.txtUpdUserName.Size = new System.Drawing.Size(187, 20);
 			this.txtUpdUserName.StyleController = this.lc;
@@ -634,140 +635,11 @@
 			this.lcTabGroup.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
 			this.lcTabGroup.SelectedTabPage = this.lcTabGroupBiz;
 			this.lcTabGroup.SelectedTabPageIndex = 0;
-			this.lcTabGroup.Size = new System.Drawing.Size(634, 280);
+			this.lcTabGroup.Size = new System.Drawing.Size(634, 278);
 			this.lcTabGroup.TabPages.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.lcTabGroupBiz,
             this.lcTabGroupPhones,
             this.lcTabGroupAddress});
-			// 
-			// lcTabGroupAddress
-			// 
-			this.lcTabGroupAddress.CaptionImage = ((System.Drawing.Image)(resources.GetObject("lcTabGroupAddress.CaptionImage")));
-			this.lcTabGroupAddress.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.lcGridAddressList,
-            this.lcTabGroupAddressButtons});
-			this.lcTabGroupAddress.Location = new System.Drawing.Point(0, 0);
-			this.lcTabGroupAddress.Name = "lcTabGroupAddress";
-			this.lcTabGroupAddress.Size = new System.Drawing.Size(624, 242);
-			this.lcTabGroupAddress.Text = "주소";
-			// 
-			// lcGridAddressList
-			// 
-			this.lcGridAddressList.Control = this.gridAddress;
-			this.lcGridAddressList.Location = new System.Drawing.Point(0, 36);
-			this.lcGridAddressList.Name = "lcGridAddressList";
-			this.lcGridAddressList.Size = new System.Drawing.Size(624, 206);
-			this.lcGridAddressList.TextSize = new System.Drawing.Size(0, 0);
-			this.lcGridAddressList.TextVisible = false;
-			// 
-			// gridAddress
-			// 
-			this.gridAddress.Compress = false;
-			this.gridAddress.DataSource = null;
-			this.gridAddress.Editable = true;
-			this.gridAddress.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
-			this.gridAddress.Location = new System.Drawing.Point(352, 277);
-			this.gridAddress.Name = "gridAddress";
-			this.gridAddress.PageFooterCenter = null;
-			this.gridAddress.PageFooterLeft = null;
-			this.gridAddress.PageFooterRight = null;
-			this.gridAddress.PageHeaderCenter = null;
-			this.gridAddress.PageHeaderLeft = null;
-			this.gridAddress.PageHeaderRight = null;
-			this.gridAddress.Pager = null;
-			this.gridAddress.PrintFooter = null;
-			this.gridAddress.PrintHeader = null;
-			this.gridAddress.ReadOnly = false;
-			this.gridAddress.ShowGroupPanel = false;
-			this.gridAddress.Size = new System.Drawing.Size(620, 202);
-			this.gridAddress.TabIndex = 35;
-			// 
-			// lcTabGroupAddressButtons
-			// 
-			this.lcTabGroupAddressButtons.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.emptySpaceItem7,
-            this.lcButtonAddressAdd,
-            this.lcButtonAddressDel,
-            this.lcButtonAddressSave});
-			this.lcTabGroupAddressButtons.Location = new System.Drawing.Point(0, 0);
-			this.lcTabGroupAddressButtons.Name = "lcTabGroupAddressButtons";
-			this.lcTabGroupAddressButtons.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcTabGroupAddressButtons.Size = new System.Drawing.Size(624, 36);
-			this.lcTabGroupAddressButtons.TextVisible = false;
-			// 
-			// emptySpaceItem7
-			// 
-			this.emptySpaceItem7.AllowHotTrack = false;
-			this.emptySpaceItem7.Location = new System.Drawing.Point(140, 0);
-			this.emptySpaceItem7.Name = "emptySpaceItem7";
-			this.emptySpaceItem7.Size = new System.Drawing.Size(404, 26);
-			this.emptySpaceItem7.TextSize = new System.Drawing.Size(0, 0);
-			// 
-			// lcButtonAddressAdd
-			// 
-			this.lcButtonAddressAdd.Control = this.btnAddressAdd;
-			this.lcButtonAddressAdd.Location = new System.Drawing.Point(0, 0);
-			this.lcButtonAddressAdd.MaxSize = new System.Drawing.Size(70, 26);
-			this.lcButtonAddressAdd.MinSize = new System.Drawing.Size(70, 26);
-			this.lcButtonAddressAdd.Name = "lcButtonAddressAdd";
-			this.lcButtonAddressAdd.Size = new System.Drawing.Size(70, 26);
-			this.lcButtonAddressAdd.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-			this.lcButtonAddressAdd.TextSize = new System.Drawing.Size(0, 0);
-			this.lcButtonAddressAdd.TextVisible = false;
-			// 
-			// btnAddressAdd
-			// 
-			this.btnAddressAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnAddressAdd.Image")));
-			this.btnAddressAdd.Location = new System.Drawing.Point(357, 246);
-			this.btnAddressAdd.Name = "btnAddressAdd";
-			this.btnAddressAdd.Size = new System.Drawing.Size(66, 22);
-			this.btnAddressAdd.StyleController = this.lc;
-			this.btnAddressAdd.TabIndex = 36;
-			this.btnAddressAdd.Text = "추가";
-			// 
-			// lcButtonAddressDel
-			// 
-			this.lcButtonAddressDel.Control = this.btnAddressDel;
-			this.lcButtonAddressDel.Location = new System.Drawing.Point(70, 0);
-			this.lcButtonAddressDel.MaxSize = new System.Drawing.Size(70, 26);
-			this.lcButtonAddressDel.MinSize = new System.Drawing.Size(70, 26);
-			this.lcButtonAddressDel.Name = "lcButtonAddressDel";
-			this.lcButtonAddressDel.Size = new System.Drawing.Size(70, 26);
-			this.lcButtonAddressDel.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-			this.lcButtonAddressDel.TextSize = new System.Drawing.Size(0, 0);
-			this.lcButtonAddressDel.TextVisible = false;
-			// 
-			// btnAddressDel
-			// 
-			this.btnAddressDel.Image = ((System.Drawing.Image)(resources.GetObject("btnAddressDel.Image")));
-			this.btnAddressDel.Location = new System.Drawing.Point(427, 246);
-			this.btnAddressDel.Name = "btnAddressDel";
-			this.btnAddressDel.Size = new System.Drawing.Size(66, 22);
-			this.btnAddressDel.StyleController = this.lc;
-			this.btnAddressDel.TabIndex = 37;
-			this.btnAddressDel.Text = "삭제";
-			// 
-			// lcButtonAddressSave
-			// 
-			this.lcButtonAddressSave.Control = this.btnAddressSave;
-			this.lcButtonAddressSave.Location = new System.Drawing.Point(544, 0);
-			this.lcButtonAddressSave.MaxSize = new System.Drawing.Size(70, 26);
-			this.lcButtonAddressSave.MinSize = new System.Drawing.Size(70, 26);
-			this.lcButtonAddressSave.Name = "lcButtonAddressSave";
-			this.lcButtonAddressSave.Size = new System.Drawing.Size(70, 26);
-			this.lcButtonAddressSave.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-			this.lcButtonAddressSave.TextSize = new System.Drawing.Size(0, 0);
-			this.lcButtonAddressSave.TextVisible = false;
-			// 
-			// btnAddressSave
-			// 
-			this.btnAddressSave.Image = ((System.Drawing.Image)(resources.GetObject("btnAddressSave.Image")));
-			this.btnAddressSave.Location = new System.Drawing.Point(901, 246);
-			this.btnAddressSave.Name = "btnAddressSave";
-			this.btnAddressSave.Size = new System.Drawing.Size(66, 22);
-			this.btnAddressSave.StyleController = this.lc;
-			this.btnAddressSave.TabIndex = 38;
-			this.btnAddressSave.Text = "저장";
 			// 
 			// lcTabGroupBiz
 			// 
@@ -823,7 +695,7 @@
 			// 
 			// txtBizRegId
 			// 
-			this.txtBizRegId.Location = new System.Drawing.Point(480, 248);
+			this.txtBizRegId.Location = new System.Drawing.Point(480, 259);
 			this.txtBizRegId.Name = "txtBizRegId";
 			this.txtBizRegId.Size = new System.Drawing.Size(125, 20);
 			this.txtBizRegId.StyleController = this.lc;
@@ -850,7 +722,7 @@
 			// 
 			// txtBizRegNo
 			// 
-			this.txtBizRegNo.Location = new System.Drawing.Point(480, 272);
+			this.txtBizRegNo.Location = new System.Drawing.Point(480, 283);
 			this.txtBizRegNo.Name = "txtBizRegNo";
 			this.txtBizRegNo.Size = new System.Drawing.Size(175, 20);
 			this.txtBizRegNo.StyleController = this.lc;
@@ -869,7 +741,7 @@
 			// 
 			// txtRepName
 			// 
-			this.txtRepName.Location = new System.Drawing.Point(780, 272);
+			this.txtRepName.Location = new System.Drawing.Point(780, 283);
 			this.txtRepName.Name = "txtRepName";
 			this.txtRepName.Size = new System.Drawing.Size(175, 20);
 			this.txtRepName.StyleController = this.lc;
@@ -896,7 +768,7 @@
 			// 
 			// txtBizName
 			// 
-			this.txtBizName.Location = new System.Drawing.Point(480, 296);
+			this.txtBizName.Location = new System.Drawing.Point(480, 307);
 			this.txtBizName.Name = "txtBizName";
 			this.txtBizName.Size = new System.Drawing.Size(325, 20);
 			this.txtBizName.StyleController = this.lc;
@@ -923,7 +795,7 @@
 			// 
 			// txtBizType
 			// 
-			this.txtBizType.Location = new System.Drawing.Point(480, 320);
+			this.txtBizType.Location = new System.Drawing.Point(480, 331);
 			this.txtBizType.Name = "txtBizType";
 			this.txtBizType.Size = new System.Drawing.Size(375, 20);
 			this.txtBizType.StyleController = this.lc;
@@ -942,7 +814,7 @@
 			// 
 			// txtBizItem
 			// 
-			this.txtBizItem.Location = new System.Drawing.Point(480, 344);
+			this.txtBizItem.Location = new System.Drawing.Point(480, 355);
 			this.txtBizItem.Name = "txtBizItem";
 			this.txtBizItem.Size = new System.Drawing.Size(475, 20);
 			this.txtBizItem.StyleController = this.lc;
@@ -961,7 +833,7 @@
 			// 
 			// txtAddressId
 			// 
-			this.txtAddressId.Location = new System.Drawing.Point(480, 368);
+			this.txtAddressId.Location = new System.Drawing.Point(480, 379);
 			this.txtAddressId.Name = "txtAddressId";
 			this.txtAddressId.Size = new System.Drawing.Size(125, 20);
 			this.txtAddressId.StyleController = this.lc;
@@ -988,7 +860,7 @@
 			// 
 			// txtPostNo
 			// 
-			this.txtPostNo.Location = new System.Drawing.Point(480, 394);
+			this.txtPostNo.Location = new System.Drawing.Point(480, 405);
 			this.txtPostNo.Name = "txtPostNo";
 			this.txtPostNo.Size = new System.Drawing.Size(125, 20);
 			this.txtPostNo.StyleController = this.lc;
@@ -1007,7 +879,7 @@
 			// 
 			// txtZoneNo
 			// 
-			this.txtZoneNo.Location = new System.Drawing.Point(730, 394);
+			this.txtZoneNo.Location = new System.Drawing.Point(730, 405);
 			this.txtZoneNo.Name = "txtZoneNo";
 			this.txtZoneNo.Size = new System.Drawing.Size(113, 20);
 			this.txtZoneNo.StyleController = this.lc;
@@ -1034,7 +906,7 @@
 			// 
 			// txtAddress1
 			// 
-			this.txtAddress1.Location = new System.Drawing.Point(480, 418);
+			this.txtAddress1.Location = new System.Drawing.Point(480, 429);
 			this.txtAddress1.Name = "txtAddress1";
 			this.txtAddress1.Size = new System.Drawing.Size(375, 20);
 			this.txtAddress1.StyleController = this.lc;
@@ -1050,7 +922,7 @@
 			// 
 			// txtAddress2
 			// 
-			this.txtAddress2.Location = new System.Drawing.Point(480, 442);
+			this.txtAddress2.Location = new System.Drawing.Point(480, 453);
 			this.txtAddress2.Name = "txtAddress2";
 			this.txtAddress2.Size = new System.Drawing.Size(375, 20);
 			this.txtAddress2.StyleController = this.lc;
@@ -1096,6 +968,27 @@
 			this.emptySpaceItem18.Size = new System.Drawing.Size(110, 24);
 			this.emptySpaceItem18.TextSize = new System.Drawing.Size(0, 0);
 			// 
+			// lcButtonSearchPostCode
+			// 
+			this.lcButtonSearchPostCode.Control = this.btnSearchPostCode;
+			this.lcButtonSearchPostCode.Location = new System.Drawing.Point(250, 120);
+			this.lcButtonSearchPostCode.MaxSize = new System.Drawing.Size(89, 26);
+			this.lcButtonSearchPostCode.MinSize = new System.Drawing.Size(89, 26);
+			this.lcButtonSearchPostCode.Name = "lcButtonSearchPostCode";
+			this.lcButtonSearchPostCode.Size = new System.Drawing.Size(89, 26);
+			this.lcButtonSearchPostCode.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.lcButtonSearchPostCode.TextSize = new System.Drawing.Size(0, 0);
+			this.lcButtonSearchPostCode.TextVisible = false;
+			// 
+			// btnSearchPostCode
+			// 
+			this.btnSearchPostCode.Location = new System.Drawing.Point(609, 379);
+			this.btnSearchPostCode.Name = "btnSearchPostCode";
+			this.btnSearchPostCode.Size = new System.Drawing.Size(85, 22);
+			this.btnSearchPostCode.StyleController = this.lc;
+			this.btnSearchPostCode.TabIndex = 40;
+			this.btnSearchPostCode.Text = "우편번호검색";
+			// 
 			// lcTabGroupPhones
 			// 
 			this.lcTabGroupPhones.CaptionImage = ((System.Drawing.Image)(resources.GetObject("lcTabGroupPhones.CaptionImage")));
@@ -1121,8 +1014,9 @@
 			this.gridPhones.Compress = false;
 			this.gridPhones.DataSource = null;
 			this.gridPhones.Editable = true;
+			this.gridPhones.FocusedRowHandle = -2147483648;
 			this.gridPhones.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
-			this.gridPhones.Location = new System.Drawing.Point(352, 277);
+			this.gridPhones.Location = new System.Drawing.Point(352, 288);
 			this.gridPhones.Name = "gridPhones";
 			this.gridPhones.PageFooterCenter = null;
 			this.gridPhones.PageFooterLeft = null;
@@ -1134,6 +1028,7 @@
 			this.gridPhones.PrintFooter = null;
 			this.gridPhones.PrintHeader = null;
 			this.gridPhones.ReadOnly = false;
+			this.gridPhones.ShowFooter = false;
 			this.gridPhones.ShowGroupPanel = false;
 			this.gridPhones.Size = new System.Drawing.Size(620, 202);
 			this.gridPhones.TabIndex = 31;
@@ -1174,7 +1069,7 @@
 			// btnPhoneAdd
 			// 
 			this.btnPhoneAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnPhoneAdd.Image")));
-			this.btnPhoneAdd.Location = new System.Drawing.Point(357, 246);
+			this.btnPhoneAdd.Location = new System.Drawing.Point(357, 257);
 			this.btnPhoneAdd.Name = "btnPhoneAdd";
 			this.btnPhoneAdd.Size = new System.Drawing.Size(66, 22);
 			this.btnPhoneAdd.StyleController = this.lc;
@@ -1197,7 +1092,7 @@
 			// btnPhoneDel
 			// 
 			this.btnPhoneDel.Image = ((System.Drawing.Image)(resources.GetObject("btnPhoneDel.Image")));
-			this.btnPhoneDel.Location = new System.Drawing.Point(427, 246);
+			this.btnPhoneDel.Location = new System.Drawing.Point(427, 257);
 			this.btnPhoneDel.Name = "btnPhoneDel";
 			this.btnPhoneDel.Size = new System.Drawing.Size(66, 22);
 			this.btnPhoneDel.StyleController = this.lc;
@@ -1219,30 +1114,143 @@
 			// btnPhoneSave
 			// 
 			this.btnPhoneSave.Image = ((System.Drawing.Image)(resources.GetObject("btnPhoneSave.Image")));
-			this.btnPhoneSave.Location = new System.Drawing.Point(901, 246);
+			this.btnPhoneSave.Location = new System.Drawing.Point(901, 257);
 			this.btnPhoneSave.Name = "btnPhoneSave";
 			this.btnPhoneSave.Size = new System.Drawing.Size(66, 22);
 			this.btnPhoneSave.StyleController = this.lc;
 			this.btnPhoneSave.TabIndex = 34;
 			this.btnPhoneSave.Text = "저장";
 			// 
-			// btnSearchPostCode
+			// lcTabGroupAddress
 			// 
-			this.btnSearchPostCode.Location = new System.Drawing.Point(609, 368);
-			this.btnSearchPostCode.Name = "btnSearchPostCode";
-			this.btnSearchPostCode.Size = new System.Drawing.Size(85, 22);
-			this.btnSearchPostCode.StyleController = this.lc;
-			this.btnSearchPostCode.TabIndex = 40;
-			this.btnSearchPostCode.Text = "우편번호검색";
+			this.lcTabGroupAddress.CaptionImage = ((System.Drawing.Image)(resources.GetObject("lcTabGroupAddress.CaptionImage")));
+			this.lcTabGroupAddress.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.lcGridAddressList,
+            this.lcTabGroupAddressButtons});
+			this.lcTabGroupAddress.Location = new System.Drawing.Point(0, 0);
+			this.lcTabGroupAddress.Name = "lcTabGroupAddress";
+			this.lcTabGroupAddress.Size = new System.Drawing.Size(624, 242);
+			this.lcTabGroupAddress.Text = "주소";
 			// 
-			// lcButtonSearchPostCode
+			// lcGridAddressList
 			// 
-			this.lcButtonSearchPostCode.Control = this.btnSearchPostCode;
-			this.lcButtonSearchPostCode.Location = new System.Drawing.Point(250, 120);
-			this.lcButtonSearchPostCode.Name = "lcButtonSearchPostCode";
-			this.lcButtonSearchPostCode.Size = new System.Drawing.Size(89, 26);
-			this.lcButtonSearchPostCode.TextSize = new System.Drawing.Size(0, 0);
-			this.lcButtonSearchPostCode.TextVisible = false;
+			this.lcGridAddressList.Control = this.gridAddress;
+			this.lcGridAddressList.Location = new System.Drawing.Point(0, 36);
+			this.lcGridAddressList.Name = "lcGridAddressList";
+			this.lcGridAddressList.Size = new System.Drawing.Size(624, 206);
+			this.lcGridAddressList.TextSize = new System.Drawing.Size(0, 0);
+			this.lcGridAddressList.TextVisible = false;
+			// 
+			// gridAddress
+			// 
+			this.gridAddress.Compress = false;
+			this.gridAddress.DataSource = null;
+			this.gridAddress.Editable = true;
+			this.gridAddress.FocusedRowHandle = -2147483648;
+			this.gridAddress.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
+			this.gridAddress.Location = new System.Drawing.Point(352, 288);
+			this.gridAddress.Name = "gridAddress";
+			this.gridAddress.PageFooterCenter = null;
+			this.gridAddress.PageFooterLeft = null;
+			this.gridAddress.PageFooterRight = null;
+			this.gridAddress.PageHeaderCenter = null;
+			this.gridAddress.PageHeaderLeft = null;
+			this.gridAddress.PageHeaderRight = null;
+			this.gridAddress.Pager = null;
+			this.gridAddress.PrintFooter = null;
+			this.gridAddress.PrintHeader = null;
+			this.gridAddress.ReadOnly = false;
+			this.gridAddress.ShowFooter = false;
+			this.gridAddress.ShowGroupPanel = false;
+			this.gridAddress.Size = new System.Drawing.Size(620, 202);
+			this.gridAddress.TabIndex = 35;
+			// 
+			// lcTabGroupAddressButtons
+			// 
+			this.lcTabGroupAddressButtons.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.emptySpaceItem7,
+            this.lcButtonAddressAdd,
+            this.lcButtonAddressDel,
+            this.lcButtonAddressSave});
+			this.lcTabGroupAddressButtons.Location = new System.Drawing.Point(0, 0);
+			this.lcTabGroupAddressButtons.Name = "lcTabGroupAddressButtons";
+			this.lcTabGroupAddressButtons.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
+			this.lcTabGroupAddressButtons.Size = new System.Drawing.Size(624, 36);
+			this.lcTabGroupAddressButtons.TextVisible = false;
+			// 
+			// emptySpaceItem7
+			// 
+			this.emptySpaceItem7.AllowHotTrack = false;
+			this.emptySpaceItem7.Location = new System.Drawing.Point(140, 0);
+			this.emptySpaceItem7.Name = "emptySpaceItem7";
+			this.emptySpaceItem7.Size = new System.Drawing.Size(404, 26);
+			this.emptySpaceItem7.TextSize = new System.Drawing.Size(0, 0);
+			// 
+			// lcButtonAddressAdd
+			// 
+			this.lcButtonAddressAdd.Control = this.btnAddressAdd;
+			this.lcButtonAddressAdd.Location = new System.Drawing.Point(0, 0);
+			this.lcButtonAddressAdd.MaxSize = new System.Drawing.Size(70, 26);
+			this.lcButtonAddressAdd.MinSize = new System.Drawing.Size(70, 26);
+			this.lcButtonAddressAdd.Name = "lcButtonAddressAdd";
+			this.lcButtonAddressAdd.Size = new System.Drawing.Size(70, 26);
+			this.lcButtonAddressAdd.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.lcButtonAddressAdd.TextSize = new System.Drawing.Size(0, 0);
+			this.lcButtonAddressAdd.TextVisible = false;
+			// 
+			// btnAddressAdd
+			// 
+			this.btnAddressAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnAddressAdd.Image")));
+			this.btnAddressAdd.Location = new System.Drawing.Point(357, 257);
+			this.btnAddressAdd.Name = "btnAddressAdd";
+			this.btnAddressAdd.Size = new System.Drawing.Size(66, 22);
+			this.btnAddressAdd.StyleController = this.lc;
+			this.btnAddressAdd.TabIndex = 36;
+			this.btnAddressAdd.Text = "추가";
+			// 
+			// lcButtonAddressDel
+			// 
+			this.lcButtonAddressDel.Control = this.btnAddressDel;
+			this.lcButtonAddressDel.Location = new System.Drawing.Point(70, 0);
+			this.lcButtonAddressDel.MaxSize = new System.Drawing.Size(70, 26);
+			this.lcButtonAddressDel.MinSize = new System.Drawing.Size(70, 26);
+			this.lcButtonAddressDel.Name = "lcButtonAddressDel";
+			this.lcButtonAddressDel.Size = new System.Drawing.Size(70, 26);
+			this.lcButtonAddressDel.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.lcButtonAddressDel.TextSize = new System.Drawing.Size(0, 0);
+			this.lcButtonAddressDel.TextVisible = false;
+			// 
+			// btnAddressDel
+			// 
+			this.btnAddressDel.Image = ((System.Drawing.Image)(resources.GetObject("btnAddressDel.Image")));
+			this.btnAddressDel.Location = new System.Drawing.Point(427, 257);
+			this.btnAddressDel.Name = "btnAddressDel";
+			this.btnAddressDel.Size = new System.Drawing.Size(66, 22);
+			this.btnAddressDel.StyleController = this.lc;
+			this.btnAddressDel.TabIndex = 37;
+			this.btnAddressDel.Text = "삭제";
+			// 
+			// lcButtonAddressSave
+			// 
+			this.lcButtonAddressSave.Control = this.btnAddressSave;
+			this.lcButtonAddressSave.Location = new System.Drawing.Point(544, 0);
+			this.lcButtonAddressSave.MaxSize = new System.Drawing.Size(70, 26);
+			this.lcButtonAddressSave.MinSize = new System.Drawing.Size(70, 26);
+			this.lcButtonAddressSave.Name = "lcButtonAddressSave";
+			this.lcButtonAddressSave.Size = new System.Drawing.Size(70, 26);
+			this.lcButtonAddressSave.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.lcButtonAddressSave.TextSize = new System.Drawing.Size(0, 0);
+			this.lcButtonAddressSave.TextVisible = false;
+			// 
+			// btnAddressSave
+			// 
+			this.btnAddressSave.Image = ((System.Drawing.Image)(resources.GetObject("btnAddressSave.Image")));
+			this.btnAddressSave.Location = new System.Drawing.Point(901, 257);
+			this.btnAddressSave.Name = "btnAddressSave";
+			this.btnAddressSave.Size = new System.Drawing.Size(66, 22);
+			this.btnAddressSave.StyleController = this.lc;
+			this.btnAddressSave.TabIndex = 38;
+			this.btnAddressSave.Text = "저장";
 			// 
 			// CustomersForm
 			// 
@@ -1290,13 +1298,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.lcItemUpdUserName)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.txtUpdUserName.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcTabGroup)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcTabGroupAddress)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcGridAddressList)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcTabGroupAddressButtons)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem7)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcButtonAddressAdd)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcButtonAddressDel)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcButtonAddressSave)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcTabGroupBiz)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupBizEdit)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemBizRegId)).EndInit();
@@ -1331,6 +1332,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem16)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem17)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem18)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcButtonSearchPostCode)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcTabGroupPhones)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGridPhoneList)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcTabGroupPhonesButtons)).EndInit();
@@ -1338,7 +1340,13 @@
 			((System.ComponentModel.ISupportInitialize)(this.lcButtonPhoneAdd)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcButtonPhoneDel)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcButtonPhoneSave)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcButtonSearchPostCode)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcTabGroupAddress)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGridAddressList)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcTabGroupAddressButtons)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem7)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcButtonAddressAdd)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcButtonAddressDel)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcButtonAddressSave)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

@@ -10,6 +10,7 @@ using JW.AUBE.Base.Logging;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Base.Variables;
 using JW.AUBE.Core.Messages;
+using JW.AUBE.Core.Utils;
 using JW.AUBE.Core.Variables;
 
 namespace JW.AUBE
@@ -31,6 +32,10 @@ namespace JW.AUBE
 			UserLookAndFeel.Default.UseDefaultLookAndFeel = true;
 			UserLookAndFeel.Default.UseWindowsXPTheme = false;
 			AppearanceObject.DefaultFont = SystemFonts.DefaultFont;
+
+			Logger.Debug("IIS Start!!");
+			SplashUtils.ShowWait("IIS를 구동하는 중입니다... 잠시만...");
+			IISExpress.Start("AubeWeb");
 
 			Logger.Debug("Application Start!!");
 

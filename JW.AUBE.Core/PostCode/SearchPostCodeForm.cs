@@ -56,7 +56,8 @@ namespace JW.AUBE.Core.PostCode
 				//wb.DocumentText = html;
 				//string curDir = Directory.GetCurrentDirectory();
 				//wb.Url = new Uri(string.Format("file:///{0}/PostCode/searchpostcode.html", curDir));
-				wb.Navigate(new Uri(@"http://do.dwcts.co.kr/Html/searchpostcode.html"));
+				//wb.Navigate(new Uri(@"http://do.dwcts.co.kr/Html/searchpostcode.html"));
+				wb.Navigate(new Uri(@"http://localhost/AubeWeb/Html/DaumZipApi.html"));
 			}
 			catch (Exception ex)
 			{

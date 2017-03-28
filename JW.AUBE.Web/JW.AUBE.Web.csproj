@@ -150,7 +150,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Html\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -200,7 +199,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <EmbeddedResource Include="DaumZipApi.html">
+    <EmbeddedResource Include="Html\DaumZipApi.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <Content Include="Scripts\bootstrap.js" />

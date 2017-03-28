@@ -35,7 +35,8 @@ namespace JW.AUBE
 
 			Logger.Debug("IIS Start!!");
 			SplashUtils.ShowWait("IIS를 구동하는 중입니다... 잠시만...");
-			IISExpress.Start("AubeWeb");
+			//IISExpress.Start("AubeWeb");
+			WebSiteContoller.SiteInvoke(JW.AUBE.Core.Utils.WebSiteContoller.SiteAction.Start);
 
 			Logger.Debug("Application Start!!");
 

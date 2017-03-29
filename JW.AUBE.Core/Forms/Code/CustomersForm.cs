@@ -104,9 +104,6 @@ namespace JW.AUBE.Core.Forms.Code
 			txtUpdUserName.SetEnable(false);
 			txtBizRegId.SetEnable(false);
 			txtAddressId.SetEnable(false);
-			txtPostNo.SetEnable(false);
-			txtZoneNo.SetEnable(false);
-			txtAddress1.SetEnable(false);
 
 			InitCombo();
 			InitGrid();
@@ -255,21 +252,93 @@ namespace JW.AUBE.Core.Forms.Code
 			#region 주소록
 			gridAddress.Init();
 			gridAddress.AddGridColumns(
-				new XGridColumn() { FieldName = "ROW_NO" },
-				new XGridColumn() { FieldName = "REG_ID", HorzAlignment = HorzAlignment.Center, Visible = false, Width = 40 },
-				new XGridColumn() { FieldName = "CUSTOMER_ID", HorzAlignment = HorzAlignment.Center, Visible = false, Width = 80 },
-				new XGridColumn() { FieldName = "ADDRESS_TYPE", HorzAlignment = HorzAlignment.Center, Width = 100 },
-				new XGridColumn() { FieldName = "ADDRESS_ID", Width = 80, Visible = false },
-				new XGridColumn() { FieldName = "POST_NO", Width = 80 },
-				new XGridColumn() { FieldName = "ZONE_NO", Width = 80 },
-				new XGridColumn() { FieldName = "ADDRESS1", Width = 200 },
-				new XGridColumn() { FieldName = "ADDRESS2", Width = 200 },
-				new XGridColumn() { FieldName = "REMARKS", Width = 200 },
-				new XGridColumn() { FieldName = "INS_TIME" },
-				new XGridColumn() { FieldName = "INS_USER_NAME" },
-				new XGridColumn() { FieldName = "UPD_TIME" },
-				new XGridColumn() { FieldName = "UPD_USER_NAME" }
-				);
+				new XGridColumn()
+				{
+					FieldName = "ROW_NO",
+					HorzAlignment = HorzAlignment.Center,
+					Width = 40
+				},
+				new XGridColumn()
+				{
+					FieldName = "REG_ID",
+					HorzAlignment = HorzAlignment.Center,
+					Visible = false,
+					Width = 40
+				},
+				new XGridColumn()
+				{
+					FieldName = "CUSTOMER_ID",
+					HorzAlignment = HorzAlignment.Center,
+					Visible = false,
+					Width = 50
+				},
+				new XGridColumn()
+				{
+					FieldName = "ADDRESS_TYPE",
+					HorzAlignment = HorzAlignment.Center,
+					Width = 100
+				},
+				new XGridColumn()
+				{
+					FieldName = "ADDRESS_ID",
+					HorzAlignment = HorzAlignment.Near,
+					Width = 80,
+					Visible = false
+				},
+				new XGridColumn()
+				{
+					FieldName = "POST_NO",
+					HorzAlignment = HorzAlignment.Near,
+					Width = 80
+				},
+				new XGridColumn()
+				{
+					FieldName = "ZONE_NO",
+					HorzAlignment = HorzAlignment.Near,
+					Width = 80
+				},
+				new XGridColumn()
+				{
+					FieldName = "ADDRESS1",
+					HorzAlignment = HorzAlignment.Near,
+					Width = 200
+				},
+				new XGridColumn()
+				{
+					FieldName = "ADDRESS2",
+					HorzAlignment = HorzAlignment.Near,
+					Width = 200
+				},
+				new XGridColumn()
+				{
+					FieldName = "REMARKS",
+					HorzAlignment = HorzAlignment.Near,
+					Width = 200
+				},
+				new XGridColumn()
+				{
+					FieldName = "INS_TIME",
+					HorzAlignment = HorzAlignment.Center,
+					Width = 150
+				},
+				new XGridColumn()
+				{
+					FieldName = "INS_USER_NAME",
+					HorzAlignment = HorzAlignment.Center,
+					Width = 100
+				},
+				new XGridColumn()
+				{
+					FieldName = "UPD_TIME",
+					HorzAlignment = HorzAlignment.Center,
+					Width = 150
+				},
+				new XGridColumn()
+				{
+					FieldName = "UPD_USER_NAME",
+					HorzAlignment = HorzAlignment.Center,
+					Width = 100
+				});
 
 			gridAddress.SetRepositoryItemLookUpEdit("ADDRESS_TYPE", "CODE", "LIST_NAME", "CodeHelp", "GetCodeHelpLookup", null, new DataMap() { { "PARENT_CODE", "ADDRESS_TYPE" } });
 			gridAddress.SetEditable("ADDRESS_TYPE", "POST_NO", "ZONE_NO", "ADDRESS1", "ADDRESS2", "REMARKS");

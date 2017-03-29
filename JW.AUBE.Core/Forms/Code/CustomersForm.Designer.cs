@@ -842,9 +842,9 @@
 			// emptySpaceItem10
 			// 
 			this.emptySpaceItem10.AllowHotTrack = false;
-			this.emptySpaceItem10.Location = new System.Drawing.Point(488, 120);
+			this.emptySpaceItem10.Location = new System.Drawing.Point(339, 120);
 			this.emptySpaceItem10.Name = "emptySpaceItem10";
-			this.emptySpaceItem10.Size = new System.Drawing.Size(122, 26);
+			this.emptySpaceItem10.Size = new System.Drawing.Size(271, 26);
 			this.emptySpaceItem10.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// lcItemPostNo
@@ -972,10 +972,10 @@
 			// 
 			this.lcButtonSearchPostCode.Control = this.btnSearchPostCode;
 			this.lcButtonSearchPostCode.Location = new System.Drawing.Point(250, 120);
-			this.lcButtonSearchPostCode.MaxSize = new System.Drawing.Size(238, 26);
-			this.lcButtonSearchPostCode.MinSize = new System.Drawing.Size(238, 26);
+			this.lcButtonSearchPostCode.MaxSize = new System.Drawing.Size(89, 26);
+			this.lcButtonSearchPostCode.MinSize = new System.Drawing.Size(89, 26);
 			this.lcButtonSearchPostCode.Name = "lcButtonSearchPostCode";
-			this.lcButtonSearchPostCode.Size = new System.Drawing.Size(238, 26);
+			this.lcButtonSearchPostCode.Size = new System.Drawing.Size(89, 26);
 			this.lcButtonSearchPostCode.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
 			this.lcButtonSearchPostCode.TextSize = new System.Drawing.Size(0, 0);
 			this.lcButtonSearchPostCode.TextVisible = false;
@@ -984,7 +984,7 @@
 			// 
 			this.btnSearchPostCode.Location = new System.Drawing.Point(609, 379);
 			this.btnSearchPostCode.Name = "btnSearchPostCode";
-			this.btnSearchPostCode.Size = new System.Drawing.Size(234, 22);
+			this.btnSearchPostCode.Size = new System.Drawing.Size(85, 22);
 			this.btnSearchPostCode.StyleController = this.lc;
 			this.btnSearchPostCode.TabIndex = 40;
 			this.btnSearchPostCode.Text = "우편번호검색";

@@ -206,27 +206,26 @@ namespace JW.AUBE.Core.Forms.Purchase
 			try
 			{
 				var res = DBTranHelper.GetData("Purchase", parameters);
-				{
-					if (res.TranList[0].Data == null)
-						throw new Exception("조회 데이터가 없습니다.");
 
-					PurcTranDataModel model = (PurcTranDataModel)res.TranList[0].Data;
+				if (res.TranList[0].Data == null)
+					throw new Exception("조회 데이터가 없습니다.");
 
-					txtPurcId.EditValue = model.PURC_ID;
-					txtPurcNo.EditValue = model.PURC_NO;
-					datPurcDate.SetDateChar8(model.PURC_DATE);
-					lupPurcType.EditValue = model.PURC_TYPE;
-					txtCustomerId.EditValue = model.CUSTOMER_ID;
-					txtCustomerId.EditText = model.CUSTOMER_NAME;
-					memRemarks.EditValue = model.REMARKS;
+				PurcTranDataModel model = res.TranList[0].Data as PurcTranDataModel;
 
-					txtInsTime.EditValue = model.INS_TIME;
-					txtInsUserName.EditValue = model.INS_USER_NAME;
-					txtUpdTime.EditValue = model.UPD_TIME;
-					txtUpdUserName.EditValue = model.UPD_USER_NAME;
+				txtPurcId.EditValue = model.PURC_ID;
+				txtPurcNo.EditValue = model.PURC_NO;
+				datPurcDate.SetDateChar8(model.PURC_DATE);
+				lupPurcType.EditValue = model.PURC_TYPE;
+				txtCustomerId.EditValue = model.CUSTOMER_ID;
+				txtCustomerId.EditText = model.CUSTOMER_NAME;
+				memRemarks.EditValue = model.REMARKS;
 
-					this.ParamsData = model.PURC_ID;
-				}
+				txtInsTime.EditValue = model.INS_TIME;
+				txtInsUserName.EditValue = model.INS_USER_NAME;
+				txtUpdTime.EditValue = model.UPD_TIME;
+				txtUpdUserName.EditValue = model.UPD_USER_NAME;
+
+				this.ParamsData = model.PURC_ID;
 
 				if (res.TranList.Length > 1)
 				{

@@ -87,72 +87,72 @@ namespace JW.AUBE.Core.Controls.Grid
 			{
 				if (GlobalVar.Settings.GetValue("GRID_EVEN_AND_ODD").ToStringNullToEmpty() == "Y")
 				{
-					(Grid.MainView as AdvBandedGridView).OptionsView.EnableAppearanceEvenRow = true;
-					(Grid.MainView as AdvBandedGridView).OptionsView.EnableAppearanceOddRow = true;
+					(MainView as AdvBandedGridView).OptionsView.EnableAppearanceEvenRow = true;
+					(MainView as AdvBandedGridView).OptionsView.EnableAppearanceOddRow = true;
 				}
-				(Grid.MainView as AdvBandedGridView).OptionsView.ShowGroupPanel = false;
-				(Grid.MainView as AdvBandedGridView).OptionsView.ShowDetailButtons = false;
-				(Grid.MainView as AdvBandedGridView).OptionsSelection.EnableAppearanceFocusedRow = true;
-				(Grid.MainView as AdvBandedGridView).OptionsSelection.EnableAppearanceFocusedCell = true;
-				(Grid.MainView as AdvBandedGridView).FocusRectStyle = DrawFocusRectStyle.CellFocus;
-				(Grid.MainView as AdvBandedGridView).OptionsSelection.MultiSelect = true;
-				(Grid.MainView as AdvBandedGridView).OptionsSelection.MultiSelectMode = GridMultiSelectMode.RowSelect;
-				(Grid.MainView as AdvBandedGridView).OptionsView.ColumnAutoWidth = false;
-				(Grid.MainView as AdvBandedGridView).OptionsBehavior.ReadOnly = true;
-				(Grid.MainView as AdvBandedGridView).OptionsBehavior.Editable = false;
+				(MainView as AdvBandedGridView).OptionsView.ShowGroupPanel = false;
+				(MainView as AdvBandedGridView).OptionsView.ShowDetailButtons = false;
+				(MainView as AdvBandedGridView).OptionsSelection.EnableAppearanceFocusedRow = true;
+				(MainView as AdvBandedGridView).OptionsSelection.EnableAppearanceFocusedCell = true;
+				(MainView as AdvBandedGridView).FocusRectStyle = DrawFocusRectStyle.CellFocus;
+				(MainView as AdvBandedGridView).OptionsSelection.MultiSelect = true;
+				(MainView as AdvBandedGridView).OptionsSelection.MultiSelectMode = GridMultiSelectMode.RowSelect;
+				(MainView as AdvBandedGridView).OptionsView.ColumnAutoWidth = false;
+				(MainView as AdvBandedGridView).OptionsBehavior.ReadOnly = true;
+				(MainView as AdvBandedGridView).OptionsBehavior.Editable = false;
 			}
 			else if (MainView is BandedGridView)
 			{
 				if (GlobalVar.Settings.GetValue("GRID_EVEN_AND_ODD").ToStringNullToEmpty() == "Y")
 				{
-					(Grid.MainView as BandedGridView).OptionsView.EnableAppearanceEvenRow = true;
-					(Grid.MainView as BandedGridView).OptionsView.EnableAppearanceOddRow = true;
+					(MainView as BandedGridView).OptionsView.EnableAppearanceEvenRow = true;
+					(MainView as BandedGridView).OptionsView.EnableAppearanceOddRow = true;
 				}
-				(Grid.MainView as BandedGridView).OptionsView.ShowGroupPanel = false;
-				(Grid.MainView as BandedGridView).OptionsView.ShowDetailButtons = false;
-				(Grid.MainView as BandedGridView).OptionsSelection.EnableAppearanceFocusedRow = true;
-				(Grid.MainView as BandedGridView).OptionsSelection.EnableAppearanceFocusedCell = true;
-				(Grid.MainView as BandedGridView).FocusRectStyle = DrawFocusRectStyle.CellFocus;
-				(Grid.MainView as BandedGridView).OptionsSelection.MultiSelect = true;
-				(Grid.MainView as BandedGridView).OptionsSelection.MultiSelectMode = GridMultiSelectMode.RowSelect;
-				(Grid.MainView as BandedGridView).OptionsView.ColumnAutoWidth = false;
-				(Grid.MainView as BandedGridView).OptionsBehavior.ReadOnly = true;
-				(Grid.MainView as BandedGridView).OptionsBehavior.Editable = false;
+				(MainView as BandedGridView).OptionsView.ShowGroupPanel = false;
+				(MainView as BandedGridView).OptionsView.ShowDetailButtons = false;
+				(MainView as BandedGridView).OptionsSelection.EnableAppearanceFocusedRow = true;
+				(MainView as BandedGridView).OptionsSelection.EnableAppearanceFocusedCell = true;
+				(MainView as BandedGridView).FocusRectStyle = DrawFocusRectStyle.CellFocus;
+				(MainView as BandedGridView).OptionsSelection.MultiSelect = true;
+				(MainView as BandedGridView).OptionsSelection.MultiSelectMode = GridMultiSelectMode.RowSelect;
+				(MainView as BandedGridView).OptionsView.ColumnAutoWidth = false;
+				(MainView as BandedGridView).OptionsBehavior.ReadOnly = true;
+				(MainView as BandedGridView).OptionsBehavior.Editable = false;
 			}
 			else if (MainView is GridView)
 			{
 				if (GlobalVar.Settings.GetValue("GRID_EVEN_AND_ODD").ToStringNullToEmpty() == "Y")
 				{
-					(Grid.MainView as GridView).OptionsView.EnableAppearanceEvenRow = true;
-					(Grid.MainView as GridView).OptionsView.EnableAppearanceOddRow = true;
+					(MainView as GridView).OptionsView.EnableAppearanceEvenRow = true;
+					(MainView as GridView).OptionsView.EnableAppearanceOddRow = true;
 				}
-				(Grid.MainView as GridView).OptionsView.ShowGroupPanel = false;
-				(Grid.MainView as GridView).OptionsView.ShowDetailButtons = false;
-				(Grid.MainView as GridView).OptionsSelection.EnableAppearanceFocusedRow = true;
-				(Grid.MainView as GridView).OptionsSelection.EnableAppearanceFocusedCell = true;
-				(Grid.MainView as GridView).FocusRectStyle = DrawFocusRectStyle.CellFocus;
-				(Grid.MainView as GridView).OptionsSelection.MultiSelect = true;
-				(Grid.MainView as GridView).OptionsSelection.MultiSelectMode = GridMultiSelectMode.RowSelect;
-				(Grid.MainView as GridView).OptionsView.ColumnAutoWidth = false;
-				(Grid.MainView as GridView).OptionsBehavior.ReadOnly = true;
-				(Grid.MainView as GridView).OptionsBehavior.Editable = false;
+				(MainView as GridView).OptionsView.ShowGroupPanel = false;
+				(MainView as GridView).OptionsView.ShowDetailButtons = false;
+				(MainView as GridView).OptionsSelection.EnableAppearanceFocusedRow = true;
+				(MainView as GridView).OptionsSelection.EnableAppearanceFocusedCell = true;
+				(MainView as GridView).FocusRectStyle = DrawFocusRectStyle.CellFocus;
+				(MainView as GridView).OptionsSelection.MultiSelect = true;
+				(MainView as GridView).OptionsSelection.MultiSelectMode = GridMultiSelectMode.RowSelect;
+				(MainView as GridView).OptionsView.ColumnAutoWidth = false;
+				(MainView as GridView).OptionsBehavior.ReadOnly = true;
+				(MainView as GridView).OptionsBehavior.Editable = false;
 			}
 
 			if (MainView is GridView || MainView is BandedGridView || MainView is AdvBandedGridView)
 			{
 				if (AppearanceObject.DefaultFont.Size > 10f)
 				{
-					(Grid.MainView as GridView).OptionsView.RowAutoHeight = true;
+					(MainView as GridView).OptionsView.RowAutoHeight = true;
 				}
 				else if (AppearanceObject.DefaultFont.Size > 9f)
 				{
-					(Grid.MainView as GridView).OptionsView.RowAutoHeight = false;
-					(Grid.MainView as GridView).RowHeight = 20;
+					(MainView as GridView).OptionsView.RowAutoHeight = false;
+					(MainView as GridView).RowHeight = 18;
 				}
 				else
 				{
-					(Grid.MainView as GridView).OptionsView.RowAutoHeight = false;
-					(Grid.MainView as GridView).RowHeight = 18;
+					(MainView as GridView).OptionsView.RowAutoHeight = false;
+					(MainView as GridView).RowHeight = 16;
 				}
 			}
 
@@ -308,9 +308,9 @@ namespace JW.AUBE.Core.Controls.Grid
 			if (column.IsMandatory)
 			{
 				gridColumn.AppearanceHeader.Options.UseForeColor = true;
-				if (SkinUtils.IsDarkSkin)
-					gridColumn.AppearanceHeader.ForeColor = Color.Yellow;
-				else
+				//if (SkinUtils.IsDarkSkin)
+				//	gridColumn.AppearanceHeader.ForeColor = Color.Yellow;
+				//else
 					gridColumn.AppearanceHeader.ForeColor = Color.Red;
 				gridColumn.Tag = true;
 			}

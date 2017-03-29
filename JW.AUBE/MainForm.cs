@@ -36,7 +36,6 @@ namespace JW.AUBE
 	public partial class MainForm : XtraForm, IMainForm
 	{
 		private string currentFormName = string.Empty;
-
 		private XTree mainMenu = null;
 
 		public MainForm()
@@ -47,40 +46,7 @@ namespace JW.AUBE
 			Init();
 
 			barManager.ItemClick += delegate (object sender, ItemClickEventArgs e) { ToolbarButtonClick(sender, e); };
-			navBarNavigate.LinkClicked += delegate (object sender, NavBarLinkEventArgs e)
-			{
-				try
-				{
-					if (sender == null)
-					{
-						return;
-					}
-					if (e.Link.Item.Tag != null)
-					{
-						if (e.Link.Item.Tag is MainMenuDataModel)
-						{
-							MainMenuDataModel model = e.Link.Item.Tag as MainMenuDataModel;
-							OpenForm(new MenuData()
-							{
-								MENU_ID = model.MENU_ID.ToIntegerNullToZero(),
-								MENU_NAME = model.MENU_NAME.ToStringNullToEmpty(),
-								CAPTION = model.MENU_NAME.ToStringNullToEmpty(),
-								IMAGE = e.Link.Item.SmallImage,
-								ASSEMBLY = model.ASSEMBLY.ToStringNullToEmpty(),
-								NAMESPACE = model.NAMESPACE.ToStringNullToEmpty(),
-								INSTANCE = model.INSTANCE.ToStringNullToEmpty(),
-								FORM_TYPE = model.FORM_TYPE.ToStringNullToEmpty(),
-								VIEW_YN = model.VIEW_YN.ToStringNullToEmpty(),
-								EDIT_YN = model.EDIT_YN.ToStringNullToEmpty()
-							});
-						}
-					}
-				}
-				catch (Exception ex)
-				{
-					MsgBox.Show(ex);
-				}
-			};
+			navBarNavigate.LinkClicked += delegate (object sender, NavBarLinkEventArgs e) { NavBarNavigateLinkClicked(sender, e); };
 
 			mdiManager.PageAdded += delegate (object sender, MdiTabPageEventArgs e)
 			{
@@ -216,22 +182,7 @@ namespace JW.AUBE
 				}
 			};
 
-			timerMainTime.Tick += delegate (object sender, EventArgs e)
-			{
-				timerMainTime.Enabled = false;
-				barStatusBarDatetime.Caption = DateTime.Now.ToString("F");
-				timerMainTime.Enabled = true;
-
-				if (NetworkUtils.IsConnectedToNetwork())
-				{
-					barStatusBarDatetime.ItemAppearance.Normal.Options.UseBackColor = false;
-				}
-				else
-				{
-					barStatusBarDatetime.ItemAppearance.Normal.BackColor = Color.Red;
-					barStatusBarDatetime.ItemAppearance.Normal.ForeColor = Color.White;
-				}
-			};
+			timerMainTime.Tick += delegate (object sender, EventArgs e) { MainTimeTick(); };
 			timerHomeShow.Tick += delegate (object sender, EventArgs e)
 			{
 				timerHomeShow.Enabled = false;
@@ -286,6 +237,58 @@ namespace JW.AUBE
 				}
 			};
 		}
+
+		private void NavBarNavigateLinkClicked(object sender, NavBarLinkEventArgs e)
+		{
+			try
+			{
+				if (sender == null)
+				{
+					return;
+				}
+				if (e.Link.Item.Tag != null)
+				{
+					if (e.Link.Item.Tag is MainMenuDataModel)
+					{
+						MainMenuDataModel model = e.Link.Item.Tag as MainMenuDataModel;
+						OpenForm(new MenuData()
+						{
+							MENU_ID = model.MENU_ID.ToIntegerNullToZero(),
+							MENU_NAME = model.MENU_NAME.ToStringNullToEmpty(),
+							CAPTION = model.MENU_NAME.ToStringNullToEmpty(),
+							IMAGE = e.Link.Item.SmallImage,
+							ASSEMBLY = model.ASSEMBLY.ToStringNullToEmpty(),
+							NAMESPACE = model.NAMESPACE.ToStringNullToEmpty(),
+							INSTANCE = model.INSTANCE.ToStringNullToEmpty(),
+							FORM_TYPE = model.FORM_TYPE.ToStringNullToEmpty(),
+							VIEW_YN = model.VIEW_YN.ToStringNullToEmpty(),
+							EDIT_YN = model.EDIT_YN.ToStringNullToEmpty()
+						});
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				MsgBox.Show(ex);
+			}
+		}
+
+		private void MainTimeTick()
+		{
+			timerMainTime.Enabled = false;
+			barStatusBarDatetime.Caption = DateTime.Now.ToString("F");
+			timerMainTime.Enabled = true;
+
+			if (NetworkUtils.IsConnectedToNetwork())
+			{
+				barStatusBarDatetime.ItemAppearance.Normal.Options.UseBackColor = false;
+			}
+			else
+			{
+				barStatusBarDatetime.ItemAppearance.Normal.BackColor = Color.Red;
+				barStatusBarDatetime.ItemAppearance.Normal.ForeColor = Color.White;
+			}
+		}
 		
 		private void Init()
 		{
@@ -296,8 +299,18 @@ namespace JW.AUBE
 
 		private void InitSkin()
 		{
-			barAndDockingController.LookAndFeel.UseDefaultLookAndFeel =
-				this.LookAndFeel.UseDefaultLookAndFeel = !GlobalVar.Settings.GetValue("MAIN_SKIN").IsNullOrEmpty();
+			if (GlobalVar.Settings.GetValue("MAIN_SKIN").IsNullOrEmpty() == false)
+			{
+				this.LookAndFeel.UseDefaultLookAndFeel =
+						barAndDockingController.LookAndFeel.UseDefaultLookAndFeel = false;
+				this.LookAndFeel.SetSkinStyle(GlobalVar.Settings.GetValue("MAIN_SKIN").ToStringNullToEmpty());
+				barAndDockingController.LookAndFeel.SetSkinStyle(GlobalVar.Settings.GetValue("MAIN_SKIN").ToStringNullToEmpty());
+			}
+			else
+			{
+				this.LookAndFeel.UseDefaultLookAndFeel =
+						barAndDockingController.LookAndFeel.UseDefaultLookAndFeel = true;
+			}
 		}
 
 		private void LoadFormLayout()

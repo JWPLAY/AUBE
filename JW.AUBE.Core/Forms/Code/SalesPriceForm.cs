@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using DevExpress.Utils;
 using DevExpress.XtraGrid.Views.Grid;
 using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Map;
-using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Controls.Grid;
 using JW.AUBE.Core.Enumerations;
@@ -79,8 +77,8 @@ namespace JW.AUBE.Core.Forms.Code
 				new XGridColumn() { FieldName = "USE_YN", HorzAlignment = HorzAlignment.Center, RepositoryItem = gridList.GetRepositoryItemCheckEdit(), Width = 80 }
 			});
 
-			gridList.SetColumnBackColor(Color.Black, "ROW_NO");
-			gridList.SetColumnForeColor(Color.White, "ROW_NO");
+			gridList.SetColumnBackColor(SkinUtils.ForeColor, "ROW_NO");
+			gridList.SetColumnForeColor(SkinUtils.BackColor, "ROW_NO");
 			gridList.ColumnFix("ROW_NO");
 
 			gridList.RowCellClick += delegate (object sender, RowCellClickEventArgs e)
@@ -128,8 +126,8 @@ namespace JW.AUBE.Core.Forms.Code
 				);
 			#endregion
 
-			gridHistList.SetColumnBackColor(Color.Black, "ROW_NO");
-			gridHistList.SetColumnForeColor(Color.Yellow, "ROW_NO");
+			gridHistList.SetColumnBackColor(SkinUtils.ForeColor, "ROW_NO");
+			gridHistList.SetColumnForeColor(SkinUtils.BackColor, "ROW_NO");
 			gridHistList.ColumnFix("ROW_NO");
 
 			gridHistList.RowCellClick += delegate (object sender, RowCellClickEventArgs e)
@@ -238,29 +236,24 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				var res = DBTranHelper.GetData("Product", "GetSalesPriceData", new DataMap()
+				var data = DBTranHelper.GetData<SalesPriceDataModel>("Product", "GetSalesPriceData", new DataMap()
 				{
 					{ "REG_ID", reg_id }
 				});
 
-				if (res.TranList.Length == 0 || res.TranList[0].Data == null)
-					throw new Exception("조회 데이터가 없습니다.");
+				txtRegId.EditValue = data.REG_ID;
+				txtProductId.EditValue = data.PRODUCT_ID;
+				txtProductCode.EditValue = data.PRODUCT_CODE;
+				txtProductName.EditValue = data.PRODUCT_NAME;
+				datBegDate.SetDateChar8(data.BEG_DATE);
+				datEndDate.SetDateChar8(data.END_DATE);
+				spnSalePrice.EditValue = data.SALE_PRICE;
+				memRemarks.EditValue = data.REMARKS;
 
-				SalesPriceDataModel model = (SalesPriceDataModel)res.TranList[0].Data;
-
-				txtRegId.EditValue = model.REG_ID;
-				txtProductId.EditValue = model.PRODUCT_ID;
-				txtProductCode.EditValue = model.PRODUCT_CODE;
-				txtProductName.EditValue = model.PRODUCT_NAME;
-				datBegDate.SetDateChar8(model.BEG_DATE);
-				datEndDate.SetDateChar8(model.END_DATE);
-				spnSalePrice.EditValue = model.SALE_PRICE;
-				memRemarks.EditValue = model.REMARKS;
-
-				txtInsTime.EditValue = model.INS_TIME;
-				txtInsUserName.EditValue = model.INS_USER_NAME;
-				txtUpdTime.EditValue = model.UPD_TIME;
-				txtUpdUserName.EditValue = model.UPD_USER_NAME;
+				txtInsTime.EditValue = data.INS_TIME;
+				txtInsUserName.EditValue = data.INS_USER_NAME;
+				txtUpdTime.EditValue = data.UPD_TIME;
+				txtUpdUserName.EditValue = data.UPD_USER_NAME;
 
 				SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true, Delete = true });
 				this.EditMode = EditModeEnum.Modify;

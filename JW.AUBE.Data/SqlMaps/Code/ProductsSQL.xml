@@ -43,6 +43,13 @@
 					]]>
 				</isEqual>
 			</isPropertyAvailable>
+			<isPropertyAvailable property="PRODUCT_TYPE" >
+				<isNotEmpty property="PRODUCT_TYPE">
+					<![CDATA[
+						AND		AA.PRODUCT_TYPE = #PRODUCT_TYPE#
+					]]>
+				</isNotEmpty>
+			</isPropertyAvailable>
 			<isPropertyAvailable property="FIND_TEXT" >
 				<isNotEmpty property="FIND_TEXT">
 					<![CDATA[

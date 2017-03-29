@@ -37,13 +37,13 @@
 			this.wb.Location = new System.Drawing.Point(0, 0);
 			this.wb.MinimumSize = new System.Drawing.Size(20, 20);
 			this.wb.Name = "wb";
-			this.wb.Size = new System.Drawing.Size(422, 456);
+			this.wb.Size = new System.Drawing.Size(478, 488);
 			this.wb.TabIndex = 4;
 			// 
 			// SearchPostCodeForm
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-			this.ClientSize = new System.Drawing.Size(422, 456);
+			this.ClientSize = new System.Drawing.Size(478, 488);
 			this.Controls.Add(this.wb);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.MaximizeBox = false;

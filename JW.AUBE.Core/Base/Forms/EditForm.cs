@@ -82,25 +82,19 @@ namespace JW.AUBE.Core.Base.Forms
 		{
 			if (!this.DesignMode)
 			{
-				if (GlobalVar.Settings.GetValue("FORM_SKIN").ToStringNullToEmpty().IsNullOrEmpty() == false)
+				if (GlobalVar.Settings.GetValue("FORM_SKIN").IsNullOrEmpty() == false)
 				{
-					this.LookAndFeel.UseDefaultLookAndFeel = false;
+					this.LookAndFeel.UseDefaultLookAndFeel = 
+						barAndDockingController.LookAndFeel.UseDefaultLookAndFeel = false;
 					this.LookAndFeel.SetSkinStyle(GlobalVar.Settings.GetValue("FORM_SKIN").ToStringNullToEmpty());
+					barAndDockingController.LookAndFeel.SetSkinStyle(GlobalVar.Settings.GetValue("FORM_SKIN").ToStringNullToEmpty());
 				}
 				else
 				{
-					this.LookAndFeel.UseDefaultLookAndFeel = true;
+					this.LookAndFeel.UseDefaultLookAndFeel = 
+						barAndDockingController.LookAndFeel.UseDefaultLookAndFeel = true;
 				}
-				if (GlobalVar.Settings.GetValue("MAIN_SKIN").ToStringNullToEmpty().IsNullOrEmpty() == false)
-				{
-					barAndDockingController.LookAndFeel.UseDefaultLookAndFeel = false;
-					barAndDockingController.LookAndFeel.SetSkinStyle(GlobalVar.Settings.GetValue("MAIN_SKIN").ToStringNullToEmpty());
-				}
-				else
-				{
-					barAndDockingController.LookAndFeel.UseDefaultLookAndFeel = true;
-				}
-				//barTools.Appearance.BackColor = SkinUtils.BackColor();
+				
 				barTools.OptionsBar.AllowQuickCustomization = false;
 
 				ToolbarButtons = new ToolbarButtons();

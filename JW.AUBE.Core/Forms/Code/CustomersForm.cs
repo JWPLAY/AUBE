@@ -1,41 +1,46 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using DevExpress.Utils;
+using DevExpress.XtraEditors.Controls;
+using DevExpress.XtraEditors.Repository;
 using DevExpress.XtraGrid.Views.Grid;
-using JW.AUBE.Base.Map;
-using JW.AUBE.Base.Utils;
-using JW.AUBE.Core.Controls.Grid;
-using JW.AUBE.Core.Enumerations;
-using JW.AUBE.Core.Base.Forms;
-using JW.AUBE.Core.Models;
-using JW.AUBE.Core.Utils;
-using JW.AUBE.Core.PostCode;
 using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.DBTran.Model;
-using System.Collections.Generic;
-using DevExpress.XtraEditors.Repository;
-using DevExpress.XtraEditors.Controls;
-using System.Windows.Forms;
+using JW.AUBE.Base.Map;
+using JW.AUBE.Base.Utils;
+using JW.AUBE.Core.Base.Forms;
+using JW.AUBE.Core.Controls.Grid;
+using JW.AUBE.Core.Enumerations;
+using JW.AUBE.Core.Models;
+using JW.AUBE.Core.PostCode;
+using JW.AUBE.Core.Utils;
 
 namespace JW.AUBE.Core.Forms.Code
 {
 	public partial class CustomersForm : EditForm
 	{
+		private object mBizRegId = null;
+		private object mAddressId = null;
+
 		public CustomersForm()
 		{
 			InitializeComponent();
 
-			btnSearchPostCode.Click += delegate (object sender, EventArgs e)
+			txtPostNo.ButtonClick += delegate (object sender, ButtonPressedEventArgs e)
 			{
-				var postdata = SearchPostCode.Find();
-				if (postdata != null && postdata.GetType() == typeof(DataMap))
+				if(e.Button.Kind== ButtonPredefines.Ellipsis)
 				{
-					txtPostNo.EditValue = postdata.GetValue("POST_NO");
-					txtZoneNo.EditValue = postdata.GetValue("ZONE_NO");
-					txtAddress1.EditValue = postdata.GetValue("ADDRESS1");
-					txtAddress2.EditValue = postdata.GetValue("ADDRESS2");
-					txtAddress2.Focus();
+					var postdata = SearchPostCode.Find();
+					if (postdata != null && postdata.GetType() == typeof(DataMap))
+					{
+						txtPostNo.EditValue = postdata.GetValue("POST_NO");
+						txtZoneNo.EditValue = postdata.GetValue("ZONE_NO");
+						txtAddress1.EditValue = postdata.GetValue("ADDRESS1");
+						txtAddress2.EditValue = postdata.GetValue("ADDRESS2");
+						txtAddress2.Focus();
+					}
 				}
 			};
 		}
@@ -107,11 +112,10 @@ namespace JW.AUBE.Core.Forms.Code
 			txtInsUserName.SetEnable(false);
 			txtUpdTime.SetEnable(false);
 			txtUpdUserName.SetEnable(false);
-			txtBizRegId.SetEnable(false);
-			txtAddressId.SetEnable(false);
-			txtPostNo.SetEnable(false);
 			txtZoneNo.SetEnable(false);
 			txtAddress1.SetEnable(false);
+
+			txtPostNo.Properties.TextEditStyle = TextEditStyles.DisableTextEditor;
 
 			InitCombo();
 			InitGrid();
@@ -328,14 +332,12 @@ namespace JW.AUBE.Core.Forms.Code
 				chkUseYn.Checked = true;
 				memRemarks.Clear();
 
-				txtBizRegId.Clear();
 				txtBizRegNo.Clear();
 				txtRepName.Clear();
 				txtBizName.Clear();
 				txtBizType.Clear();
 				txtBizItem.Clear();
 
-				txtAddressId.Clear();
 				txtPostNo.Clear();
 				txtZoneNo.Clear();
 				txtAddress1.Clear();
@@ -345,6 +347,9 @@ namespace JW.AUBE.Core.Forms.Code
 				txtInsUserName.Clear();
 				txtUpdTime.Clear();
 				txtUpdUserName.Clear();
+
+				mBizRegId = null;
+				mAddressId = null;
 
 				gridPhones.DataSource = null;
 				gridPhones.EmptyDataTableBinding();
@@ -412,14 +417,14 @@ namespace JW.AUBE.Core.Forms.Code
 					chkUseYn.EditValue = data.GetValue("USE_YN");
 					memRemarks.EditValue = data.GetValue("REMARKS");
 
-					txtBizRegId.EditValue = data.GetValue("BIZ_REG_ID");
+					mBizRegId = data.GetValue("BIZ_REG_ID");
 					txtBizRegNo.EditValue = data.GetValue("BIZ_REG_NO");
 					txtBizName.EditValue = data.GetValue("BIZ_NAME");
 					txtRepName.EditValue = data.GetValue("REP_NAME");
 					txtBizType.EditValue = data.GetValue("BIZ_TYPE");
 					txtBizItem.EditValue = data.GetValue("BIZ_ITEM");
 
-					txtAddressId.EditValue = data.GetValue("ADDRESS_ID");
+					mAddressId = data.GetValue("ADDRESS_ID");
 					txtPostNo.EditValue = data.GetValue("POST_NO");
 					txtZoneNo.EditValue = data.GetValue("ZONE_NO");
 					txtAddress1.EditValue = data.GetValue("ADDRESS1");
@@ -456,6 +461,8 @@ namespace JW.AUBE.Core.Forms.Code
 			try
 			{
 				DataTable dt = lc.GroupToDataTable(lcGroupEdit, lcGroupBizEdit)
+					.SetValue("BIZ_REG_ID", mBizRegId)
+					.SetValue("ADDRESS_ID", mAddressId)
 					.SetValue("ROWSTATE", (this.EditMode == EditModeEnum.New) ? "INSERT" : "UPDATE");
 
 				var res = DBTranHelper.Execute(new DBTranSet()
@@ -473,6 +480,7 @@ namespace JW.AUBE.Core.Forms.Code
 					throw new Exception(res.ErrorMessage);
 
 				txtCustomerId.EditValue = res.TranList[0].ReturnValue;
+
 				DataSavePhones();
 				DataSaveAddress();
 

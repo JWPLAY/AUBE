@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using JW.AUBE.Base.DBTran.Model;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
-using  JW.AUBE.Base.DBTran.Model;
-using JW.AUBE.Service.Mappers;
 using JW.AUBE.Model.Codes;
+using JW.AUBE.Service.Mappers;
 using JW.AUBE.Service.Utils;
 
 namespace JW.AUBE.Service.Services
@@ -74,10 +74,11 @@ namespace JW.AUBE.Service.Services
 					//상품정보 저장
 					if (req.TranList.Length > 0)
 					{
-						if (req.TranList[0].Data == null || (req.TranList[0].Data as DataTable).Rows.Count == 0)
+						if (req.TranList[0].Data == null)
 							throw new Exception("상품정보를 저장할 데이터가 존재하지 않습니다.");
 
-						DataMap data = (req.TranList[0].Data as DataTable).ToDataMapList()[0];
+						DataMap data = req.TranList[0].Data as DataMap;
+						data.SetValue("INS_USER", req.UserId);
 
 						if (string.IsNullOrEmpty(data.GetValue("PRODUCT_CODE").ToStringNullToEmpty()))
 						{
@@ -113,6 +114,7 @@ namespace JW.AUBE.Service.Services
 							foreach (DataMap map in list)
 							{
 								map.SetValue("PRODUCT_ID", product_id);
+								map.SetValue("INS_USER", req.UserId);
 
 								if (map.GetValue("ROWSTATE").ToStringNullToEmpty() == "INSERT")
 								{
@@ -228,10 +230,11 @@ namespace JW.AUBE.Service.Services
 					
 					if (req.TranList.Length > 0)
 					{
-						if (req.TranList[0].Data == null || (req.TranList[0].Data as DataTable).Rows.Count == 0)
+						if (req.TranList[0].Data == null)
 							throw new Exception("상품정보를 저장할 데이터가 존재하지 않습니다.");
 
-						DataMap data = (req.TranList[0].Data as DataTable).ToDataMapList()[0];
+						DataMap data = req.TranList[0].Data as DataMap;
+						data.SetValue("INS_USER", req.UserId);
 
 						product_id = data.GetValue("PRODUCT_ID");
 

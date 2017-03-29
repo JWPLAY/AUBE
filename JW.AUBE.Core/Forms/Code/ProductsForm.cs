@@ -67,14 +67,8 @@ namespace JW.AUBE.Core.Forms.Code
 		protected override void InitButtons()
 		{
 			base.InitButtons();
-			SetToolbarButtons(new ToolbarButtons()
-			{
-				New = true,
-				Refresh = true,
-				Save = true,
-				SaveAndNew = true,
-				Delete = true
-			});
+			SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true });
+			btnLineAdd.Enabled = btnLineDel.Enabled = btnSave.Enabled = this.IsDataEdit;
 
 			btnLineAdd.Click += delegate (object sender, EventArgs e)
 			{
@@ -116,6 +110,7 @@ namespace JW.AUBE.Core.Forms.Code
 
 		void InitCombo()
 		{
+			lupSchProductType.BindData("PRODUCT_TYPE", null, "ALL", true);
 			lupProductType.BindData("PRODUCT_TYPE", null, null, true);
 			lupCategory.BindData("CATEGORY", null, null, true);
 			lupUnitType.BindData("UNIT_TYPE", null, null, true);
@@ -134,8 +129,8 @@ namespace JW.AUBE.Core.Forms.Code
 				new XGridColumn() { FieldName = "CATEGORY", HorzAlignment = HorzAlignment.Center, Width = 100 },
 				new XGridColumn() { FieldName = "USE_YN", HorzAlignment = HorzAlignment.Center, RepositoryItem = gridList.GetRepositoryItemCheckEdit(), Width = 80 }
 			);
-			gridList.SetColumnBackColor(SkinUtils.BackColor, "ROW_NO");
-			gridList.SetColumnForeColor(Color.FromArgb(230, 232, 242), "ROW_NO");
+			gridList.SetColumnBackColor(SkinUtils.ForeColor, "ROW_NO");
+			gridList.SetColumnForeColor(SkinUtils.BackColor, "ROW_NO");
 			gridList.ColumnFix("ROW_NO");
 
 			gridList.RowCellClick += delegate (object sender, RowCellClickEventArgs e)
@@ -260,6 +255,7 @@ namespace JW.AUBE.Core.Forms.Code
 
 				onProductTypeChanged();
 
+				SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true });
 				this.EditMode = EditModeEnum.New;
 				txtProductName.Focus();
 			}
@@ -273,7 +269,7 @@ namespace JW.AUBE.Core.Forms.Code
 		{
 			try
 			{
-				gridList.BindData("Product", "GetList", null, new DataMap() { { "FIND_TEXT", txtFindText.EditValue } });
+				gridList.BindData("Product", "GetList", null, new DataMap() { { "PRODUCT_TYPE", lupSchProductType.EditValue }, { "FIND_TEXT", txtFindText.EditValue } });
 
 				if (param != null)
 					DetailDataLoad(param);
@@ -321,6 +317,7 @@ namespace JW.AUBE.Core.Forms.Code
 
 				onProductTypeChanged();
 
+				SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true, Delete = true });
 				this.EditMode = EditModeEnum.Modify;
 				txtProductName.Focus();
 			}

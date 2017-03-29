@@ -79,6 +79,8 @@
 			this.btnLineDel = new DevExpress.XtraEditors.SimpleButton();
 			this.lcButtonSave = new DevExpress.XtraLayout.LayoutControlItem();
 			this.btnSave = new DevExpress.XtraEditors.SimpleButton();
+			this.lupSchProductType = new JW.AUBE.Core.Controls.Common.XLookup();
+			this.lcItemSchProductType = new DevExpress.XtraLayout.LayoutControlItem();
 			((System.ComponentModel.ISupportInitialize)(this.lc)).BeginInit();
 			this.lc.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupBase)).BeginInit();
@@ -127,10 +129,13 @@
 			((System.ComponentModel.ISupportInitialize)(this.lcButtonLineAdd)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcButtonLineDel)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcButtonSave)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lupSchProductType.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcItemSchProductType)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// lc
 			// 
+			this.lc.Controls.Add(this.lupSchProductType);
 			this.lc.Controls.Add(this.lupUnitType);
 			this.lc.Controls.Add(this.lupCategory);
 			this.lc.Controls.Add(this.btnSave);
@@ -150,9 +155,9 @@
 			this.lc.Controls.Add(this.txtProductName);
 			this.lc.Controls.Add(this.txtProductId);
 			this.lc.Controls.Add(this.txtFindText);
-			this.lc.Location = new System.Drawing.Point(0, 42);
+			this.lc.Location = new System.Drawing.Point(0, 44);
 			this.lc.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(742, 86, 457, 350);
-			this.lc.Size = new System.Drawing.Size(998, 548);
+			this.lc.Size = new System.Drawing.Size(998, 552);
 			// 
 			// lcGroupBase
 			// 
@@ -163,7 +168,7 @@
             this.lcTabGroup});
 			this.lcGroupBase.Name = "Root";
 			this.lcGroupBase.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcGroupBase.Size = new System.Drawing.Size(998, 548);
+			this.lcGroupBase.Size = new System.Drawing.Size(998, 552);
 			// 
 			// lcGroupFind
 			// 
@@ -173,41 +178,42 @@
 			this.lcGroupFind.Location = new System.Drawing.Point(0, 0);
 			this.lcGroupFind.Name = "lcGroupFind";
 			this.lcGroupFind.Padding = new DevExpress.XtraLayout.Utils.Padding(4, 4, 4, 4);
-			this.lcGroupFind.Size = new System.Drawing.Size(356, 544);
+			this.lcGroupFind.Size = new System.Drawing.Size(382, 548);
 			this.lcGroupFind.Text = "검색";
 			this.lcGroupFind.TextVisible = false;
 			// 
 			// lcGroupSearch
 			// 
 			this.lcGroupSearch.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.lcItemFindText});
+            this.lcItemFindText,
+            this.lcItemSchProductType});
 			this.lcGroupSearch.Location = new System.Drawing.Point(0, 0);
 			this.lcGroupSearch.Name = "lcGroupSearch";
 			this.lcGroupSearch.Padding = new DevExpress.XtraLayout.Utils.Padding(4, 4, 4, 4);
-			this.lcGroupSearch.Size = new System.Drawing.Size(342, 59);
+			this.lcGroupSearch.Size = new System.Drawing.Size(368, 81);
 			// 
 			// lcItemFindText
 			// 
 			this.lcItemFindText.Control = this.txtFindText;
-			this.lcItemFindText.Location = new System.Drawing.Point(0, 0);
+			this.lcItemFindText.Location = new System.Drawing.Point(0, 24);
 			this.lcItemFindText.Name = "lcItemFindText";
-			this.lcItemFindText.Size = new System.Drawing.Size(328, 24);
-			this.lcItemFindText.TextSize = new System.Drawing.Size(111, 14);
+			this.lcItemFindText.Size = new System.Drawing.Size(354, 24);
+			this.lcItemFindText.TextSize = new System.Drawing.Size(125, 14);
 			// 
 			// txtFindText
 			// 
-			this.txtFindText.Location = new System.Drawing.Point(133, 39);
+			this.txtFindText.Location = new System.Drawing.Point(147, 61);
 			this.txtFindText.Name = "txtFindText";
-			this.txtFindText.Size = new System.Drawing.Size(209, 20);
+			this.txtFindText.Size = new System.Drawing.Size(221, 20);
 			this.txtFindText.StyleController = this.lc;
 			this.txtFindText.TabIndex = 4;
 			// 
 			// lcGridList
 			// 
 			this.lcGridList.Control = this.gridList;
-			this.lcGridList.Location = new System.Drawing.Point(0, 59);
+			this.lcGridList.Location = new System.Drawing.Point(0, 81);
 			this.lcGridList.Name = "lcGridList";
-			this.lcGridList.Size = new System.Drawing.Size(342, 471);
+			this.lcGridList.Size = new System.Drawing.Size(368, 453);
 			this.lcGridList.TextSize = new System.Drawing.Size(0, 0);
 			this.lcGridList.TextVisible = false;
 			// 
@@ -216,8 +222,9 @@
 			this.gridList.Compress = false;
 			this.gridList.DataSource = null;
 			this.gridList.Editable = true;
+			this.gridList.FocusedRowHandle = -2147483648;
 			this.gridList.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
-			this.gridList.Location = new System.Drawing.Point(11, 70);
+			this.gridList.Location = new System.Drawing.Point(11, 92);
 			this.gridList.Name = "gridList";
 			this.gridList.PageFooterCenter = null;
 			this.gridList.PageFooterLeft = null;
@@ -229,8 +236,9 @@
 			this.gridList.PrintFooter = null;
 			this.gridList.PrintHeader = null;
 			this.gridList.ReadOnly = false;
+			this.gridList.ShowFooter = false;
 			this.gridList.ShowGroupPanel = false;
-			this.gridList.Size = new System.Drawing.Size(338, 467);
+			this.gridList.Size = new System.Drawing.Size(364, 449);
 			this.gridList.TabIndex = 7;
 			// 
 			// lcGroupEdit
@@ -249,10 +257,10 @@
             this.emptySpaceItem5,
             this.lcItemCategory,
             this.lcItemUnitType});
-			this.lcGroupEdit.Location = new System.Drawing.Point(356, 0);
+			this.lcGroupEdit.Location = new System.Drawing.Point(382, 0);
 			this.lcGroupEdit.Name = "lcGroupEdit";
 			this.lcGroupEdit.Padding = new DevExpress.XtraLayout.Utils.Padding(4, 4, 4, 4);
-			this.lcGroupEdit.Size = new System.Drawing.Size(638, 218);
+			this.lcGroupEdit.Size = new System.Drawing.Size(612, 218);
 			this.lcGroupEdit.TextVisible = false;
 			// 
 			// lcItemProductId
@@ -262,14 +270,14 @@
 			this.lcItemProductId.Control = this.txtProductId;
 			this.lcItemProductId.Location = new System.Drawing.Point(0, 0);
 			this.lcItemProductId.Name = "lcItemProductId";
-			this.lcItemProductId.Size = new System.Drawing.Size(277, 24);
-			this.lcItemProductId.TextSize = new System.Drawing.Size(111, 17);
+			this.lcItemProductId.Size = new System.Drawing.Size(275, 24);
+			this.lcItemProductId.TextSize = new System.Drawing.Size(125, 17);
 			// 
 			// txtProductId
 			// 
-			this.txtProductId.Location = new System.Drawing.Point(482, 11);
+			this.txtProductId.Location = new System.Drawing.Point(522, 11);
 			this.txtProductId.Name = "txtProductId";
-			this.txtProductId.Size = new System.Drawing.Size(158, 20);
+			this.txtProductId.Size = new System.Drawing.Size(142, 20);
 			this.txtProductId.StyleController = this.lc;
 			this.txtProductId.TabIndex = 5;
 			// 
@@ -278,31 +286,31 @@
 			this.lcItemProductName.Control = this.txtProductName;
 			this.lcItemProductName.Location = new System.Drawing.Point(0, 48);
 			this.lcItemProductName.Name = "lcItemProductName";
-			this.lcItemProductName.Size = new System.Drawing.Size(427, 24);
-			this.lcItemProductName.TextSize = new System.Drawing.Size(111, 14);
+			this.lcItemProductName.Size = new System.Drawing.Size(425, 24);
+			this.lcItemProductName.TextSize = new System.Drawing.Size(125, 14);
 			// 
 			// txtProductName
 			// 
-			this.txtProductName.Location = new System.Drawing.Point(482, 59);
+			this.txtProductName.Location = new System.Drawing.Point(522, 59);
 			this.txtProductName.Name = "txtProductName";
-			this.txtProductName.Size = new System.Drawing.Size(308, 20);
+			this.txtProductName.Size = new System.Drawing.Size(292, 20);
 			this.txtProductName.StyleController = this.lc;
 			this.txtProductName.TabIndex = 6;
 			// 
 			// emptySpaceItem1
 			// 
 			this.emptySpaceItem1.AllowHotTrack = false;
-			this.emptySpaceItem1.Location = new System.Drawing.Point(277, 0);
+			this.emptySpaceItem1.Location = new System.Drawing.Point(275, 0);
 			this.emptySpaceItem1.Name = "emptySpaceItem1";
-			this.emptySpaceItem1.Size = new System.Drawing.Size(347, 24);
+			this.emptySpaceItem1.Size = new System.Drawing.Size(323, 24);
 			this.emptySpaceItem1.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// emptySpaceItem3
 			// 
 			this.emptySpaceItem3.AllowHotTrack = false;
-			this.emptySpaceItem3.Location = new System.Drawing.Point(427, 48);
+			this.emptySpaceItem3.Location = new System.Drawing.Point(425, 48);
 			this.emptySpaceItem3.Name = "emptySpaceItem3";
-			this.emptySpaceItem3.Size = new System.Drawing.Size(197, 24);
+			this.emptySpaceItem3.Size = new System.Drawing.Size(173, 24);
 			this.emptySpaceItem3.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// lcItemRemarks
@@ -312,15 +320,15 @@
 			this.lcItemRemarks.MaxSize = new System.Drawing.Size(0, 60);
 			this.lcItemRemarks.MinSize = new System.Drawing.Size(129, 60);
 			this.lcItemRemarks.Name = "lcItemRemarks";
-			this.lcItemRemarks.Size = new System.Drawing.Size(624, 60);
+			this.lcItemRemarks.Size = new System.Drawing.Size(598, 60);
 			this.lcItemRemarks.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-			this.lcItemRemarks.TextSize = new System.Drawing.Size(111, 14);
+			this.lcItemRemarks.TextSize = new System.Drawing.Size(125, 14);
 			// 
 			// memRemarks
 			// 
-			this.memRemarks.Location = new System.Drawing.Point(482, 155);
+			this.memRemarks.Location = new System.Drawing.Point(522, 155);
 			this.memRemarks.Name = "memRemarks";
-			this.memRemarks.Size = new System.Drawing.Size(505, 56);
+			this.memRemarks.Size = new System.Drawing.Size(465, 56);
 			this.memRemarks.StyleController = this.lc;
 			this.memRemarks.TabIndex = 14;
 			// 
@@ -329,19 +337,19 @@
 			this.lcItemUseYn.Control = this.chkUseYn;
 			this.lcItemUseYn.Location = new System.Drawing.Point(0, 120);
 			this.lcItemUseYn.Name = "lcItemUseYn";
-			this.lcItemUseYn.Size = new System.Drawing.Size(312, 24);
-			this.lcItemUseYn.TextSize = new System.Drawing.Size(111, 14);
+			this.lcItemUseYn.Size = new System.Drawing.Size(310, 24);
+			this.lcItemUseYn.TextSize = new System.Drawing.Size(125, 14);
 			// 
 			// chkUseYn
 			// 
 			this.chkUseYn.EditValue = "N";
-			this.chkUseYn.Location = new System.Drawing.Point(482, 131);
+			this.chkUseYn.Location = new System.Drawing.Point(522, 131);
 			this.chkUseYn.Name = "chkUseYn";
 			this.chkUseYn.Properties.AutoWidth = true;
 			this.chkUseYn.Properties.Caption = "";
 			this.chkUseYn.Properties.ValueChecked = "Y";
 			this.chkUseYn.Properties.ValueUnchecked = "N";
-			this.chkUseYn.Size = new System.Drawing.Size(18, 19);
+			this.chkUseYn.Size = new System.Drawing.Size(19, 19);
 			this.chkUseYn.StyleController = this.lc;
 			this.chkUseYn.TabIndex = 0;
 			this.chkUseYn.TabStop = false;
@@ -351,8 +359,8 @@
 			this.lcItemProductType.Control = this.lupProductType;
 			this.lcItemProductType.Location = new System.Drawing.Point(0, 96);
 			this.lcItemProductType.Name = "lcItemProductType";
-			this.lcItemProductType.Size = new System.Drawing.Size(309, 24);
-			this.lcItemProductType.TextSize = new System.Drawing.Size(111, 14);
+			this.lcItemProductType.Size = new System.Drawing.Size(310, 24);
+			this.lcItemProductType.TextSize = new System.Drawing.Size(125, 14);
 			// 
 			// lupProductType
 			// 
@@ -360,13 +368,13 @@
 			this.lupProductType.DisplayMember = "";
 			this.lupProductType.GroupCode = null;
 			this.lupProductType.ListMember = "LIST_NAME";
-			this.lupProductType.Location = new System.Drawing.Point(482, 107);
+			this.lupProductType.Location = new System.Drawing.Point(522, 107);
 			this.lupProductType.Name = "lupProductType";
 			this.lupProductType.NullText = "[EditValue is null]";
 			this.lupProductType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
 			this.lupProductType.SelectedIndex = -1;
-			this.lupProductType.Size = new System.Drawing.Size(190, 20);
+			this.lupProductType.Size = new System.Drawing.Size(177, 20);
 			this.lupProductType.StyleController = this.lc;
 			this.lupProductType.TabIndex = 19;
 			this.lupProductType.ValueMember = "";
@@ -374,9 +382,9 @@
 			// emptySpaceItem10
 			// 
 			this.emptySpaceItem10.AllowHotTrack = false;
-			this.emptySpaceItem10.Location = new System.Drawing.Point(277, 24);
+			this.emptySpaceItem10.Location = new System.Drawing.Point(275, 24);
 			this.emptySpaceItem10.Name = "emptySpaceItem10";
-			this.emptySpaceItem10.Size = new System.Drawing.Size(347, 24);
+			this.emptySpaceItem10.Size = new System.Drawing.Size(323, 24);
 			this.emptySpaceItem10.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// lcItemProductCode
@@ -384,14 +392,14 @@
 			this.lcItemProductCode.Control = this.txtProductCode;
 			this.lcItemProductCode.Location = new System.Drawing.Point(0, 24);
 			this.lcItemProductCode.Name = "lcItemProductCode";
-			this.lcItemProductCode.Size = new System.Drawing.Size(277, 24);
-			this.lcItemProductCode.TextSize = new System.Drawing.Size(111, 14);
+			this.lcItemProductCode.Size = new System.Drawing.Size(275, 24);
+			this.lcItemProductCode.TextSize = new System.Drawing.Size(125, 14);
 			// 
 			// txtProductCode
 			// 
-			this.txtProductCode.Location = new System.Drawing.Point(482, 35);
+			this.txtProductCode.Location = new System.Drawing.Point(522, 35);
 			this.txtProductCode.Name = "txtProductCode";
-			this.txtProductCode.Size = new System.Drawing.Size(158, 20);
+			this.txtProductCode.Size = new System.Drawing.Size(142, 20);
 			this.txtProductCode.StyleController = this.lc;
 			this.txtProductCode.TabIndex = 39;
 			// 
@@ -401,13 +409,13 @@
 			this.lcItemBarcode.Location = new System.Drawing.Point(0, 72);
 			this.lcItemBarcode.Name = "lcItemBarcode";
 			this.lcItemBarcode.Size = new System.Drawing.Size(310, 24);
-			this.lcItemBarcode.TextSize = new System.Drawing.Size(111, 14);
+			this.lcItemBarcode.TextSize = new System.Drawing.Size(125, 14);
 			// 
 			// txtBarcode
 			// 
-			this.txtBarcode.Location = new System.Drawing.Point(482, 83);
+			this.txtBarcode.Location = new System.Drawing.Point(522, 83);
 			this.txtBarcode.Name = "txtBarcode";
-			this.txtBarcode.Size = new System.Drawing.Size(191, 20);
+			this.txtBarcode.Size = new System.Drawing.Size(177, 20);
 			this.txtBarcode.StyleController = this.lc;
 			this.txtBarcode.TabIndex = 17;
 			// 
@@ -416,16 +424,16 @@
 			this.emptySpaceItem5.AllowHotTrack = false;
 			this.emptySpaceItem5.Location = new System.Drawing.Point(310, 72);
 			this.emptySpaceItem5.Name = "emptySpaceItem5";
-			this.emptySpaceItem5.Size = new System.Drawing.Size(314, 24);
+			this.emptySpaceItem5.Size = new System.Drawing.Size(288, 24);
 			this.emptySpaceItem5.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// lcItemCategory
 			// 
 			this.lcItemCategory.Control = this.lupCategory;
-			this.lcItemCategory.Location = new System.Drawing.Point(309, 96);
+			this.lcItemCategory.Location = new System.Drawing.Point(310, 96);
 			this.lcItemCategory.Name = "lcItemCategory";
-			this.lcItemCategory.Size = new System.Drawing.Size(315, 24);
-			this.lcItemCategory.TextSize = new System.Drawing.Size(111, 14);
+			this.lcItemCategory.Size = new System.Drawing.Size(288, 24);
+			this.lcItemCategory.TextSize = new System.Drawing.Size(125, 14);
 			// 
 			// lupCategory
 			// 
@@ -433,13 +441,13 @@
 			this.lupCategory.DisplayMember = "";
 			this.lupCategory.GroupCode = null;
 			this.lupCategory.ListMember = "LIST_NAME";
-			this.lupCategory.Location = new System.Drawing.Point(791, 107);
+			this.lupCategory.Location = new System.Drawing.Point(832, 107);
 			this.lupCategory.Name = "lupCategory";
 			this.lupCategory.NullText = "[EditValue is null]";
 			this.lupCategory.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
 			this.lupCategory.SelectedIndex = -1;
-			this.lupCategory.Size = new System.Drawing.Size(196, 20);
+			this.lupCategory.Size = new System.Drawing.Size(155, 20);
 			this.lupCategory.StyleController = this.lc;
 			this.lupCategory.TabIndex = 44;
 			this.lupCategory.ValueMember = "";
@@ -447,10 +455,10 @@
 			// lcItemUnitType
 			// 
 			this.lcItemUnitType.Control = this.lupUnitType;
-			this.lcItemUnitType.Location = new System.Drawing.Point(312, 120);
+			this.lcItemUnitType.Location = new System.Drawing.Point(310, 120);
 			this.lcItemUnitType.Name = "lcItemUnitType";
-			this.lcItemUnitType.Size = new System.Drawing.Size(312, 24);
-			this.lcItemUnitType.TextSize = new System.Drawing.Size(111, 14);
+			this.lcItemUnitType.Size = new System.Drawing.Size(288, 24);
+			this.lcItemUnitType.TextSize = new System.Drawing.Size(125, 14);
 			// 
 			// lupUnitType
 			// 
@@ -458,13 +466,13 @@
 			this.lupUnitType.DisplayMember = "";
 			this.lupUnitType.GroupCode = null;
 			this.lupUnitType.ListMember = "LIST_NAME";
-			this.lupUnitType.Location = new System.Drawing.Point(794, 131);
+			this.lupUnitType.Location = new System.Drawing.Point(832, 131);
 			this.lupUnitType.Name = "lupUnitType";
 			this.lupUnitType.NullText = "[EditValue is null]";
 			this.lupUnitType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
 			this.lupUnitType.SelectedIndex = -1;
-			this.lupUnitType.Size = new System.Drawing.Size(193, 20);
+			this.lupUnitType.Size = new System.Drawing.Size(155, 20);
 			this.lupUnitType.StyleController = this.lc;
 			this.lupUnitType.TabIndex = 45;
 			this.lupUnitType.ValueMember = "";
@@ -476,10 +484,10 @@
             this.lcItemInsUserName,
             this.lcItemUpdTime,
             this.lcItemUpdUserName});
-			this.lcGroupRegInfo.Location = new System.Drawing.Point(356, 482);
+			this.lcGroupRegInfo.Location = new System.Drawing.Point(382, 486);
 			this.lcGroupRegInfo.Name = "lcGroupRegInfo";
 			this.lcGroupRegInfo.Padding = new DevExpress.XtraLayout.Utils.Padding(4, 4, 4, 4);
-			this.lcGroupRegInfo.Size = new System.Drawing.Size(638, 62);
+			this.lcGroupRegInfo.Size = new System.Drawing.Size(612, 62);
 			this.lcGroupRegInfo.TextVisible = false;
 			// 
 			// lcItemInsTime
@@ -487,14 +495,14 @@
 			this.lcItemInsTime.Control = this.txtInsTime;
 			this.lcItemInsTime.Location = new System.Drawing.Point(0, 0);
 			this.lcItemInsTime.Name = "lcItemInsTime";
-			this.lcItemInsTime.Size = new System.Drawing.Size(309, 24);
-			this.lcItemInsTime.TextSize = new System.Drawing.Size(111, 14);
+			this.lcItemInsTime.Size = new System.Drawing.Size(307, 24);
+			this.lcItemInsTime.TextSize = new System.Drawing.Size(125, 14);
 			// 
 			// txtInsTime
 			// 
-			this.txtInsTime.Location = new System.Drawing.Point(482, 493);
+			this.txtInsTime.Location = new System.Drawing.Point(522, 497);
 			this.txtInsTime.Name = "txtInsTime";
-			this.txtInsTime.Size = new System.Drawing.Size(190, 20);
+			this.txtInsTime.Size = new System.Drawing.Size(174, 20);
 			this.txtInsTime.StyleController = this.lc;
 			this.txtInsTime.TabIndex = 10;
 			// 
@@ -503,57 +511,57 @@
 			this.lcItemInsUserName.Control = this.txtInsUserName;
 			this.lcItemInsUserName.Location = new System.Drawing.Point(0, 24);
 			this.lcItemInsUserName.Name = "lcItemInsUserName";
-			this.lcItemInsUserName.Size = new System.Drawing.Size(309, 24);
-			this.lcItemInsUserName.TextSize = new System.Drawing.Size(111, 14);
+			this.lcItemInsUserName.Size = new System.Drawing.Size(307, 24);
+			this.lcItemInsUserName.TextSize = new System.Drawing.Size(125, 14);
 			// 
 			// txtInsUserName
 			// 
-			this.txtInsUserName.Location = new System.Drawing.Point(482, 517);
+			this.txtInsUserName.Location = new System.Drawing.Point(522, 521);
 			this.txtInsUserName.Name = "txtInsUserName";
-			this.txtInsUserName.Size = new System.Drawing.Size(190, 20);
+			this.txtInsUserName.Size = new System.Drawing.Size(174, 20);
 			this.txtInsUserName.StyleController = this.lc;
 			this.txtInsUserName.TabIndex = 11;
 			// 
 			// lcItemUpdTime
 			// 
 			this.lcItemUpdTime.Control = this.txtUpdTime;
-			this.lcItemUpdTime.Location = new System.Drawing.Point(309, 0);
+			this.lcItemUpdTime.Location = new System.Drawing.Point(307, 0);
 			this.lcItemUpdTime.Name = "lcItemUpdTime";
-			this.lcItemUpdTime.Size = new System.Drawing.Size(315, 24);
-			this.lcItemUpdTime.TextSize = new System.Drawing.Size(111, 14);
+			this.lcItemUpdTime.Size = new System.Drawing.Size(291, 24);
+			this.lcItemUpdTime.TextSize = new System.Drawing.Size(125, 14);
 			// 
 			// txtUpdTime
 			// 
-			this.txtUpdTime.Location = new System.Drawing.Point(791, 493);
+			this.txtUpdTime.Location = new System.Drawing.Point(829, 497);
 			this.txtUpdTime.Name = "txtUpdTime";
-			this.txtUpdTime.Size = new System.Drawing.Size(196, 20);
+			this.txtUpdTime.Size = new System.Drawing.Size(158, 20);
 			this.txtUpdTime.StyleController = this.lc;
 			this.txtUpdTime.TabIndex = 12;
 			// 
 			// lcItemUpdUserName
 			// 
 			this.lcItemUpdUserName.Control = this.txtUpdUserName;
-			this.lcItemUpdUserName.Location = new System.Drawing.Point(309, 24);
+			this.lcItemUpdUserName.Location = new System.Drawing.Point(307, 24);
 			this.lcItemUpdUserName.Name = "lcItemUpdUserName";
-			this.lcItemUpdUserName.Size = new System.Drawing.Size(315, 24);
-			this.lcItemUpdUserName.TextSize = new System.Drawing.Size(111, 14);
+			this.lcItemUpdUserName.Size = new System.Drawing.Size(291, 24);
+			this.lcItemUpdUserName.TextSize = new System.Drawing.Size(125, 14);
 			// 
 			// txtUpdUserName
 			// 
-			this.txtUpdUserName.Location = new System.Drawing.Point(791, 517);
+			this.txtUpdUserName.Location = new System.Drawing.Point(829, 521);
 			this.txtUpdUserName.Name = "txtUpdUserName";
-			this.txtUpdUserName.Size = new System.Drawing.Size(196, 20);
+			this.txtUpdUserName.Size = new System.Drawing.Size(158, 20);
 			this.txtUpdUserName.StyleController = this.lc;
 			this.txtUpdUserName.TabIndex = 13;
 			// 
 			// lcTabGroup
 			// 
-			this.lcTabGroup.Location = new System.Drawing.Point(356, 218);
+			this.lcTabGroup.Location = new System.Drawing.Point(382, 218);
 			this.lcTabGroup.Name = "lcTabGroup";
 			this.lcTabGroup.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
 			this.lcTabGroup.SelectedTabPage = this.lcTabGroupMaterials;
 			this.lcTabGroup.SelectedTabPageIndex = 0;
-			this.lcTabGroup.Size = new System.Drawing.Size(638, 264);
+			this.lcTabGroup.Size = new System.Drawing.Size(612, 268);
 			this.lcTabGroup.TabPages.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.lcTabGroupMaterials});
 			// 
@@ -565,7 +573,7 @@
             this.lcTabGroupMaterialsButtons});
 			this.lcTabGroupMaterials.Location = new System.Drawing.Point(0, 0);
 			this.lcTabGroupMaterials.Name = "lcTabGroupMaterials";
-			this.lcTabGroupMaterials.Size = new System.Drawing.Size(626, 228);
+			this.lcTabGroupMaterials.Size = new System.Drawing.Size(602, 232);
 			this.lcTabGroupMaterials.Text = "원부자재등록";
 			// 
 			// lcGridMaterials
@@ -573,7 +581,7 @@
 			this.lcGridMaterials.Control = this.gridMaterials;
 			this.lcGridMaterials.Location = new System.Drawing.Point(0, 36);
 			this.lcGridMaterials.Name = "lcGridMaterials";
-			this.lcGridMaterials.Size = new System.Drawing.Size(626, 192);
+			this.lcGridMaterials.Size = new System.Drawing.Size(602, 196);
 			this.lcGridMaterials.TextSize = new System.Drawing.Size(0, 0);
 			this.lcGridMaterials.TextVisible = false;
 			// 
@@ -582,8 +590,9 @@
 			this.gridMaterials.Compress = false;
 			this.gridMaterials.DataSource = null;
 			this.gridMaterials.Editable = true;
+			this.gridMaterials.FocusedRowHandle = -2147483648;
 			this.gridMaterials.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
-			this.gridMaterials.Location = new System.Drawing.Point(366, 288);
+			this.gridMaterials.Location = new System.Drawing.Point(391, 289);
 			this.gridMaterials.Name = "gridMaterials";
 			this.gridMaterials.PageFooterCenter = null;
 			this.gridMaterials.PageFooterLeft = null;
@@ -595,8 +604,9 @@
 			this.gridMaterials.PrintFooter = null;
 			this.gridMaterials.PrintHeader = null;
 			this.gridMaterials.ReadOnly = false;
+			this.gridMaterials.ShowFooter = false;
 			this.gridMaterials.ShowGroupPanel = false;
-			this.gridMaterials.Size = new System.Drawing.Size(622, 188);
+			this.gridMaterials.Size = new System.Drawing.Size(598, 192);
 			this.gridMaterials.TabIndex = 40;
 			// 
 			// lcTabGroupMaterialsButtons
@@ -609,35 +619,32 @@
 			this.lcTabGroupMaterialsButtons.Location = new System.Drawing.Point(0, 0);
 			this.lcTabGroupMaterialsButtons.Name = "lcTabGroupMaterialsButtons";
 			this.lcTabGroupMaterialsButtons.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcTabGroupMaterialsButtons.Size = new System.Drawing.Size(626, 36);
+			this.lcTabGroupMaterialsButtons.Size = new System.Drawing.Size(602, 36);
 			this.lcTabGroupMaterialsButtons.TextVisible = false;
 			// 
 			// emptySpaceItem4
 			// 
 			this.emptySpaceItem4.AllowHotTrack = false;
-			this.emptySpaceItem4.Location = new System.Drawing.Point(160, 0);
+			this.emptySpaceItem4.Location = new System.Drawing.Point(200, 0);
 			this.emptySpaceItem4.Name = "emptySpaceItem4";
-			this.emptySpaceItem4.Size = new System.Drawing.Size(376, 26);
+			this.emptySpaceItem4.Size = new System.Drawing.Size(293, 26);
 			this.emptySpaceItem4.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// lcButtonLineAdd
 			// 
 			this.lcButtonLineAdd.Control = this.btnLineAdd;
 			this.lcButtonLineAdd.Location = new System.Drawing.Point(0, 0);
-			this.lcButtonLineAdd.MaxSize = new System.Drawing.Size(80, 26);
-			this.lcButtonLineAdd.MinSize = new System.Drawing.Size(80, 26);
 			this.lcButtonLineAdd.Name = "lcButtonLineAdd";
-			this.lcButtonLineAdd.Size = new System.Drawing.Size(80, 26);
-			this.lcButtonLineAdd.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.lcButtonLineAdd.Size = new System.Drawing.Size(100, 26);
 			this.lcButtonLineAdd.TextSize = new System.Drawing.Size(0, 0);
 			this.lcButtonLineAdd.TextVisible = false;
 			// 
 			// btnLineAdd
 			// 
 			this.btnLineAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnLineAdd.Image")));
-			this.btnLineAdd.Location = new System.Drawing.Point(371, 257);
+			this.btnLineAdd.Location = new System.Drawing.Point(396, 258);
 			this.btnLineAdd.Name = "btnLineAdd";
-			this.btnLineAdd.Size = new System.Drawing.Size(76, 22);
+			this.btnLineAdd.Size = new System.Drawing.Size(96, 22);
 			this.btnLineAdd.StyleController = this.lc;
 			this.btnLineAdd.TabIndex = 41;
 			this.btnLineAdd.Text = "라인추가";
@@ -645,21 +652,18 @@
 			// lcButtonLineDel
 			// 
 			this.lcButtonLineDel.Control = this.btnLineDel;
-			this.lcButtonLineDel.Location = new System.Drawing.Point(80, 0);
-			this.lcButtonLineDel.MaxSize = new System.Drawing.Size(80, 26);
-			this.lcButtonLineDel.MinSize = new System.Drawing.Size(80, 26);
+			this.lcButtonLineDel.Location = new System.Drawing.Point(100, 0);
 			this.lcButtonLineDel.Name = "lcButtonLineDel";
-			this.lcButtonLineDel.Size = new System.Drawing.Size(80, 26);
-			this.lcButtonLineDel.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.lcButtonLineDel.Size = new System.Drawing.Size(100, 26);
 			this.lcButtonLineDel.TextSize = new System.Drawing.Size(0, 0);
 			this.lcButtonLineDel.TextVisible = false;
 			// 
 			// btnLineDel
 			// 
 			this.btnLineDel.Image = ((System.Drawing.Image)(resources.GetObject("btnLineDel.Image")));
-			this.btnLineDel.Location = new System.Drawing.Point(451, 257);
+			this.btnLineDel.Location = new System.Drawing.Point(496, 258);
 			this.btnLineDel.Name = "btnLineDel";
-			this.btnLineDel.Size = new System.Drawing.Size(76, 22);
+			this.btnLineDel.Size = new System.Drawing.Size(96, 22);
 			this.btnLineDel.StyleController = this.lc;
 			this.btnLineDel.TabIndex = 42;
 			this.btnLineDel.Text = "라인삭제";
@@ -667,24 +671,46 @@
 			// lcButtonSave
 			// 
 			this.lcButtonSave.Control = this.btnSave;
-			this.lcButtonSave.Location = new System.Drawing.Point(536, 0);
-			this.lcButtonSave.MaxSize = new System.Drawing.Size(80, 26);
-			this.lcButtonSave.MinSize = new System.Drawing.Size(80, 26);
+			this.lcButtonSave.Location = new System.Drawing.Point(493, 0);
 			this.lcButtonSave.Name = "lcButtonSave";
-			this.lcButtonSave.Size = new System.Drawing.Size(80, 26);
-			this.lcButtonSave.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+			this.lcButtonSave.Size = new System.Drawing.Size(99, 26);
 			this.lcButtonSave.TextSize = new System.Drawing.Size(0, 0);
 			this.lcButtonSave.TextVisible = false;
 			// 
 			// btnSave
 			// 
 			this.btnSave.Image = ((System.Drawing.Image)(resources.GetObject("btnSave.Image")));
-			this.btnSave.Location = new System.Drawing.Point(907, 257);
+			this.btnSave.Location = new System.Drawing.Point(889, 258);
 			this.btnSave.Name = "btnSave";
-			this.btnSave.Size = new System.Drawing.Size(76, 22);
+			this.btnSave.Size = new System.Drawing.Size(95, 22);
 			this.btnSave.StyleController = this.lc;
 			this.btnSave.TabIndex = 43;
 			this.btnSave.Text = "저장";
+			// 
+			// lupSchProductType
+			// 
+			this.lupSchProductType.DataSource = null;
+			this.lupSchProductType.DisplayMember = "";
+			this.lupSchProductType.GroupCode = null;
+			this.lupSchProductType.ListMember = "LIST_NAME";
+			this.lupSchProductType.Location = new System.Drawing.Point(147, 37);
+			this.lupSchProductType.Name = "lupSchProductType";
+			this.lupSchProductType.NullText = "[EditValue is null]";
+			this.lupSchProductType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.lupSchProductType.SelectedIndex = -1;
+			this.lupSchProductType.Size = new System.Drawing.Size(221, 20);
+			this.lupSchProductType.StyleController = this.lc;
+			this.lupSchProductType.TabIndex = 46;
+			this.lupSchProductType.ValueMember = "";
+			// 
+			// lcItemSchProductType
+			// 
+			this.lcItemSchProductType.Control = this.lupSchProductType;
+			this.lcItemSchProductType.Location = new System.Drawing.Point(0, 0);
+			this.lcItemSchProductType.Name = "lcItemSchProductType";
+			this.lcItemSchProductType.Size = new System.Drawing.Size(354, 24);
+			this.lcItemSchProductType.TextSize = new System.Drawing.Size(125, 14);
 			// 
 			// ProductsForm
 			// 
@@ -741,6 +767,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.lcButtonLineAdd)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcButtonLineDel)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcButtonSave)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lupSchProductType.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcItemSchProductType)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -797,5 +825,7 @@
 		private DevExpress.XtraLayout.LayoutControlItem lcItemCategory;
 		private Controls.Common.XLookup lupUnitType;
 		private DevExpress.XtraLayout.LayoutControlItem lcItemUnitType;
+		private Controls.Common.XLookup lupSchProductType;
+		private DevExpress.XtraLayout.LayoutControlItem lcItemSchProductType;
 	}
 }

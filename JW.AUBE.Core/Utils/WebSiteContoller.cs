@@ -62,18 +62,26 @@ namespace JW.AUBE.Core.Utils
 
 		private static string getSiteIdByName(string siteName)
 		{
-			DirectoryEntry root = getDirectoryEntry("IIS://localhost/W3SVC");
-			foreach (DirectoryEntry e in root.Children)
+			try
 			{
-				if (e.SchemaClassName == "IIsWebServer")
+				DirectoryEntry root = getDirectoryEntry("IIS://localhost/W3SVC");
+				foreach (DirectoryEntry e in root.Children)
 				{
-					if (e.Properties["ServerComment"].Value.ToString().Equals(siteName, StringComparison.OrdinalIgnoreCase))
+					if (e.SchemaClassName == "IIsWebServer")
 					{
-						return e.Name;
+						if (e.Properties["ServerComment"].Value.ToString().Equals(siteName, StringComparison.OrdinalIgnoreCase))
+						{
+							return e.Name;
+						}
 					}
 				}
+				return null;
 			}
-			return null;
+			catch(Exception ex)
+			{
+				MsgBox.Show(ex);
+				return null;
+			}
 		}
 
 		private static string[] enumerateSites()

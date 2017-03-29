@@ -42,8 +42,7 @@
 			// 
 			// SearchPostCodeForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.ClientSize = new System.Drawing.Size(422, 456);
 			this.Controls.Add(this.wb);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;

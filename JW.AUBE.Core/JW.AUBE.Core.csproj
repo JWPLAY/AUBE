@@ -477,6 +477,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ButtonResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -577,7 +578,6 @@
     <Content Include="Images\charts\Stepline_16x16.png" />
     <Content Include="Images\Home_16x16.png" />
     <Content Include="Images\Home_32x32.png" />
-    <EmbeddedResource Include="PostCode\searchpostcode.html" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JW.AUBE.Base\JW.AUBE.Base.csproj">

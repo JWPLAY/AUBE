@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
+using JW.AUBE.Base.DBTran.Model;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
-using JW.AUBE.Base.DBTran.Model;
 using JW.AUBE.Service.Mappers;
 
 namespace JW.AUBE.Service.Services
@@ -20,27 +19,17 @@ namespace JW.AUBE.Service.Services
 		{
 			try
 			{
-				var customerData = DaoFactory.Instance.QueryForList<DataMap>("SelectCustomer", req.TranList[0].Parameter);
+				var customerData = DaoFactory.Instance.QueryForObject<DataMap>("SelectCustomer", req.TranList[0].Parameter);
 				var phonesData = DaoFactory.Instance.QueryForList<DataMap>("SelectCustomerPhones", req.TranList[0].Parameter);
 				var addressData = DaoFactory.Instance.QueryForList<DataMap>("SelectCustomerAddress", req.TranList[0].Parameter);
 
 				req.TranList = new DBTranData[]
 				{
-					new DBTranData()
-					{
-						Data = ConvertUtils.DataMapListToDataTable(customerData, "Customer")
-					}
-					,
-					new DBTranData()
-					{
-						Data = ConvertUtils.DataMapListToDataTable(phonesData, "CustomerPhones")
-					}
-					,
-					new DBTranData()
-					{
-						Data = ConvertUtils.DataMapListToDataTable(addressData, "CustomerAddress")
-					}
+					new DBTranData() { Data = customerData },
+					new DBTranData() { Data = phonesData },
+					new DBTranData() { Data = addressData }
 				};
+				
 				return req;
 			}
 			catch (Exception ex)
@@ -86,6 +75,7 @@ namespace JW.AUBE.Service.Services
 							throw new Exception("거래처정보를 저장할 데이터가 존재하지 않습니다.");
 
 						DataMap data = (req.TranList[0].Data as DataTable).ToDataMapList()[0];
+						data.SetValue("INS_USER", req.UserId);
 
 						rowState = data.GetValue("ROWSTATE").ToStringNullToEmpty();
 
@@ -131,7 +121,6 @@ namespace JW.AUBE.Service.Services
 								DaoFactory.Instance.Update("UpdateBizRegCe", data);
 							}
 						}
-
 
 						if (rowState == "INSERT")
 						{
@@ -232,6 +221,7 @@ namespace JW.AUBE.Service.Services
 							if (map == null || map.Count == 0)
 								continue;
 
+							map.SetValue("INS_USER", req.UserId);
 							rowState = map.GetValue("ROWSTATE").ToString();
 
 							if (rowState == "INSERT" || rowState == "UPDATE")

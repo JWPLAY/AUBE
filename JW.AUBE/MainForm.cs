@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -14,22 +15,21 @@ using DevExpress.XtraSplashScreen;
 using DevExpress.XtraTabbedMdi;
 using DevExpress.XtraTreeList;
 using JW.AUBE.Base.Constants;
+using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Logging;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
 using JW.AUBE.Base.Variables;
-using JW.AUBE.Core.Controls.Common;
 using JW.AUBE.Core.Base.Forms;
+using JW.AUBE.Core.Base.Interface;
+using JW.AUBE.Core.Controls.Common;
+using JW.AUBE.Core.Forms.Sales;
+using JW.AUBE.Core.Interfaces;
 using JW.AUBE.Core.Messages;
 using JW.AUBE.Core.Models;
 using JW.AUBE.Core.Resources;
 using JW.AUBE.Core.Utils;
-using JW.AUBE.Core.Base.Interface;
-using JW.AUBE.Core.Interfaces;
-using JW.AUBE.Core.Forms.Sales;
 using JW.AUBE.Model.Auth;
-using System.Collections.Generic;
-using JW.AUBE.Base.DBTran.Controller;
 
 namespace JW.AUBE
 {
@@ -296,8 +296,8 @@ namespace JW.AUBE
 
 		private void InitSkin()
 		{
-			barAndDockingController.LookAndFeel.UseDefaultLookAndFeel = this.LookAndFeel.UseDefaultLookAndFeel = true;
-			barAndDockingController.LookAndFeel.UseWindowsXPTheme = this.LookAndFeel.UseWindowsXPTheme = false;
+			barAndDockingController.LookAndFeel.UseDefaultLookAndFeel =
+				this.LookAndFeel.UseDefaultLookAndFeel = !GlobalVar.Settings.GetValue("MAIN_SKIN").IsNullOrEmpty();
 		}
 
 		private void LoadFormLayout()
@@ -388,7 +388,7 @@ namespace JW.AUBE
 			}
 			catch (Exception ex)
 			{
-				MsgBox.Show(ErrorUtils.GetException(ex));
+				MsgBox.Show(ex);
 			}
 			finally
 			{
@@ -896,6 +896,7 @@ namespace JW.AUBE
 				MsgBox.Show(ex);
 			}
 		}
+
 		private void ShowChangePwd()
 		{
 			using (var form = new PasswordForm())

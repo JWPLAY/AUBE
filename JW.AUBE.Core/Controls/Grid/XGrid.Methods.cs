@@ -161,6 +161,10 @@ namespace JW.AUBE.Core.Controls.Grid
 				LookAndFeel.UseDefaultLookAndFeel = false;
 				LookAndFeel.SkinName = GlobalVar.Settings.GetValue("GRID_SKIN").ToString();
 			}
+			else
+			{
+				LookAndFeel.UseDefaultLookAndFeel = true;
+			}
 		}
 
 		/// <summary>

@@ -33,10 +33,10 @@ namespace JW.AUBE
 			UserLookAndFeel.Default.UseWindowsXPTheme = false;
 			AppearanceObject.DefaultFont = SystemFonts.DefaultFont;
 
-			Logger.Debug("IIS Start!!");
-			SplashUtils.ShowWait("IIS를 구동하는 중입니다... 잠시만...");
-			//IISExpress.Start("AubeWeb");
-			WebSiteContoller.SiteInvoke(JW.AUBE.Core.Utils.WebSiteContoller.SiteAction.Start);
+			//Logger.Debug("IIS Start!!");
+			//SplashUtils.ShowWait("IIS를 구동하는 중입니다... 잠시만...");
+			////IISExpress.Start("AubeWeb");
+			//WebSiteContoller.SiteInvoke(WebSiteContoller.SiteAction.Start);
 
 			Logger.Debug("Application Start!!");
 
@@ -44,8 +44,9 @@ namespace JW.AUBE
 			{
 				Setting.Init();
 
-				if (GlobalVar.Settings.GetValue("IS_USESKIN").ToBooleanNullToFalse())
+				if (GlobalVar.Settings.GetValue("MAIN_SKIN").IsNullOrEmpty() == false)
 				{
+					UserLookAndFeel.Default.UseDefaultLookAndFeel = true;
 					if (GlobalVar.Settings.GetValue("MAIN_SKIN").ToStringNullToEmpty() != SkinConsts.MAIN_SKIN)
 					{
 						UserLookAndFeel.Default.SetSkinStyle(GlobalVar.Settings.GetValue("MAIN_SKIN").ToStringNullToEmpty());
@@ -54,7 +55,6 @@ namespace JW.AUBE
 				else
 				{
 					UserLookAndFeel.Default.UseDefaultLookAndFeel = false;
-					UserLookAndFeel.Default.UseWindowsXPTheme = true;
 				}
 
 				if (GlobalVar.Settings.GetValue("FONT_NAME").ToStringNullToEmpty() != SkinConsts.FONT_NAME ||
@@ -103,6 +103,11 @@ namespace JW.AUBE
 				Application.ExitThread();
 				Environment.Exit(0);
 			}
+
+			//Logger.Debug("IIS Stop!!");
+			//SplashUtils.ShowWait("IIS를 종료하는 중입니다... 잠시만...");
+			//WebSiteContoller.SiteInvoke(WebSiteContoller.SiteAction.Stop);
+
 			Logger.Debug("Application Close!!");
 		}
 	}

@@ -13,6 +13,10 @@ using JW.AUBE.Core.Utils;
 using JW.AUBE.Core.PostCode;
 using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.DBTran.Model;
+using System.Collections.Generic;
+using DevExpress.XtraEditors.Repository;
+using DevExpress.XtraEditors.Controls;
+using System.Windows.Forms;
 
 namespace JW.AUBE.Core.Forms.Code
 {
@@ -31,6 +35,7 @@ namespace JW.AUBE.Core.Forms.Code
 					txtZoneNo.EditValue = postdata.GetValue("ZONE_NO");
 					txtAddress1.EditValue = postdata.GetValue("ADDRESS1");
 					txtAddress2.EditValue = postdata.GetValue("ADDRESS2");
+					txtAddress2.Focus();
 				}
 			};
 		}
@@ -104,6 +109,9 @@ namespace JW.AUBE.Core.Forms.Code
 			txtUpdUserName.SetEnable(false);
 			txtBizRegId.SetEnable(false);
 			txtAddressId.SetEnable(false);
+			txtPostNo.SetEnable(false);
+			txtZoneNo.SetEnable(false);
+			txtAddress1.SetEnable(false);
 
 			InitCombo();
 			InitGrid();
@@ -252,96 +260,50 @@ namespace JW.AUBE.Core.Forms.Code
 			#region 주소록
 			gridAddress.Init();
 			gridAddress.AddGridColumns(
-				new XGridColumn()
-				{
-					FieldName = "ROW_NO",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 40
-				},
-				new XGridColumn()
-				{
-					FieldName = "REG_ID",
-					HorzAlignment = HorzAlignment.Center,
-					Visible = false,
-					Width = 40
-				},
-				new XGridColumn()
-				{
-					FieldName = "CUSTOMER_ID",
-					HorzAlignment = HorzAlignment.Center,
-					Visible = false,
-					Width = 50
-				},
-				new XGridColumn()
-				{
-					FieldName = "ADDRESS_TYPE",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 100
-				},
-				new XGridColumn()
-				{
-					FieldName = "ADDRESS_ID",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 80,
-					Visible = false
-				},
-				new XGridColumn()
-				{
-					FieldName = "POST_NO",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 80
-				},
-				new XGridColumn()
-				{
-					FieldName = "ZONE_NO",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 80
-				},
-				new XGridColumn()
-				{
-					FieldName = "ADDRESS1",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 200
-				},
-				new XGridColumn()
-				{
-					FieldName = "ADDRESS2",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 200
-				},
-				new XGridColumn()
-				{
-					FieldName = "REMARKS",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 200
-				},
-				new XGridColumn()
-				{
-					FieldName = "INS_TIME",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 150
-				},
-				new XGridColumn()
-				{
-					FieldName = "INS_USER_NAME",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 100
-				},
-				new XGridColumn()
-				{
-					FieldName = "UPD_TIME",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 150
-				},
-				new XGridColumn()
-				{
-					FieldName = "UPD_USER_NAME",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 100
-				});
+				new XGridColumn() { FieldName = "ROW_NO" },
+				new XGridColumn() { FieldName = "REG_ID", HorzAlignment = HorzAlignment.Center, Visible = false, Width = 40 },
+				new XGridColumn() { FieldName = "CUSTOMER_ID", HorzAlignment = HorzAlignment.Center, Visible = false, Width = 50 },
+				new XGridColumn() { FieldName = "ADDRESS_TYPE", HorzAlignment = HorzAlignment.Center, Width = 100 },
+				new XGridColumn() { FieldName = "ADDRESS_ID", Width = 80, Visible = false },
+				new XGridColumn() { FieldName = "POST_NO", Width = 120 },
+				new XGridColumn() { FieldName = "ZONE_NO", Width = 80 },
+				new XGridColumn() { FieldName = "ADDRESS1", Width = 200 },
+				new XGridColumn() { FieldName = "ADDRESS2", Width = 200 },
+				new XGridColumn() { FieldName = "REMARKS", Width = 200 },
+				new XGridColumn() { FieldName = "INS_TIME" },
+				new XGridColumn() { FieldName = "INS_USER_NAME" },
+				new XGridColumn() { FieldName = "UPD_TIME" },
+				new XGridColumn() { FieldName = "UPD_USER_NAME" }
+				);
 
 			gridAddress.SetRepositoryItemLookUpEdit("ADDRESS_TYPE", "CODE", "LIST_NAME", "CodeHelp", "GetCodeHelpLookup", null, new DataMap() { { "PARENT_CODE", "ADDRESS_TYPE" } });
-			gridAddress.SetEditable("ADDRESS_TYPE", "POST_NO", "ZONE_NO", "ADDRESS1", "ADDRESS2", "REMARKS");
+			gridAddress.SetRepositoryItemButtonEdit("POST_NO");
+			(gridAddress.MainView.Columns["POST_NO"].ColumnEdit as RepositoryItemButtonEdit).TextEditStyle = TextEditStyles.DisableTextEditor;
+			(gridAddress.MainView.Columns["POST_NO"].ColumnEdit as RepositoryItemButtonEdit).Buttons.Add(new EditorButton() { Caption = "삭제", Kind = ButtonPredefines.Delete });
+			(gridAddress.MainView.Columns["POST_NO"].ColumnEdit as RepositoryItemButtonEdit).ButtonClick += delegate (object sender, ButtonPressedEventArgs e)
+			{
+				if(e.Button.Kind== ButtonPredefines.Ellipsis)
+				{
+					var postdata = SearchPostCode.Find();
+					if (postdata != null && postdata.GetType() == typeof(DataMap))
+					{
+						gridAddress.SetValue(gridAddress.FocusedRowHandle, "POST_NO", postdata.GetValue("POST_NO"));
+						gridAddress.SetValue(gridAddress.FocusedRowHandle, "ZONE_NO", postdata.GetValue("ZONE_NO"));
+						gridAddress.SetValue(gridAddress.FocusedRowHandle, "ADDRESS1", postdata.GetValue("ADDRESS1"));
+						gridAddress.SetValue(gridAddress.FocusedRowHandle, "ADDRESS2", postdata.GetValue("ADDRESS2"));
+						gridAddress.SetFocus(gridAddress.FocusedRowHandle, "ADDRESS2");
+					}
+				}
+				else if(e.Button.Kind== ButtonPredefines.Delete)
+				{
+					gridAddress.SetValue(gridAddress.FocusedRowHandle, "POST_NO", null);
+					gridAddress.SetValue(gridAddress.FocusedRowHandle, "ZONE_NO", null);
+					gridAddress.SetValue(gridAddress.FocusedRowHandle, "ADDRESS1", null);
+					gridAddress.SetValue(gridAddress.FocusedRowHandle, "ADDRESS2", null);
+				}
+			};
+
+			gridAddress.SetEditable("ADDRESS_TYPE", "POST_NO", "ADDRESS2", "REMARKS");
 
 			gridAddress.SetColumnBackColor(Color.Black, "ROW_NO");
 			gridAddress.SetColumnForeColor(Color.Yellow, "ROW_NO");
@@ -437,47 +399,43 @@ namespace JW.AUBE.Core.Forms.Code
 
 				if (res.TranList.Length > 0)
 				{
-					if (res.TranList[0].Data == null || (res.TranList[0].Data as DataTable).Rows.Count == 0)
+					if (res.TranList[0].Data == null)
 						throw new Exception("조회할 데이터가 없습니다.");
 
-					DataRow row = (res.TranList[0].Data as DataTable).Rows[0];
+					DataMap data = res.TranList[0].Data as DataMap;
 
-					txtCustomerId.EditValue = row["CUSTOMER_ID"];
-					txtCustomerName.EditValue = row["CUSTOMER_NAME"];
-					lupCustomerType.EditValue = row["CUSTOMER_TYPE"];
-					txtEmail.EditValue = row["EMAIL"];
-					txtHpage.EditValue = row["HPAGE"];
-					chkUseYn.EditValue = row["USE_YN"];
-					memRemarks.EditValue = row["REMARKS"];
+					txtCustomerId.EditValue = data.GetValue("CUSTOMER_ID");
+					txtCustomerName.EditValue = data.GetValue("CUSTOMER_NAME");
+					lupCustomerType.EditValue = data.GetValue("CUSTOMER_TYPE");
+					txtEmail.EditValue = data.GetValue("EMAIL");
+					txtHpage.EditValue = data.GetValue("HPAGE");
+					chkUseYn.EditValue = data.GetValue("USE_YN");
+					memRemarks.EditValue = data.GetValue("REMARKS");
 
-					txtBizRegId.EditValue = row["BIZ_REG_ID"];
-					txtBizRegNo.EditValue = row["BIZ_REG_NO"];
-					txtBizName.EditValue = row["BIZ_NAME"];
-					txtRepName.EditValue = row["REP_NAME"];
-					txtBizType.EditValue = row["BIZ_TYPE"];
-					txtBizItem.EditValue = row["BIZ_ITEM"];
+					txtBizRegId.EditValue = data.GetValue("BIZ_REG_ID");
+					txtBizRegNo.EditValue = data.GetValue("BIZ_REG_NO");
+					txtBizName.EditValue = data.GetValue("BIZ_NAME");
+					txtRepName.EditValue = data.GetValue("REP_NAME");
+					txtBizType.EditValue = data.GetValue("BIZ_TYPE");
+					txtBizItem.EditValue = data.GetValue("BIZ_ITEM");
 
-					txtAddressId.EditValue = row["ADDRESS_ID"];
-					txtPostNo.EditValue = row["POST_NO"];
-					txtZoneNo.EditValue = row["ZONE_NO"];
-					txtAddress1.EditValue = row["ADDRESS1"];
-					txtAddress2.EditValue = row["ADDRESS2"];
+					txtAddressId.EditValue = data.GetValue("ADDRESS_ID");
+					txtPostNo.EditValue = data.GetValue("POST_NO");
+					txtZoneNo.EditValue = data.GetValue("ZONE_NO");
+					txtAddress1.EditValue = data.GetValue("ADDRESS1");
+					txtAddress2.EditValue = data.GetValue("ADDRESS2");
 
-					txtInsTime.EditValue = row["INS_TIME"];
-					txtInsUserName.EditValue = row["INS_USER_NAME"];
-					txtUpdTime.EditValue = row["UPD_TIME"];
-					txtUpdUserName.EditValue = row["UPD_USER_NAME"];
+					txtInsTime.EditValue = data.GetValue("INS_TIME");
+					txtInsUserName.EditValue = data.GetValue("INS_USER_NAME");
+					txtUpdTime.EditValue = data.GetValue("UPD_TIME");
+					txtUpdUserName.EditValue = data.GetValue("UPD_USER_NAME");
 				}
 
 				if (res.TranList.Length > 1)
-				{
-					gridPhones.DataSource = res.TranList[1].Data;
-				}
+					gridPhones.DataSource = (res.TranList[1].Data as List<DataMap>).DataMapListToDataTable();
 
 				if (res.TranList.Length > 2)
-				{
-					gridAddress.DataSource = res.TranList[2].Data;
-				}
+					gridAddress.DataSource = (res.TranList[2].Data as List<DataMap>).DataMapListToDataTable();
 
 				btnAddressSave.Enabled =
 					btnPhoneSave.Enabled = true;

@@ -79,6 +79,9 @@ namespace JW.AUBE.Base.DBTran.Controller
 				if (string.IsNullOrEmpty(serviceId))
 					serviceId = "Base";
 
+				if (string.IsNullOrEmpty(processId))
+					processId = "GetData";
+
 				if (parameter == null)
 					parameter = new DataMap();
 

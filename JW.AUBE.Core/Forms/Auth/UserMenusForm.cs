@@ -8,6 +8,7 @@ using JW.AUBE.Base.Variables;
 using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Controls.Grid;
 using JW.AUBE.Core.Models;
+using JW.AUBE.Core.Utils;
 
 namespace JW.AUBE.Core.Forms.Auth
 {
@@ -43,25 +44,13 @@ namespace JW.AUBE.Core.Forms.Auth
 			#region gridUsers
 			gridUsers.Init();
 			gridUsers.AddGridColumns(
-				new XGridColumn()
-				{
-					FieldName = "ROW_NO",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 40
-				},
-				new XGridColumn()
-				{
-					FieldName = "USER_ID",
-					HorzAlignment = HorzAlignment.Center,
-					Visible = false
-				},
-				new XGridColumn()
-				{
-					FieldName = "USER_NAME",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 150
-				}
+				new XGridColumn() { FieldName = "ROW_NO" },
+				new XGridColumn() { FieldName = "USER_ID", HorzAlignment = HorzAlignment.Center, Visible = false },
+				new XGridColumn() { FieldName = "USER_NAME", HorzAlignment = HorzAlignment.Center, Width = 150 }
 			);
+			gridUsers.SetColumnBackColor(SkinUtils.ForeColor, "ROW_NO");
+			gridUsers.SetColumnForeColor(SkinUtils.BackColor, "ROW_NO");
+			gridUsers.ColumnFix("ROW_NO");
 
 			gridUsers.RowCellClick += delegate (object sender, RowCellClickEventArgs e)
 			{
@@ -86,71 +75,20 @@ namespace JW.AUBE.Core.Forms.Auth
 			#region gridMenus
 			gridMenus.Init();
 			gridMenus.AddGridColumns(
-				new XGridColumn()
-				{
-					FieldName = "ROW_NO",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 40
-				},
-				new XGridColumn()
-				{
-					FieldName = "HIER_ID",
-					HorzAlignment = HorzAlignment.Near,
-					Visible = false
-				},
-				new XGridColumn()
-				{
-					FieldName = "HIER_NAME",
-					Caption = "메뉴명",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 300
-				},
-				new XGridColumn()
-				{
-					FieldName = "MENU_ID",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 80,
-					Visible = false
-				},
-				new XGridColumn()
-				{
-					FieldName = "VIEW_YN",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 80,
-					RepositoryItem = gridMenus.GetRepositoryItemCheckEdit()					
-				},
-				new XGridColumn()
-				{
-					FieldName = "EDIT_YN",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 80,
-					RepositoryItem = gridMenus.GetRepositoryItemCheckEdit()
-				},
-				new XGridColumn()
-				{
-					FieldName = "INS_TIME",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 180
-				},
-				new XGridColumn()
-				{
-					FieldName = "INS_USER_NAME",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 100
-				},
-				new XGridColumn()
-				{
-					FieldName = "UPD_TIME",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 180
-				},
-				new XGridColumn()
-				{
-					FieldName = "UPD_USER_NAME",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 100
-				}
+				new XGridColumn() { FieldName = "ROW_NO" },
+				new XGridColumn() { FieldName = "HIER_ID", Visible = false },
+				new XGridColumn() { FieldName = "HIER_NAME", Caption = "메뉴명", Width = 300 },
+				new XGridColumn() { FieldName = "MENU_ID", HorzAlignment = HorzAlignment.Center, Width = 80, Visible = false },
+				new XGridColumn() { FieldName = "VIEW_YN", HorzAlignment = HorzAlignment.Center, Width = 80, RepositoryItem = gridMenus.GetRepositoryItemCheckEdit() },
+				new XGridColumn() { FieldName = "EDIT_YN", HorzAlignment = HorzAlignment.Center, Width = 80, RepositoryItem = gridMenus.GetRepositoryItemCheckEdit() },
+				new XGridColumn() { FieldName = "INS_TIME" },
+				new XGridColumn() { FieldName = "INS_USER_NAME" },
+				new XGridColumn() { FieldName = "UPD_TIME" },
+				new XGridColumn() { FieldName = "UPD_USER_NAME" }
 			);
+			gridMenus.SetColumnBackColor(SkinUtils.ForeColor, "ROW_NO");
+			gridMenus.SetColumnForeColor(SkinUtils.BackColor, "ROW_NO");
+			gridMenus.ColumnFix("ROW_NO");
 
 			gridMenus.SetEditable("VIEW_YN", "EDIT_YN");
 			#endregion

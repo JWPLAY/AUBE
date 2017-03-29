@@ -578,6 +578,8 @@
     <Content Include="Images\charts\Stepline_16x16.png" />
     <Content Include="Images\Home_16x16.png" />
     <Content Include="Images\Home_32x32.png" />
+    <None Include="Resources\back_gray.png" />
+    <None Include="Resources\back_white.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JW.AUBE.Base\JW.AUBE.Base.csproj">

@@ -30,6 +30,7 @@
         {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ErrorMessageBox));
 			this.lc = new DevExpress.XtraLayout.LayoutControl();
+			this.memStackTrace = new DevExpress.XtraEditors.MemoEdit();
 			this.btnOk = new DevExpress.XtraEditors.SimpleButton();
 			this.memMessage = new DevExpress.XtraEditors.MemoEdit();
 			this.lcGroupBase = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -41,10 +42,10 @@
 			this.lcTabGroupMessage = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.lcItemMessage = new DevExpress.XtraLayout.LayoutControlItem();
 			this.lcTabGroupStackTrace = new DevExpress.XtraLayout.LayoutControlGroup();
-			this.memStackTrace = new DevExpress.XtraEditors.MemoEdit();
 			this.lcItemStackTrace = new DevExpress.XtraLayout.LayoutControlItem();
 			((System.ComponentModel.ISupportInitialize)(this.lc)).BeginInit();
 			this.lc.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.memStackTrace.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.memMessage.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupBase)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
@@ -55,7 +56,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.lcTabGroupMessage)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemMessage)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcTabGroupStackTrace)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.memStackTrace.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemStackTrace)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -73,6 +73,14 @@
 			this.lc.Size = new System.Drawing.Size(598, 368);
 			this.lc.TabIndex = 5;
 			this.lc.Text = "xLayout1";
+			// 
+			// memStackTrace
+			// 
+			this.memStackTrace.Location = new System.Drawing.Point(17, 17);
+			this.memStackTrace.Name = "memStackTrace";
+			this.memStackTrace.Size = new System.Drawing.Size(564, 260);
+			this.memStackTrace.StyleController = this.lc;
+			this.memStackTrace.TabIndex = 5;
 			// 
 			// btnOk
 			// 
@@ -102,6 +110,8 @@
 			// 
 			// lcGroupBase
 			// 
+			this.lcGroupBase.BackgroundImage = global::JW.AUBE.Core.Properties.Resources.back_gray;
+			this.lcGroupBase.BackgroundImageVisible = true;
 			this.lcGroupBase.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
 			this.lcGroupBase.GroupBordersVisible = false;
 			this.lcGroupBase.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
@@ -194,14 +204,6 @@
 			this.lcTabGroupStackTrace.Size = new System.Drawing.Size(568, 264);
 			this.lcTabGroupStackTrace.Text = "오류위치";
 			// 
-			// memStackTrace
-			// 
-			this.memStackTrace.Location = new System.Drawing.Point(17, 17);
-			this.memStackTrace.Name = "memStackTrace";
-			this.memStackTrace.Size = new System.Drawing.Size(564, 260);
-			this.memStackTrace.StyleController = this.lc;
-			this.memStackTrace.TabIndex = 5;
-			// 
 			// lcItemStackTrace
 			// 
 			this.lcItemStackTrace.Control = this.memStackTrace;
@@ -222,6 +224,7 @@
 			this.Text = "ErrorMessageBox";
 			((System.ComponentModel.ISupportInitialize)(this.lc)).EndInit();
 			this.lc.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.memStackTrace.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.memMessage.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupBase)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
@@ -232,7 +235,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.lcTabGroupMessage)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemMessage)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcTabGroupStackTrace)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.memStackTrace.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemStackTrace)).EndInit();
 			this.ResumeLayout(false);
 

@@ -275,5 +275,45 @@ namespace JW.AUBE.Service.Services
 				return req;
 			}
 		}
+
+		public static DBTranSet ClearPassword(DBTranSet req)
+		{
+			try
+			{
+				DataMap data = req.TranList[0].Data as DataMap;
+				data.SetValue("INS_USER", req.UserId);
+
+				DaoFactory.Instance.Update("ClearPassword", data);
+				req.ErrorNumber = 0;
+				req.ErrorMessage = "SUCCESS";
+				return req;
+			}
+			catch (Exception ex)
+			{
+				req.ErrorNumber = ex.HResult;
+				req.ErrorMessage = ex.Message;
+				return req;
+			}
+		}
+
+		public static DBTranSet ChangePassword(DBTranSet req)
+		{
+			try
+			{
+				DataMap data = req.TranList[0].Data as DataMap;
+				data.SetValue("INS_USER", req.UserId);
+
+				DaoFactory.Instance.Update("ChangePassword", data);
+				req.ErrorNumber = 0;
+				req.ErrorMessage = "SUCCESS";
+				return req;
+			}
+			catch (Exception ex)
+			{
+				req.ErrorNumber = ex.HResult;
+				req.ErrorMessage = ex.Message;
+				return req;
+			}
+		}
 	}
 }

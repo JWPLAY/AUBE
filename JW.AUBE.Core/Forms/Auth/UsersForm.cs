@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Data;
 using DevExpress.Utils;
 using DevExpress.XtraGrid.Views.Grid;
 using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Map;
-using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Controls.Grid;
 using JW.AUBE.Core.Enumerations;
@@ -18,6 +16,8 @@ namespace JW.AUBE.Core.Forms.Auth
 		public UsersForm()
 		{
 			InitializeComponent();
+
+			btnPasswordClear.Click += delegate (object sender, EventArgs e) { ClearPassword(); };
 		}
 
 		protected override void OnShown(EventArgs e)
@@ -64,6 +64,9 @@ namespace JW.AUBE.Core.Forms.Auth
 				new XGridColumn() { FieldName = "LOGIN_ID", Width = 100 },
 				new XGridColumn() { FieldName = "USE_YN", HorzAlignment = HorzAlignment.Center, Width = 80, RepositoryItem = gridList.GetRepositoryItemCheckEdit() }
 			);
+			gridList.SetColumnBackColor(SkinUtils.ForeColor, "ROW_NO");
+			gridList.SetColumnForeColor(SkinUtils.BackColor, "ROW_NO");
+			gridList.ColumnFix("ROW_NO");
 
 			gridList.RowCellClick += delegate (object sender, RowCellClickEventArgs e)
 			{
@@ -94,7 +97,6 @@ namespace JW.AUBE.Core.Forms.Auth
 			txtUserId.Clear();
 			txtUserName.Clear();
 			txtLoginId.Clear();
-			txtLoginPw.Clear();
 			chkUseYn.Checked = true;
 			memeRemarks.Clear();
 
@@ -130,7 +132,6 @@ namespace JW.AUBE.Core.Forms.Auth
 				txtUserName.EditValue = data.GetValue("USER_NAME");
 				lupUserType.EditValue = data.GetValue("USER_TYPE");
 				txtLoginId.EditValue = data.GetValue("LOGIN_ID");
-				txtLoginPw.EditValue = data.GetValue("LOGIN_PW");
 				chkUseYn.EditValue = data.GetValue("USE_YN");
 				memeRemarks.EditValue = data.GetValue("REMARKS");
 
@@ -160,7 +161,6 @@ namespace JW.AUBE.Core.Forms.Auth
 					{ "USER_NAME", txtUserName.EditValue },
 					{ "USER_TYPE", lupUserType.EditValue },
 					{ "LOGIN_ID", txtLoginId.EditValue },
-					{ "LOGIN_PW", txtLoginPw.EditValue },
 					{ "USE_YN", chkUseYn.EditValue },
 					{ "REMARKS", memeRemarks.EditValue },
 					{ "ROWSTATE", (this.EditMode== EditModeEnum.New)?"INSERT":"UPDATE" }
@@ -196,6 +196,28 @@ namespace JW.AUBE.Core.Forms.Auth
 
 				ShowMsgBox("삭제하였습니다.");
 				callback(arg, null);
+
+			}
+			catch (Exception ex)
+			{
+				ShowErrBox(ex);
+			}
+		}
+
+		private void ClearPassword()
+		{
+			try
+			{
+				DataMap data = new DataMap()
+				{
+					{ "USER_ID", txtUserId.EditValue }
+				};
+
+				var res = DBTranHelper.Execute("Auth", "ClearPassword", null, data, null);
+				if (res.ErrorNumber != 0)
+					throw new Exception(res.ErrorMessage);
+
+				ShowMsgBox("비밀번호를 초기화 하였습니다.");
 
 			}
 			catch (Exception ex)

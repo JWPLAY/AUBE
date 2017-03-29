@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using System.Windows.Forms;
 using DevExpress.Utils;
 using DevExpress.XtraGrid.Views.Grid;
@@ -79,6 +78,9 @@ namespace JW.AUBE.Core.Forms.Auth
 				new XGridColumn() { FieldName = "OPTION_VALUE4", Width = 100 },
 				new XGridColumn() { FieldName = "OPTION_VALUE5", Width = 100 }
 			);
+			gridList.SetColumnBackColor(SkinUtils.ForeColor, "ROW_NO");
+			gridList.SetColumnForeColor(SkinUtils.BackColor, "ROW_NO");
+			gridList.ColumnFix("ROW_NO");
 
 			gridList.RowCellClick += delegate (object sender, RowCellClickEventArgs e)
 			{

@@ -28,9 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-			this.barManager = new DevExpress.XtraBars.BarManager(this.components);
+			this.barManager = new DevExpress.XtraBars.BarManager();
 			this.barTools = new DevExpress.XtraBars.Bar();
 			this.barButtonNav = new DevExpress.XtraBars.BarButtonItem();
 			this.barButtonFav = new DevExpress.XtraBars.BarButtonItem();
@@ -53,12 +52,12 @@
 			this.barStatusBarCulture = new DevExpress.XtraBars.BarStaticItem();
 			this.barStatusBarDatetime = new DevExpress.XtraBars.BarStaticItem();
 			this.chkKeepAlive = new DevExpress.XtraBars.BarCheckItem();
-			this.barAndDockingController = new DevExpress.XtraBars.BarAndDockingController(this.components);
+			this.barAndDockingController = new DevExpress.XtraBars.BarAndDockingController();
 			this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-			this.dockManager = new DevExpress.XtraBars.Docking.DockManager(this.components);
+			this.dockManager = new DevExpress.XtraBars.Docking.DockManager();
 			this.dockPanelLog = new DevExpress.XtraBars.Docking.DockPanel();
 			this.controlContainer1 = new DevExpress.XtraBars.Docking.ControlContainer();
 			this.dpFavorite = new DevExpress.XtraBars.Docking.DockPanel();
@@ -70,7 +69,7 @@
 			this.dockPanelMainMenu_Container = new DevExpress.XtraBars.Docking.ControlContainer();
 			this.navBarNavigate = new DevExpress.XtraNavBar.NavBarControl();
 			this.navBarGroup1 = new DevExpress.XtraNavBar.NavBarGroup();
-			this.toolTipController = new DevExpress.Utils.ToolTipController(this.components);
+			this.toolTipController = new DevExpress.Utils.ToolTipController();
 			this.barSubItemPanels = new DevExpress.XtraBars.BarSubItem();
 			this.barPopupUxButtonpandAll = new DevExpress.XtraBars.BarButtonItem();
 			this.barPopupButtonCollapseAll = new DevExpress.XtraBars.BarButtonItem();
@@ -81,14 +80,14 @@
 			this.barPopupButtonSave = new DevExpress.XtraBars.BarButtonItem();
 			this.barButtonTabPageCloseAll = new DevExpress.XtraBars.BarButtonItem();
 			this.barButtonTabPageCloseAllButThis = new DevExpress.XtraBars.BarButtonItem();
-			this.imageCollection = new DevExpress.Utils.ImageCollection(this.components);
-			this.mdiManager = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
-			this.timerMainTime = new System.Windows.Forms.Timer(this.components);
-			this.popupMenuOfMainMenu = new DevExpress.XtraBars.PopupMenu(this.components);
-			this.popupMenuOfBookmark = new DevExpress.XtraBars.PopupMenu(this.components);
-			this.timerHomeShow = new System.Windows.Forms.Timer(this.components);
-			this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-			this.popupMenuTabPage = new DevExpress.XtraBars.PopupMenu(this.components);
+			this.imageCollection = new DevExpress.Utils.ImageCollection();
+			this.mdiManager = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager();
+			this.timerMainTime = new System.Windows.Forms.Timer();
+			this.popupMenuOfMainMenu = new DevExpress.XtraBars.PopupMenu();
+			this.popupMenuOfBookmark = new DevExpress.XtraBars.PopupMenu();
+			this.timerHomeShow = new System.Windows.Forms.Timer();
+			this.notifyIcon1 = new System.Windows.Forms.NotifyIcon();
+			this.popupMenuTabPage = new DevExpress.XtraBars.PopupMenu();
 			((System.ComponentModel.ISupportInitialize)(this.barManager)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.barAndDockingController)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dockManager)).BeginInit();
@@ -397,8 +396,7 @@
 			// 
 			// barAndDockingController
 			// 
-			this.barAndDockingController.LookAndFeel.UseDefaultLookAndFeel = false;
-			this.barAndDockingController.LookAndFeel.UseWindowsXPTheme = true;
+			this.barAndDockingController.PropertiesBar.AllowLinkLighting = false;
 			this.barAndDockingController.PropertiesBar.DefaultGlyphSize = new System.Drawing.Size(16, 16);
 			this.barAndDockingController.PropertiesBar.DefaultLargeGlyphSize = new System.Drawing.Size(32, 32);
 			// 
@@ -408,21 +406,21 @@
 			this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
 			this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
 			this.barDockControlTop.Manager = this.barManager;
-			this.barDockControlTop.Size = new System.Drawing.Size(1084, 50);
+			this.barDockControlTop.Size = new System.Drawing.Size(1084, 52);
 			// 
 			// barDockControlBottom
 			// 
 			this.barDockControlBottom.CausesValidation = false;
 			this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.barDockControlBottom.Location = new System.Drawing.Point(0, 516);
+			this.barDockControlBottom.Location = new System.Drawing.Point(0, 518);
 			this.barDockControlBottom.Manager = this.barManager;
-			this.barDockControlBottom.Size = new System.Drawing.Size(1084, 26);
+			this.barDockControlBottom.Size = new System.Drawing.Size(1084, 24);
 			// 
 			// barDockControlLeft
 			// 
 			this.barDockControlLeft.CausesValidation = false;
 			this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-			this.barDockControlLeft.Location = new System.Drawing.Point(0, 50);
+			this.barDockControlLeft.Location = new System.Drawing.Point(0, 52);
 			this.barDockControlLeft.Manager = this.barManager;
 			this.barDockControlLeft.Size = new System.Drawing.Size(0, 466);
 			// 
@@ -430,7 +428,7 @@
 			// 
 			this.barDockControlRight.CausesValidation = false;
 			this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-			this.barDockControlRight.Location = new System.Drawing.Point(1084, 50);
+			this.barDockControlRight.Location = new System.Drawing.Point(1084, 52);
 			this.barDockControlRight.Manager = this.barManager;
 			this.barDockControlRight.Size = new System.Drawing.Size(0, 466);
 			// 
@@ -484,7 +482,7 @@
 			this.dpFavorite.FloatVertical = true;
 			this.dpFavorite.ID = new System.Guid("a5e98a7a-fef2-43d9-af20-020bb44847c4");
 			this.dpFavorite.Image = ((System.Drawing.Image)(resources.GetObject("dpFavorite.Image")));
-			this.dpFavorite.Location = new System.Drawing.Point(818, 50);
+			this.dpFavorite.Location = new System.Drawing.Point(818, 52);
 			this.dpFavorite.Name = "dpFavorite";
 			this.dpFavorite.OriginalSize = new System.Drawing.Size(266, 391);
 			this.dpFavorite.Size = new System.Drawing.Size(266, 466);
@@ -493,9 +491,9 @@
 			// dockPanel1_Container
 			// 
 			this.dockPanel1_Container.Controls.Add(this.navBarFavorite);
-			this.dockPanel1_Container.Location = new System.Drawing.Point(3, 21);
+			this.dockPanel1_Container.Location = new System.Drawing.Point(5, 39);
 			this.dockPanel1_Container.Name = "dockPanel1_Container";
-			this.dockPanel1_Container.Size = new System.Drawing.Size(260, 442);
+			this.dockPanel1_Container.Size = new System.Drawing.Size(257, 423);
 			this.dockPanel1_Container.TabIndex = 0;
 			// 
 			// navBarFavorite
@@ -507,11 +505,11 @@
             this.nbGroupBookMark});
 			this.navBarFavorite.Location = new System.Drawing.Point(0, 0);
 			this.navBarFavorite.Name = "navBarFavorite";
-			this.navBarFavorite.OptionsNavPane.ExpandedWidth = 260;
+			this.navBarFavorite.OptionsNavPane.ExpandedWidth = 257;
 			this.navBarFavorite.OptionsNavPane.ShowExpandButton = false;
 			this.navBarFavorite.OptionsNavPane.ShowGroupImageInHeader = true;
 			this.navBarFavorite.PaintStyleKind = DevExpress.XtraNavBar.NavBarViewKind.NavigationPane;
-			this.navBarFavorite.Size = new System.Drawing.Size(260, 442);
+			this.navBarFavorite.Size = new System.Drawing.Size(257, 423);
 			this.navBarFavorite.StoreDefaultPaintStyleName = true;
 			this.navBarFavorite.TabIndex = 0;
 			this.navBarFavorite.Text = "즐겨찾기";
@@ -538,7 +536,7 @@
 			this.dpNavigation.FloatVertical = true;
 			this.dpNavigation.ID = new System.Guid("98baa37f-b8a0-4579-8915-c1e07f9c317f");
 			this.dpNavigation.Image = ((System.Drawing.Image)(resources.GetObject("dpNavigation.Image")));
-			this.dpNavigation.Location = new System.Drawing.Point(0, 50);
+			this.dpNavigation.Location = new System.Drawing.Point(0, 52);
 			this.dpNavigation.Name = "dpNavigation";
 			this.dpNavigation.OriginalSize = new System.Drawing.Size(274, 200);
 			this.dpNavigation.Size = new System.Drawing.Size(274, 466);
@@ -547,10 +545,10 @@
 			// dockPanelMainMenu_Container
 			// 
 			this.dockPanelMainMenu_Container.Controls.Add(this.navBarNavigate);
-			this.dockPanelMainMenu_Container.Location = new System.Drawing.Point(3, 21);
+			this.dockPanelMainMenu_Container.Location = new System.Drawing.Point(4, 39);
 			this.dockPanelMainMenu_Container.Name = "dockPanelMainMenu_Container";
 			this.dockPanelMainMenu_Container.Padding = new System.Windows.Forms.Padding(2);
-			this.dockPanelMainMenu_Container.Size = new System.Drawing.Size(268, 442);
+			this.dockPanelMainMenu_Container.Size = new System.Drawing.Size(265, 423);
 			this.dockPanelMainMenu_Container.TabIndex = 0;
 			// 
 			// navBarNavigate
@@ -564,10 +562,10 @@
             this.navBarGroup1});
 			this.navBarNavigate.Location = new System.Drawing.Point(2, 2);
 			this.navBarNavigate.Name = "navBarNavigate";
-			this.navBarNavigate.OptionsNavPane.ExpandedWidth = 264;
+			this.navBarNavigate.OptionsNavPane.ExpandedWidth = 261;
 			this.navBarNavigate.OptionsNavPane.ShowExpandButton = false;
 			this.navBarNavigate.PaintStyleKind = DevExpress.XtraNavBar.NavBarViewKind.NavigationPane;
-			this.navBarNavigate.Size = new System.Drawing.Size(264, 438);
+			this.navBarNavigate.Size = new System.Drawing.Size(261, 419);
 			this.navBarNavigate.StoreDefaultPaintStyleName = true;
 			this.navBarNavigate.TabIndex = 1;
 			this.navBarNavigate.Text = "navBarControl1";
@@ -710,8 +708,8 @@
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.ClientSize = new System.Drawing.Size(1084, 542);
-			this.Controls.Add(this.dpFavorite);
 			this.Controls.Add(this.dpNavigation);
+			this.Controls.Add(this.dpFavorite);
 			this.Controls.Add(this.barDockControlLeft);
 			this.Controls.Add(this.barDockControlRight);
 			this.Controls.Add(this.barDockControlBottom);

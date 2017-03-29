@@ -12,7 +12,6 @@
 					,	AA.USER_NAME
 					,	AA.USER_TYPE
 					,	AA.LOGIN_ID
-					,	AA.LOGIN_PW
 					,	AA.USE_YN
 					,	AA.REMARKS
 					,	AA.INS_TIME
@@ -55,7 +54,7 @@
 					#USER_NAME#
 				,	#USER_TYPE#
 				,	#LOGIN_ID#
-				,	#LOGIN_PW#
+				,	PWDENCRYPT(#LOGIN_ID#)
 				,	#USE_YN#
 				,	#REMARKS#
 				,	GETDATE()
@@ -88,5 +87,23 @@
 				WHERE	USER_ID = #USER_ID#
 			]]>
 		</delete>
+		<update id="ClearPassword" parameterClass="DataMap">
+			<![CDATA[
+				UPDATE  UAA.USERS
+				SET     LOGIN_PW	= PWDENCRYPT(LOGIN_ID)
+					,	UPD_TIME	= GETDATE()
+					,	UPD_USER	= #INS_USER#
+				WHERE	USER_ID		= #USER_ID#
+			]]>
+		</update>
+		<update id="ChangePassword" parameterClass="DataMap">
+			<![CDATA[
+				UPDATE  UAA.USERS
+				SET     LOGIN_PW	= PWDENCRYPT(#LOGIN_PW#)
+					,	UPD_TIME	= GETDATE()
+					,	UPD_USER	= #INS_USER#
+				WHERE	USER_ID		= #USER_ID#
+			]]>
+		</update>
 	</statements>
 </sqlMap>

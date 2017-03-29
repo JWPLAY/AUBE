@@ -167,7 +167,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\back_white.png" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JW.AUBE.Base\JW.AUBE.Base.csproj">
       <Project>{c18da53b-5d3c-4ab0-a5f2-5ee399af54cc}</Project>
@@ -197,6 +199,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\back_gray.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

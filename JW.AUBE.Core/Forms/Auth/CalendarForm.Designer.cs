@@ -116,7 +116,7 @@
 			this.lc.Controls.Add(this.txtHolidayName);
 			this.lc.Location = new System.Drawing.Point(0, 44);
 			this.lc.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(892, 390, 532, 350);
-			this.lc.Size = new System.Drawing.Size(1028, 414);
+			this.lc.Size = new System.Drawing.Size(1028, 418);
 			// 
 			// lcGroupBase
 			// 
@@ -126,7 +126,7 @@
             this.lcGroupEditBase});
 			this.lcGroupBase.Name = "Root";
 			this.lcGroupBase.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcGroupBase.Size = new System.Drawing.Size(1028, 414);
+			this.lcGroupBase.Size = new System.Drawing.Size(1028, 418);
 			// 
 			// lcGroupFind
 			// 
@@ -136,7 +136,7 @@
 			this.lcGroupFind.Location = new System.Drawing.Point(0, 0);
 			this.lcGroupFind.Name = "lcGroupFind";
 			this.lcGroupFind.Padding = new DevExpress.XtraLayout.Utils.Padding(4, 4, 4, 4);
-			this.lcGroupFind.Size = new System.Drawing.Size(562, 410);
+			this.lcGroupFind.Size = new System.Drawing.Size(562, 414);
 			this.lcGroupFind.Text = "검색";
 			this.lcGroupFind.TextVisible = false;
 			// 
@@ -156,11 +156,8 @@
 			// 
 			this.lcItemCalYear.Control = this.datCalYear;
 			this.lcItemCalYear.Location = new System.Drawing.Point(0, 0);
-			this.lcItemCalYear.MaxSize = new System.Drawing.Size(250, 24);
-			this.lcItemCalYear.MinSize = new System.Drawing.Size(250, 24);
 			this.lcItemCalYear.Name = "lcItemCalYear";
 			this.lcItemCalYear.Size = new System.Drawing.Size(250, 26);
-			this.lcItemCalYear.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
 			this.lcItemCalYear.TextSize = new System.Drawing.Size(111, 14);
 			// 
 			// datCalYear
@@ -188,11 +185,8 @@
 			// 
 			this.lcButtonCreate.Control = this.btnCreate;
 			this.lcButtonCreate.Location = new System.Drawing.Point(454, 0);
-			this.lcButtonCreate.MaxSize = new System.Drawing.Size(80, 26);
-			this.lcButtonCreate.MinSize = new System.Drawing.Size(80, 26);
 			this.lcButtonCreate.Name = "lcButtonCreate";
 			this.lcButtonCreate.Size = new System.Drawing.Size(80, 26);
-			this.lcButtonCreate.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
 			this.lcButtonCreate.TextSize = new System.Drawing.Size(0, 0);
 			this.lcButtonCreate.TextVisible = false;
 			// 
@@ -210,7 +204,7 @@
 			this.layoutControlItem3.Control = this.gridList;
 			this.layoutControlItem3.Location = new System.Drawing.Point(0, 40);
 			this.layoutControlItem3.Name = "layoutControlItem3";
-			this.layoutControlItem3.Size = new System.Drawing.Size(548, 356);
+			this.layoutControlItem3.Size = new System.Drawing.Size(548, 360);
 			this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
 			this.layoutControlItem3.TextVisible = false;
 			// 
@@ -219,6 +213,7 @@
 			this.gridList.Compress = false;
 			this.gridList.DataSource = null;
 			this.gridList.Editable = true;
+			this.gridList.FocusedRowHandle = -2147483648;
 			this.gridList.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
 			this.gridList.Location = new System.Drawing.Point(11, 51);
 			this.gridList.Name = "gridList";
@@ -232,8 +227,9 @@
 			this.gridList.PrintFooter = null;
 			this.gridList.PrintHeader = null;
 			this.gridList.ReadOnly = false;
+			this.gridList.ShowFooter = false;
 			this.gridList.ShowGroupPanel = false;
-			this.gridList.Size = new System.Drawing.Size(544, 352);
+			this.gridList.Size = new System.Drawing.Size(544, 356);
 			this.gridList.TabIndex = 7;
 			// 
 			// lcGroupEdit1
@@ -354,7 +350,7 @@
 			this.splitterItem1.AllowHotTrack = true;
 			this.splitterItem1.Location = new System.Drawing.Point(562, 0);
 			this.splitterItem1.Name = "splitterItem1";
-			this.splitterItem1.Size = new System.Drawing.Size(12, 410);
+			this.splitterItem1.Size = new System.Drawing.Size(12, 414);
 			// 
 			// lcGroupRegInfo
 			// 
@@ -438,7 +434,7 @@
 			this.emptySpaceItem5.AllowHotTrack = false;
 			this.emptySpaceItem5.Location = new System.Drawing.Point(0, 0);
 			this.emptySpaceItem5.Name = "emptySpaceItem5";
-			this.emptySpaceItem5.Size = new System.Drawing.Size(440, 153);
+			this.emptySpaceItem5.Size = new System.Drawing.Size(440, 157);
 			this.emptySpaceItem5.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// lcGroupEdit2
@@ -448,7 +444,7 @@
 			this.lcGroupEdit2.Location = new System.Drawing.Point(0, 247);
 			this.lcGroupEdit2.Name = "lcGroupEdit2";
 			this.lcGroupEdit2.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcGroupEdit2.Size = new System.Drawing.Size(450, 163);
+			this.lcGroupEdit2.Size = new System.Drawing.Size(450, 167);
 			this.lcGroupEdit2.TextVisible = false;
 			// 
 			// lcGroupEditBase
@@ -460,7 +456,7 @@
             this.lcGroupEdit2});
 			this.lcGroupEditBase.Location = new System.Drawing.Point(574, 0);
 			this.lcGroupEditBase.Name = "lcGroupEditBase";
-			this.lcGroupEditBase.Size = new System.Drawing.Size(450, 410);
+			this.lcGroupEditBase.Size = new System.Drawing.Size(450, 414);
 			this.lcGroupEditBase.TextVisible = false;
 			// 
 			// CalendarForm

@@ -65,6 +65,9 @@ namespace JW.AUBE.Core.Forms.Auth
 				new XGridColumn() { FieldName = "SORT_SEQ", HorzAlignment = HorzAlignment.Center, Width = 80 },
 				new XGridColumn() { FieldName = "USE_YN", HorzAlignment = HorzAlignment.Center, Width = 80, RepositoryItem = gridList.GetRepositoryItemCheckEdit() }
 			);
+			gridList.SetColumnBackColor(SkinUtils.ForeColor, "ROW_NO");
+			gridList.SetColumnForeColor(SkinUtils.BackColor, "ROW_NO");
+			gridList.ColumnFix("ROW_NO");
 
 			gridList.RowCellClick += delegate (object sender, RowCellClickEventArgs e)
 			{

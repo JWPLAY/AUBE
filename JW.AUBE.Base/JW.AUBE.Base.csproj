@@ -76,6 +76,11 @@
     <Compile Include="Map\StyleMap.cs" />
     <Compile Include="Models\ErrorMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utils\AppConfigUtils.cs" />
     <Compile Include="Utils\CheckDigitUtils.cs" />
     <Compile Include="Utils\CommonUtils.cs" />
@@ -106,6 +111,24 @@
       <Project>{30f5ec55-1d6c-4ea3-89b0-f9cd6b60a17c}</Project>
       <Name>JW.AUBE.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\back_red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\back_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\back_gray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\back_orange.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

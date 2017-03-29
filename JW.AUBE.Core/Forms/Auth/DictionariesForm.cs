@@ -57,6 +57,9 @@ namespace JW.AUBE.Core.Forms.Auth
 				new XGridColumn() { FieldName = "LOGICAL_NAME", Width = 200 },
 				new XGridColumn() { FieldName = "PHYSICAL_NAME", Width = 200 }
 			);
+			gridList.SetColumnBackColor(SkinUtils.ForeColor, "ROW_NO");
+			gridList.SetColumnForeColor(SkinUtils.BackColor, "ROW_NO");
+			gridList.ColumnFix("ROW_NO");
 
 			gridList.RowCellClick += delegate (object sender, RowCellClickEventArgs e)
 			{

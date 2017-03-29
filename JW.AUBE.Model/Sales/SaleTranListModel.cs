@@ -14,6 +14,7 @@
 		public int ITEM_NO { get; set; }
 		public int ITEM_ID { get; set; }
 		public int PRODUCT_ID { get; set; }
+		public string PRODUCT_CODE { get; set; }
 		public string PRODUCT_NAME { get; set; }
 		public decimal SALE_PRICE { get; set; }
 		public int DISC_RATE { get; set; }

@@ -38,40 +38,57 @@ namespace JW.AUBE.Core.Forms.Sales
 			gridSaleProduct.ShowFooter = true;
 			gridSaleProduct.AddGridColumns(new XGridColumn[]
 			{
+				new XGridColumn() { FieldName = "ROW_NO" },
 				new XGridColumn() { FieldName = "PRODUCT_ID", HorzAlignment = HorzAlignment.Center, Width = 80, Visible = false },
 				new XGridColumn() { FieldName = "PRODUCT_CODE", HorzAlignment = HorzAlignment.Center, Width = 80 },
 				new XGridColumn() { FieldName = "PRODUCT_NAME", Width = 200 },
 				new XGridColumn() { FieldName = "SALE_QTY", Width = 100, HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0", IsSummary = true, SummaryItemType = SummaryItemType.Sum },
 				new XGridColumn() { FieldName = "SALE_AMT", Width = 120, HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0", IsSummary = true, SummaryItemType = SummaryItemType.Sum }
 			});
+			gridSaleProduct.SetColumnBackColor(SkinUtils.ForeColor, "ROW_NO");
+			gridSaleProduct.SetColumnForeColor(SkinUtils.BackColor, "ROW_NO");
+			gridSaleProduct.ColumnFix("ROW_NO");
 
 			gridSaleCustomer.Init();
 			gridSaleCustomer.ShowFooter = true;
 			gridSaleCustomer.AddGridColumns(new XGridColumn[]
 			{
-				new XGridColumn() {FieldName="CUSTOMER_ID", HorzAlignment = HorzAlignment.Center, Width = 80, Visible = false },
-				new XGridColumn() {FieldName="CUSTOMER_NAME", Width=200 },
-				new XGridColumn() {FieldName="SALE_QTY", Width=100, HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString="N0", IsSummary = true, SummaryItemType = SummaryItemType.Sum },
-				new XGridColumn() {FieldName="SALE_AMT", Width=120, HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString="N0", IsSummary = true, SummaryItemType = SummaryItemType.Sum }
+				new XGridColumn() { FieldName = "ROW_NO" },
+				new XGridColumn() { FieldName = "CUSTOMER_ID", HorzAlignment = HorzAlignment.Center, Width = 80, Visible = false },
+				new XGridColumn() { FieldName = "CUSTOMER_NAME", Width = 200 },
+				new XGridColumn() { FieldName = "SALE_QTY", Width = 100, HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0", IsSummary = true, SummaryItemType = SummaryItemType.Sum },
+				new XGridColumn() { FieldName = "SALE_AMT", Width = 120, HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0", IsSummary = true, SummaryItemType = SummaryItemType.Sum }
 			});
+			gridSaleCustomer.SetColumnBackColor(SkinUtils.ForeColor, "ROW_NO");
+			gridSaleCustomer.SetColumnForeColor(SkinUtils.BackColor, "ROW_NO");
+			gridSaleCustomer.ColumnFix("ROW_NO");
 
 			gridSaleCategory.Init();
 			gridSaleCategory.ShowFooter = true;
 			gridSaleCategory.AddGridColumns(new XGridColumn[]
 			{
-				new XGridColumn() {FieldName="CATEGORY", Width=200 },
-				new XGridColumn() {FieldName="SALE_QTY", Width=100, HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString="N0", IsSummary = true, SummaryItemType = SummaryItemType.Sum },
-				new XGridColumn() {FieldName="SALE_AMT", Width=120, HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString="N0", IsSummary = true, SummaryItemType = SummaryItemType.Sum }
+				new XGridColumn() { FieldName = "ROW_NO" },
+				new XGridColumn() { FieldName = "CATEGORY", Width = 200 },
+				new XGridColumn() { FieldName = "SALE_QTY", Width = 100, HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0", IsSummary = true, SummaryItemType = SummaryItemType.Sum },
+				new XGridColumn() { FieldName = "SALE_AMT", Width = 120, HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0", IsSummary = true, SummaryItemType = SummaryItemType.Sum }
 			});
+			gridSaleCategory.SetColumnBackColor(SkinUtils.ForeColor, "ROW_NO");
+			gridSaleCategory.SetColumnForeColor(SkinUtils.BackColor, "ROW_NO");
+			gridSaleCategory.ColumnFix("ROW_NO");
 
 			gridSalePayType.Init();
 			gridSalePayType.ShowFooter = true;
 			gridSalePayType.AddGridColumns(new XGridColumn[]
 			{
-				new XGridColumn() {FieldName="PAY_TYPE", Width=100 },
-				new XGridColumn() {FieldName="SALE_QTY", Width=100, HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString="N0", IsSummary = true, SummaryItemType = SummaryItemType.Sum },
-				new XGridColumn() {FieldName="SALE_AMT", Width=120, HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString="N0", IsSummary = true, SummaryItemType = SummaryItemType.Sum }
+				new XGridColumn() { FieldName = "ROW_NO" },
+				new XGridColumn() { FieldName = "PAY_TYPE", Width = 100 },
+				new XGridColumn() { FieldName = "SALE_QTY", Width = 100, HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0", IsSummary = true, SummaryItemType = SummaryItemType.Sum },
+				new XGridColumn() { FieldName = "SALE_AMT", Width = 120, HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0", IsSummary = true, SummaryItemType = SummaryItemType.Sum }
 			});
+			gridSalePayType.SetColumnBackColor(SkinUtils.ForeColor, "ROW_NO");
+			gridSalePayType.SetColumnForeColor(SkinUtils.BackColor, "ROW_NO");
+			gridSalePayType.ColumnFix("ROW_NO");
+
 		}
 
 		protected override void DataLoad(object param = null)

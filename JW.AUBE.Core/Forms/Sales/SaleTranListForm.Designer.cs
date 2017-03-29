@@ -59,9 +59,9 @@
 			this.lc.Controls.Add(this.txtCustomer);
 			this.lc.Controls.Add(this.datSaleDate);
 			this.lc.Controls.Add(this.gridList);
-			this.lc.Location = new System.Drawing.Point(0, 47);
+			this.lc.Location = new System.Drawing.Point(0, 44);
 			this.lc.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1173, 264, 450, 400);
-			this.lc.Size = new System.Drawing.Size(1012, 412);
+			this.lc.Size = new System.Drawing.Size(1012, 418);
 			// 
 			// lcGroupBase
 			// 
@@ -70,7 +70,7 @@
             this.lcGridList});
 			this.lcGroupBase.Name = "Root";
 			this.lcGroupBase.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcGroupBase.Size = new System.Drawing.Size(1012, 412);
+			this.lcGroupBase.Size = new System.Drawing.Size(1012, 418);
 			// 
 			// lcGroupSearch
 			// 
@@ -188,6 +188,7 @@
 			this.gridList.Compress = false;
 			this.gridList.DataSource = null;
 			this.gridList.Editable = true;
+			this.gridList.FocusedRowHandle = -2147483648;
 			this.gridList.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
 			this.gridList.Location = new System.Drawing.Point(4, 109);
 			this.gridList.Name = "gridList";
@@ -203,7 +204,7 @@
 			this.gridList.ReadOnly = false;
 			this.gridList.ShowFooter = false;
 			this.gridList.ShowGroupPanel = false;
-			this.gridList.Size = new System.Drawing.Size(1004, 299);
+			this.gridList.Size = new System.Drawing.Size(1004, 305);
 			this.gridList.TabIndex = 4;
 			// 
 			// lcGridList
@@ -211,7 +212,7 @@
 			this.lcGridList.Control = this.gridList;
 			this.lcGridList.Location = new System.Drawing.Point(0, 105);
 			this.lcGridList.Name = "lcGridList";
-			this.lcGridList.Size = new System.Drawing.Size(1008, 303);
+			this.lcGridList.Size = new System.Drawing.Size(1008, 309);
 			this.lcGridList.TextSize = new System.Drawing.Size(0, 0);
 			this.lcGridList.TextVisible = false;
 			// 

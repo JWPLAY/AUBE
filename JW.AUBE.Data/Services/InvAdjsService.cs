@@ -67,7 +67,8 @@ namespace JW.AUBE.Service.Services
 						if (req.TranList[0].Data == null)
 							throw new Exception("저장할 데이터가 존재하지 않습니다.");
 
-						DataMap data = (req.TranList[0].Data as DataTable).ToDataMapList()[0];
+						DataMap data = req.TranList[0].Data as DataMap;
+						data.SetValue("INS_USER", req.UserId);
 
 						if (data.GetValue("ROWSTATE").ToStringNullToEmpty() == "INSERT")
 						{

@@ -35,11 +35,11 @@
 			this.txtProductId = new JW.AUBE.Core.Controls.Common.XSearch();
 			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.lcItemMaterial = new DevExpress.XtraLayout.LayoutControlItem();
+			this.txtMaterialId = new JW.AUBE.Core.Controls.Common.XSearch();
+			this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.gridList = new JW.AUBE.Core.Controls.Grid.XGrid();
 			this.lcGridList = new DevExpress.XtraLayout.LayoutControlItem();
-			this.txtMaterialId = new JW.AUBE.Core.Controls.Common.XSearch();
-			this.lcItemMaterial = new DevExpress.XtraLayout.LayoutControlItem();
-			this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
 			((System.ComponentModel.ISupportInitialize)(this.lc)).BeginInit();
 			this.lc.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupBase)).BeginInit();
@@ -48,9 +48,9 @@
 			((System.ComponentModel.ISupportInitialize)(this.lcItemProduct)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcGridList)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemMaterial)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGridList)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// lc
@@ -109,11 +109,8 @@
 			// 
 			this.lcItemProduct.Control = this.txtProductId;
 			this.lcItemProduct.Location = new System.Drawing.Point(0, 24);
-			this.lcItemProduct.MaxSize = new System.Drawing.Size(497, 24);
-			this.lcItemProduct.MinSize = new System.Drawing.Size(497, 24);
 			this.lcItemProduct.Name = "lcItemProduct";
 			this.lcItemProduct.Size = new System.Drawing.Size(497, 24);
-			this.lcItemProduct.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
 			this.lcItemProduct.TextSize = new System.Drawing.Size(85, 14);
 			// 
 			// txtProductId
@@ -151,6 +148,41 @@
 			this.emptySpaceItem3.Size = new System.Drawing.Size(497, 24);
 			this.emptySpaceItem3.TextSize = new System.Drawing.Size(0, 0);
 			// 
+			// lcItemMaterial
+			// 
+			this.lcItemMaterial.Control = this.txtMaterialId;
+			this.lcItemMaterial.Location = new System.Drawing.Point(0, 48);
+			this.lcItemMaterial.Name = "lcItemMaterial";
+			this.lcItemMaterial.Size = new System.Drawing.Size(497, 24);
+			this.lcItemMaterial.TextSize = new System.Drawing.Size(85, 14);
+			// 
+			// txtMaterialId
+			// 
+			this.txtMaterialId.CodeField = "CODE";
+			this.txtMaterialId.CodeGroup = "CODES";
+			this.txtMaterialId.CodeWidth = 100;
+			this.txtMaterialId.DisplayFields = new string[] {
+        "CODE",
+        "NAME"};
+			this.txtMaterialId.EditText = null;
+			this.txtMaterialId.EditValue = null;
+			this.txtMaterialId.Location = new System.Drawing.Point(100, 78);
+			this.txtMaterialId.MaximumSize = new System.Drawing.Size(0, 20);
+			this.txtMaterialId.MinimumSize = new System.Drawing.Size(0, 20);
+			this.txtMaterialId.Name = "txtMaterialId";
+			this.txtMaterialId.NameField = "NAME";
+			this.txtMaterialId.Parameters = null;
+			this.txtMaterialId.Size = new System.Drawing.Size(404, 20);
+			this.txtMaterialId.TabIndex = 8;
+			// 
+			// emptySpaceItem2
+			// 
+			this.emptySpaceItem2.AllowHotTrack = false;
+			this.emptySpaceItem2.Location = new System.Drawing.Point(497, 48);
+			this.emptySpaceItem2.Name = "emptySpaceItem2";
+			this.emptySpaceItem2.Size = new System.Drawing.Size(497, 24);
+			this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
+			// 
 			// gridList
 			// 
 			this.gridList.Compress = false;
@@ -184,41 +216,6 @@
 			this.lcGridList.TextSize = new System.Drawing.Size(0, 0);
 			this.lcGridList.TextVisible = false;
 			// 
-			// txtMaterialId
-			// 
-			this.txtMaterialId.CodeField = "CODE";
-			this.txtMaterialId.CodeGroup = "CODES";
-			this.txtMaterialId.CodeWidth = 100;
-			this.txtMaterialId.DisplayFields = new string[] {
-        "CODE",
-        "NAME"};
-			this.txtMaterialId.EditText = null;
-			this.txtMaterialId.EditValue = null;
-			this.txtMaterialId.Location = new System.Drawing.Point(100, 78);
-			this.txtMaterialId.MaximumSize = new System.Drawing.Size(0, 20);
-			this.txtMaterialId.MinimumSize = new System.Drawing.Size(0, 20);
-			this.txtMaterialId.Name = "txtMaterialId";
-			this.txtMaterialId.NameField = "NAME";
-			this.txtMaterialId.Parameters = null;
-			this.txtMaterialId.Size = new System.Drawing.Size(404, 20);
-			this.txtMaterialId.TabIndex = 8;
-			// 
-			// lcItemMaterial
-			// 
-			this.lcItemMaterial.Control = this.txtMaterialId;
-			this.lcItemMaterial.Location = new System.Drawing.Point(0, 48);
-			this.lcItemMaterial.Name = "lcItemMaterial";
-			this.lcItemMaterial.Size = new System.Drawing.Size(497, 24);
-			this.lcItemMaterial.TextSize = new System.Drawing.Size(85, 14);
-			// 
-			// emptySpaceItem2
-			// 
-			this.emptySpaceItem2.AllowHotTrack = false;
-			this.emptySpaceItem2.Location = new System.Drawing.Point(497, 48);
-			this.emptySpaceItem2.Name = "emptySpaceItem2";
-			this.emptySpaceItem2.Size = new System.Drawing.Size(497, 24);
-			this.emptySpaceItem2.TextSize = new System.Drawing.Size(0, 0);
-			// 
 			// ProdStatForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -234,9 +231,9 @@
 			((System.ComponentModel.ISupportInitialize)(this.lcItemProduct)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcGridList)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemMaterial)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem2)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGridList)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

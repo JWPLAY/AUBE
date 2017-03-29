@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
+using JW.AUBE.Base.DBTran.Model;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
-using  JW.AUBE.Base.DBTran.Model;
-using JW.AUBE.Service.Mappers;
 using JW.AUBE.Model.Production;
+using JW.AUBE.Service.Mappers;
 
 namespace JW.AUBE.Service.Services
 {
@@ -67,7 +66,8 @@ namespace JW.AUBE.Service.Services
 						if (req.TranList[0].Data == null)
 							throw new Exception("저장할 데이터가 존재하지 않습니다.");
 
-						DataMap data = (req.TranList[0].Data as DataTable).ToDataMapList()[0];
+						DataMap data = req.TranList[0].Data as DataMap;
+						data.SetValue("INS_USER", req.UserId);
 
 						if (data.GetValue("ROWSTATE").ToStringNullToEmpty() == "INSERT")
 						{

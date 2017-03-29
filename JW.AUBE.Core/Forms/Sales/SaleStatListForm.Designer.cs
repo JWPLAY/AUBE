@@ -34,17 +34,17 @@
 			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.lcGroupStat = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.lcGroupSaleProduct = new DevExpress.XtraLayout.LayoutControlGroup();
-			this.lcGroupSaleCustomer = new DevExpress.XtraLayout.LayoutControlGroup();
-			this.lcGroupSaleCategory = new DevExpress.XtraLayout.LayoutControlGroup();
-			this.lcGroupSalePayType = new DevExpress.XtraLayout.LayoutControlGroup();
-			this.gridSaleProduct = new JW.AUBE.Core.Controls.Grid.XGrid();
 			this.lcGridSaleProduct = new DevExpress.XtraLayout.LayoutControlItem();
-			this.gridSaleCustomer = new JW.AUBE.Core.Controls.Grid.XGrid();
+			this.gridSaleProduct = new JW.AUBE.Core.Controls.Grid.XGrid();
+			this.lcGroupSaleCustomer = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.lcGridSaleCustomer = new DevExpress.XtraLayout.LayoutControlItem();
-			this.gridSaleCategory = new JW.AUBE.Core.Controls.Grid.XGrid();
+			this.gridSaleCustomer = new JW.AUBE.Core.Controls.Grid.XGrid();
+			this.lcGroupSaleCategory = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.lcGridSaleCategory = new DevExpress.XtraLayout.LayoutControlItem();
-			this.gridSalePayType = new JW.AUBE.Core.Controls.Grid.XGrid();
+			this.gridSaleCategory = new JW.AUBE.Core.Controls.Grid.XGrid();
+			this.lcGroupSalePayType = new DevExpress.XtraLayout.LayoutControlGroup();
 			this.lcGridSalePayType = new DevExpress.XtraLayout.LayoutControlItem();
+			this.gridSalePayType = new JW.AUBE.Core.Controls.Grid.XGrid();
 			((System.ComponentModel.ISupportInitialize)(this.lc)).BeginInit();
 			this.lc.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupBase)).BeginInit();
@@ -53,12 +53,12 @@
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupStat)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupSaleProduct)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcGroupSaleCustomer)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcGroupSaleCategory)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcGroupSalePayType)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGridSaleProduct)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGroupSaleCustomer)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGridSaleCustomer)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGroupSaleCategory)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGridSaleCategory)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGroupSalePayType)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGridSalePayType)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -142,35 +142,14 @@
 			this.lcGroupSaleProduct.Size = new System.Drawing.Size(499, 173);
 			this.lcGroupSaleProduct.Text = "상품별 매출현황";
 			// 
-			// lcGroupSaleCustomer
+			// lcGridSaleProduct
 			// 
-			this.lcGroupSaleCustomer.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.lcGridSaleCustomer});
-			this.lcGroupSaleCustomer.Location = new System.Drawing.Point(499, 0);
-			this.lcGroupSaleCustomer.Name = "lcGroupSaleCustomer";
-			this.lcGroupSaleCustomer.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcGroupSaleCustomer.Size = new System.Drawing.Size(499, 173);
-			this.lcGroupSaleCustomer.Text = "거래처별 매출현황";
-			// 
-			// lcGroupSaleCategory
-			// 
-			this.lcGroupSaleCategory.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.lcGridSaleCategory});
-			this.lcGroupSaleCategory.Location = new System.Drawing.Point(0, 173);
-			this.lcGroupSaleCategory.Name = "lcGroupSaleCategory";
-			this.lcGroupSaleCategory.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcGroupSaleCategory.Size = new System.Drawing.Size(499, 174);
-			this.lcGroupSaleCategory.Text = "카테고리별 매출현황";
-			// 
-			// lcGroupSalePayType
-			// 
-			this.lcGroupSalePayType.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.lcGridSalePayType});
-			this.lcGroupSalePayType.Location = new System.Drawing.Point(499, 173);
-			this.lcGroupSalePayType.Name = "lcGroupSalePayType";
-			this.lcGroupSalePayType.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcGroupSalePayType.Size = new System.Drawing.Size(499, 174);
-			this.lcGroupSalePayType.Text = "결제방법별 매출현황";
+			this.lcGridSaleProduct.Control = this.gridSaleProduct;
+			this.lcGridSaleProduct.Location = new System.Drawing.Point(0, 0);
+			this.lcGridSaleProduct.Name = "lcGridSaleProduct";
+			this.lcGridSaleProduct.Size = new System.Drawing.Size(489, 144);
+			this.lcGridSaleProduct.TextSize = new System.Drawing.Size(0, 0);
+			this.lcGridSaleProduct.TextVisible = false;
 			// 
 			// gridSaleProduct
 			// 
@@ -196,14 +175,24 @@
 			this.gridSaleProduct.Size = new System.Drawing.Size(485, 140);
 			this.gridSaleProduct.TabIndex = 8;
 			// 
-			// lcGridSaleProduct
+			// lcGroupSaleCustomer
 			// 
-			this.lcGridSaleProduct.Control = this.gridSaleProduct;
-			this.lcGridSaleProduct.Location = new System.Drawing.Point(0, 0);
-			this.lcGridSaleProduct.Name = "lcGridSaleProduct";
-			this.lcGridSaleProduct.Size = new System.Drawing.Size(489, 144);
-			this.lcGridSaleProduct.TextSize = new System.Drawing.Size(0, 0);
-			this.lcGridSaleProduct.TextVisible = false;
+			this.lcGroupSaleCustomer.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.lcGridSaleCustomer});
+			this.lcGroupSaleCustomer.Location = new System.Drawing.Point(499, 0);
+			this.lcGroupSaleCustomer.Name = "lcGroupSaleCustomer";
+			this.lcGroupSaleCustomer.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
+			this.lcGroupSaleCustomer.Size = new System.Drawing.Size(499, 173);
+			this.lcGroupSaleCustomer.Text = "거래처별 매출현황";
+			// 
+			// lcGridSaleCustomer
+			// 
+			this.lcGridSaleCustomer.Control = this.gridSaleCustomer;
+			this.lcGridSaleCustomer.Location = new System.Drawing.Point(0, 0);
+			this.lcGridSaleCustomer.Name = "lcGridSaleCustomer";
+			this.lcGridSaleCustomer.Size = new System.Drawing.Size(489, 144);
+			this.lcGridSaleCustomer.TextSize = new System.Drawing.Size(0, 0);
+			this.lcGridSaleCustomer.TextVisible = false;
 			// 
 			// gridSaleCustomer
 			// 
@@ -229,14 +218,24 @@
 			this.gridSaleCustomer.Size = new System.Drawing.Size(485, 140);
 			this.gridSaleCustomer.TabIndex = 9;
 			// 
-			// lcGridSaleCustomer
+			// lcGroupSaleCategory
 			// 
-			this.lcGridSaleCustomer.Control = this.gridSaleCustomer;
-			this.lcGridSaleCustomer.Location = new System.Drawing.Point(0, 0);
-			this.lcGridSaleCustomer.Name = "lcGridSaleCustomer";
-			this.lcGridSaleCustomer.Size = new System.Drawing.Size(489, 144);
-			this.lcGridSaleCustomer.TextSize = new System.Drawing.Size(0, 0);
-			this.lcGridSaleCustomer.TextVisible = false;
+			this.lcGroupSaleCategory.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.lcGridSaleCategory});
+			this.lcGroupSaleCategory.Location = new System.Drawing.Point(0, 173);
+			this.lcGroupSaleCategory.Name = "lcGroupSaleCategory";
+			this.lcGroupSaleCategory.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
+			this.lcGroupSaleCategory.Size = new System.Drawing.Size(499, 174);
+			this.lcGroupSaleCategory.Text = "카테고리별 매출현황";
+			// 
+			// lcGridSaleCategory
+			// 
+			this.lcGridSaleCategory.Control = this.gridSaleCategory;
+			this.lcGridSaleCategory.Location = new System.Drawing.Point(0, 0);
+			this.lcGridSaleCategory.Name = "lcGridSaleCategory";
+			this.lcGridSaleCategory.Size = new System.Drawing.Size(489, 145);
+			this.lcGridSaleCategory.TextSize = new System.Drawing.Size(0, 0);
+			this.lcGridSaleCategory.TextVisible = false;
 			// 
 			// gridSaleCategory
 			// 
@@ -262,14 +261,24 @@
 			this.gridSaleCategory.Size = new System.Drawing.Size(485, 141);
 			this.gridSaleCategory.TabIndex = 10;
 			// 
-			// lcGridSaleCategory
+			// lcGroupSalePayType
 			// 
-			this.lcGridSaleCategory.Control = this.gridSaleCategory;
-			this.lcGridSaleCategory.Location = new System.Drawing.Point(0, 0);
-			this.lcGridSaleCategory.Name = "lcGridSaleCategory";
-			this.lcGridSaleCategory.Size = new System.Drawing.Size(489, 145);
-			this.lcGridSaleCategory.TextSize = new System.Drawing.Size(0, 0);
-			this.lcGridSaleCategory.TextVisible = false;
+			this.lcGroupSalePayType.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.lcGridSalePayType});
+			this.lcGroupSalePayType.Location = new System.Drawing.Point(499, 173);
+			this.lcGroupSalePayType.Name = "lcGroupSalePayType";
+			this.lcGroupSalePayType.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
+			this.lcGroupSalePayType.Size = new System.Drawing.Size(499, 174);
+			this.lcGroupSalePayType.Text = "결제방법별 매출현황";
+			// 
+			// lcGridSalePayType
+			// 
+			this.lcGridSalePayType.Control = this.gridSalePayType;
+			this.lcGridSalePayType.Location = new System.Drawing.Point(0, 0);
+			this.lcGridSalePayType.Name = "lcGridSalePayType";
+			this.lcGridSalePayType.Size = new System.Drawing.Size(489, 145);
+			this.lcGridSalePayType.TextSize = new System.Drawing.Size(0, 0);
+			this.lcGridSalePayType.TextVisible = false;
 			// 
 			// gridSalePayType
 			// 
@@ -295,15 +304,6 @@
 			this.gridSalePayType.Size = new System.Drawing.Size(485, 141);
 			this.gridSalePayType.TabIndex = 11;
 			// 
-			// lcGridSalePayType
-			// 
-			this.lcGridSalePayType.Control = this.gridSalePayType;
-			this.lcGridSalePayType.Location = new System.Drawing.Point(0, 0);
-			this.lcGridSalePayType.Name = "lcGridSalePayType";
-			this.lcGridSalePayType.Size = new System.Drawing.Size(489, 145);
-			this.lcGridSalePayType.TextSize = new System.Drawing.Size(0, 0);
-			this.lcGridSalePayType.TextVisible = false;
-			// 
 			// SaleStatListForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -319,12 +319,12 @@
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupStat)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupSaleProduct)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcGroupSaleCustomer)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcGroupSaleCategory)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcGroupSalePayType)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGridSaleProduct)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGroupSaleCustomer)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGridSaleCustomer)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGroupSaleCategory)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGridSaleCategory)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGroupSalePayType)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGridSalePayType)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();

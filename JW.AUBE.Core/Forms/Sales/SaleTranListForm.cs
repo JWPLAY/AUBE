@@ -73,10 +73,10 @@ namespace JW.AUBE.Core.Forms.Sales
 				);
 
 			//gridList.SetMerge("SALE_DATE", "SALE_NO");
-			gridList.SetMerge("SALE_DATE", "SALE_NO", "SALE_TYPE", "CUSTOMER_ID", "CUSTOMER_NAME", "REMARKS");
+			gridList.SetMerge("SALE_DATE", "SALE_NO", "SALE_TYPE", "PAY_TYPE", "CUSTOMER_ID", "CUSTOMER_NAME", "REMARKS");
 
-			gridList.SetColumnBackColor(Color.FromArgb(50, 50, 50), "ROW_NO");
-			gridList.SetColumnForeColor(Color.White, "ROW_NO");
+			gridList.SetColumnBackColor(SkinUtils.ForeColor, "ROW_NO");
+			gridList.SetColumnForeColor(SkinUtils.BackColor, "ROW_NO");
 			gridList.ColumnFix("ROW_NO");
 
 			gridList.RowCellClick += delegate (object sender, RowCellClickEventArgs e)

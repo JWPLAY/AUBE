@@ -57,8 +57,8 @@ namespace JW.AUBE.Core.Forms.Production
 
 			gridList.SetMerge("PROD_DATE", "PROD_ID", "PRODUCT_ID", "PRODUCT_CODE", "PRODUCT_NAME", "REMARKS", "PROD_QTY");
 
-			gridList.SetColumnBackColor(Color.FromArgb(50, 50, 50), "ROW_NO");
-			gridList.SetColumnForeColor(Color.White, "ROW_NO");
+			gridList.SetColumnBackColor(SkinUtils.ForeColor, "ROW_NO");
+			gridList.SetColumnForeColor(SkinUtils.BackColor, "ROW_NO");
 			gridList.ColumnFix("ROW_NO");
 		}
 

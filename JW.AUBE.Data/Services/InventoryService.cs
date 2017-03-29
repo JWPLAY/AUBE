@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
+using JW.AUBE.Base.DBTran.Model;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
-using  JW.AUBE.Base.DBTran.Model;
-using JW.AUBE.Service.Mappers;
 using JW.AUBE.Model.Inventory;
 using JW.AUBE.Model.Production;
+using JW.AUBE.Service.Mappers;
 
 namespace JW.AUBE.Service.Services
 {

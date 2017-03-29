@@ -55,7 +55,7 @@ namespace JW.AUBE.Core.Forms.Production
 			datProdDate.Init();
 			spnProdQty.SetFormat("N0", false);
 			txtProductId.Init("PROD_PRODUCT", "PRODUCT_ID", "PRODUCT_NAME", null, null);
-			txtSchProduct.Init("PROD_PRODUCT", "PRODUCT_ID", "PRODUCT_NAME", null, null);
+			txtSchProductId.Init("PROD_PRODUCT", "PRODUCT_ID", "PRODUCT_NAME", null, null);
 
 			InitGrid();
 		}
@@ -81,8 +81,8 @@ namespace JW.AUBE.Core.Forms.Production
 				new XGridColumn() { FieldName="UPD_USER", Visible = false },
 				new XGridColumn() { FieldName="UPD_USER_NAME" }
 			});
-			gridList.SetColumnBackColor(Color.Black, "ROW_NO");
-			gridList.SetColumnForeColor(Color.White, "ROW_NO");
+			gridList.SetColumnBackColor(SkinUtils.ForeColor, "ROW_NO");
+			gridList.SetColumnForeColor(SkinUtils.BackColor, "ROW_NO");
 			gridList.ColumnFix("ROW_NO");
 
 			gridList.RowCellClick += delegate (object sender, RowCellClickEventArgs e)
@@ -143,7 +143,7 @@ namespace JW.AUBE.Core.Forms.Production
 				{
 					{ "ST_PROD_DATE", datSchProdDate.DateFrEdit.GetDateChar8() },
 					{ "ED_PROD_DATE", datSchProdDate.DateToEdit.GetDateChar8() },
-					{ "PRODUCT_ID", txtProductId.EditValue }					
+					{ "PRODUCT_ID", txtSchProductId.EditValue }					
 				});
 
 				if (param != null)

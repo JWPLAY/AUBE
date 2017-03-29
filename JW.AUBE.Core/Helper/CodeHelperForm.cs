@@ -264,8 +264,8 @@ namespace JW.AUBE.Core.Helper
 						gridList.SetMerge(mergeFields.ToArray());
 					}
 
-					gridList.SetColumnBackColor(Color.FromArgb(50, 50, 50), this.CodeField);
-					gridList.SetColumnForeColor(Color.WhiteSmoke, this.CodeField);
+					gridList.SetColumnBackColor(SkinUtils.ForeColor, this.CodeField);
+					gridList.SetColumnForeColor(SkinUtils.BackColor, this.CodeField);
 				}
 			}
 			catch (Exception ex)

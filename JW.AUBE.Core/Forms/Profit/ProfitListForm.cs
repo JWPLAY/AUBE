@@ -87,8 +87,8 @@ namespace JW.AUBE.Core.Forms.Profit
 
 			gridList.SetMerge("PRODUCT_TYPE", "CATEGORY");
 			
-			gridList.SetColumnBackColor(Color.FromArgb(50, 50, 50), "ROW_NO");
-			gridList.SetColumnForeColor(Color.White, "ROW_NO");
+			gridList.SetColumnBackColor(SkinUtils.ForeColor, "ROW_NO");
+			gridList.SetColumnForeColor(SkinUtils.BackColor, "ROW_NO");
 		}
 
 		protected override void DataLoad(object param = null)

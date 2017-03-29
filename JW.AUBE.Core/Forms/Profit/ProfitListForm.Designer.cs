@@ -99,11 +99,8 @@
 			// 
 			this.lcItemProduct.Control = this.txtProduct;
 			this.lcItemProduct.Location = new System.Drawing.Point(0, 24);
-			this.lcItemProduct.MaxSize = new System.Drawing.Size(500, 24);
-			this.lcItemProduct.MinSize = new System.Drawing.Size(500, 24);
 			this.lcItemProduct.Name = "lcItemProduct";
 			this.lcItemProduct.Size = new System.Drawing.Size(500, 24);
-			this.lcItemProduct.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
 			this.lcItemProduct.TextSize = new System.Drawing.Size(105, 14);
 			// 
 			// txtProduct
@@ -145,11 +142,8 @@
 			// 
 			this.lcItemProductType.Control = this.lupProductType;
 			this.lcItemProductType.Location = new System.Drawing.Point(500, 0);
-			this.lcItemProductType.MaxSize = new System.Drawing.Size(300, 24);
-			this.lcItemProductType.MinSize = new System.Drawing.Size(300, 24);
 			this.lcItemProductType.Name = "lcItemProductType";
 			this.lcItemProductType.Size = new System.Drawing.Size(300, 24);
-			this.lcItemProductType.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
 			this.lcItemProductType.TextSize = new System.Drawing.Size(105, 14);
 			// 
 			// lupProductType
@@ -198,11 +192,8 @@
 			// 
 			this.lcItemClosingYm.Control = this.datClosingYm;
 			this.lcItemClosingYm.Location = new System.Drawing.Point(0, 0);
-			this.lcItemClosingYm.MaxSize = new System.Drawing.Size(250, 24);
-			this.lcItemClosingYm.MinSize = new System.Drawing.Size(250, 24);
 			this.lcItemClosingYm.Name = "lcItemClosingYm";
 			this.lcItemClosingYm.Size = new System.Drawing.Size(250, 24);
-			this.lcItemClosingYm.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
 			this.lcItemClosingYm.TextSize = new System.Drawing.Size(105, 14);
 			// 
 			// datClosingYm
@@ -234,6 +225,7 @@
 			this.gridList.Compress = false;
 			this.gridList.DataSource = null;
 			this.gridList.Editable = true;
+			this.gridList.FocusedRowHandle = -2147483648;
 			this.gridList.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
 			this.gridList.Location = new System.Drawing.Point(4, 85);
 			this.gridList.Name = "gridList";

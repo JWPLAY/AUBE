@@ -80,8 +80,8 @@ namespace JW.AUBE.Core.Forms.Inventory
 				new XGridColumn() { FieldName = "UPD_USER", Visible = false },
 				new XGridColumn() { FieldName = "UPD_USER_NAME" }
 			);
-			gridList.SetColumnBackColor(Color.Black, "ROW_NO");
-			gridList.SetColumnForeColor(Color.White, "ROW_NO");
+			gridList.SetColumnBackColor(SkinUtils.ForeColor, "ROW_NO");
+			gridList.SetColumnForeColor(SkinUtils.BackColor, "ROW_NO");
 			gridList.ColumnFix("ROW_NO");
 
 			gridList.RowCellClick += delegate (object sender, RowCellClickEventArgs e)

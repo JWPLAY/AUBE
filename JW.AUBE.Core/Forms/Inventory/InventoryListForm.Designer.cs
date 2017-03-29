@@ -35,12 +35,12 @@
 			this.txtProduct = new JW.AUBE.Core.Controls.Common.XSearch();
 			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
+			this.lcItemProductType = new DevExpress.XtraLayout.LayoutControlItem();
+			this.lupProductType = new JW.AUBE.Core.Controls.Common.XLookup();
+			this.lcItemCategory = new DevExpress.XtraLayout.LayoutControlItem();
+			this.lupCategory = new JW.AUBE.Core.Controls.Common.XLookup();
 			this.gridList = new JW.AUBE.Core.Controls.Grid.XGrid();
 			this.lcGridList = new DevExpress.XtraLayout.LayoutControlItem();
-			this.lupProductType = new JW.AUBE.Core.Controls.Common.XLookup();
-			this.lcItemProductType = new DevExpress.XtraLayout.LayoutControlItem();
-			this.lupCategory = new JW.AUBE.Core.Controls.Common.XLookup();
-			this.lcItemCategory = new DevExpress.XtraLayout.LayoutControlItem();
 			((System.ComponentModel.ISupportInitialize)(this.lc)).BeginInit();
 			this.lc.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupBase)).BeginInit();
@@ -49,11 +49,11 @@
 			((System.ComponentModel.ISupportInitialize)(this.lcItemProduct)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcGridList)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lupProductType.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemProductType)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lupCategory.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lupProductType.Properties)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemCategory)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lupCategory.Properties)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGridList)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// lc
@@ -152,11 +152,62 @@
 			this.emptySpaceItem3.Size = new System.Drawing.Size(197, 24);
 			this.emptySpaceItem3.TextSize = new System.Drawing.Size(0, 0);
 			// 
+			// lcItemProductType
+			// 
+			this.lcItemProductType.Control = this.lupProductType;
+			this.lcItemProductType.Location = new System.Drawing.Point(497, 0);
+			this.lcItemProductType.Name = "lcItemProductType";
+			this.lcItemProductType.Size = new System.Drawing.Size(300, 24);
+			this.lcItemProductType.TextSize = new System.Drawing.Size(105, 14);
+			// 
+			// lupProductType
+			// 
+			this.lupProductType.DataSource = null;
+			this.lupProductType.DisplayMember = "";
+			this.lupProductType.GroupCode = null;
+			this.lupProductType.ListMember = "LIST_NAME";
+			this.lupProductType.Location = new System.Drawing.Point(617, 30);
+			this.lupProductType.Name = "lupProductType";
+			this.lupProductType.NullText = "[EditValue is null]";
+			this.lupProductType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.lupProductType.SelectedIndex = -1;
+			this.lupProductType.Size = new System.Drawing.Size(187, 20);
+			this.lupProductType.StyleController = this.lc;
+			this.lupProductType.TabIndex = 8;
+			this.lupProductType.ValueMember = "";
+			// 
+			// lcItemCategory
+			// 
+			this.lcItemCategory.Control = this.lupCategory;
+			this.lcItemCategory.Location = new System.Drawing.Point(497, 24);
+			this.lcItemCategory.Name = "lcItemCategory";
+			this.lcItemCategory.Size = new System.Drawing.Size(300, 24);
+			this.lcItemCategory.TextSize = new System.Drawing.Size(105, 14);
+			// 
+			// lupCategory
+			// 
+			this.lupCategory.DataSource = null;
+			this.lupCategory.DisplayMember = "";
+			this.lupCategory.GroupCode = null;
+			this.lupCategory.ListMember = "LIST_NAME";
+			this.lupCategory.Location = new System.Drawing.Point(617, 54);
+			this.lupCategory.Name = "lupCategory";
+			this.lupCategory.NullText = "[EditValue is null]";
+			this.lupCategory.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+			this.lupCategory.SelectedIndex = -1;
+			this.lupCategory.Size = new System.Drawing.Size(187, 20);
+			this.lupCategory.StyleController = this.lc;
+			this.lupCategory.TabIndex = 9;
+			this.lupCategory.ValueMember = "";
+			// 
 			// gridList
 			// 
 			this.gridList.Compress = false;
 			this.gridList.DataSource = null;
 			this.gridList.Editable = true;
+			this.gridList.FocusedRowHandle = -2147483648;
 			this.gridList.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
 			this.gridList.Location = new System.Drawing.Point(4, 85);
 			this.gridList.Name = "gridList";
@@ -184,59 +235,6 @@
 			this.lcGridList.TextSize = new System.Drawing.Size(0, 0);
 			this.lcGridList.TextVisible = false;
 			// 
-			// lupProductType
-			// 
-			this.lupProductType.DataSource = null;
-			this.lupProductType.DisplayMember = "";
-			this.lupProductType.GroupCode = null;
-			this.lupProductType.ListMember = "LIST_NAME";
-			this.lupProductType.Location = new System.Drawing.Point(617, 30);
-			this.lupProductType.Name = "lupProductType";
-			this.lupProductType.NullText = "[EditValue is null]";
-			this.lupProductType.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.lupProductType.SelectedIndex = -1;
-			this.lupProductType.Size = new System.Drawing.Size(187, 20);
-			this.lupProductType.StyleController = this.lc;
-			this.lupProductType.TabIndex = 8;
-			this.lupProductType.ValueMember = "";
-			// 
-			// lcItemProductType
-			// 
-			this.lcItemProductType.Control = this.lupProductType;
-			this.lcItemProductType.Location = new System.Drawing.Point(497, 0);
-			this.lcItemProductType.MaxSize = new System.Drawing.Size(300, 24);
-			this.lcItemProductType.MinSize = new System.Drawing.Size(300, 24);
-			this.lcItemProductType.Name = "lcItemProductType";
-			this.lcItemProductType.Size = new System.Drawing.Size(300, 24);
-			this.lcItemProductType.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-			this.lcItemProductType.TextSize = new System.Drawing.Size(105, 14);
-			// 
-			// lupCategory
-			// 
-			this.lupCategory.DataSource = null;
-			this.lupCategory.DisplayMember = "";
-			this.lupCategory.GroupCode = null;
-			this.lupCategory.ListMember = "LIST_NAME";
-			this.lupCategory.Location = new System.Drawing.Point(617, 54);
-			this.lupCategory.Name = "lupCategory";
-			this.lupCategory.NullText = "[EditValue is null]";
-			this.lupCategory.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-			this.lupCategory.SelectedIndex = -1;
-			this.lupCategory.Size = new System.Drawing.Size(187, 20);
-			this.lupCategory.StyleController = this.lc;
-			this.lupCategory.TabIndex = 9;
-			this.lupCategory.ValueMember = "";
-			// 
-			// lcItemCategory
-			// 
-			this.lcItemCategory.Control = this.lupCategory;
-			this.lcItemCategory.Location = new System.Drawing.Point(497, 24);
-			this.lcItemCategory.Name = "lcItemCategory";
-			this.lcItemCategory.Size = new System.Drawing.Size(300, 24);
-			this.lcItemCategory.TextSize = new System.Drawing.Size(105, 14);
-			// 
 			// InventoryListForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -252,11 +250,11 @@
 			((System.ComponentModel.ISupportInitialize)(this.lcItemProduct)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcGridList)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lupProductType.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemProductType)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lupCategory.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lupProductType.Properties)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemCategory)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lupCategory.Properties)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcGridList)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

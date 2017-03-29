@@ -76,7 +76,7 @@
 			this.lc.Controls.Add(this.txtProduct);
 			this.lc.Controls.Add(this.gridList);
 			this.lc.Location = new System.Drawing.Point(0, 44);
-			this.lc.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1179, 286, 450, 400);
+			this.lc.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(908, 286, 450, 400);
 			this.lc.Size = new System.Drawing.Size(1012, 418);
 			// 
 			// lcGroupBase
@@ -108,11 +108,8 @@
 			// 
 			this.lcItemProduct.Control = this.txtProduct;
 			this.lcItemProduct.Location = new System.Drawing.Point(0, 24);
-			this.lcItemProduct.MaxSize = new System.Drawing.Size(500, 24);
-			this.lcItemProduct.MinSize = new System.Drawing.Size(500, 24);
 			this.lcItemProduct.Name = "lcItemProduct";
 			this.lcItemProduct.Size = new System.Drawing.Size(500, 24);
-			this.lcItemProduct.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
 			this.lcItemProduct.TextSize = new System.Drawing.Size(105, 14);
 			// 
 			// txtProduct
@@ -154,11 +151,8 @@
 			// 
 			this.lcItemProductType.Control = this.lupProductType;
 			this.lcItemProductType.Location = new System.Drawing.Point(500, 0);
-			this.lcItemProductType.MaxSize = new System.Drawing.Size(300, 24);
-			this.lcItemProductType.MinSize = new System.Drawing.Size(300, 24);
 			this.lcItemProductType.Name = "lcItemProductType";
 			this.lcItemProductType.Size = new System.Drawing.Size(300, 24);
-			this.lcItemProductType.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
 			this.lcItemProductType.TextSize = new System.Drawing.Size(105, 14);
 			// 
 			// lupProductType
@@ -207,11 +201,8 @@
 			// 
 			this.lcItemClosingYm.Control = this.datClosingYm;
 			this.lcItemClosingYm.Location = new System.Drawing.Point(0, 0);
-			this.lcItemClosingYm.MaxSize = new System.Drawing.Size(250, 24);
-			this.lcItemClosingYm.MinSize = new System.Drawing.Size(250, 24);
 			this.lcItemClosingYm.Name = "lcItemClosingYm";
 			this.lcItemClosingYm.Size = new System.Drawing.Size(250, 24);
-			this.lcItemClosingYm.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
 			this.lcItemClosingYm.TextSize = new System.Drawing.Size(105, 14);
 			// 
 			// datClosingYm
@@ -243,6 +234,7 @@
 			this.gridList.Compress = false;
 			this.gridList.DataSource = null;
 			this.gridList.Editable = true;
+			this.gridList.FocusedRowHandle = -2147483648;
 			this.gridList.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
 			this.gridList.Location = new System.Drawing.Point(4, 121);
 			this.gridList.Name = "gridList";
@@ -297,11 +289,8 @@
 			// 
 			this.lcButtonClosing.Control = this.btnClosing;
 			this.lcButtonClosing.Location = new System.Drawing.Point(898, 0);
-			this.lcButtonClosing.MaxSize = new System.Drawing.Size(100, 26);
-			this.lcButtonClosing.MinSize = new System.Drawing.Size(100, 26);
 			this.lcButtonClosing.Name = "lcButtonClosing";
 			this.lcButtonClosing.Size = new System.Drawing.Size(100, 26);
-			this.lcButtonClosing.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
 			this.lcButtonClosing.TextSize = new System.Drawing.Size(0, 0);
 			this.lcButtonClosing.TextVisible = false;
 			// 

@@ -28,8 +28,9 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-			this.barManager = new DevExpress.XtraBars.BarManager();
+			this.barManager = new DevExpress.XtraBars.BarManager(this.components);
 			this.barTools = new DevExpress.XtraBars.Bar();
 			this.barButtonNav = new DevExpress.XtraBars.BarButtonItem();
 			this.barButtonFav = new DevExpress.XtraBars.BarButtonItem();
@@ -52,12 +53,12 @@
 			this.barStatusBarCulture = new DevExpress.XtraBars.BarStaticItem();
 			this.barStatusBarDatetime = new DevExpress.XtraBars.BarStaticItem();
 			this.chkKeepAlive = new DevExpress.XtraBars.BarCheckItem();
-			this.barAndDockingController = new DevExpress.XtraBars.BarAndDockingController();
+			this.barAndDockingController = new DevExpress.XtraBars.BarAndDockingController(this.components);
 			this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-			this.dockManager = new DevExpress.XtraBars.Docking.DockManager();
+			this.dockManager = new DevExpress.XtraBars.Docking.DockManager(this.components);
 			this.dockPanelLog = new DevExpress.XtraBars.Docking.DockPanel();
 			this.controlContainer1 = new DevExpress.XtraBars.Docking.ControlContainer();
 			this.dpFavorite = new DevExpress.XtraBars.Docking.DockPanel();
@@ -69,7 +70,7 @@
 			this.dockPanelMainMenu_Container = new DevExpress.XtraBars.Docking.ControlContainer();
 			this.navBarNavigate = new DevExpress.XtraNavBar.NavBarControl();
 			this.navBarGroup1 = new DevExpress.XtraNavBar.NavBarGroup();
-			this.toolTipController = new DevExpress.Utils.ToolTipController();
+			this.toolTipController = new DevExpress.Utils.ToolTipController(this.components);
 			this.barSubItemPanels = new DevExpress.XtraBars.BarSubItem();
 			this.barPopupUxButtonpandAll = new DevExpress.XtraBars.BarButtonItem();
 			this.barPopupButtonCollapseAll = new DevExpress.XtraBars.BarButtonItem();
@@ -80,14 +81,14 @@
 			this.barPopupButtonSave = new DevExpress.XtraBars.BarButtonItem();
 			this.barButtonTabPageCloseAll = new DevExpress.XtraBars.BarButtonItem();
 			this.barButtonTabPageCloseAllButThis = new DevExpress.XtraBars.BarButtonItem();
-			this.imageCollection = new DevExpress.Utils.ImageCollection();
-			this.mdiManager = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager();
-			this.timerMainTime = new System.Windows.Forms.Timer();
-			this.popupMenuOfMainMenu = new DevExpress.XtraBars.PopupMenu();
-			this.popupMenuOfBookmark = new DevExpress.XtraBars.PopupMenu();
-			this.timerHomeShow = new System.Windows.Forms.Timer();
-			this.notifyIcon1 = new System.Windows.Forms.NotifyIcon();
-			this.popupMenuTabPage = new DevExpress.XtraBars.PopupMenu();
+			this.imageCollection = new DevExpress.Utils.ImageCollection(this.components);
+			this.mdiManager = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
+			this.timerMainTime = new System.Windows.Forms.Timer(this.components);
+			this.popupMenuOfMainMenu = new DevExpress.XtraBars.PopupMenu(this.components);
+			this.popupMenuOfBookmark = new DevExpress.XtraBars.PopupMenu(this.components);
+			this.timerHomeShow = new System.Windows.Forms.Timer(this.components);
+			this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+			this.popupMenuTabPage = new DevExpress.XtraBars.PopupMenu(this.components);
 			((System.ComponentModel.ISupportInitialize)(this.barManager)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.barAndDockingController)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dockManager)).BeginInit();
@@ -221,7 +222,7 @@
 			// 
 			// barButtonSetting
 			// 
-			this.barButtonSetting.Caption = "Setting";
+			this.barButtonSetting.Caption = "판매등록";
 			this.barButtonSetting.CategoryGuid = new System.Guid("a88229de-4627-4658-b6a2-102960a89e38");
 			this.barButtonSetting.Id = 67;
 			this.barButtonSetting.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonSetting.ImageOptions.Image")));
@@ -275,7 +276,7 @@
 			// 
 			// barButtonChangePassword
 			// 
-			this.barButtonChangePassword.Caption = "사용자 정보 변경";
+			this.barButtonChangePassword.Caption = "비밀번호변경";
 			this.barButtonChangePassword.CategoryGuid = new System.Guid("187f1f34-7a4a-479d-83b8-80cebc184b65");
 			this.barButtonChangePassword.Id = 25;
 			this.barButtonChangePassword.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonChangePassword.ImageOptions.Image")));

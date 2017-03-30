@@ -95,6 +95,7 @@
 			this.gridList.Compress = false;
 			this.gridList.DataSource = null;
 			this.gridList.Editable = true;
+			this.gridList.FocusedRowHandle = -2147483648;
 			this.gridList.GridViewType = JW.AUBE.Core.Controls.Grid.GridViewType.GridView;
 			this.gridList.Location = new System.Drawing.Point(12, 74);
 			this.gridList.Name = "gridList";
@@ -108,12 +109,15 @@
 			this.gridList.PrintFooter = null;
 			this.gridList.PrintHeader = null;
 			this.gridList.ReadOnly = false;
+			this.gridList.ShowFooter = false;
 			this.gridList.ShowGroupPanel = false;
 			this.gridList.Size = new System.Drawing.Size(468, 366);
 			this.gridList.TabIndex = 4;
 			// 
 			// layoutControlGroup1
 			// 
+			this.layoutControlGroup1.BackgroundImage = global::JW.AUBE.Core.Properties.Resources.back_gray;
+			this.layoutControlGroup1.BackgroundImageVisible = true;
 			this.layoutControlGroup1.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
 			this.layoutControlGroup1.GroupBordersVisible = false;
 			this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {

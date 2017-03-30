@@ -200,6 +200,11 @@ namespace JW.AUBE.Core.Base.Forms
 		{
 			try
 			{
+				lc.Padding = new Padding(2);
+				lc.Margin = new Padding(0);
+				lcGroupBase.Padding = new DevExpress.XtraLayout.Utils.Padding(0);
+				barTools.Offset = 0;
+
 				try
 				{
 					foreach (LayoutControlGroup group in lc.Items.OfType<LayoutControlGroup>().Where(x => x.Name.Equals("lcGroupSearch")))
@@ -246,24 +251,10 @@ namespace JW.AUBE.Core.Base.Forms
 					}
 				});
 
-				try
-				{
-					if (Controls.Count > 0)
-					{
-						foreach (Control control in Controls)
-						{
-							if (control.GetType() == typeof(LayoutControl))
-							{
-								((LayoutControl)control).Root.Padding = new DevExpress.XtraLayout.Utils.Padding(2);
-								break;
-							}
-						}
-					}
-				}
-				catch
-				{
-					throw;
-				}
+				lc.Items.OfType<LayoutControlGroup>().Where(x => x.Name != lcGroupBase.Name).ToList().ForEach(x =>
+				   {
+					   x.Spacing = new DevExpress.XtraLayout.Utils.Padding(2);
+				   });
 			}
 			catch(Exception ex)
 			{
@@ -361,7 +352,7 @@ namespace JW.AUBE.Core.Base.Forms
 				SetButtonName();
 
 				SetLayout();
-
+				
 				barTitle.Caption = this.Text;
 				barTitle.ItemAppearance.Normal.ForeColor = Color.White;
 				barTitle.ItemAppearance.Normal.BackColor = Color.Black;
@@ -369,6 +360,7 @@ namespace JW.AUBE.Core.Base.Forms
 				barStaticMessage.Caption = string.Empty;
 				barStaticTotalRecords.Caption = string.Empty;
 				barStaticEditMode.Caption = EditMode.ToString().ToUpper();
+							
 
 				InitButtons();
 				InitControls();

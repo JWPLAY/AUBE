@@ -132,6 +132,8 @@
 			// 
 			// lcGroupBase
 			// 
+			this.lcGroupBase.BackgroundImage = global::JW.AUBE.Core.Properties.Resources.back_gray;
+			this.lcGroupBase.BackgroundImageVisible = true;
 			this.lcGroupBase.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
 			this.lcGroupBase.GroupBordersVisible = false;
 			this.lcGroupBase.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {

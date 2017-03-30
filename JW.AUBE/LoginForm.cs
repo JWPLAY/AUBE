@@ -82,6 +82,7 @@ namespace JW.AUBE
 			MaximizeBox = false;
 			MinimizeBox = false;
 			Icon = IconResource.icon;
+			this.BackColor = SkinUtils.FormBackColor;
 
 			lcItemCompanyId.SetFieldName("COMPANY_ID");
 			lcItemLoginId.SetFieldName("LOGIN_ID");

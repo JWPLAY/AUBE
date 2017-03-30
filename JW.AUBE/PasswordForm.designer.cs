@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
 			this.lc = new DevExpress.XtraLayout.LayoutControl();
+			this.btnConfirm = new DevExpress.XtraEditors.SimpleButton();
 			this.TextEdit3 = new DevExpress.XtraEditors.TextEdit();
 			this.TextEdit2 = new DevExpress.XtraEditors.TextEdit();
 			this.TextEdit1 = new DevExpress.XtraEditors.TextEdit();
@@ -39,7 +40,6 @@
 			this.emptySpaceItem2 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.emptySpaceItem3 = new DevExpress.XtraLayout.EmptySpaceItem();
-			this.btnConfirm = new DevExpress.XtraEditors.SimpleButton();
 			this.lcButtonConfirm = new DevExpress.XtraLayout.LayoutControlItem();
 			this.emptySpaceItem5 = new DevExpress.XtraLayout.EmptySpaceItem();
 			this.emptySpaceItem6 = new DevExpress.XtraLayout.EmptySpaceItem();
@@ -75,6 +75,16 @@
 			this.lc.Size = new System.Drawing.Size(392, 270);
 			this.lc.TabIndex = 0;
 			// 
+			// btnConfirm
+			// 
+			this.btnConfirm.Location = new System.Drawing.Point(162, 226);
+			this.btnConfirm.Name = "btnConfirm";
+			this.btnConfirm.Size = new System.Drawing.Size(68, 22);
+			this.btnConfirm.StyleController = this.lc;
+			this.btnConfirm.TabIndex = 0;
+			this.btnConfirm.TabStop = false;
+			this.btnConfirm.Text = "확인";
+			// 
 			// TextEdit3
 			// 
 			this.TextEdit3.Location = new System.Drawing.Point(80, 138);
@@ -101,8 +111,6 @@
 			// 
 			// lcGroupBase
 			// 
-			this.lcGroupBase.BackgroundImage = global::JW.AUBE.Properties.Resources.back_white;
-			this.lcGroupBase.BackgroundImageVisible = true;
 			this.lcGroupBase.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
 			this.lcGroupBase.GroupBordersVisible = false;
 			this.lcGroupBase.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
@@ -168,22 +176,12 @@
 			this.emptySpaceItem3.Size = new System.Drawing.Size(372, 64);
 			this.emptySpaceItem3.TextSize = new System.Drawing.Size(0, 0);
 			// 
-			// btnConfirm
-			// 
-			this.btnConfirm.Location = new System.Drawing.Point(105, 226);
-			this.btnConfirm.Name = "btnConfirm";
-			this.btnConfirm.Size = new System.Drawing.Size(182, 22);
-			this.btnConfirm.StyleController = this.lc;
-			this.btnConfirm.TabIndex = 0;
-			this.btnConfirm.TabStop = false;
-			this.btnConfirm.Text = "확인";
-			// 
 			// lcButtonConfirm
 			// 
 			this.lcButtonConfirm.Control = this.btnConfirm;
-			this.lcButtonConfirm.Location = new System.Drawing.Point(93, 214);
+			this.lcButtonConfirm.Location = new System.Drawing.Point(150, 214);
 			this.lcButtonConfirm.Name = "lcButtonConfirm";
-			this.lcButtonConfirm.Size = new System.Drawing.Size(186, 26);
+			this.lcButtonConfirm.Size = new System.Drawing.Size(72, 26);
 			this.lcButtonConfirm.TextSize = new System.Drawing.Size(0, 0);
 			this.lcButtonConfirm.TextVisible = false;
 			// 
@@ -192,15 +190,15 @@
 			this.emptySpaceItem5.AllowHotTrack = false;
 			this.emptySpaceItem5.Location = new System.Drawing.Point(0, 214);
 			this.emptySpaceItem5.Name = "emptySpaceItem5";
-			this.emptySpaceItem5.Size = new System.Drawing.Size(93, 26);
+			this.emptySpaceItem5.Size = new System.Drawing.Size(150, 26);
 			this.emptySpaceItem5.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// emptySpaceItem6
 			// 
 			this.emptySpaceItem6.AllowHotTrack = false;
-			this.emptySpaceItem6.Location = new System.Drawing.Point(279, 214);
+			this.emptySpaceItem6.Location = new System.Drawing.Point(222, 214);
 			this.emptySpaceItem6.Name = "emptySpaceItem6";
-			this.emptySpaceItem6.Size = new System.Drawing.Size(93, 26);
+			this.emptySpaceItem6.Size = new System.Drawing.Size(150, 26);
 			this.emptySpaceItem6.TextSize = new System.Drawing.Size(0, 0);
 			// 
 			// PasswordForm

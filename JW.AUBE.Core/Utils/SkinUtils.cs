@@ -23,6 +23,7 @@ namespace JW.AUBE.Core.Utils
 				}
 			}
 		}
+		public static Color FormBackColor { get { return Color.FromArgb(74, 74, 74); } }
 		public static Color BackColor
 		{
 			get

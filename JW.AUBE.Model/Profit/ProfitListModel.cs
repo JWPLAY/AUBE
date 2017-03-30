@@ -11,6 +11,7 @@ namespace JW.AUBE.Model.Profit
 		public int PRODUCT_ID { get; set; }
 		public string PRODUCT_CODE { get; set; }
 		public string PRODUCT_NAME { get; set; }
+		public decimal SALE_AMT { get; set; }
 		public decimal BASE_AMT { get; set; }
 		public decimal PURC_AMT { get; set; }
 		public decimal PROD_AMT { get; set; }

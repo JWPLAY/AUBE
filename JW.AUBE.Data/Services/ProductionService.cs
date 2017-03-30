@@ -31,7 +31,13 @@ namespace JW.AUBE.Service.Services
 			try
 			{
 				var data = DaoFactory.Instance.QueryForObject<ProdTranDataModel>("GetProdTranData", req.TranList[0].Parameter);
-				req.TranList[0].Data = data;
+				var list = DaoFactory.Instance.QueryForList<DataMap>("GetProdMaterials", req.TranList[0].Parameter);
+
+				req.TranList = new DBTranData[]
+				{
+					new DBTranData() { Data = data },
+					new DBTranData() { Data = list }
+				};
 				return req;
 			}
 			catch (Exception ex)

@@ -70,7 +70,7 @@ namespace JW.AUBE.Core.Forms.Inventory
 				new XGridColumn() { FieldName = "ADJS_DATE", HorzAlignment = HorzAlignment.Center, Width = 100 },
 				new XGridColumn() { FieldName = "PRODUCT_ID", HorzAlignment = HorzAlignment.Center, Width = 60, Visible = false },
 				new XGridColumn() { FieldName = "PRODUCT_CODE", HorzAlignment = HorzAlignment.Center, Width = 80 },
-				new XGridColumn() { FieldName = "PRODUCT_NAME", HorzAlignment = HorzAlignment.Near, Width = 200 },
+				new XGridColumn() { FieldName = "PRODUCT_NAME", Width = 200 },
 				new XGridColumn() { FieldName = "ADJS_QTY", HorzAlignment = HorzAlignment.Far, Width = 80, FormatType = FormatType.Numeric, FormatString = "N0" },
 				new XGridColumn() { FieldName = "REMARKS", Width = 200 },
 				new XGridColumn() { FieldName = "INS_TIME" },

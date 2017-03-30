@@ -117,6 +117,24 @@
 			]]>
 		</delete>
 
+		<select id="GetProdMaterials" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT  ROW_NUMBER() OVER (ORDER BY AA.REG_ID)	AS ROW_NO
+					,	AA.TRAN_ID								AS PROD_ID
+					,	AA.PRODUCT_ID							AS MATERIAL_ID
+					,	PP.PRODUCT_CODE							AS MATERIAL_CODE
+					,	PP.PRODUCT_NAME							AS MATERIAL_NAME
+					,	AA.INV_QTY								AS INPUT_QTY
+				FROM	UBZ.INVENTORY_TRAN AA
+						LEFT JOIN
+							UCD.PRODUCTS PP
+								ON AA.PRODUCT_ID = PP.PRODUCT_ID
+				WHERE	AA.TRAN_ID = #PROD_ID#
+				AND		AA.TRAN_TP = 'PU'
+				ORDER BY AA.REG_ID
+			]]>
+		</select>
+
 		<select id="GetProductionList" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
 				SELECT  ROW_NUMBER() OVER (ORDER BY AA.PROD_ID, IT.ITEM_ID)	AS ROW_NO

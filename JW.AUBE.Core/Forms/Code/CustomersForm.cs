@@ -133,38 +133,11 @@ namespace JW.AUBE.Core.Forms.Code
 			#region 조회리스트
 			gridList.Init();
 			gridList.AddGridColumns(
-				new XGridColumn()
-				{
-					FieldName = "ROW_NO",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 40
-				},
-				new XGridColumn()
-				{
-					FieldName = "CUSTOMER_ID",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 80
-				},
-				new XGridColumn()
-				{
-					FieldName = "CUSTOMER_NAME",
-					Caption = "거래처명",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 200
-				},
-				new XGridColumn()
-				{
-					FieldName = "CUSTOMER_TYPE",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 80
-				},
-				new XGridColumn()
-				{
-					FieldName = "USE_YN",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 80,
-					RepositoryItem = gridList.GetRepositoryItemCheckEdit()
-				}
+				new XGridColumn() { FieldName = "ROW_NO" },
+				new XGridColumn() { FieldName = "CUSTOMER_ID", HorzAlignment = HorzAlignment.Center, Width = 80 },
+				new XGridColumn() { FieldName = "CUSTOMER_NAME", Caption = "거래처명", Width = 200 },
+				new XGridColumn() { FieldName = "CUSTOMER_TYPE", HorzAlignment = HorzAlignment.Center, Width = 80 },
+				new XGridColumn() { FieldName = "USE_YN", HorzAlignment = HorzAlignment.Center, Width = 80, RepositoryItem = gridList.GetRepositoryItemCheckEdit() }
 			);
 
 			gridList.RowCellClick += delegate (object sender, RowCellClickEventArgs e)
@@ -190,68 +163,17 @@ namespace JW.AUBE.Core.Forms.Code
 			#region 연락처
 			gridPhones.Init();
 			gridPhones.AddGridColumns(
-				new XGridColumn()
-				{
-					FieldName = "ROW_NO",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 40
-				},
-				new XGridColumn()
-				{
-					FieldName = "REG_ID",
-					HorzAlignment = HorzAlignment.Center,
-					Visible = false,
-					Width = 40
-				},
-				new XGridColumn()
-				{
-					FieldName = "CUSTOMER_ID",
-					HorzAlignment = HorzAlignment.Center,
-					Visible = false,
-					Width = 50
-				},
-				new XGridColumn()
-				{
-					FieldName = "PHONE_TYPE",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 100
-				},
-				new XGridColumn()
-				{
-					FieldName = "PHONE_NUMBER",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 120
-				},
-				new XGridColumn()
-				{
-					FieldName = "REMARKS",
-					HorzAlignment = HorzAlignment.Near,
-					Width = 200
-				},
-				new XGridColumn()
-				{
-					FieldName = "INS_TIME",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 150
-				},
-				new XGridColumn()
-				{
-					FieldName = "INS_USER_NAME",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 100
-				},
-				new XGridColumn()
-				{
-					FieldName = "UPD_TIME",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 150
-				},
-				new XGridColumn()
-				{
-					FieldName = "UPD_USER_NAME",
-					HorzAlignment = HorzAlignment.Center,
-					Width = 100
-				});
+				new XGridColumn() { FieldName = "ROW_NO" },
+				new XGridColumn() { FieldName = "REG_ID", HorzAlignment = HorzAlignment.Center, Visible = false, Width = 40 },
+				new XGridColumn() { FieldName = "CUSTOMER_ID", HorzAlignment = HorzAlignment.Center, Visible = false, Width = 50 },
+				new XGridColumn() { FieldName = "PHONE_TYPE", HorzAlignment = HorzAlignment.Center, Width = 100 },
+				new XGridColumn() { FieldName = "PHONE_NUMBER", Width = 120 },
+				new XGridColumn() { FieldName = "REMARKS", Width = 200 },
+				new XGridColumn() { FieldName = "INS_TIME" },
+				new XGridColumn() { FieldName = "INS_USER_NAME" },
+				new XGridColumn() { FieldName = "UPD_TIME" },
+				new XGridColumn() { FieldName = "UPD_USER_NAME" }
+				);
 
 			gridPhones.SetRepositoryItemLookUpEdit("PHONE_TYPE", "CODE", "LIST_NAME", "CodeHelp", "GetCodeHelpLookup", null, new DataMap() { { "PARENT_CODE", "PHONE_TYPE" } });
 			gridPhones.SetEditable("PHONE_NUMBER", "PHONE_TYPE", "REMARKS");

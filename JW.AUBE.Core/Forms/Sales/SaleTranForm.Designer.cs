@@ -129,7 +129,9 @@
 			this.lc.Controls.Add(this.gridProducts);
 			this.lc.Controls.Add(this.gridCategory);
 			this.lc.Controls.Add(this.gridItems);
+			this.lc.Margin = new System.Windows.Forms.Padding(0);
 			this.lc.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1168, 108, 662, 400);
+			this.lc.Padding = new System.Windows.Forms.Padding(2);
 			this.lc.Size = new System.Drawing.Size(998, 646);
 			// 
 			// lcGroupBase
@@ -699,7 +701,6 @@
 			// 
 			this.lupPayType.DataSource = null;
 			this.lupPayType.DisplayMember = "";
-			this.lupPayType.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lupPayType.GroupCode = null;
 			this.lupPayType.ListMember = "LIST_NAME";
 			this.lupPayType.Location = new System.Drawing.Point(679, 487);

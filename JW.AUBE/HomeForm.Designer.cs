@@ -61,6 +61,7 @@
 			// 
 			// pnlStatistic
 			// 
+			this.pnlStatistic.BackColor = System.Drawing.Color.White;
 			this.pnlStatistic.Controls.Add(this.chart2);
 			this.pnlStatistic.Controls.Add(this.chart1);
 			this.pnlStatistic.Controls.Add(this.btnRefresh);

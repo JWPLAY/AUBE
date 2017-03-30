@@ -605,8 +605,8 @@
 			this.lcTabGroup.Location = new System.Drawing.Point(374, 217);
 			this.lcTabGroup.Name = "lcTabGroup";
 			this.lcTabGroup.Padding = new DevExpress.XtraLayout.Utils.Padding(2, 2, 2, 2);
-			this.lcTabGroup.SelectedTabPage = this.lcTabGroupBiz;
-			this.lcTabGroup.SelectedTabPageIndex = 0;
+			this.lcTabGroup.SelectedTabPage = this.lcTabGroupPhones;
+			this.lcTabGroup.SelectedTabPageIndex = 1;
 			this.lcTabGroup.Size = new System.Drawing.Size(624, 273);
 			this.lcTabGroup.TabPages.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.lcTabGroupBiz,
@@ -914,6 +914,8 @@
 			// 
 			// lcTabGroupPhonesButtons
 			// 
+			this.lcTabGroupPhonesButtons.BackgroundImage = global::JW.AUBE.Core.Properties.Resources.back_gray;
+			this.lcTabGroupPhonesButtons.BackgroundImageVisible = true;
 			this.lcTabGroupPhonesButtons.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.emptySpaceItem8,
             this.lcButtonPhoneAdd,
@@ -1002,6 +1004,8 @@
 			// 
 			// lcTabGroupAddress
 			// 
+			this.lcTabGroupAddress.BackgroundImage = global::JW.AUBE.Core.Properties.Resources.back_gray;
+			this.lcTabGroupAddress.BackgroundImageVisible = true;
 			this.lcTabGroupAddress.CaptionImage = ((System.Drawing.Image)(resources.GetObject("lcTabGroupAddress.CaptionImage")));
 			this.lcTabGroupAddress.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.lcGridAddressList,
@@ -1046,6 +1050,8 @@
 			// 
 			// lcTabGroupAddressButtons
 			// 
+			this.lcTabGroupAddressButtons.BackgroundImage = global::JW.AUBE.Core.Properties.Resources.back_gray;
+			this.lcTabGroupAddressButtons.BackgroundImageVisible = true;
 			this.lcTabGroupAddressButtons.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.emptySpaceItem7,
             this.lcButtonAddressAdd,

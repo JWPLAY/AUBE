@@ -124,7 +124,7 @@ namespace JW.AUBE.Core.Forms.Code
 				new XGridColumn() { FieldName = "ROW_NO" },
 				new XGridColumn() { FieldName = "PRODUCT_ID", HorzAlignment = HorzAlignment.Center, Width = 60, Visible = false },
 				new XGridColumn() { FieldName = "PRODUCT_CODE", HorzAlignment = HorzAlignment.Center, Width = 80 },
-				new XGridColumn() { FieldName = "PRODUCT_NAME", HorzAlignment = HorzAlignment.Near, Width = 200 },
+				new XGridColumn() { FieldName = "PRODUCT_NAME", Width = 200 },
 				new XGridColumn() { FieldName = "PRODUCT_TYPE", HorzAlignment = HorzAlignment.Center, Width = 100 },
 				new XGridColumn() { FieldName = "CATEGORY", HorzAlignment = HorzAlignment.Center, Width = 100 },
 				new XGridColumn() { FieldName = "USE_YN", HorzAlignment = HorzAlignment.Center, RepositoryItem = gridList.GetRepositoryItemCheckEdit(), Width = 80 }
@@ -161,7 +161,7 @@ namespace JW.AUBE.Core.Forms.Code
 				new XGridColumn() { FieldName = "ROW_NO" },
 				new XGridColumn() { FieldName = "REG_ID", HorzAlignment = HorzAlignment.Center, Width = 40, Visible = false },
 				new XGridColumn() { FieldName = "PRODUCT_ID", HorzAlignment = HorzAlignment.Center, Width = 50, Visible = false },
-				new XGridColumn() { FieldName = "MATERIAL_NAME", HorzAlignment = HorzAlignment.Near, Width = 200 },
+				new XGridColumn() { FieldName = "MATERIAL_NAME", Width = 200 },
 				new XGridColumn() { FieldName = "MATERIAL_ID", HorzAlignment = HorzAlignment.Center, Width = 100 },
 				new XGridColumn() { FieldName = "INPUT_QTY", HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N2", Width = 80 },
 				new XGridColumn() { FieldName = "UNIT_TYPE", HorzAlignment = HorzAlignment.Center, Width = 80 },
@@ -175,8 +175,8 @@ namespace JW.AUBE.Core.Forms.Code
 			gridMaterials.SetRepositoryItemButtonEdit("MATERIAL_NAME");
 			gridMaterials.SetEditable("MATERIAL_NAME", "INPUT_QTY");
 
-			gridMaterials.SetColumnBackColor(Color.FromArgb(66, 69, 84), "ROW_NO");
-			gridMaterials.SetColumnForeColor(Color.FromArgb(230, 232, 242), "ROW_NO");
+			gridMaterials.SetColumnBackColor(SkinUtils.ForeColor, "ROW_NO");
+			gridMaterials.SetColumnForeColor(SkinUtils.BackColor, "ROW_NO");
 			gridMaterials.ColumnFix("ROW_NO");
 
 			#region Grid Events

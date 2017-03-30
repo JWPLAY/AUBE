@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using DevExpress.Utils;
 using DevExpress.XtraEditors;
+using JW.AUBE.Base.Constants;
 using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Map;
 using JW.AUBE.Base.Utils;
@@ -96,8 +97,8 @@ namespace JW.AUBE
 			//picImage.Properties.SizeMode = PictureSizeMode.Stretch;
 			
 			txtCompanyId.EditValue = "1000";
-			txtLoginId.EditValue = "admin";
-			txtPassword.EditValue = "admin";
+			txtLoginId.EditValue = RegistryUtils.GetValue(RegiPathConsts.LOGIN_INFO, "LoginId");
+			txtPassword.EditValue = RegistryUtils.GetValue(RegiPathConsts.LOGIN_INFO, "LoginPw");
 
 			lcItemCompanyId.Visibility = DevExpress.XtraLayout.Utils.LayoutVisibility.Never;
 		}
@@ -147,8 +148,15 @@ namespace JW.AUBE
 				if (data == null)
 					throw new Exception("로그인 사용자의 정보가 정확하지 않습니다.");
 
+				GlobalVar.Settings.SetValue("LOGIN_ID", (data as LoginUserDataModel).LOGIN_ID);
 				GlobalVar.Settings.SetValue("USER_ID", (data as LoginUserDataModel).USER_ID);
 				GlobalVar.Settings.SetValue("USER_NAME", (data as LoginUserDataModel).USER_NAME);
+
+				if (chkRemember.Checked)
+				{
+					RegistryUtils.SetValue(RegiPathConsts.LOGIN_INFO, "LoginId", txtLoginId.EditValue.ToStringNullToEmpty());
+					RegistryUtils.SetValue(RegiPathConsts.LOGIN_INFO, "LoginPw", txtPassword.EditValue.ToStringNullToEmpty());
+				}
 
 				SetModifiedCount();
 				Close();

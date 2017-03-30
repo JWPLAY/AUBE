@@ -2,7 +2,7 @@
 {
 	public static class RegiPathConsts
 	{
-		public const string ROOT = @"Software\JW\WIN";
+		public const string ROOT = @"Software\JW\AUBE";
 		public const string FORM_SIZE = @"Layouts\MainLayout\FormSize";
 		public const string LOOK_AND_FEEL = @"Layouts\LookAndFeel";
 		public const string LOGIN_INFO = @"LoginInfo";

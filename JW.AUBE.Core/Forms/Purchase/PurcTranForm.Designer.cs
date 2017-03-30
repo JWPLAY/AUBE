@@ -114,7 +114,9 @@
 			this.lc.Controls.Add(this.txtCustomerId);
 			this.lc.Controls.Add(this.gridItem);
 			this.lc.Location = new System.Drawing.Point(0, 44);
+			this.lc.Margin = new System.Windows.Forms.Padding(0);
 			this.lc.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(922, 345, 450, 400);
+			this.lc.Padding = new System.Windows.Forms.Padding(2);
 			this.lc.Size = new System.Drawing.Size(998, 502);
 			// 
 			// lcGroupBase
@@ -318,6 +320,8 @@
 			// 
 			// lcTabGroupItemButtons
 			// 
+			this.lcTabGroupItemButtons.BackgroundImage = global::JW.AUBE.Core.Properties.Resources.back_gray;
+			this.lcTabGroupItemButtons.BackgroundImageVisible = true;
 			this.lcTabGroupItemButtons.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.emptySpaceItem4,
             this.lcButtonItemAdd,

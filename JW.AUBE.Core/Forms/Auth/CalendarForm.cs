@@ -80,8 +80,8 @@ namespace JW.AUBE.Core.Forms.Auth
 				new XGridColumn() { FieldName = "WEEK_OF_MONTH", Caption = "월주차", HorzAlignment = HorzAlignment.Center, Width = 60 },
 				new XGridColumn() { FieldName = "WEEK_OF_YEAR", Caption = "연주차", HorzAlignment = HorzAlignment.Center, Width = 60 },
 				new XGridColumn() { FieldName = "HOLIDAY_YN", Caption = "휴일여부", HorzAlignment = HorzAlignment.Center, Width = 80 },
-				new XGridColumn() { FieldName = "HOLIDAY_NAME", Caption = "휴일명", HorzAlignment = HorzAlignment.Near, Width = 100 },
-				new XGridColumn() { FieldName = "REMARKS", HorzAlignment = HorzAlignment.Near, Width = 200 }
+				new XGridColumn() { FieldName = "HOLIDAY_NAME", Caption = "휴일명", HorzAlignment = HorzAlignment.Center, Width = 100 },
+				new XGridColumn() { FieldName = "REMARKS", Width = 200 }
 			);
 
 			gridList.SetRepositoryItemCheckEdit("HOLIDAY_YN");

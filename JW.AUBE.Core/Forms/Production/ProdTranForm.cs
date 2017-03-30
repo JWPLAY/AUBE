@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Drawing;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using DevExpress.Utils;
 using DevExpress.XtraGrid.Views.Grid;
 using JW.AUBE.Base.DBTran.Controller;
 using JW.AUBE.Base.Map;
+using JW.AUBE.Base.Utils;
 using JW.AUBE.Core.Base.Forms;
 using JW.AUBE.Core.Controls.Grid;
 using JW.AUBE.Core.Enumerations;
@@ -64,23 +65,22 @@ namespace JW.AUBE.Core.Forms.Production
 		{
 			#region 조회리스트
 			gridList.Init();
-			gridList.AddGridColumns(new XGridColumn[]
-			{
-				new XGridColumn() { FieldName="ROW_NO" },
-				new XGridColumn() { FieldName="PROD_ID", Visible = false },
-				new XGridColumn() { FieldName="PROD_DATE", HorzAlignment = HorzAlignment.Center, Width=100 },
-				new XGridColumn() { FieldName="PRODUCT_ID",   HorzAlignment = HorzAlignment.Center, Width = 60, Visible = false },
-				new XGridColumn() { FieldName="PRODUCT_CODE", HorzAlignment = HorzAlignment.Center, Width = 80  },
-				new XGridColumn() { FieldName="PRODUCT_NAME", HorzAlignment = HorzAlignment.Near,   Width = 200 },
-				new XGridColumn() { FieldName="PROD_QTY", HorzAlignment = HorzAlignment.Far, Width = 80, FormatType = FormatType.Numeric, FormatString = "N0" },
-				new XGridColumn() { FieldName="REMARKS", Width = 200 },
-				new XGridColumn() { FieldName="INS_TIME" },
-				new XGridColumn() { FieldName="INS_USER", Visible = false },
-				new XGridColumn() { FieldName="INS_USER_NAME" },
-				new XGridColumn() { FieldName="UPD_TIME" },
-				new XGridColumn() { FieldName="UPD_USER", Visible = false },
-				new XGridColumn() { FieldName="UPD_USER_NAME" }
-			});
+			gridList.AddGridColumns(
+				new XGridColumn() { FieldName = "ROW_NO" },
+				new XGridColumn() { FieldName = "PROD_ID", Visible = false },
+				new XGridColumn() { FieldName = "PROD_DATE", HorzAlignment = HorzAlignment.Center, Width = 100 },
+				new XGridColumn() { FieldName = "PRODUCT_ID", HorzAlignment = HorzAlignment.Center, Width = 60, Visible = false },
+				new XGridColumn() { FieldName = "PRODUCT_CODE", HorzAlignment = HorzAlignment.Center, Width = 80 },
+				new XGridColumn() { FieldName = "PRODUCT_NAME", Width = 200 },
+				new XGridColumn() { FieldName = "PROD_QTY", HorzAlignment = HorzAlignment.Far, Width = 80, FormatType = FormatType.Numeric, FormatString = "N0" },
+				new XGridColumn() { FieldName = "REMARKS", Width = 200 },
+				new XGridColumn() { FieldName = "INS_TIME" },
+				new XGridColumn() { FieldName = "INS_USER", Visible = false },
+				new XGridColumn() { FieldName = "INS_USER_NAME" },
+				new XGridColumn() { FieldName = "UPD_TIME" },
+				new XGridColumn() { FieldName = "UPD_USER", Visible = false },
+				new XGridColumn() { FieldName = "UPD_USER_NAME" }
+			);
 			gridList.SetColumnBackColor(SkinUtils.ForeColor, "ROW_NO");
 			gridList.SetColumnForeColor(SkinUtils.BackColor, "ROW_NO");
 			gridList.ColumnFix("ROW_NO");
@@ -104,6 +104,20 @@ namespace JW.AUBE.Core.Forms.Production
 				}
 			};
 			#endregion
+
+			#region 조회리스트
+			gridMaterialList.Init();
+			gridMaterialList.AddGridColumns(
+				new XGridColumn() { FieldName = "ROW_NO" },
+				new XGridColumn() { FieldName = "MATERIAL_ID", Visible = false },
+				new XGridColumn() { FieldName = "MATERIAL_CODE", HorzAlignment = HorzAlignment.Center, Width = 100 },
+				new XGridColumn() { FieldName = "MATERIAL_NAME", Width = 200 },
+				new XGridColumn() { FieldName = "INPUT_QTY", HorzAlignment = HorzAlignment.Far, Width = 80, FormatType = FormatType.Numeric, FormatString = "N0" }
+			);
+			gridMaterialList.SetColumnBackColor(SkinUtils.ForeColor, "ROW_NO");
+			gridMaterialList.SetColumnForeColor(SkinUtils.BackColor, "ROW_NO");
+			gridMaterialList.ColumnFix("ROW_NO");
+			#endregion
 		}
 		
 		protected override void LoadForm()
@@ -124,6 +138,8 @@ namespace JW.AUBE.Core.Forms.Production
 				txtInsUserName.Clear();
 				txtUpdTime.Clear();
 				txtUpdUserName.Clear();
+
+				gridMaterialList.Clear();
 
 				SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true });
 				this.EditMode = EditModeEnum.New;
@@ -161,19 +177,27 @@ namespace JW.AUBE.Core.Forms.Production
 		{
 			try
 			{
-				var res = DBTranHelper.GetData<ProdTranDataModel>("Production", new DataMap() { { "PROD_ID", id } });
+				var res = DBTranHelper.GetData("Production", new DataMap() { { "PROD_ID", id } });
 
-				txtProdId.EditValue = res.PROD_ID;
-				datProdDate.SetDateChar8(res.PROD_DATE);
-				txtProductId.EditValue = res.PRODUCT_ID;
-				txtProductId.EditText = res.PRODUCT_NAME;
-				spnProdQty.EditValue = res.PROD_QTY;
-				memRemarks.EditValue = res.REMARKS;
+				if (res.TranList.Length > 0)
+				{
+					ProdTranDataModel model = res.TranList[0].Data as ProdTranDataModel;
 
-				txtInsTime.EditValue = res.INS_TIME;
-				txtInsUserName.EditValue = res.INS_USER_NAME;
-				txtUpdTime.EditValue = res.UPD_TIME;
-				txtUpdUserName.EditValue = res.UPD_USER_NAME;
+					txtProdId.EditValue = model.PROD_ID;
+					datProdDate.SetDateChar8(model.PROD_DATE);
+					txtProductId.EditValue = model.PRODUCT_ID;
+					txtProductId.EditText = model.PRODUCT_NAME;
+					spnProdQty.EditValue = model.PROD_QTY;
+					memRemarks.EditValue = model.REMARKS;
+
+					txtInsTime.EditValue = model.INS_TIME;
+					txtInsUserName.EditValue = model.INS_USER_NAME;
+					txtUpdTime.EditValue = model.UPD_TIME;
+					txtUpdUserName.EditValue = model.UPD_USER_NAME;
+				}
+
+				if (res.TranList.Length > 1)
+					gridMaterialList.DataSource = (res.TranList[1].Data as List<DataMap>).DataMapListToDataTable();
 
 				SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true, Delete = true });
 				this.EditMode = EditModeEnum.Modify;

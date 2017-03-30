@@ -17,6 +17,7 @@ namespace JW.AUBE
 
 		private void Init()
 		{
+			this.Padding = new System.Windows.Forms.Padding(10);
 			this.BackColor = SkinUtils.FormBackColor;
 			chart1.BackColor = chart2.BackColor = SkinUtils.FormBackColor;
 		}

@@ -300,10 +300,36 @@ namespace JW.AUBE.Service.Services
 		{
 			try
 			{
-				DataMap data = req.TranList[0].Data as DataMap;
-				data.SetValue("INS_USER", req.UserId);
+				DataMap map = req.TranList[0].Data as DataMap;
+				map.SetValue("INS_USER", req.UserId);
 
-				DaoFactory.Instance.Update("ChangePassword", data);
+				var data = DaoFactory.Instance.QueryForObject<LoginUserDataModel>("GetLoginUser", map);
+
+				if (data == null)
+				{
+					req.ErrorNumber = -1;
+					req.ErrorMessage = "해당 아이디로 사용자를 찾을 수 없습니다.";
+					return req;
+				}
+
+				if (data.USE_YN != "Y")
+				{
+					req.ErrorNumber = -2;
+					req.ErrorMessage = "사용 가능한 아이디가 아닙니다. 확인 후 다시 시도하세요!!!";
+					return req;
+				}
+
+				if (data.IS_PW_CHECK != 1)
+				{
+					req.ErrorNumber = -3;
+					req.ErrorMessage = "비밀번호가 정확하지 않습니다. 확인 후 다시 시도하세요!!!";
+					return req;
+				}
+
+				map.SetValue("USER_ID", data.USER_ID);
+				map.SetValue("LOGIN_PW", map.GetValue("CHG_LOGIN_PW"));
+
+				DaoFactory.Instance.Update("ChangePassword", map);
 				req.ErrorNumber = 0;
 				req.ErrorMessage = "SUCCESS";
 				return req;

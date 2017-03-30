@@ -436,5 +436,28 @@
 				ORDER BY ROW_NO
 			]]>
 		</select>
+
+		<select id="GetSaleDaily" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT	AA.SALE_DATE			AS SALE_DATE
+					,	SUM(AA.TOT_NPAY_AMT)	AS SALE_AMT
+				FROM	UBZ.SALE_TRAN AA
+				WHERE	AA.SALE_DATE >= CONVERT(VARCHAR(8), DATEADD(DAY, -30, GETDATE()), 112)
+				AND		AA.SALE_DATE <= CONVERT(VARCHAR(8), GETDATE(), 112)
+				GROUP BY AA.SALE_DATE
+				ORDER BY SALE_DATE
+			]]>
+		</select>
+		<select id="GetSaleMonthly" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT	LEFT(AA.SALE_DATE, 6)	AS SALE_YM
+					,	SUM(AA.TOT_NPAY_AMT)	AS SALE_AMT
+				FROM	UBZ.SALE_TRAN AA
+				WHERE	AA.SALE_DATE >= CONVERT(VARCHAR(8), DATEADD(MONTH, -12, GETDATE()), 112)
+				AND		AA.SALE_DATE <= CONVERT(VARCHAR(8), GETDATE(), 112)
+				GROUP BY LEFT(AA.SALE_DATE, 6)
+				ORDER BY SALE_YM
+			]]>
+		</select>
 	</statements>
 </sqlMap>

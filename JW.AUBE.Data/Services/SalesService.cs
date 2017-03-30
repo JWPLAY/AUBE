@@ -298,5 +298,27 @@ namespace JW.AUBE.Service.Services
 				return req;
 			}
 		}
+
+		public static DBTranSet GetSaleDashboard(DBTranSet req)
+		{
+			try
+			{
+				var data1 = DaoFactory.Instance.QueryForList<DataMap>("GetSaleDaily", req.TranList[0].Parameter);
+				var data2 = DaoFactory.Instance.QueryForList<DataMap>("GetSaleMonthly", req.TranList[0].Parameter);
+
+				req.TranList = new DBTranData[]
+				{
+					new DBTranData() { Data = data1 },
+					new DBTranData() { Data = data2 }
+				};
+				return req;
+			}
+			catch (Exception ex)
+			{
+				req.ErrorNumber = ex.HResult;
+				req.ErrorMessage = ex.Message;
+				return req;
+			}
+		}
 	}
 }

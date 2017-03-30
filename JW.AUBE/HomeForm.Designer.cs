@@ -31,9 +31,12 @@
 		{
 			DevExpress.XtraCharts.XYDiagram xyDiagram1 = new DevExpress.XtraCharts.XYDiagram();
 			DevExpress.XtraCharts.Series series1 = new DevExpress.XtraCharts.Series();
+			DevExpress.XtraCharts.PointSeriesLabel pointSeriesLabel1 = new DevExpress.XtraCharts.PointSeriesLabel();
 			DevExpress.XtraCharts.AreaSeriesView areaSeriesView1 = new DevExpress.XtraCharts.AreaSeriesView();
+			DevExpress.XtraCharts.ChartTitle chartTitle1 = new DevExpress.XtraCharts.ChartTitle();
 			DevExpress.XtraCharts.XYDiagram xyDiagram2 = new DevExpress.XtraCharts.XYDiagram();
 			DevExpress.XtraCharts.Series series2 = new DevExpress.XtraCharts.Series();
+			DevExpress.XtraCharts.ChartTitle chartTitle2 = new DevExpress.XtraCharts.ChartTitle();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HomeForm));
 			this.wb = new System.Windows.Forms.WebBrowser();
 			this.pnlStatistic = new System.Windows.Forms.Panel();
@@ -44,6 +47,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(xyDiagram1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(series1)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(pointSeriesLabel1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(areaSeriesView1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(xyDiagram2)).BeginInit();
@@ -77,9 +81,11 @@
 			this.chart2.AppearanceNameSerializable = "Dark";
 			this.chart2.BackImage.Stretch = true;
 			this.chart2.DataBindings = null;
+			xyDiagram1.AxisX.Label.TextPattern = "{A:yy\'년\' M\'월\'}";
 			xyDiagram1.AxisX.VisibleInPanesSerializable = "-1";
 			xyDiagram1.AxisX.WholeRange.AutoSideMargins = false;
 			xyDiagram1.AxisX.WholeRange.SideMarginsValue = 0D;
+			xyDiagram1.AxisY.Label.TextPattern = "{V:N0}";
 			xyDiagram1.AxisY.VisibleInPanesSerializable = "-1";
 			this.chart2.Diagram = xyDiagram1;
 			this.chart2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -88,20 +94,30 @@
 			this.chart2.Location = new System.Drawing.Point(598, 2);
 			this.chart2.Name = "chart2";
 			this.chart2.PaletteName = "Northern Lights";
+			series1.ArgumentScaleType = DevExpress.XtraCharts.ScaleType.DateTime;
+			pointSeriesLabel1.TextPattern = "{A:yy년 M월}";
+			series1.Label = pointSeriesLabel1;
 			series1.Name = "Series 1";
 			series1.View = areaSeriesView1;
 			this.chart2.SeriesSerializable = new DevExpress.XtraCharts.Series[] {
         series1};
 			this.chart2.Size = new System.Drawing.Size(390, 94);
 			this.chart2.TabIndex = 2;
+			chartTitle1.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			chartTitle1.Text = "최근 1년간 월별 매출동향";
+			this.chart2.Titles.AddRange(new DevExpress.XtraCharts.ChartTitle[] {
+            chartTitle1});
 			// 
 			// chart1
 			// 
 			this.chart1.AppearanceNameSerializable = "Dark";
 			this.chart1.BackImage.Stretch = true;
 			this.chart1.DataBindings = null;
+			xyDiagram2.AxisX.Label.TextPattern = "{A:M\'월\' d\'일\'}";
+			xyDiagram2.AxisX.Visibility = DevExpress.Utils.DefaultBoolean.True;
 			xyDiagram2.AxisX.VisibleInPanesSerializable = "-1";
 			xyDiagram2.AxisY.Interlaced = true;
+			xyDiagram2.AxisY.Label.TextPattern = "{V:N0}";
 			xyDiagram2.AxisY.MinorCount = 4;
 			xyDiagram2.AxisY.VisibleInPanesSerializable = "-1";
 			this.chart1.Diagram = xyDiagram2;
@@ -111,11 +127,18 @@
 			this.chart1.Location = new System.Drawing.Point(98, 2);
 			this.chart1.Name = "chart1";
 			this.chart1.PaletteName = "Northern Lights";
-			series2.Name = "Series 1";
+			series2.ArgumentScaleType = DevExpress.XtraCharts.ScaleType.DateTime;
+			series2.LegendName = "Default Legend";
+			series2.Name = "매출액";
+			series2.ShowInLegend = false;
 			this.chart1.SeriesSerializable = new DevExpress.XtraCharts.Series[] {
         series2};
 			this.chart1.Size = new System.Drawing.Size(500, 94);
 			this.chart1.TabIndex = 0;
+			chartTitle2.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			chartTitle2.Text = "최근 30일 매출동향";
+			this.chart1.Titles.AddRange(new DevExpress.XtraCharts.ChartTitle[] {
+            chartTitle2});
 			// 
 			// btnRefresh
 			// 
@@ -143,6 +166,7 @@
 			this.Text = "HomeForm";
 			this.pnlStatistic.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(xyDiagram1)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(pointSeriesLabel1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(areaSeriesView1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(series1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();

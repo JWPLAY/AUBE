@@ -331,6 +331,7 @@
       <DependentUpon>WaitFormEx.cs</DependentUpon>
     </Compile>
     <Compile Include="Helper\CodeHelper.cs" />
+    <Compile Include="Utils\ChartUtils.cs" />
     <Compile Include="Utils\CommonRequest.cs" />
     <Compile Include="Utils\ControlUtils.cs" />
     <Compile Include="Utils\DomainUtils.cs" />

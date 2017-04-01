@@ -28,9 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-			this.barManager = new DevExpress.XtraBars.BarManager(this.components);
+			this.barManager = new DevExpress.XtraBars.BarManager();
 			this.barTools = new DevExpress.XtraBars.Bar();
 			this.barButtonNav = new DevExpress.XtraBars.BarButtonItem();
 			this.barButtonFav = new DevExpress.XtraBars.BarButtonItem();
@@ -53,12 +52,12 @@
 			this.barStatusBarCulture = new DevExpress.XtraBars.BarStaticItem();
 			this.barStatusBarDatetime = new DevExpress.XtraBars.BarStaticItem();
 			this.chkKeepAlive = new DevExpress.XtraBars.BarCheckItem();
-			this.barAndDockingController = new DevExpress.XtraBars.BarAndDockingController(this.components);
+			this.barAndDockingController = new DevExpress.XtraBars.BarAndDockingController();
 			this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
 			this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-			this.dockManager = new DevExpress.XtraBars.Docking.DockManager(this.components);
+			this.dockManager = new DevExpress.XtraBars.Docking.DockManager();
 			this.dockPanelLog = new DevExpress.XtraBars.Docking.DockPanel();
 			this.controlContainer1 = new DevExpress.XtraBars.Docking.ControlContainer();
 			this.dpFavorite = new DevExpress.XtraBars.Docking.DockPanel();
@@ -70,7 +69,7 @@
 			this.dockPanelMainMenu_Container = new DevExpress.XtraBars.Docking.ControlContainer();
 			this.navBarNavigate = new DevExpress.XtraNavBar.NavBarControl();
 			this.navBarGroup1 = new DevExpress.XtraNavBar.NavBarGroup();
-			this.toolTipController = new DevExpress.Utils.ToolTipController(this.components);
+			this.toolTipController = new DevExpress.Utils.ToolTipController();
 			this.barSubItemPanels = new DevExpress.XtraBars.BarSubItem();
 			this.barPopupUxButtonpandAll = new DevExpress.XtraBars.BarButtonItem();
 			this.barPopupButtonCollapseAll = new DevExpress.XtraBars.BarButtonItem();
@@ -81,14 +80,17 @@
 			this.barPopupButtonSave = new DevExpress.XtraBars.BarButtonItem();
 			this.barButtonTabPageCloseAll = new DevExpress.XtraBars.BarButtonItem();
 			this.barButtonTabPageCloseAllButThis = new DevExpress.XtraBars.BarButtonItem();
-			this.imageCollection = new DevExpress.Utils.ImageCollection(this.components);
-			this.mdiManager = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(this.components);
-			this.timerMainTime = new System.Windows.Forms.Timer(this.components);
-			this.popupMenuOfMainMenu = new DevExpress.XtraBars.PopupMenu(this.components);
-			this.popupMenuOfBookmark = new DevExpress.XtraBars.PopupMenu(this.components);
-			this.timerHomeShow = new System.Windows.Forms.Timer(this.components);
-			this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-			this.popupMenuTabPage = new DevExpress.XtraBars.PopupMenu(this.components);
+			this.imageCollection = new DevExpress.Utils.ImageCollection();
+			this.mdiManager = new DevExpress.XtraTabbedMdi.XtraTabbedMdiManager();
+			this.timerMainTime = new System.Windows.Forms.Timer();
+			this.popupMenuOfMainMenu = new DevExpress.XtraBars.PopupMenu();
+			this.popupMenuOfBookmark = new DevExpress.XtraBars.PopupMenu();
+			this.timerHomeShow = new System.Windows.Forms.Timer();
+			this.notifyIcon1 = new System.Windows.Forms.NotifyIcon();
+			this.popupMenuTabPage = new DevExpress.XtraBars.PopupMenu();
+			this.nbGroupBlog = new DevExpress.XtraNavBar.NavBarGroup();
+			this.navBarGroupControlContainer1 = new DevExpress.XtraNavBar.NavBarGroupControlContainer();
+			this.wbBlog = new System.Windows.Forms.WebBrowser();
 			((System.ComponentModel.ISupportInitialize)(this.barManager)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.barAndDockingController)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.dockManager)).BeginInit();
@@ -96,6 +98,7 @@
 			this.dpFavorite.SuspendLayout();
 			this.dockPanel1_Container.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.navBarFavorite)).BeginInit();
+			this.navBarFavorite.SuspendLayout();
 			this.dpNavigation.SuspendLayout();
 			this.dockPanelMainMenu_Container.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.navBarNavigate)).BeginInit();
@@ -104,6 +107,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.popupMenuOfMainMenu)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.popupMenuOfBookmark)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.popupMenuTabPage)).BeginInit();
+			this.navBarGroupControlContainer1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// barManager
@@ -499,9 +503,11 @@
 			// 
 			// navBarFavorite
 			// 
-			this.navBarFavorite.ActiveGroup = this.nbGroupMyMenu;
+			this.navBarFavorite.ActiveGroup = this.nbGroupBlog;
+			this.navBarFavorite.Controls.Add(this.navBarGroupControlContainer1);
 			this.navBarFavorite.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.navBarFavorite.Groups.AddRange(new DevExpress.XtraNavBar.NavBarGroup[] {
+            this.nbGroupBlog,
             this.nbGroupMyMenu,
             this.nbGroupBookMark});
 			this.navBarFavorite.Location = new System.Drawing.Point(0, 0);
@@ -518,17 +524,16 @@
 			// nbGroupMyMenu
 			// 
 			this.nbGroupMyMenu.Caption = "My Menu";
-			this.nbGroupMyMenu.Expanded = true;
 			this.nbGroupMyMenu.LargeImage = ((System.Drawing.Image)(resources.GetObject("nbGroupMyMenu.LargeImage")));
 			this.nbGroupMyMenu.Name = "nbGroupMyMenu";
-			this.nbGroupMyMenu.SmallImage = ((System.Drawing.Image)(resources.GetObject("nbGroupMyMenu.SmallImage")));
+			this.nbGroupMyMenu.Visible = false;
 			// 
 			// nbGroupBookMark
 			// 
 			this.nbGroupBookMark.Caption = "Bookmark";
 			this.nbGroupBookMark.LargeImage = ((System.Drawing.Image)(resources.GetObject("nbGroupBookMark.LargeImage")));
 			this.nbGroupBookMark.Name = "nbGroupBookMark";
-			this.nbGroupBookMark.SmallImage = ((System.Drawing.Image)(resources.GetObject("nbGroupBookMark.SmallImage")));
+			this.nbGroupBookMark.Visible = false;
 			// 
 			// dpNavigation
 			// 
@@ -705,6 +710,34 @@
 			this.popupMenuTabPage.Manager = this.barManager;
 			this.popupMenuTabPage.Name = "popupMenuTabPage";
 			// 
+			// nbGroupBlog
+			// 
+			this.nbGroupBlog.Caption = "Blog";
+			this.nbGroupBlog.ControlContainer = this.navBarGroupControlContainer1;
+			this.nbGroupBlog.Expanded = true;
+			this.nbGroupBlog.GroupClientHeight = 194;
+			this.nbGroupBlog.GroupStyle = DevExpress.XtraNavBar.NavBarGroupStyle.ControlContainer;
+			this.nbGroupBlog.LargeImage = ((System.Drawing.Image)(resources.GetObject("nbGroupBlog.LargeImage")));
+			this.nbGroupBlog.Name = "nbGroupBlog";
+			// 
+			// navBarGroupControlContainer1
+			// 
+			this.navBarGroupControlContainer1.Appearance.BackColor = System.Drawing.SystemColors.Control;
+			this.navBarGroupControlContainer1.Appearance.Options.UseBackColor = true;
+			this.navBarGroupControlContainer1.Controls.Add(this.wbBlog);
+			this.navBarGroupControlContainer1.Name = "navBarGroupControlContainer1";
+			this.navBarGroupControlContainer1.Size = new System.Drawing.Size(257, 192);
+			this.navBarGroupControlContainer1.TabIndex = 0;
+			// 
+			// wbBlog
+			// 
+			this.wbBlog.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.wbBlog.Location = new System.Drawing.Point(0, 0);
+			this.wbBlog.MinimumSize = new System.Drawing.Size(20, 20);
+			this.wbBlog.Name = "wbBlog";
+			this.wbBlog.Size = new System.Drawing.Size(257, 192);
+			this.wbBlog.TabIndex = 0;
+			// 
 			// MainForm
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -728,6 +761,7 @@
 			this.dpFavorite.ResumeLayout(false);
 			this.dockPanel1_Container.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.navBarFavorite)).EndInit();
+			this.navBarFavorite.ResumeLayout(false);
 			this.dpNavigation.ResumeLayout(false);
 			this.dockPanelMainMenu_Container.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.navBarNavigate)).EndInit();
@@ -736,6 +770,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.popupMenuOfMainMenu)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.popupMenuOfBookmark)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.popupMenuTabPage)).EndInit();
+			this.navBarGroupControlContainer1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -803,5 +838,8 @@
 		private DevExpress.XtraNavBar.NavBarControl navBarNavigate;
 		private DevExpress.XtraNavBar.NavBarGroup navBarGroup1;
 		private DevExpress.XtraBars.BarButtonItem barButtonSetting;
+		private DevExpress.XtraNavBar.NavBarGroup nbGroupBlog;
+		private DevExpress.XtraNavBar.NavBarGroupControlContainer navBarGroupControlContainer1;
+		private System.Windows.Forms.WebBrowser wbBlog;
 	}
 }

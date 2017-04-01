@@ -392,6 +392,7 @@ namespace JW.AUBE
 
 				InitLayoutSetting();
 				InitMainMenu();
+				//wbBlog.Navigate(@"http://map.naver.com/local/siteview.nhn?code=37006063&_ts=1491059671235");
 
 				timerHomeShow.Interval = 100;
 				timerHomeShow.Enabled = true;
@@ -418,7 +419,9 @@ namespace JW.AUBE
 			{
 				//dpFavorite.Visibility = DockVisibility.AutoHide;
 				dpFavorite.Visibility = DockVisibility.Hidden;
-				barButtonFav.Visibility = BarItemVisibility.Never;
+				//nbGroupBookMark.Visible = false;
+				//nbGroupMyMenu.Visible = false;
+				//barButtonFav.Visibility = BarItemVisibility.Never;
 			}
 			catch (Exception ex)
 			{
@@ -722,7 +725,6 @@ namespace JW.AUBE
 			else
 			{
 				dock.Visibility = DockVisibility.Visible;
-
 
 				if (dock.Name == "dockPanelLog")
 				{

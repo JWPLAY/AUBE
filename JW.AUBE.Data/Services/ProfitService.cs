@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using  JW.AUBE.Base.DBTran.Model;
+using JW.AUBE.Base.DBTran.Model;
 using JW.AUBE.Model.Profit;
 using JW.AUBE.Service.Mappers;
 

@@ -29,8 +29,8 @@
 		private void InitializeComponent()
 		{
 			this.lcGroupSearch = new DevExpress.XtraLayout.LayoutControlGroup();
-			this.lcItemPurcDate = new DevExpress.XtraLayout.LayoutControlItem();
-			this.datPurcDate = new JW.AUBE.Core.Controls.Common.XPeriod();
+			this.lcItemInvDate = new DevExpress.XtraLayout.LayoutControlItem();
+			this.datInvDate = new JW.AUBE.Core.Controls.Common.XPeriod();
 			this.lcItemProduct = new DevExpress.XtraLayout.LayoutControlItem();
 			this.txtProduct = new JW.AUBE.Core.Controls.Common.XSearch();
 			this.emptySpaceItem1 = new DevExpress.XtraLayout.EmptySpaceItem();
@@ -45,7 +45,7 @@
 			this.lc.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupBase)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupSearch)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcItemPurcDate)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcItemInvDate)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemProduct)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).BeginInit();
@@ -61,10 +61,12 @@
 			this.lc.Controls.Add(this.lupCategory);
 			this.lc.Controls.Add(this.lupProductType);
 			this.lc.Controls.Add(this.txtProduct);
-			this.lc.Controls.Add(this.datPurcDate);
+			this.lc.Controls.Add(this.datInvDate);
 			this.lc.Controls.Add(this.gridList);
 			this.lc.Location = new System.Drawing.Point(0, 44);
+			this.lc.Margin = new System.Windows.Forms.Padding(0);
 			this.lc.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1173, 264, 450, 400);
+			this.lc.Padding = new System.Windows.Forms.Padding(2);
 			this.lc.Size = new System.Drawing.Size(1012, 418);
 			// 
 			// lcGroupBase
@@ -79,7 +81,7 @@
 			// lcGroupSearch
 			// 
 			this.lcGroupSearch.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.lcItemPurcDate,
+            this.lcItemInvDate,
             this.lcItemProduct,
             this.emptySpaceItem1,
             this.emptySpaceItem3,
@@ -90,24 +92,24 @@
 			this.lcGroupSearch.Padding = new DevExpress.XtraLayout.Utils.Padding(4, 4, 4, 4);
 			this.lcGroupSearch.Size = new System.Drawing.Size(1008, 81);
 			// 
-			// lcItemPurcDate
+			// lcItemInvDate
 			// 
-			this.lcItemPurcDate.Control = this.datPurcDate;
-			this.lcItemPurcDate.Location = new System.Drawing.Point(0, 0);
-			this.lcItemPurcDate.Name = "lcItemPurcDate";
-			this.lcItemPurcDate.Size = new System.Drawing.Size(497, 24);
-			this.lcItemPurcDate.TextSize = new System.Drawing.Size(105, 14);
+			this.lcItemInvDate.Control = this.datInvDate;
+			this.lcItemInvDate.Location = new System.Drawing.Point(0, 0);
+			this.lcItemInvDate.Name = "lcItemInvDate";
+			this.lcItemInvDate.Size = new System.Drawing.Size(497, 24);
+			this.lcItemInvDate.TextSize = new System.Drawing.Size(105, 14);
 			// 
-			// datPurcDate
+			// datInvDate
 			// 
-			this.datPurcDate.FromEditValue = new System.DateTime(2017, 3, 8, 14, 6, 25, 648);
-			this.datPurcDate.Location = new System.Drawing.Point(120, 30);
-			this.datPurcDate.MaximumSize = new System.Drawing.Size(0, 20);
-			this.datPurcDate.MinimumSize = new System.Drawing.Size(215, 20);
-			this.datPurcDate.Name = "datPurcDate";
-			this.datPurcDate.Size = new System.Drawing.Size(384, 20);
-			this.datPurcDate.TabIndex = 5;
-			this.datPurcDate.ToEditValue = new System.DateTime(2017, 3, 8, 14, 6, 25, 648);
+			this.datInvDate.FromEditValue = new System.DateTime(2017, 3, 8, 14, 6, 25, 648);
+			this.datInvDate.Location = new System.Drawing.Point(120, 30);
+			this.datInvDate.MaximumSize = new System.Drawing.Size(0, 20);
+			this.datInvDate.MinimumSize = new System.Drawing.Size(215, 20);
+			this.datInvDate.Name = "datInvDate";
+			this.datInvDate.Size = new System.Drawing.Size(384, 20);
+			this.datInvDate.TabIndex = 5;
+			this.datInvDate.ToEditValue = new System.DateTime(2017, 3, 8, 14, 6, 25, 648);
 			// 
 			// lcItemProduct
 			// 
@@ -246,7 +248,7 @@
 			this.lc.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupBase)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcGroupSearch)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.lcItemPurcDate)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.lcItemInvDate)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.lcItemProduct)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem1)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.emptySpaceItem3)).EndInit();
@@ -264,8 +266,8 @@
 		private DevExpress.XtraLayout.LayoutControlGroup lcGroupSearch;
 		private Controls.Grid.XGrid gridList;
 		private DevExpress.XtraLayout.LayoutControlItem lcGridList;
-		private Controls.Common.XPeriod datPurcDate;
-		private DevExpress.XtraLayout.LayoutControlItem lcItemPurcDate;
+		private Controls.Common.XPeriod datInvDate;
+		private DevExpress.XtraLayout.LayoutControlItem lcItemInvDate;
 		private Controls.Common.XSearch txtProduct;
 		private DevExpress.XtraLayout.LayoutControlItem lcItemProduct;
 		private DevExpress.XtraLayout.EmptySpaceItem emptySpaceItem1;

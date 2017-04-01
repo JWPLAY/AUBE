@@ -48,7 +48,7 @@ namespace JW.AUBE.Core.Forms.Inventory
 
 			SetFieldNames();
 
-			datPurcDate.Init();
+			datInvDate.Init();
 			txtProduct.Init("PRODUCT", "PRODUCT_ID", "PRODUCT_NAME", null, null);
 
 			InitCombo();
@@ -90,8 +90,8 @@ namespace JW.AUBE.Core.Forms.Inventory
 		protected override void DataLoad(object param = null)
 		{
 			gridList.BindData("Inventory", "GetInventoryList", null, new DataMap() {
-				{ "ST_INV_DATE", datPurcDate.DateFrEdit.GetDateChar8() },
-				{ "ED_INV_DATE", datPurcDate.DateToEdit.GetDateChar8() },
+				{ "ST_INV_DATE", datInvDate.DateFrEdit.GetDateChar8() },
+				{ "ED_INV_DATE", datInvDate.DateToEdit.GetDateChar8() },
 				{ "PRODUCT_ID", txtProduct.EditValue },
 				{ "PRODUCT_TYPE", lupProductType.EditValue },
 				{ "CATEGORY", lupCategory.EditValue }

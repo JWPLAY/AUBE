@@ -21,9 +21,6 @@ namespace JW.AUBE.Base.DBTran.Model
 		public string KeyField { get; set; }
 
 		[DataMember]
-		public string DataModelName { get; set; }
-
-		[DataMember]
 		public object Data { get; set; }
 
 		[DataMember]

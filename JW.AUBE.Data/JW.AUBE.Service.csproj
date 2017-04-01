@@ -66,6 +66,7 @@
     <Compile Include="Mappers\DaoFactory.cs" />
     <Compile Include="Mappers\SqlFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DatabaseService.cs" />
     <Compile Include="Services\CommonService.cs" />
     <Compile Include="Services\ProfitService.cs" />
     <Compile Include="Services\CustomerService.cs" />
@@ -178,6 +179,9 @@
     <EmbeddedResource Include="SqlMaps\Business\CreditSQL.xml">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SqlMaps\Auth\DatabaseSQL.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

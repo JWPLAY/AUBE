@@ -1,0 +1,416 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sqlMap
+	namespace="JW.AUBE.Service.SqlMaps"
+	xmlns="http://ibatis.apache.org/mapping"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<statements>
+		<select id="GetTables" parameterClass="DataMap" resultClass="TableList" >
+			<![CDATA[
+				SELECT	ROW_NUMBER() OVER (ORDER BY SCHEMA_NAME, TABLE_NAME)	AS ROW_NO
+					,	AA.TABLE_ID
+					,	AA.SCHEMA_NAME
+					,	AA.TABLE_NAME
+					,	AA.ID
+					,	AA.DESCRIPTION
+					,	AA.ROW_COUNT
+					,	AA.TABLE_SIZE
+					,	AA.DATA_SIZE
+					,	AA.INDEX_SIZE
+					,	AA.LAST_USER_SEEK
+					,	AA.LAST_USER_SCAN
+					,	AA.LAST_USER_LOOKUP
+					,	AA.LAST_USER_UPDATE
+					,	AA.LAST_SYSTEM_UPDATE
+				FROM	(
+							SELECT	CONVERT(VARCHAR, a.object_id)														AS TABLE_ID
+								,	SCHEMA_NAME(a.schema_id)															AS SCHEMA_NAME
+								,	a.name																				AS TABLE_NAME
+								,	C.ID																				AS ID
+								,	convert(nvarchar, isnull(b.value, isnull(c.description, '')))						AS DESCRIPTION
+								,	c.REMARKS																			AS REMARKS
+								,	isnull(s.row_count, 0)																AS ROW_COUNT
+								,	round((isnull(s.reserved_size, 0) + isnull(s2.reserved_size, 0))/128., 3)			AS TABLE_SIZE
+								,	round(s.data_size/128., 3)															AS DATA_SIZE
+								,	round((case when (isnull(s.used_size, 0) + isnull(s2.used_size, 0)) > s.data_size then 
+												(isnull(s.used_size, 0) + isnull(s2.used_size, 0)) - isnull(s.data_size, 0) 
+											else 0 end)/128., 3)														AS INDEX_SIZE
+								,	dbo.DateTimeToChar20(u.last_user_seek)												AS LAST_USER_SEEK
+								,	dbo.DateTimeToChar20(u.last_user_scan)												AS LAST_USER_SCAN
+								,	dbo.DateTimeToChar20(u.last_user_lookup)											AS LAST_USER_LOOKUP
+								,	dbo.DateTimeToChar20(u.last_user_update)											AS LAST_USER_UPDATE
+								,	dbo.DateTimeToChar20(u.last_system_update)											AS LAST_SYSTEM_UPDATE
+							FROM	sys.tables a
+									left join
+									(	
+										select	object_id
+											,	sum(case when index_id < 2 then row_count else 0 end)			as row_count
+											,	sum(reserved_page_count)										as reserved_size
+											,	sum(case when index_id < 2 then 
+														in_row_data_page_count + 
+														lob_used_page_count + 
+														row_overflow_used_page_count
+													else 
+														lob_used_page_count + row_overflow_used_page_count 
+													end)														as data_size
+											,	sum(used_page_count)											as used_size
+										from	sys.dm_db_partition_stats
+										group by object_id
+									) s ON a.object_id = s.object_id
+									left join
+									(
+										select	s2.parent_id
+											,	sum(s1.reserved_page_count)	as reserved_size
+											,	sum(s1.used_page_count)		as used_size
+										from	sys.dm_db_partition_stats s1
+												inner join 
+													sys.internal_tables s2 
+														on s2.object_id = s1.object_id
+										where	s2.internal_type in (202,204)
+										group by s2.parent_id
+									) s2 on a.object_id = s2.parent_id
+									left join
+									(
+										select	a.object_id
+											,	max(a.last_user_seek)		as last_user_seek		/* 마지막 사용자 검색(Seek)시간 */
+											,	max(a.last_user_scan)		as last_user_scan		/* 마지막 사용자 검색(Scan) 시간 */
+											,	max(a.last_user_lookup)		as last_user_lookup		/* 마지막 사용자 조회 시간 */
+											,	max(a.last_user_update)		as last_user_update		/* 마지막 사용자 업데이트 시간 */
+											,	max(a.last_system_update)	as last_system_update
+										from	sys.dm_db_index_usage_stats a
+												inner join
+													sys.databases b
+														on a.database_id = b.database_id
+										where	b.name = #DB_NAME#
+										group by a.object_id
+									) u on a.object_id = u.object_id
+									left join
+									(
+										select	major_id
+											,	value
+										from	sys.extended_properties
+										where	minor_id= 0 
+										and		name	= 'MS_Description'
+									) b ON a.object_id = b.major_id
+									left join USS.TABLES c 
+										on a.name = c.table_name 
+											and c.db_name = #DB_NAME#
+							WHERE	a.type = 'U'
+					) AA
+			WHERE	1=1
+			]]>
+			<isNotEmpty property="FIND_TEXT">
+				<![CDATA[
+				AND		(	
+							AA.TABLE_NAME	LIKE '%'+#FIND_TEXT#+'%'	OR
+							AA.DESCRIPTION	LIKE '%'+#FIND_TEXT#+'%'
+						)
+			]]>
+			</isNotEmpty>
+			<![CDATA[
+				ORDER BY ROW_NO
+			]]>
+		</select>
+		<select id="GetTablesMySql" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT	ROW_NUMBER() OVER (ORDER BY AA.TABLE_NAME)		AS ROW_NO
+					,	AA.TABLE_TYPE + ' ' + AA.TABLE_NAME				AS TABLE_ID
+					,	AA.TABLE_SCHEMA									AS SCHEMA_NAME
+					,	AA.TABLE_NAME									AS TABLE_NAME
+					,	CC.ID											AS ID
+					,	AA.TABLE_COMMENT								AS DESCRIPTION
+					,	AA.TABLE_ROWS									AS ROW_COUNT
+					,	(AA.DATA_LENGTH + AA.INDEX_LENGTH)/1024/1024	AS TABLE_SIZE
+					,	AA.DATA_LENGTH/1024/1024						AS DATA_SIZE
+					,	AA.INDEX_LENGTH/1024/1024						AS INDEX_SIZE
+					,	AA.UPDATE_TIME									AS LAST_UPDATED
+				FROM	INFORMATION_SCHEMA.TABLES AA
+						LEFT JOIN
+							USS.TABLES CC
+								ON AA.TABLE_NAME = CC.TABLE_NAME
+									AND CC.DB_NAME = #DB_NAME#
+				WHERE	AA.TABLE_TYPE	= 'BASE TABLE'
+			]]>
+			<isNotEmpty property="FIND_TEXT">
+			<![CDATA[
+				AND		(	
+							AA.TABLE_NAME		LIKE '%'+#FIND_TEXT#+'%'	OR
+							AA.TABLE_COMMENT	LIKE '%'+#FIND_TEXT#+'%'
+						)
+			]]>
+			</isNotEmpty>
+			<![CDATA[
+				ORDER BY ROW_NO
+			]]>
+		</select>
+		<insert id="InsertTables" parameterClass="DataMap" >
+			<![CDATA[
+				INSERT INTO USS.TABLES
+				( 
+					DB_NAME, TABLE_NAME, DESCRIPTION, REMARKS, INS_TIME, INS_USER
+				)
+				VALUES
+				( 
+					#DB_NAME#
+				,	#TABLE_NAME#
+				,	#DESCRIPTION#
+				,	#REMARKS#
+				,	GETDATE()
+				,	#INS_USER#
+				)
+			]]>
+			<selectKey type="post" property="ID" resultClass="Int">
+				<![CDATA[
+					SELECT @@IDENTITY AS ID
+				]]>
+			</selectKey>
+		</insert>
+		<update id="UpdateTables" parameterClass="DataMap">
+			<![CDATA[
+				UPDATE  USS.TABLES
+				SET     DB_NAME		= #DB_NAME#
+					,	TABLE_NAME	= #TABLE_NAME#
+					,	DESCRIPTION	= #DESCRIPTION#
+					,	REMARKS		= #REMARKS#
+					,	UPD_TIME	= GETDATE()
+					,	UPD_USER	= #INS_USER#
+				WHERE	ID			= #ID#
+			]]>
+		</update>
+		<delete id="DeleteTables" parameterClass="DataMap">
+			<![CDATA[
+				DELETE 
+				FROM	USS.TABLES
+				WHERE	ID = #ID#
+			]]>
+		</delete>
+
+		<select id="GetColumns" parameterClass="DataMap" resultClass="ColumnList" >
+			<![CDATA[
+				SELECT  ROW_NUMBER() OVER (ORDER BY XX.COLUMN_ID)	AS ROW_NO
+					,	CONVERT(VARCHAR, XX.TABLE_ID)				AS TABLE_ID
+					,	XX.TABLE_NAME
+					,	XX.COLUMN_ID
+					,	XX.COLUMN_NAME
+					,	ISNULL(XX.[DESC], YY.DESCRIPTION)	AS DESCRIPTION
+					,	UPPER(XX.[TYPE]) + 
+						CASE 
+							WHEN XX.LENGTH <> '' THEN 
+								'(' +	
+								CASE 
+									WHEN XX.LENGTH = '-1' THEN 'MAX' 
+									ELSE UPPER(XX.LENGTH) 
+								END + 
+								')' 
+							ELSE '' 
+						END									AS COLUMN_TYPE_LEN
+					,	UPPER(XX.[TYPE])					AS COLUMN_TYPE
+					,	XX.LENGTH							AS DATA_LEN
+					,	CASE 
+							WHEN XX.PK = 'Y' THEN 'PK'
+							ELSE ''
+						END									AS PKEY
+					,	CASE
+							WHEN XX.NULLABLE = 'Y' THEN ''
+							ELSE 'NOT NULL'
+						END									AS NULLABLE
+					,	CASE 
+							WHEN XX.[IDENTITY] = 'Y' THEN 'YES'
+							ELSE ''
+						END									AS COLUMN_IDENTITY
+					,	XX.COLUMN_DEFAULT					AS COLUMN_DEFAULT
+					,	YY.REMARKS							AS REMARKS
+					,	YY.ID								AS ID
+				FROM (
+						SELECT  SC.OBJECT_ID		AS TABLE_ID 
+							,	ST.NAME				AS TABLE_NAME
+							,	SC.COLUMN_ID		AS COLUMN_ID 
+							,	SC.NAME				AS COLUMN_NAME
+							,	CASE 
+									WHEN STY.SYSTEM_TYPE_ID = STY.USER_TYPE_ID THEN 
+										STY.NAME 
+									ELSE 
+										(	SELECT	NAME 
+											FROM	SYS.TYPES S2 
+											WHERE	S2.SYSTEM_TYPE_ID = STY.SYSTEM_TYPE_ID 
+											AND		S2.SYSTEM_TYPE_ID = S2.USER_TYPE_ID ) 
+								  END					AS [TYPE] 
+							,	CASE 
+									WHEN STY.NAME IN ('CHAR','VARCHAR') THEN 
+										CONVERT(NVARCHAR(30), SC.MAX_LENGTH) 
+								    WHEN STY.NAME IN ('NCHAR','NVARCHAR') THEN 
+										CONVERT(NVARCHAR(30), SC.MAX_LENGTH/2) 
+									ELSE '' 
+								END						AS [LEN1] 
+							,	CASE 
+									WHEN SC.IS_NULLABLE = 1 THEN 'Y' 
+									ELSE 'N' 
+								END						AS [NULLABLE]
+							,	CASE 
+									WHEN ISNULL(SD.DEFINITION, '') = '' THEN '' 
+									ELSE SD.DEFINITION 
+								END						AS [DEFAULT] 
+							,	CASE 
+									WHEN SC.IS_IDENTITY = 1 THEN 'Y' 
+									ELSE 'N' 
+								END						AS [IDENTITY] 
+							,	CONVERT(NVARCHAR(200), CCM.VALUE) AS [DESC] 
+							,	SC.COLLATION_NAME 
+							,	SC.MAX_LENGTH 
+							,	CASE 
+									WHEN ZZ.COLUMN_NAME IS NOT NULL THEN 'Y' 
+									ELSE '' 
+								END						AS [PK] 
+							,	SC2.LENGTH
+							,	SC2.COLUMN_DEFAULT
+						FROM	SYS.TABLES ST  
+								INNER JOIN 
+									SYS.COLUMNS SC 
+										ON ST.OBJECT_ID = SC.OBJECT_ID 
+								INNER JOIN 
+									SYS.TYPES STY 
+										ON STY.SYSTEM_TYPE_ID = SC.SYSTEM_TYPE_ID 
+											AND STY.USER_TYPE_ID = SC.USER_TYPE_ID 
+								LEFT JOIN 
+								(
+									SELECT	MAJOR_ID
+										,	MINOR_ID
+										,	VALUE  
+									FROM	SYS.EXTENDED_PROPERTIES 
+									WHERE	CLASS = 1 
+								) CCM ON SC.OBJECT_ID = CCM.MAJOR_ID 
+									AND SC.COLUMN_ID = CCM.MINOR_ID 
+								LEFT JOIN 
+								(
+									SELECT	PARENT_OBJECT_ID
+										,	PARENT_COLUMN_ID
+										,	DEFINITION  
+									FROM	SYS.DEFAULT_CONSTRAINTS 
+								) SD ON SC.OBJECT_ID = SD.PARENT_OBJECT_ID 
+									AND SC.COLUMN_ID = SD.PARENT_COLUMN_ID  
+								LEFT JOIN 
+									INFORMATION_SCHEMA.KEY_COLUMN_USAGE ZZ 
+										ON ST.NAME = ZZ.TABLE_NAME 
+											AND SC.NAME = ZZ.COLUMN_NAME 
+            					LEFT JOIN 
+								( 
+									SELECT	TABLE_NAME
+										,	COLUMN_NAME
+										,	DATA_TYPE
+										,	CASE 
+												WHEN DATA_TYPE IN ( 'CHAR', 'VARCHAR', 'NCHAR', 'NVARCHAR' ) THEN 
+													LTRIM(STR(CHARACTER_MAXIMUM_LENGTH))
+            									WHEN DATA_TYPE = 'DECIMAL' THEN 
+													LTRIM(STR(NUMERIC_PRECISION)) + ',' + LTRIM(STR(NUMERIC_SCALE))
+            									WHEN DATA_TYPE = 'DATETIME' THEN ''
+            									ELSE '' 
+											END					AS LENGTH
+										,	COLUMN_DEFAULT
+            						FROM	INFORMATION_SCHEMA.COLUMNS 
+								) SC2 ON ST.NAME = SC2.TABLE_NAME 
+									AND SC.NAME = SC2.COLUMN_NAME
+						WHERE ST.NAME = #TABLE_NAME#
+					) XX
+					LEFT JOIN 
+						USS.COLUMNS YY 
+							ON XX.TABLE_NAME = YY.TABLE_NAME 
+								AND XX.COLUMN_NAME = YY.COLUMN_NAME 
+								AND YY.DB_NAME = #DB_NAME#
+				ORDER BY ROW_NO
+			]]>
+		</select>
+		<select id="GetColumnsMySql" parameterClass="DataMap" resultClass="ColumnList" >
+			<![CDATA[
+				SELECT	ROW_NUMBER() OVER (ORDER BY AA.ORDINAL_POSITION)	AS ROW_NO
+					,	BB.TABLE_TYPE + ' ' + BB.TABLE_NAME					AS TABLE_ID
+					,	AA.TABLE_NAME										AS TABLE_NAME
+					,	AA.ORDINAL_POSITION									AS COLUMN_ID
+					,	AA.COLUMN_NAME										AS COLUMN_NAME
+					,	ISNULL(AA.COLUMN_COMMENT, CC.DESCRIPTION)			AS DESCRIPTION
+					,	AA.COLUMN_TYPE										AS COLUMN_TYPE_LEN
+					,	AA.DATA_TYPE										AS COLUMN_TYPE
+					,	AA.CHARACTER_MAXIMUM_LENGTH							AS DATA_LEN
+					,	CASE 
+							WHEN AA.COLUMN_KEY = 'PRI' THEN 'PK' 
+							ELSE '' 
+						END													AS PKEY
+					,	CASE 
+							WHEN AA.IS_NULLABLE = 'NO' THEN 'NOT NULL' 
+							ELSE '' 
+						END													AS NULLABLE
+					,	NULL												AS COLUMN_IDENTITY
+					,	NULL												AS COLUMN_DEFAULT
+					,	CC.REMARKS											AS REMARKS
+					,	CC.ID												AS ID
+				FROM	INFORMATION_SCHEMA.COLUMNS AA
+						INNER JOIN 
+							INFORMATION_SCHEMA.TABLES BB 
+								ON AA.TABLE_NAME = BB.TABLE_NAME 
+									AND AA.TABLE_SCHEMA = BB.TABLE_SCHEMA
+						LEFT JOIN
+							USS.COLUMNS CC
+								ON AA.TABLE_NAME = CC.TABLE_NAME
+									AND AA.COLUMN_NAME = CC.COLUMN_NAME
+				WHERE	AA.TABLE_NAME	= #TABLE_NAME#
+				AND		AA.TABLE_SCHEMA	= #SCHEMA_NAME#
+				ORDER BY ROW_NO
+			]]>
+		</select>
+		<insert id="InsertColumns" parameterClass="DataMap" >
+			<![CDATA[
+				INSERT INTO USS.COLUMNS
+				( 
+					DB_NAME, TABLE_NAME, COLUMN_NAME, DESCRIPTION, REMARKS, INS_TIME, INS_USER
+				)
+				VALUES
+				( 
+					#DB_NAME#
+				,	#TABLE_NAME#
+				,	#COLUMN_NAME#
+				,	#DESCRIPTION#
+				,	#REMARKS#
+				,	GETDATE()
+				,	#INS_USER#
+				)
+			]]>
+			<selectKey type="post" property="ID" resultClass="Int">
+				<![CDATA[
+					SELECT @@IDENTITY AS ID
+				]]>
+			</selectKey>
+		</insert>
+		<update id="UpdateColumns" parameterClass="DataMap">
+			<![CDATA[
+				UPDATE  USS.COLUMNS
+				SET     DB_NAME			= #DB_NAME#
+					,	TABLE_NAME		= #TABLE_NAME#
+					,	COLUMN_NAME		= #COLUMN_NAME#
+					,	DESCRIPTION		= #DESCRIPTION#
+					,	REMARKS			= #REMARKS#
+					,	UPD_TIME		= GETDATE()
+					,	UPD_USER		= #INS_USER#
+				WHERE	ID				= #ID#
+			]]>
+		</update>
+		<delete id="DeleteColumns" parameterClass="DataMap">
+			<![CDATA[
+				DELETE 
+				FROM	USS.COLUMNS
+				WHERE	ID = #ID#
+			]]>
+		</delete>
+
+		<select id="GetIndexes" parameterClass="DataMap" resultClass="DataMap" >
+			<![CDATA[
+				SELECT	DB_NAME(database_id)			AS [DatabaseName]
+				,	OBJECT_NAME(a.object_id)		AS [TableName]
+				,	a.index_id						AS [IndexId]
+				,	b.name							AS [IndexName]
+				,	a.avg_fragmentation_in_percent	AS [AvgFragInPer]
+			FROM	sys.dm_db_index_physical_stats (DB_ID(), OBJECT_ID(''' + @TableName + '''), NULL, NULL, NULL) AS a
+					JOIN sys.indexes AS b ON a.object_id = b.object_id AND a.index_id = b.index_id
+			WHERE	a.database_id = DB_ID()
+			]]>
+		</select>
+	</statements>
+</sqlMap>

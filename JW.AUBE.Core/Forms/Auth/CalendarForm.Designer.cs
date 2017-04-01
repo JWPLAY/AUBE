@@ -115,7 +115,9 @@
 			this.lc.Controls.Add(this.gridList);
 			this.lc.Controls.Add(this.txtHolidayName);
 			this.lc.Location = new System.Drawing.Point(0, 44);
+			this.lc.Margin = new System.Windows.Forms.Padding(0);
 			this.lc.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(892, 390, 532, 350);
+			this.lc.Padding = new System.Windows.Forms.Padding(2);
 			this.lc.Size = new System.Drawing.Size(1028, 418);
 			// 
 			// lcGroupBase
@@ -456,6 +458,7 @@
             this.lcGroupEdit2});
 			this.lcGroupEditBase.Location = new System.Drawing.Point(574, 0);
 			this.lcGroupEditBase.Name = "lcGroupEditBase";
+			this.lcGroupEditBase.Padding = new DevExpress.XtraLayout.Utils.Padding(4, 4, 4, 4);
 			this.lcGroupEditBase.Size = new System.Drawing.Size(450, 414);
 			this.lcGroupEditBase.TextVisible = false;
 			// 

@@ -76,6 +76,8 @@
     <Compile Include="Sales\SaleTranDataModel.cs" />
     <Compile Include="Sales\SaleTranItemDataModel.cs" />
     <Compile Include="Sales\SaleTranListModel.cs" />
+    <Compile Include="System\ColumnListModel.cs" />
+    <Compile Include="System\TableListModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

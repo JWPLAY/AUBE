@@ -1027,21 +1027,28 @@ namespace JW.AUBE.Core.Controls.Grid
 		/// <param name="bestFit">자동맞춤여부</param>
 		public void BindData(string serviceId = null, string processId = null, string sqlId = null, DataMap param = null, bool bestFit = false)
 		{
-			int rowIndex = this.MainView.FocusedRowHandle;
-			this.DataSource = DBTranHelper.GetData(serviceId, processId, sqlId, param).TranList[0].Data;
-			if (this.DataSource == null)
+			try
 			{
-				this.EmptyDataTableBinding();
-			}
-			else
-			{
-				this.MainView.FocusedRowHandle = rowIndex;
-				this.MainView.SelectRow(rowIndex);
-			}
+				int rowIndex = this.MainView.FocusedRowHandle;
+				this.DataSource = DBTranHelper.GetData(serviceId, processId, sqlId, param).TranList[0].Data;
+				if (this.DataSource == null)
+				{
+					this.EmptyDataTableBinding();
+				}
+				else
+				{
+					this.MainView.FocusedRowHandle = rowIndex;
+					this.MainView.SelectRow(rowIndex);
+				}
 
-			if (bestFit)
+				if (bestFit)
+				{
+					BestFitColumns();
+				}
+			}
+			catch(Exception ex)
 			{
-				BestFitColumns();
+				MsgBox.Show(ex);
 			}
 		}
 

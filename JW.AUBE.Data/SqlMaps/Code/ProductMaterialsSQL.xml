@@ -5,7 +5,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
 
 	<statements>
-		<select id="SelectProductMaterials" parameterClass="DataMap" resultClass="ProductMaterialListModel" >
+		<select id="SelectProductMaterials" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
 				SELECT  ROW_NUMBER() OVER (ORDER BY AA.REG_ID DESC)	AS ROW_NO
 					,	AA.REG_ID
@@ -38,7 +38,7 @@
 				WHERE	AA.PRODUCT_ID = #PRODUCT_ID#
 				]]>
 		</select>
-		<select id="SelectProductMaterial" parameterClass="DataMap" resultClass="ProductMaterialDataModel" >
+		<select id="SelectProductMaterial" parameterClass="DataMap" resultClass="DataMap" >
 			<![CDATA[
 				SELECT	AA.REG_ID
 					,	AA.PRODUCT_ID

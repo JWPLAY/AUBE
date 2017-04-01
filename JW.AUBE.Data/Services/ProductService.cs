@@ -33,12 +33,12 @@ namespace JW.AUBE.Service.Services
 			try
 			{
 				var product = DaoFactory.Instance.QueryForObject<ProductDataModel>("SelectProduct", req.TranList[0].Parameter);
-				var materials = DaoFactory.Instance.QueryForList<ProductMaterialListModel>("SelectProductMaterials", req.TranList[0].Parameter);
+				var materials = DaoFactory.Instance.QueryForList<DataMap>("SelectProductMaterials", req.TranList[0].Parameter);
 
 				req.TranList = new DBTranData[]
 				{
-					new DBTranData() {Data = product },
-					new DBTranData() {Data = materials }
+					new DBTranData() { Data = product },
+					new DBTranData() { Data = materials }
 				};
 				return req;
 			}
@@ -283,7 +283,7 @@ namespace JW.AUBE.Service.Services
 		{
 			try
 			{
-				var data = DaoFactory.Instance.QueryForObject<DataMap>("GetProductId", req.TranList[0].Parameter);
+				var data = DaoFactory.Instance.QueryForObject<DataMap>("GetDataByBarcode", req.TranList[0].Parameter);
 				req.TranList[0].Data = data;
 				return req;
 			}

@@ -50,8 +50,6 @@
     <Compile Include="Codes\AddressDataModel.cs" />
     <Compile Include="Codes\ProductDataModel.cs" />
     <Compile Include="Codes\ProductListModel.cs" />
-    <Compile Include="Codes\ProductMaterialDataModel.cs" />
-    <Compile Include="Codes\ProductMaterialLIstModel.cs" />
     <Compile Include="Codes\SalesPriceDataModel.cs" />
     <Compile Include="Codes\SalesPriceListModel.cs" />
     <Compile Include="Enums\ColumnTypeEnum.cs" />

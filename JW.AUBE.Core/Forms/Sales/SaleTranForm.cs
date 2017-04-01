@@ -599,111 +599,118 @@ namespace JW.AUBE.Core.Forms.Sales
 
 		private void InputEnter()
 		{
-			if (SaleInputMode == SaleInputMode.Item)
+			try
 			{
-				if (txtInput.EditValue.ToStringNullToEmpty().IsNullOrEmpty() == false)
+				if (SaleInputMode == SaleInputMode.Item)
 				{
-					var res = DBTranHelper.GetData<DataMap>("Product", "GetDataByBarcode", new DataMap() { { "BARCODE", txtInput.EditValue } });
-					if (res == null)
-						throw new Exception("데이터가 정확하지 않습니다.");
-
-					SetSaleItem(new SaleTranItemDataModel()
+					if (txtInput.EditValue.ToStringNullToEmpty().IsNullOrEmpty() == false)
 					{
-						PRODUCT_ID = res.GetValue("PRODUCT_ID").ToIntegerNullToZero(),
-						PRODUCT_CODE = res.GetValue("PRODUCT_CODE").ToStringNullToEmpty(),
-						PRODUCT_NAME = res.GetValue("PRODUCT_NAME").ToStringNullToEmpty(),
-						SALE_PRICE = res.GetValue("SALE_PRICE").ToIntegerNullToZero(),
-						DISC_RATE = 0,
-						DISC_PRICE = res.GetValue("SALE_PRICE").ToIntegerNullToZero(),
-						SALE_QTY = (lupSaleType.EditValue.ToString() == "0") ? 1 : -1,
-						SALE_AMT = res.GetValue("SALE_PRICE").ToIntegerNullToZero(),
-						DISC_AMT = 0,
-						NPAY_AMT = res.GetValue("SALE_PRICE").ToIntegerNullToZero(),
-						DISC_TYPE = "00"
-					});
-					txtInput.Focus();
+						var res = DBTranHelper.GetData<DataMap>("Product", "GetDataByBarcode", new DataMap() { { "BARCODE", txtInput.EditValue } });
+						if (res == null)
+							throw new Exception("데이터가 정확하지 않습니다.");
+
+						SetSaleItem(new SaleTranItemDataModel()
+						{
+							PRODUCT_ID = res.GetValue("PRODUCT_ID").ToIntegerNullToZero(),
+							PRODUCT_CODE = res.GetValue("PRODUCT_CODE").ToStringNullToEmpty(),
+							PRODUCT_NAME = res.GetValue("PRODUCT_NAME").ToStringNullToEmpty(),
+							SALE_PRICE = res.GetValue("SALE_PRICE").ToIntegerNullToZero(),
+							DISC_RATE = 0,
+							DISC_PRICE = res.GetValue("SALE_PRICE").ToIntegerNullToZero(),
+							SALE_QTY = (lupSaleType.EditValue.ToString() == "0") ? 1 : -1,
+							SALE_AMT = res.GetValue("SALE_PRICE").ToIntegerNullToZero(),
+							DISC_AMT = 0,
+							NPAY_AMT = res.GetValue("SALE_PRICE").ToIntegerNullToZero(),
+							DISC_TYPE = "00"
+						});
+						txtInput.Focus();
+					}
+				}
+				else if (SaleInputMode == SaleInputMode.ChangeQty)
+				{
+					if (txtInput.EditValue.ToStringNullToEmpty().IsNumeric() == false)
+					{
+						ShowMsgBox("변경할 수량을 숫자로 입력하세요.");
+						txtInput.Clear();
+						txtInput.Focus();
+					}
+					else
+					{
+						if (gridItems.FocusedRowHandle < 0)
+							return;
+
+						int rowIndex = gridItems.FocusedRowHandle;
+						int qty = txtInput.EditValue.ToIntegerNullToZero();
+
+						gridItems.SetValue(rowIndex, "SALE_QTY", qty);
+						gridItems.UpdateCurrentRow();
+
+						CalcSaleItem(gridItems.FocusedRowHandle);
+
+						SetSaleInputMode(SaleInputMode.Item);
+						txtInput.Clear();
+						txtInput.Focus();
+					}
+				}
+				else if (SaleInputMode == SaleInputMode.DiscountRate)
+				{
+					if (txtInput.EditValue.ToStringNullToEmpty().IsNumeric() == false)
+					{
+						ShowMsgBox("할인율은 숫자로 입력해야 합니다.");
+						txtInput.Clear();
+						txtInput.Focus();
+					}
+					else
+					{
+						if (gridItems.FocusedRowHandle < 0)
+							return;
+
+						int rowIndex = gridItems.FocusedRowHandle;
+						int dcRate = txtInput.EditValue.ToIntegerNullToZero();
+
+						gridItems.SetValue(rowIndex, "DISC_RATE", dcRate);
+						gridItems.SetValue(rowIndex, "DISC_TYPE", "10");
+						gridItems.UpdateCurrentRow();
+
+						CalcSaleItem(gridItems.FocusedRowHandle);
+
+						SetSaleInputMode(SaleInputMode.Item);
+						txtInput.Clear();
+						txtInput.Focus();
+					}
+				}
+				else if (SaleInputMode == SaleInputMode.DiscountAmount)
+				{
+					if (txtInput.EditValue.ToStringNullToEmpty().IsNumeric() == false)
+					{
+						ShowMsgBox("할인액은 숫자로 입력해야 합니다.");
+						txtInput.Clear();
+						txtInput.Focus();
+					}
+					else
+					{
+						if (gridItems.FocusedRowHandle < 0)
+							return;
+
+						int rowIndex = gridItems.FocusedRowHandle;
+						int discAmt = txtInput.EditValue.ToIntegerNullToZero();
+
+						gridItems.SetValue(rowIndex, "DISC_RATE", 0);
+						gridItems.SetValue(rowIndex, "DISC_AMT", discAmt);
+						gridItems.SetValue(rowIndex, "DISC_TYPE", "20");
+						gridItems.UpdateCurrentRow();
+
+						CalcSaleItem(gridItems.FocusedRowHandle);
+
+						SetSaleInputMode(SaleInputMode.Item);
+						txtInput.Clear();
+						txtInput.Focus();
+					}
 				}
 			}
-			else if (SaleInputMode == SaleInputMode.ChangeQty)
+			catch(Exception ex)
 			{
-				if (txtInput.EditValue.ToStringNullToEmpty().IsNumeric() == false)
-				{
-					ShowMsgBox("변경할 수량을 숫자로 입력하세요.");
-					txtInput.Clear();
-					txtInput.Focus();
-				}
-				else
-				{
-					if (gridItems.FocusedRowHandle < 0)
-						return;
-
-					int rowIndex = gridItems.FocusedRowHandle;
-					int qty = txtInput.EditValue.ToIntegerNullToZero();
-
-					gridItems.SetValue(rowIndex, "SALE_QTY", qty);
-					gridItems.UpdateCurrentRow();
-
-					CalcSaleItem(gridItems.FocusedRowHandle);
-
-					SetSaleInputMode(SaleInputMode.Item);
-					txtInput.Clear();
-					txtInput.Focus();
-				}
-			}
-			else if (SaleInputMode == SaleInputMode.DiscountRate)
-			{
-				if (txtInput.EditValue.ToStringNullToEmpty().IsNumeric() == false)
-				{
-					ShowMsgBox("할인율은 숫자로 입력해야 합니다.");
-					txtInput.Clear();
-					txtInput.Focus();
-				}
-				else
-				{
-					if (gridItems.FocusedRowHandle < 0)
-						return;
-
-					int rowIndex = gridItems.FocusedRowHandle;
-					int dcRate = txtInput.EditValue.ToIntegerNullToZero();
-
-					gridItems.SetValue(rowIndex, "DISC_RATE", dcRate);
-					gridItems.SetValue(rowIndex, "DISC_TYPE", "10");
-					gridItems.UpdateCurrentRow();
-
-					CalcSaleItem(gridItems.FocusedRowHandle);
-
-					SetSaleInputMode(SaleInputMode.Item);
-					txtInput.Clear();
-					txtInput.Focus();
-				}
-			}
-			else if (SaleInputMode == SaleInputMode.DiscountAmount)
-			{
-				if (txtInput.EditValue.ToStringNullToEmpty().IsNumeric() == false)
-				{
-					ShowMsgBox("할인액은 숫자로 입력해야 합니다.");
-					txtInput.Clear();
-					txtInput.Focus();
-				}
-				else
-				{
-					if (gridItems.FocusedRowHandle < 0)
-						return;
-
-					int rowIndex = gridItems.FocusedRowHandle;
-					int discAmt = txtInput.EditValue.ToIntegerNullToZero();
-
-					gridItems.SetValue(rowIndex, "DISC_RATE", 0);
-					gridItems.SetValue(rowIndex, "DISC_AMT", discAmt);
-					gridItems.SetValue(rowIndex, "DISC_TYPE", "20");
-					gridItems.UpdateCurrentRow();
-
-					CalcSaleItem(gridItems.FocusedRowHandle);
-
-					SetSaleInputMode(SaleInputMode.Item);
-					txtInput.Clear();
-					txtInput.Focus();
-				}
+				ShowErrBox(ex);
 			}
 		}
 

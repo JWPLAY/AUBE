@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
@@ -163,7 +164,7 @@ namespace JW.AUBE.Core.Forms.Code
 				new XGridColumn() { FieldName = "PRODUCT_ID", HorzAlignment = HorzAlignment.Center, Width = 50, Visible = false },
 				new XGridColumn() { FieldName = "MATERIAL_NAME", Width = 200 },
 				new XGridColumn() { FieldName = "MATERIAL_ID", HorzAlignment = HorzAlignment.Center, Width = 100 },
-				new XGridColumn() { FieldName = "INPUT_QTY", HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N2", Width = 80 },
+				new XGridColumn() { FieldName = "INPUT_QTY", HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0", Width = 80 },
 				new XGridColumn() { FieldName = "UNIT_TYPE", HorzAlignment = HorzAlignment.Center, Width = 80 },
 				new XGridColumn() { FieldName = "INS_TIME" },
 				new XGridColumn() { FieldName = "INS_USER_NAME" },
@@ -312,7 +313,7 @@ namespace JW.AUBE.Core.Forms.Code
 
 				if (res.TranList.Length > 1)
 				{
-					gridMaterials.DataSource = res.TranList[1].Data;
+					gridMaterials.DataSource = (res.TranList[1].Data as List<DataMap>).DataMapListToDataTable();
 				}
 
 				onProductTypeChanged();

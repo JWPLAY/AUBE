@@ -130,6 +130,8 @@
 			// 
 			// lcGroupSearch
 			// 
+			this.lcGroupSearch.BackgroundImage = global::JW.AUBE.Core.Properties.Resources.back_gray;
+			this.lcGroupSearch.BackgroundImageVisible = true;
 			this.lcGroupSearch.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.lcItemFindText,
             this.lcItemUseYn,

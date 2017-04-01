@@ -51,7 +51,7 @@ namespace JW.AUBE.Core.Forms.Auth
 
 		void InitCombo()
 		{
-			lupDbName.BindData("DATABASE_ID", null, null, true);
+			lupDbName.BindData("DATABASE", null, null, true);
 		}
 
 		void InitGrid()

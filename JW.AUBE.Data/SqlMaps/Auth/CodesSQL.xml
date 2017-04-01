@@ -140,6 +140,13 @@
 		<update id="UpdateCode" parameterClass="DataMap">
 			<![CDATA[
 				UPDATE	UAA.CODES
+				SET		PARENT_CODE = #CODE#
+					,	UPD_TIME	= GETDATE()
+					,	UPD_USER	= #INS_USER#
+				WHERE	PARENT_CODE	= (	SELECT	CODE
+										FROM	UAA.CODES
+										WHERE	CODE_ID = #CODE_ID# );
+				UPDATE	UAA.CODES
 				SET		CODE			= #CODE#
 					,	NAME			= #NAME#
 					,	VALUE			= #VALUE#
@@ -155,14 +162,19 @@
 					,	OPTION_VALUE5	= #OPTION_VALUE5#
 					,	UPD_TIME		= GETDATE()
 					,	UPD_USER		= #INS_USER#
-				WHERE	CODE_ID			= #CODE_ID#
+				WHERE	CODE_ID			= #CODE_ID#;
 			]]>
 		</update>
 		<delete id="DeleteCode" parameterClass="DataMap">
 			<![CDATA[
 				DELETE
 				FROM	UAA.CODES
-				WHERE	CODE_ID = #CODE_ID#
+				WHERE	PARENT_CODE = (	SELECT	CODE
+										FROM	UAA.CODES
+										WHERE	CODE_ID = #CODE_ID# );
+				DELETE
+				FROM	UAA.CODES
+				WHERE	CODE_ID = #CODE_ID#;
 			]]>
 		</delete>
 	</statements>

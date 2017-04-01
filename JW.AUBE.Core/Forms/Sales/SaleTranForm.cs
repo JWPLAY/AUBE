@@ -265,8 +265,9 @@ namespace JW.AUBE.Core.Forms.Sales
 			gridProducts.Init();
 			gridProducts.AddGridColumns(
 				new XGridColumn() { FieldName = "PRODUCT_ID", Caption = "품목ID", HorzAlignment = HorzAlignment.Center, Width = 80, Visible = false },
-				new XGridColumn() { FieldName = "PRODUCT_NAME", Caption = "품목명", HorzAlignment = HorzAlignment.Near, Width = 180 },
+				new XGridColumn() { FieldName = "PRODUCT_NAME", Caption = "품목명", HorzAlignment = HorzAlignment.Near, Width = 160 },
 				new XGridColumn() { FieldName = "SALE_PRICE", Caption = "판매가", HorzAlignment = HorzAlignment.Far, FormatType = FormatType.Numeric, FormatString = "N0", Width = 80 },
+				new XGridColumn() { FieldName = "STOCK_QTY", Caption = "재고", HorzAlignment = HorzAlignment.Center, FormatType = FormatType.Numeric, FormatString = "N0", Width = 60 },
 				new XGridColumn() { FieldName = "PRODUCT_CODE", Caption = "품목코드", HorzAlignment = HorzAlignment.Center, Width = 80 }
 				);
 			(gridProducts.MainView as GridView).RowHeight = 30;

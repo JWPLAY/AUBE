@@ -32,9 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevExpress.Charts.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Data.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Images.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Office.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Pdf.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.PivotGrid.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Printing.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.RichEdit.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Sparkline.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
@@ -44,6 +47,7 @@
     <Reference Include="DevExpress.XtraCharts.v16.2.Extensions, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraCharts.v16.2.UI, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraEditors.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraGauges.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraGrid.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraLayout.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraNavBar.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -186,6 +190,12 @@
     <Compile Include="Forms\Auth\UsersForm.Designer.cs">
       <DependentUpon>UsersForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Code\ProductTagForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Code\ProductTagForm.Designer.cs">
+      <DependentUpon>ProductTagForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Code\SalesPriceForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -314,6 +324,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Reports\RptProductTag.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\RptProductTag.Designer.cs">
+      <DependentUpon>RptProductTag.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\RptProductTagDs.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RptProductTagDs.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Resources\ButtonResource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>ButtonResource.resx</DependentUpon>
@@ -426,6 +447,9 @@
     <EmbeddedResource Include="Forms\Auth\UsersForm.resx">
       <DependentUpon>UsersForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Code\ProductTagForm.resx">
+      <DependentUpon>ProductTagForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Code\SalesPriceForm.resx">
       <DependentUpon>SalesPriceForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -488,6 +512,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\RptProductTag.resx">
+      <DependentUpon>RptProductTag.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ButtonResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -588,6 +615,17 @@
     <Content Include="Images\charts\Stepline_16x16.png" />
     <Content Include="Images\Home_16x16.png" />
     <Content Include="Images\Home_32x32.png" />
+    <None Include="Reports\RptProductTagDs.xsc">
+      <DependentUpon>RptProductTagDs.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\RptProductTagDs.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>RptProductTagDs.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reports\RptProductTagDs.xss">
+      <DependentUpon>RptProductTagDs.xsd</DependentUpon>
+    </None>
     <None Include="Resources\back_gray.png" />
     <None Include="Resources\back_white.png" />
   </ItemGroup>

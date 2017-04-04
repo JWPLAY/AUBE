@@ -16,5 +16,7 @@
 		public int SALE_QTY { get; set; }
 		public int ADJS_QTY { get; set; }
 		public int BLNC_QTY { get; set; }
+		public decimal COST_PRICE { get; set; }
+		public decimal BLNC_AMT { get; set; }
 	}
 }

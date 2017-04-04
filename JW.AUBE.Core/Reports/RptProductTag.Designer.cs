@@ -29,16 +29,18 @@
 		private void InitializeComponent()
 		{
 			this.Detail = new DevExpress.XtraReports.UI.DetailBand();
+			this.lblProuctName = new DevExpress.XtraReports.UI.XRLabel();
 			this.topMarginBand1 = new DevExpress.XtraReports.UI.TopMarginBand();
 			this.bottomMarginBand1 = new DevExpress.XtraReports.UI.BottomMarginBand();
 			this.rptProductTagDs1 = new JW.AUBE.Core.Reports.RptProductTagDs();
-			this.lblProuctName = new DevExpress.XtraReports.UI.XRLabel();
+			this.xrLabel1 = new DevExpress.XtraReports.UI.XRLabel();
 			((System.ComponentModel.ISupportInitialize)(this.rptProductTagDs1)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
 			// 
 			// Detail
 			// 
 			this.Detail.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrLabel1,
             this.lblProuctName});
 			this.Detail.Dpi = 254F;
 			this.Detail.HeightF = 500F;
@@ -46,6 +48,18 @@
 			this.Detail.Padding = new DevExpress.XtraPrinting.PaddingInfo(0, 0, 0, 0, 254F);
 			this.Detail.PageBreak = DevExpress.XtraReports.UI.PageBreak.BeforeBand;
 			this.Detail.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopLeft;
+			// 
+			// lblProuctName
+			// 
+			this.lblProuctName.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Products.PRODUCT_NAME")});
+			this.lblProuctName.Dpi = 254F;
+			this.lblProuctName.LocationFloat = new DevExpress.Utils.PointFloat(58.20833F, 25.00001F);
+			this.lblProuctName.Name = "lblProuctName";
+			this.lblProuctName.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+			this.lblProuctName.SizeF = new System.Drawing.SizeF(428.625F, 58.42001F);
+			this.lblProuctName.StylePriority.UseTextAlignment = false;
+			this.lblProuctName.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
 			// 
 			// topMarginBand1
 			// 
@@ -64,17 +78,13 @@
 			this.rptProductTagDs1.DataSetName = "RptProductTagDs";
 			this.rptProductTagDs1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
 			// 
-			// lblProuctName
+			// xrLabel1
 			// 
-			this.lblProuctName.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-            new DevExpress.XtraReports.UI.XRBinding("Text", null, "Products.PRODUCT_NAME")});
-			this.lblProuctName.Dpi = 254F;
-			this.lblProuctName.LocationFloat = new DevExpress.Utils.PointFloat(58.20833F, 25.00001F);
-			this.lblProuctName.Name = "lblProuctName";
-			this.lblProuctName.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
-			this.lblProuctName.SizeF = new System.Drawing.SizeF(428.625F, 58.42001F);
-			this.lblProuctName.StylePriority.UseTextAlignment = false;
-			this.lblProuctName.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
+			this.xrLabel1.Dpi = 254F;
+			this.xrLabel1.LocationFloat = new DevExpress.Utils.PointFloat(58.20833F, 83.42001F);
+			this.xrLabel1.Name = "xrLabel1";
+			this.xrLabel1.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 96F);
+			this.xrLabel1.SizeF = new System.Drawing.SizeF(428.625F, 416.58F);
 			// 
 			// RptProductTag
 			// 
@@ -106,5 +116,6 @@
 		private DevExpress.XtraReports.UI.BottomMarginBand bottomMarginBand1;
 		private RptProductTagDs rptProductTagDs1;
 		private DevExpress.XtraReports.UI.XRLabel lblProuctName;
+		private DevExpress.XtraReports.UI.XRLabel xrLabel1;
 	}
 }

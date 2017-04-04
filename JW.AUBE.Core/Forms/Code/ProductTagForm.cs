@@ -31,7 +31,7 @@ namespace JW.AUBE.Core.Forms.Code
 		protected override void InitButtons()
 		{
 			base.InitButtons();
-			SetToolbarButtons(new ToolbarButtons() { New = true, Refresh = true, Save = true, SaveAndNew = true });
+			SetToolbarButtons(new ToolbarButtons() { Refresh = true });
 		}
 
 		protected override void InitControls()
@@ -129,16 +129,16 @@ namespace JW.AUBE.Core.Forms.Code
 				});
 				dt.Rows.Add(id, name);
 	
-				ds.Tables.Add(dt);
+				ds.Tables.Add(dt.Copy());
 				ds.Tables[0].TableName = "Products";
-				ds.Tables[0].PrimaryKey = new DataColumn[] { dt.Columns["PRODUCT_ID"] };
+				ds.Tables[0].PrimaryKey = new DataColumn[] { ds.Tables[0].Columns["PRODUCT_ID"] };
 
-				using(RptProductTag rpt = new RptProductTag())
+				RptProductTag rpt = new RptProductTag()
 				{
-					rpt.DataSource = ds;
-					dvTag.DocumentSource = rpt;
-					rpt.CreateDocument();
-				}
+					DataSource = ds
+				};
+				dvTag.DocumentSource = rpt;
+				rpt.CreateDocument();
 			}
 		}
 	}

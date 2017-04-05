@@ -30,7 +30,7 @@ namespace JW.AUBE.Core.Forms.Code
 
 			txtPostNo.ButtonClick += delegate (object sender, ButtonPressedEventArgs e)
 			{
-				if(e.Button.Kind== ButtonPredefines.Ellipsis)
+				if (e.Button.Kind == ButtonPredefines.Ellipsis)
 				{
 					var postdata = SearchPostCode.Find();
 					if (postdata != null && postdata.GetType() == typeof(DataMap))
